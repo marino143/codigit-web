@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Co Digit — Web Technology That Grows Your Business</title>
+  <meta name="description" content="Co Digit — We bridge the gap between strategy and execution. AI-powered web development, digital transformation, and SEO in Zagreb, Croatia." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg2: #111111;
+      --bg3: #1a1a1a;
+      --border: #222222;
+      --text: #f0f0f0;
+      --muted: #888;
+      --accent: #e63946;
+      --accent2: #457b9d;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: rgba(10,10,10,0.85);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav.scrolled { border-bottom-color: var(--border); }
+
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+      letter-spacing: 0.3px;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--white) !important;
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      transition: opacity 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.85; color: var(--white) !important; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 60px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(230,57,70,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 900px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(230,57,70,0.1);
+      border: 1px solid rgba(230,57,70,0.3);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 6vw, 80px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 28px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 48px;
+      line-height: 1.7;
+    }
+
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+    }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--muted); background: rgba(255,255,255,0.03); }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 72px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-number {
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      color: var(--white);
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ─── SECTION BASE ─── */
+    section { padding: 100px 60px; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .section-desc {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 540px;
+      line-height: 1.7;
+    }
+
+    /* ─── CLIENTS ─── */
+    .clients-section { background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 60px; }
+    .clients-label { text-align: center; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; }
+    .clients-track-wrap { overflow: hidden; position: relative; }
+    .clients-track-wrap::before,
+    .clients-track-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 120px;
+      z-index: 2;
+    }
+    .clients-track-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
+    .clients-track-wrap::after { right: 0; background: linear-gradient(-90deg, var(--bg), transparent); }
+
+    .clients-track {
+      display: flex;
+      gap: 60px;
+      align-items: center;
+      animation: scroll-track 30s linear infinite;
+      width: max-content;
+    }
+    .clients-track:hover { animation-play-state: paused; }
+
+    @keyframes scroll-track {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .client-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #444;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .client-name:hover { color: var(--muted); }
+
+    /* ─── AI SECTION ─── */
+    .ai-section {
+      background: linear-gradient(135deg, #0d0d0d 0%, #111827 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ai-bg-lines {
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 40px,
+        rgba(69,123,157,0.03) 40px,
+        rgba(69,123,157,0.03) 41px
+      );
+    }
+
+    .ai-inner {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .ai-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(69,123,157,0.12);
+      border: 1px solid rgba(69,123,157,0.3);
+      color: #6db6e8;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .ai-tag svg { width: 14px; height: 14px; }
+
+    .ai-section h2 { letter-spacing: -1.5px; }
+    .ai-section h2 em { font-style: normal; color: #6db6e8; }
+
+    .ai-benefits {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .ai-benefit {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .ai-benefit-icon {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      background: rgba(69,123,157,0.1);
+      border: 1px solid rgba(69,123,157,0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .ai-benefit-text strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .ai-benefit-text p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .ai-terminal {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      overflow: hidden;
+      font-family: 'Courier New', monospace;
+    }
+    .ai-terminal-bar {
+      background: #161b22;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #30363d;
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #febc2e; }
+    .dot-g { background: #28c840; }
+    .terminal-title {
+      margin-left: 8px;
+      font-size: 12px;
+      color: #8b949e;
+      font-family: 'Inter', sans-serif;
+    }
+    .ai-terminal-body {
+      padding: 24px;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    .t-comment { color: #8b949e; }
+    .t-prompt { color: #58a6ff; }
+    .t-output { color: #3fb950; }
+    .t-accent { color: #f78166; }
+    .t-white { color: #e6edf3; }
+    .t-line { display: block; margin-bottom: 2px; }
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 14px;
+      background: #58a6ff;
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .ai-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: #30363d;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+    .ai-metric {
+      background: #0d1117;
+      padding: 20px;
+      text-align: center;
+    }
+    .ai-metric-val {
+      font-size: 28px;
+      font-weight: 800;
+      color: #3fb950;
+      letter-spacing: -1px;
+    }
+    .ai-metric-lbl {
+      font-size: 11px;
+      color: #8b949e;
+      margin-top: 4px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ─── SERVICES ─── */
+    .services-section { background: var(--bg2); }
+    .services-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: end;
+      margin-bottom: 60px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .service-card {
+      background: var(--bg2);
+      padding: 48px 40px;
+      transition: background 0.2s;
+      cursor: default;
+    }
+    .service-card:hover { background: var(--bg3); }
+
+    .service-icon {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    .service-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+      color: var(--white);
+    }
+    .service-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+    .service-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    /* ─── CERTS ─── */
+    .certs-section { background: var(--bg); }
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .cert-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .cert-card:hover { border-color: var(--muted); transform: translateY(-2px); }
+    .cert-icon { font-size: 36px; margin-bottom: 12px; }
+    .cert-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .cert-issuer {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ─── CAPABILITIES ─── */
+    .caps-section {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+    .caps-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-top: 60px;
+    }
+    .cap-group h4 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .cap-list { list-style: none; }
+    .cap-list li {
+      font-size: 14px;
+      color: var(--muted);
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: color 0.2s;
+    }
+    .cap-list li:hover { color: var(--text); }
+    .cap-list li:last-child { border-bottom: none; }
+
+    /* ─── ABOUT ─── */
+    .about-section { background: var(--bg); }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-image {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-image-inner {
+      font-size: 80px;
+      opacity: 0.1;
+    }
+    .about-points {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .about-point {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--muted);
+    }
+    .about-point::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      min-width: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    /* ─── CONTACT ─── */
+    .contact-section {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    input, textarea, select {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    input::placeholder, textarea::placeholder { color: #555; }
+    input:focus, textarea:focus, select:focus { border-color: var(--muted); }
+    textarea { resize: vertical; min-height: 120px; }
+    select option { background: var(--bg3); }
+
+    .contact-info { padding-top: 8px; }
+    .contact-info p {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+    .contact-details { display: flex; flex-direction: column; gap: 20px; }
+    .contact-detail {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .contact-detail-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      min-width: 40px;
+    }
+    .contact-detail-text strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+    .contact-detail-text span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 40px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--white);
+    }
+    .footer-logo span { color: var(--accent); }
+    footer p {
+      font-size: 13px;
+      color: #555;
+    }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      font-size: 13px;
+      color: #555;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--muted); }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      width: 48px;
+      height: 3px;
+      background: var(--accent);
+      margin-bottom: 32px;
+      border-radius: 2px;
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      section { padding: 70px 24px; }
+      .hero { padding: 100px 24px 60px; }
+      .hero h1 { font-size: 42px; }
+      .hero-stats { gap: 24px; flex-wrap: wrap; }
+      .ai-inner { grid-template-columns: 1fr; }
+      .services-header { grid-template-columns: 1fr; gap: 24px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .certs-grid { grid-template-columns: repeat(2, 1fr); }
+      .caps-inner { grid-template-columns: repeat(2, 1fr); }
+      .about-inner { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 20px; text-align: center; }
+      .clients-section { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">CO<span>.</span>DIGIT</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#ai">AI-Powered</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#certs">Certifications</a></li>
+    <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Zagreb, Croatia · Est. 2022</div>
+    <h1>
+      We build web<br/>
+      technology that<br/>
+      <em>actually grows</em><br/>
+      your business.
+    </h1>
+    <p class="hero-sub">
+      We bridge the gap between strategy and execution — fusing deep technical expertise with custom development and AI to deliver digital transformation that delivers real results.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-primary">Start a project →</a>
+      <a href="#services" class="btn btn-outline">Our services</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-number">12+</div>
+        <div class="stat-label">Happy clients</div>
+      </div>
+      <div>
+        <div class="stat-number">30+</div>
+        <div class="stat-label">Projects delivered</div>
+      </div>
+      <div>
+        <div class="stat-number">8+</div>
+        <div class="stat-label">Certifications</div>
+      </div>
+      <div>
+        <div class="stat-number">3×</div>
+        <div class="stat-label">Faster with AI</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<div class="clients-section">
+  <p class="clients-label">Trusted by teams across Croatia and beyond</p>
+  <div class="clients-track-wrap">
+    <div class="clients-track" id="clients-track">
+      <span class="client-name">Medihive</span>
+      <span class="client-name">Croatia Control</span>
+      <span class="client-name">HGSHOP</span>
+      <span class="client-name">Auto Zubak</span>
+      <span class="client-name">MountMedia</span>
+      <span class="client-name">Nomago</span>
+      <span class="client-name">The Lowdown</span>
+      <span class="client-name">SIAL Charity</span>
+      <span class="client-name">Tilde Loop</span>
+      <span class="client-name">Clover</span>
+      <span class="client-name">Game Lounge</span>
+      <span class="client-name">Algebra</span>
+      <!-- duplicate for seamless loop -->
+      <span class="client-name">Medihive</span>
+      <span class="client-name">Croatia Control</span>
+      <span class="client-name">HGSHOP</span>
+      <span class="client-name">Auto Zubak</span>
+      <span class="client-name">MountMedia</span>
+      <span class="client-name">Nomago</span>
+      <span class="client-name">The Lowdown</span>
+      <span class="client-name">SIAL Charity</span>
+      <span class="client-name">Tilde Loop</span>
+      <span class="client-name">Clover</span>
+      <span class="client-name">Game Lounge</span>
+      <span class="client-name">Algebra</span>
+    </div>
+  </div>
+</div>
+
+<!-- AI SECTION -->
+<section class="ai-section reveal" id="ai">
+  <div class="ai-bg-lines"></div>
+  <div class="ai-inner">
+    <div>
+      <div class="ai-tag">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        AI-Powered Development
+      </div>
+      <h2>We move <em>3× faster</em><br/>because we use AI.<br/>You pay less for more.</h2>
+      <p class="section-desc" style="margin-top: 16px;">
+        While others are still copy-pasting Stack Overflow, we've integrated AI into every layer of our workflow — from design ideation to code generation, testing, and SEO. The result? Higher quality, shorter timelines, and better pricing.
+      </p>
+      <div class="ai-benefits">
+        <div class="ai-benefit">
+          <div class="ai-benefit-icon">⚡</div>
+          <div class="ai-benefit-text">
+            <strong>Drastically shorter delivery times</strong>
+            <p>AI handles the repetitive heavy-lifting — boilerplate, documentation, test generation — so our engineers focus on architecture and strategy that actually moves the needle.</p>
+          </div>
+        </div>
+        <div class="ai-benefit">
+          <div class="ai-benefit-icon">🎯</div>
+          <div class="ai-benefit-text">
+            <strong>Higher quality, fewer bugs</strong>
+            <p>AI-assisted code review and automated testing catch issues before they reach production. Every line of code is reviewed twice — once by us, once by the machine.</p>
+          </div>
+        </div>
+        <div class="ai-benefit">
+          <div class="ai-benefit-icon">💰</div>
+          <div class="ai-benefit-text">
+            <strong>Better pricing for you</strong>
+            <p>Efficiency gains translate directly to cost savings we pass on to you. You get enterprise-grade output at a competitive price — without cutting corners.</p>
+          </div>
+        </div>
+        <div class="ai-benefit">
+          <div class="ai-benefit-icon">🔍</div>
+          <div class="ai-benefit-text">
+            <strong>AI-driven SEO & content strategy</strong>
+            <p>We use AI to analyze competitors, find keyword gaps, and craft content strategies that rank — turning your website into an actual revenue channel.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="ai-terminal">
+        <div class="ai-terminal-bar">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+          <span class="terminal-title">codigit-ai-workflow.sh</span>
+        </div>
+        <div class="ai-terminal-body">
+          <span class="t-line t-comment"># Co Digit AI Workflow — Project kickoff</span>
+          <span class="t-line"> </span>
+          <span class="t-line"><span class="t-prompt">$</span> <span class="t-white">analyze_client_brief --input="brief.pdf"</span></span>
+          <span class="t-line t-output">✓ Extracted 23 requirements</span>
+          <span class="t-line t-output">✓ Identified 4 competitor gaps</span>
+          <span class="t-line t-output">✓ Generated tech stack recommendation</span>
+          <span class="t-line"> </span>
+          <span class="t-line"><span class="t-prompt">$</span> <span class="t-white">generate_wireframes --pages=8</span></span>
+          <span class="t-line t-output">✓ Wireframes ready in 12 minutes</span>
+          <span class="t-line t-comment">  # (Traditional: 2–3 days)</span>
+          <span class="t-line"> </span>
+          <span class="t-line"><span class="t-prompt">$</span> <span class="t-white">scaffold_project --framework=next</span></span>
+          <span class="t-line t-output">✓ Boilerplate generated</span>
+          <span class="t-line t-output">✓ 847 lines of config automated</span>
+          <span class="t-line"> </span>
+          <span class="t-line"><span class="t-prompt">$</span> <span class="t-white">run_seo_audit --competitor-analysis</span></span>
+          <span class="t-line t-output">✓ 156 keywords identified</span>
+          <span class="t-line t-output">✓ On-page SEO plan generated</span>
+          <span class="t-line"> </span>
+          <span class="t-line"><span class="t-prompt">$</span> <span class="t-white">deploy --env=production</span></span>
+          <span class="t-line t-output">✓ <span class="t-accent">Project delivered on time, under budget</span></span>
+          <span class="t-line"> </span>
+          <span class="t-line"><span class="t-prompt">$</span> <span class="cursor"></span></span>
+        </div>
+      </div>
+      <div class="ai-metrics">
+        <div class="ai-metric">
+          <div class="ai-metric-val">3×</div>
+          <div class="ai-metric-lbl">Faster delivery</div>
+        </div>
+        <div class="ai-metric">
+          <div class="ai-metric-val">40%</div>
+          <div class="ai-metric-lbl">Lower cost</div>
+        </div>
+        <div class="ai-metric">
+          <div class="ai-metric-val">↓60%</div>
+          <div class="ai-metric-lbl">Fewer bugs</div>
+        </div>
+        <div class="ai-metric">
+          <div class="ai-metric-val">↑2×</div>
+          <div class="ai-metric-lbl">SEO results</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section reveal" id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-label">What we do</div>
+      <div class="divider"></div>
+      <h2>Services built around your growth</h2>
+    </div>
+    <p class="section-desc">
+      We uncover problems, design solutions, and build digital products that perform — from the first pixel to the last line of code.
+    </p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🌐</div>
+      <h3>Website Development</h3>
+      <p>Websites that focus on and drastically improve the metrics that matter — conversions, sales, and engagement. Tell us your goals, and we'll build you something that knocks it out of the park.</p>
+      <div class="service-tags">
+        <span class="service-tag">React / Next.js</span>
+        <span class="service-tag">WordPress</span>
+        <span class="service-tag">Shopify</span>
+        <span class="service-tag">Magento 2</span>
+        <span class="service-tag">PWA</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔄</div>
+      <h3>Digital Transformation</h3>
+      <p>You've built an amazing brand — your digital presence should reflect that and take it to the next level. Every element will align perfectly with your brand voice and business objectives.</p>
+      <div class="service-tags">
+        <span class="service-tag">Process Automation</span>
+        <span class="service-tag">CMS Integration</span>
+        <span class="service-tag">API Development</span>
+        <span class="service-tag">Cloud Migration</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📈</div>
+      <h3>Search Engine Optimization</h3>
+      <p>Data-driven SEO strategies that turn your website into an organic revenue channel. We handle everything from technical audits to content strategy and link building.</p>
+      <div class="service-tags">
+        <span class="service-tag">Technical SEO</span>
+        <span class="service-tag">Keyword Research</span>
+        <span class="service-tag">On-Page SEO</span>
+        <span class="service-tag">Competitor Analysis</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🧭</div>
+      <h3>Strategy & Consulting</h3>
+      <p>At whichever point in the project you are, we can contribute. Designing, developing, or consulting — we keep you moving forward and help you make the right decisions faster.</p>
+      <div class="service-tags">
+        <span class="service-tag">UX Research</span>
+        <span class="service-tag">Brand Strategy</span>
+        <span class="service-tag">Growth Consulting</span>
+        <span class="service-tag">Tech Audits</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section class="caps-section reveal">
+  <div class="section-label">Our stack</div>
+  <div class="divider"></div>
+  <h2>Full-stack capabilities</h2>
+  <div class="caps-inner">
+    <div class="cap-group">
+      <h4>Design</h4>
+      <ul class="cap-list">
+        <li>Award-Winning Design</li>
+        <li>Responsive Web Design</li>
+        <li>UX Research & Design</li>
+        <li>User Interface Design</li>
+        <li>Illustrations & Branding</li>
+        <li>Creative Research</li>
+      </ul>
+    </div>
+    <div class="cap-group">
+      <h4>Development</h4>
+      <ul class="cap-list">
+        <li>Front-End Engineering</li>
+        <li>Back-End Development</li>
+        <li>WordPress & Shopify</li>
+        <li>Magento 2</li>
+        <li>Progressive Web Apps</li>
+        <li>CMS Integration</li>
+      </ul>
+    </div>
+    <div class="cap-group">
+      <h4>Strategy</h4>
+      <ul class="cap-list">
+        <li>Brand Development</li>
+        <li>Creative Lead</li>
+        <li>Growth Consulting</li>
+        <li>Digital Transformation</li>
+        <li>Customer Acquisition</li>
+        <li>Continuous Support</li>
+      </ul>
+    </div>
+    <div class="cap-group">
+      <h4>SEO & Analytics</h4>
+      <ul class="cap-list">
+        <li>Website Audit</li>
+        <li>Competitor Analysis</li>
+        <li>Keyword Research</li>
+        <li>On-Page & Off-Page SEO</li>
+        <li>Drive Engagement</li>
+        <li>Performance Tracking</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="certs-section reveal" id="certs">
+  <div class="section-label">Credentials</div>
+  <div class="divider"></div>
+  <h2>Our certifications speak for themselves</h2>
+  <p class="section-desc">
+    Every professional on our team has a deep technical background — from hardware to high-level software. Our certifications reflect years of hands-on expertise.
+  </p>
+  <div class="certs-grid">
+    <div class="cert-card">
+      <div class="cert-icon">🛡️</div>
+      <div class="cert-name">Cisco Certified CCNA</div>
+      <div class="cert-issuer">Cisco Systems</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🔐</div>
+      <div class="cert-name">CCNP Routing & Switching</div>
+      <div class="cert-issuer">Cisco Systems</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">⚙️</div>
+      <div class="cert-name">ITIL Foundation</div>
+      <div class="cert-issuer">Axelos</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🎓</div>
+      <div class="cert-name">FCE — First Certificate in English</div>
+      <div class="cert-issuer">University of Cambridge</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🎨</div>
+      <div class="cert-name">Google UX Design Certificate</div>
+      <div class="cert-issuer">Google / Coursera</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">📊</div>
+      <div class="cert-name">Google Data Analytics Certificate</div>
+      <div class="cert-issuer">Google / Coursera</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">📣</div>
+      <div class="cert-name">SEMrush Academy Certified</div>
+      <div class="cert-issuer">SEMrush</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🛒</div>
+      <div class="cert-name">Shopify Partner</div>
+      <div class="cert-issuer">Shopify</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section reveal" id="about">
+  <div class="about-inner">
+    <div class="about-image">
+      <div class="about-image-inner">💻</div>
+    </div>
+    <div>
+      <div class="section-label">About Co Digit</div>
+      <div class="divider"></div>
+      <h2>No style over substance — we deliver both.</h2>
+      <p class="section-desc" style="max-width: 100%; margin-top: 16px;">
+        We bring together form and function to create something that looks great and performs even better. Every single professional on our team has a deep tech background — going all the way back to hardware and microcontrollers. That puts us way above the industry baseline.
+      </p>
+      <p class="section-desc" style="max-width: 100%; margin-top: 16px;">
+        We also believe in the transfer of knowledge and have actively participated in guest lecturing — from high schools to universities. That experience taught us how to approach each client clearly and cut through technical complexity.
+      </p>
+      <div class="about-points">
+        <div class="about-point">Grow your digital business</div>
+        <div class="about-point">Strategy development & consulting</div>
+        <div class="about-point">Connect to more online customers</div>
+        <div class="about-point">Continuous support, long-term partnership</div>
+        <div class="about-point">AI-accelerated delivery on every project</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section reveal" id="contact">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <div class="section-label">Get in touch</div>
+      <div class="divider"></div>
+      <h2>Let's build something great together.</h2>
+      <p>
+        You know about us. Now let's talk about you. If you have a project in mind or are simply interested in finding out more, get in touch and let's get things moving.
+      </p>
+      <div class="contact-details">
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📍</div>
+          <div class="contact-detail-text">
+            <strong>Address</strong>
+            <span>Obrež 20, Zagreb, Croatia</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">🏢</div>
+          <div class="contact-detail-text">
+            <strong>Company</strong>
+            <span>CO DIGIT d.o.o. · OIB: 34317148047</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">🌐</div>
+          <div class="contact-detail-text">
+            <strong>Website</strong>
+            <span>codigit.hr</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <input type="text" placeholder="Name *" required />
+          <input type="text" placeholder="Company" />
+        </div>
+        <input type="email" placeholder="Email *" required />
+        <select>
+          <option value="" disabled selected>— What are you interested in? —</option>
+          <option>Web design &amp; development</option>
+          <option>Strategy &amp; consulting</option>
+          <option>Search Engine Optimization</option>
+          <option>Digital transformation</option>
+          <option>AI-powered solutions</option>
+          <option>Other</option>
+        </select>
+        <textarea placeholder="Tell us about your project *" required></textarea>
+        <button type="submit" class="btn btn-primary" style="justify-content: center;">Send message →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">CO<span>.</span>DIGIT</div>
+  <p>© 2025 Co Digit d.o.o. · Zagreb, Croatia</p>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#ai">AI</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // Sticky nav
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Form handler
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.textContent = '✓ Message sent!';
+    btn.style.background = '#28a745';
+    setTimeout(() => {
+      btn.textContent = 'Send message →';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+  }
+</script>
+
+</body>
+</html>
