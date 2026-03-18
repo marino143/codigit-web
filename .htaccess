@@ -1,0 +1,13 @@
+DirectoryIndex index.html index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    # Serve index.html for root requests
+    RewriteRule ^$ index.html [L]
+    # Don't rewrite existing files or directories
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    # Fallback to index.html for SPA-style routing
+    RewriteRule . /index.html [L]
+</IfModule>
