@@ -5,3 +5,4 @@ deployment:
     - /bin/cp index.html $DEPLOYPATH
     - /bin/cp .htaccess $DEPLOYPATH
     - /bin/cp webhook.php $DEPLOYPATH
+    - /bin/cp favicon.svg $DEPLOYPATH
