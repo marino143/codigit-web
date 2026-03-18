@@ -14,13 +14,15 @@ jobs:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
 
-      - name: 📂 Deploy to cPanel via FTP
+      - name: 📂 Deploy to cPanel via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          protocol: ftps
+          port: 21
           exclude: |
             **/.git*
             **/.git*/**
