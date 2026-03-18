@@ -1155,13 +1155,15 @@
       </div>
     </div>
     <div>
-      <form class="contact-form" onsubmit="handleSubmit(event)">
+      <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+        <!-- Honeypot anti-spam (hidden) -->
+        <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
         <div class="form-row">
-          <input type="text" placeholder="Name *" required />
-          <input type="text" placeholder="Company" />
+          <input type="text" name="name" placeholder="Name *" required />
+          <input type="text" name="company" placeholder="Company" />
         </div>
-        <input type="email" placeholder="Email *" required />
-        <select>
+        <input type="email" name="email" placeholder="Email *" required />
+        <select name="service">
           <option value="" disabled selected>— What are you interested in? —</option>
           <option>Web design &amp; development</option>
           <option>Strategy &amp; consulting</option>
@@ -1170,8 +1172,9 @@
           <option>AI-powered solutions</option>
           <option>Other</option>
         </select>
-        <textarea placeholder="Tell us about your project *" required></textarea>
-        <button type="submit" class="btn btn-primary" style="justify-content: center;">Send message →</button>
+        <textarea name="message" placeholder="Tell us about your project *" required></textarea>
+        <button type="submit" id="submitBtn" class="btn btn-primary" style="justify-content: center;">Send message →</button>
+        <p id="formMsg" style="display:none; font-size:14px; margin-top:4px;"></p>
       </form>
     </div>
   </div>
@@ -1208,17 +1211,43 @@
   }, { threshold: 0.08 });
   reveals.forEach(el => observer.observe(el));
 
-  // Form handler
-  function handleSubmit(e) {
+  // Contact form
+  async function handleSubmit(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('button[type="submit"]');
-    btn.textContent = '✓ Message sent!';
-    btn.style.background = '#28a745';
-    setTimeout(() => {
+    const form = e.target;
+    const btn  = document.getElementById('submitBtn');
+    const msg  = document.getElementById('formMsg');
+
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    msg.style.display = 'none';
+
+    try {
+      const res  = await fetch('/contact.php', {
+        method: 'POST',
+        body: new FormData(form)
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        btn.textContent = '✓ Message sent!';
+        btn.style.background = '#28a745';
+        form.reset();
+        setTimeout(() => {
+          btn.textContent = 'Send message →';
+          btn.style.background = '';
+          btn.disabled = false;
+        }, 4000);
+      } else {
+        throw new Error(data.message || 'Something went wrong.');
+      }
+    } catch (err) {
       btn.textContent = 'Send message →';
-      btn.style.background = '';
-      e.target.reset();
-    }, 3000);
+      btn.disabled = false;
+      msg.textContent = err.message;
+      msg.style.display = 'block';
+      msg.style.color = '#e63946';
+    }
   }
 </script>
 
