@@ -809,7 +809,10 @@
       section { padding: 70px 24px; }
       .hero { padding: 100px 24px 60px; }
       .hero h1 { font-size: 42px; }
-      .hero-stats { gap: 24px; flex-wrap: wrap; }
+      .hero-stats { gap: 0; flex-wrap: nowrap; }
+      .hero-stats > div { flex: 1; padding: 0 8px; }
+      .stat-number { font-size: 24px; }
+      .stat-label { font-size: 11px; }
       .ai-inner { grid-template-columns: 1fr; }
       .services-header { grid-template-columns: 1fr; gap: 24px; }
       .services-grid { grid-template-columns: 1fr; }
