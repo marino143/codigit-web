@@ -4,3 +4,4 @@ deployment:
     - export DEPLOYPATH=/home/codihr/public_html/
     - /bin/cp index.html $DEPLOYPATH
     - /bin/cp .htaccess $DEPLOYPATH
+    - /bin/cp webhook.php $DEPLOYPATH
