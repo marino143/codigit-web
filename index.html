@@ -701,6 +701,32 @@
     }
     .footer-links a:hover { color: var(--muted); }
 
+    /* ─── BACK TO TOP ─── */
+    #backToTop {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 44px;
+      height: 44px;
+      background: var(--accent);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      text-decoration: none;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 999;
+    }
+    #backToTop.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #backToTop:hover { transform: translateY(-3px); }
+
     /* ─── DIVIDER ─── */
     .divider {
       width: 48px;
@@ -1182,10 +1208,13 @@
   </div>
 </section>
 
+<!-- BACK TO TOP -->
+<a href="#" id="backToTop" aria-label="Back to top">↑</a>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">CO<span>.</span>DIGIT</div>
-  <p>© 2025 Co Digit d.o.o. · Zagreb, Croatia</p>
+  <p>© 2026 Co Digit d.o.o. · Zagreb, Croatia</p>
   <div class="footer-links">
     <a href="#services">Services</a>
     <a href="#ai">AI</a>
@@ -1199,6 +1228,16 @@
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Back to top
+  const btt = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    btt.classList.toggle('visible', window.scrollY > 400);
+  });
+  btt.addEventListener('click', e => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   // Scroll reveal
