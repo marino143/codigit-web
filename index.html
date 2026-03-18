@@ -1156,8 +1156,10 @@
     </div>
     <div>
       <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
-        <!-- Honeypot anti-spam (hidden) -->
-        <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="access_key" value="6b317dda-123e-4b6f-8e01-5d634a9976be">
+        <input type="hidden" name="subject" value="New enquiry from codigit.hr">
+        <input type="hidden" name="from_name" value="Co Digit Website">
+        <input type="checkbox" name="botcheck" style="display:none">
         <div class="form-row">
           <input type="text" name="name" placeholder="Name *" required />
           <input type="text" name="company" placeholder="Company" />
@@ -1223,7 +1225,7 @@
     msg.style.display = 'none';
 
     try {
-      const res  = await fetch('/contact.php', {
+      const res  = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body: new FormData(form)
       });
