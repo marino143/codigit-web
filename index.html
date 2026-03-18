@@ -744,10 +744,68 @@
     }
     .reveal.visible { opacity: 1; transform: none; }
 
+    /* ─── HAMBURGER ─── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 201;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ─── MOBILE MENU ─── */
+    #mobileMenu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: var(--bg);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+    #mobileMenu.open { display: flex; }
+    #mobileMenu a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      transition: color 0.2s;
+    }
+    #mobileMenu a:hover { color: var(--accent); }
+    #mobileMenu .mobile-cta {
+      background: var(--accent);
+      color: var(--white) !important;
+      padding: 14px 36px;
+      border-radius: 8px;
+      font-size: 20px !important;
+    }
+
     /* ─── MOBILE ─── */
     @media (max-width: 900px) {
       nav { padding: 16px 24px; }
       .nav-links { display: none; }
+      .hamburger { display: flex; }
       section { padding: 70px 24px; }
       .hero { padding: 100px 24px 60px; }
       .hero h1 { font-size: 42px; }
@@ -767,6 +825,15 @@
 </head>
 <body>
 
+<!-- MOBILE MENU -->
+<div id="mobileMenu">
+  <a href="#services">Services</a>
+  <a href="#ai">AI-Powered</a>
+  <a href="#about">About</a>
+  <a href="#certs">Certifications</a>
+  <a href="#contact" class="mobile-cta">Get in touch</a>
+</div>
+
 <!-- NAV -->
 <nav id="nav">
   <a href="#" class="nav-logo">CO<span>.</span>DIGIT</a>
@@ -777,6 +844,9 @@
     <li><a href="#certs">Certifications</a></li>
     <li><a href="#contact" class="nav-cta">Get in touch</a></li>
   </ul>
+  <button class="hamburger" id="menuBtn" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -1228,6 +1298,22 @@
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    menuBtn.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      menuBtn.classList.remove('open');
+      document.body.style.overflow = '';
+    });
   });
 
   // Back to top
