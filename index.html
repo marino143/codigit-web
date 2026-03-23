@@ -299,16 +299,19 @@
       to { transform: translateX(-50%); }
     }
 
-    .client-name {
-      font-size: 16px;
-      font-weight: 700;
-      color: #444;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      white-space: nowrap;
-      transition: color 0.2s;
+    .client-logo {
+      height: 32px;
+      max-width: 140px;
+      object-fit: contain;
+      display: block;
+      filter: invert(1) grayscale(1) opacity(0.55);
+      transition: filter 0.3s;
     }
-    .client-name:hover { color: var(--muted); }
+    .client-logo:hover { filter: invert(1) grayscale(0) opacity(1); }
+    [data-theme="light"] .client-logo {
+      filter: grayscale(1) opacity(0.5);
+    }
+    [data-theme="light"] .client-logo:hover { filter: grayscale(0) opacity(1); }
 
     /* ─── AI SECTION ─── */
     .ai-section {
@@ -1104,31 +1107,25 @@
   <p class="clients-label" data-i18n="clients.label">Trusted by teams across Croatia and beyond</p>
   <div class="clients-track-wrap">
     <div class="clients-track" id="clients-track">
-      <span class="client-name">Medihive</span>
-      <span class="client-name">Croatia Control</span>
-      <span class="client-name">HGSHOP</span>
-      <span class="client-name">Auto Zubak</span>
-      <span class="client-name">MountMedia</span>
-      <span class="client-name">Nomago</span>
-      <span class="client-name">The Lowdown</span>
-      <span class="client-name">SIAL Charity</span>
-      <span class="client-name">Tilde Loop</span>
-      <span class="client-name">Clover</span>
-      <span class="client-name">Game Lounge</span>
-      <span class="client-name">Algebra</span>
+      <img class="client-logo" src="https://www.medihive.com/wp-content/uploads/2024/04/logo-medihive.svg" alt="Medihive">
+      <span class="client-name">CROATIA CONTROL</span>
+      <img class="client-logo" src="https://www.hgspot.hr/catalog/view/theme/hgshop/img/hgshop-logo.png" alt="HGSHOP">
+      <img class="client-logo" src="https://www.autozubak.hr/wp-content/themes/auto-zubak/public/img/logo.svg" alt="Auto Zubak">
+      <img class="client-logo" src="https://mountmedia.online/assets/img/logo/black-logo.png" alt="MountMedia">
+      <img class="client-logo" src="https://nomago.hr/themes/shuttle/assets/img/nomago.svg" alt="Nomago">
+      <img class="client-logo" src="https://sial.charity/wp-content/uploads/2020/08/cropped-SIALcharity_logo_01-RGB_H_pos-1.png" alt="SIAL Charity">
+      <img class="client-logo" src="http://tildeloop.com/wp-content/uploads/2020/09/logo-transparency-2.png" alt="Tilde Loop">
+      <img class="client-logo" src="https://www.gamelounge.com/wp-content/uploads/2024/09/gameLoungeLogo.svg" alt="Game Lounge">
       <!-- duplicate for seamless loop -->
-      <span class="client-name">Medihive</span>
-      <span class="client-name">Croatia Control</span>
-      <span class="client-name">HGSHOP</span>
-      <span class="client-name">Auto Zubak</span>
-      <span class="client-name">MountMedia</span>
-      <span class="client-name">Nomago</span>
-      <span class="client-name">The Lowdown</span>
-      <span class="client-name">SIAL Charity</span>
-      <span class="client-name">Tilde Loop</span>
-      <span class="client-name">Clover</span>
-      <span class="client-name">Game Lounge</span>
-      <span class="client-name">Algebra</span>
+      <img class="client-logo" src="https://www.medihive.com/wp-content/uploads/2024/04/logo-medihive.svg" alt="Medihive">
+      <span class="client-name">CROATIA CONTROL</span>
+      <img class="client-logo" src="https://www.hgspot.hr/catalog/view/theme/hgshop/img/hgshop-logo.png" alt="HGSHOP">
+      <img class="client-logo" src="https://www.autozubak.hr/wp-content/themes/auto-zubak/public/img/logo.svg" alt="Auto Zubak">
+      <img class="client-logo" src="https://mountmedia.online/assets/img/logo/black-logo.png" alt="MountMedia">
+      <img class="client-logo" src="https://nomago.hr/themes/shuttle/assets/img/nomago.svg" alt="Nomago">
+      <img class="client-logo" src="https://sial.charity/wp-content/uploads/2020/08/cropped-SIALcharity_logo_01-RGB_H_pos-1.png" alt="SIAL Charity">
+      <img class="client-logo" src="http://tildeloop.com/wp-content/uploads/2020/09/logo-transparency-2.png" alt="Tilde Loop">
+      <img class="client-logo" src="https://www.gamelounge.com/wp-content/uploads/2024/09/gameLoungeLogo.svg" alt="Game Lounge">
     </div>
   </div>
 </div>
