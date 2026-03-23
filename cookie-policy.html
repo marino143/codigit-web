@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -13,124 +13,53 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #0a0a0a;
-      --bg2: #111111;
       --border: #222222;
-      --text: #f0f0f0;
       --muted: #888;
       --accent: #e63946;
     }
     html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: #f0f0f0; line-height: 1.7; }
 
-    /* NAV */
     nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 20px 60px;
       backdrop-filter: blur(20px);
       background: rgba(10,10,10,0.9);
       border-bottom: 1px solid var(--border);
     }
-    .nav-logo {
-      font-size: 18px;
-      font-weight: 900;
-      letter-spacing: -0.5px;
-      color: #fff;
-      text-decoration: none;
-    }
+    .nav-logo { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; color: #fff; text-decoration: none; }
     .nav-logo span { color: var(--accent); }
-    nav a.back {
-      font-size: 13px;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    nav a.back { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     nav a.back:hover { color: #fff; }
 
-    /* CONTENT */
-    .page {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 72px 24px 120px;
+    .lang-switcher { display: flex; align-items: center; gap: 4px; }
+    .lang-btn {
+      background: none; border: 1px solid transparent; color: var(--muted);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 4px 8px; border-radius: 4px; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
     }
-    .label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    h1 {
-      font-size: 48px;
-      font-weight: 900;
-      letter-spacing: -1.5px;
-      color: #fff;
-      line-height: 1.1;
-      margin-bottom: 16px;
-    }
-    .meta {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 56px;
-      padding-bottom: 40px;
-      border-bottom: 1px solid var(--border);
-    }
-    h2 {
-      font-size: 20px;
-      font-weight: 700;
-      color: #fff;
-      margin: 48px 0 16px;
-    }
+    .lang-btn:hover { color: #fff; }
+    .lang-btn.active { color: #fff; border-color: var(--border); }
+    .lang-sep { color: #333; font-size: 11px; }
+
+    .page { max-width: 760px; margin: 0 auto; padding: 72px 24px 120px; }
+    .label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; margin-bottom: 16px; }
+    h1 { font-size: 48px; font-weight: 900; letter-spacing: -1.5px; color: #fff; line-height: 1.1; margin-bottom: 16px; }
+    .meta { font-size: 13px; color: var(--muted); margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+    h2 { font-size: 20px; font-weight: 700; color: #fff; margin: 48px 0 16px; }
     p { color: #bbb; margin-bottom: 16px; font-size: 15px; }
-    ul {
-      color: #bbb;
-      font-size: 15px;
-      padding-left: 20px;
-      margin-bottom: 16px;
-    }
+    ul { color: #bbb; font-size: 15px; padding-left: 20px; margin-bottom: 16px; }
     ul li { margin-bottom: 10px; }
     ul li strong { color: #fff; }
     a { color: var(--accent); }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
-    th {
-      text-align: left;
-      padding: 12px 16px;
-      background: #111;
-      color: #fff;
-      font-weight: 600;
-      border-bottom: 1px solid var(--border);
-    }
-    td {
-      padding: 12px 16px;
-      border-bottom: 1px solid #1a1a1a;
-      color: #bbb;
-      vertical-align: top;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 24px; }
+    th { text-align: left; padding: 12px 16px; background: #111; color: #fff; font-weight: 600; border-bottom: 1px solid var(--border); }
+    td { padding: 12px 16px; border-bottom: 1px solid #1a1a1a; color: #bbb; vertical-align: top; }
     tr:last-child td { border-bottom: none; }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 32px 24px;
-      border-top: 1px solid var(--border);
-      font-size: 13px;
-      color: var(--muted);
-    }
+    footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
     footer a { color: var(--muted); text-decoration: none; }
     footer a:hover { color: #fff; }
 
@@ -147,71 +76,159 @@
 
 <nav>
   <a href="/" class="nav-logo">CO<span>.</span>DIGIT</a>
-  <a href="/" class="back">← Natrag na stranicu</a>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="hr">HR</button>
+    </div>
+    <a href="/" class="back" id="backLink">← Back to site</a>
+  </div>
 </nav>
 
 <div class="page">
-  <p class="label">Pravni dokumenti</p>
+  <p class="label" id="pageLabel">Legal</p>
   <h1>Cookie Policy</h1>
-  <p class="meta">Zadnja izmjena: 23. ožujka 2026. · CO DIGIT d.o.o., Zagreb, Hrvatska</p>
+  <p class="meta" id="pageMeta">Last updated: 23 March 2026 · CO DIGIT d.o.o., Zagreb, Croatia</p>
 
-  <h2>1. Što su kolačići?</h2>
-  <p>Kolačići (cookies) su male tekstualne datoteke koje web stranica pohranjuje na vašem uređaju (računalu, mobitelu ili tabletu) kada je posjetite. Koriste se kako bi stranica mogla "zapamtiti" određene informacije o vašoj posjeti — npr. vaše preferencije — što poboljšava vaše korisničko iskustvo.</p>
+  <h2 id="s1h">1. What are cookies?</h2>
+  <p id="s1p">Cookies are small text files that a website stores on your device (computer, phone or tablet) when you visit it. They allow the site to "remember" certain information about your visit — such as your preferences — which improves your user experience.</p>
 
-  <h2>2. Koje kolačiće koristimo?</h2>
-  <p>Naša web stranica <strong>codigit.hr</strong> koristi isključivo nužne (tehničke) kolačiće. Ne koristimo kolačiće za praćenje, analitiku niti marketing bez vaše izričite suglasnosti.</p>
+  <h2 id="s2h">2. Which cookies do we use?</h2>
+  <p id="s2p">Our website <strong>codigit.hr</strong> uses only necessary (technical) cookies. We do not use tracking, analytics or marketing cookies without your explicit consent.</p>
 
   <table>
     <thead>
       <tr>
-        <th>Naziv</th>
-        <th>Vrsta</th>
-        <th>Svrha</th>
-        <th>Trajanje</th>
+        <th id="th1">Name</th>
+        <th id="th2">Type</th>
+        <th id="th3">Purpose</th>
+        <th id="th4">Duration</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><code>cookieConsent</code></td>
-        <td>Funkcionalni</td>
-        <td>Pohranjuje vašu odluku o prihvaćanju ili odbijanju kolačića kako banner ne bi prikazivao svaki put.</td>
-        <td>Trajno (localStorage)</td>
+        <td id="td-type">Functional</td>
+        <td id="td-purpose">Stores your decision to accept or decline cookies so the banner is not shown on every visit.</td>
+        <td id="td-duration">Permanent (localStorage)</td>
       </tr>
     </tbody>
   </table>
 
-  <p>Napomena: <code>cookieConsent</code> nije klasični cookie nego vrijednost pohranjena u <strong>localStorage</strong> vašeg preglednika — ne šalje se na server i ne prati vas između domena.</p>
+  <p id="s2note"><strong>Note:</strong> <code>cookieConsent</code> is not a classic cookie but a value stored in your browser's <strong>localStorage</strong> — it is not sent to any server and does not track you across domains.</p>
 
-  <h2>3. Kolačići trećih strana</h2>
-  <p>Kontakt forma koristi servis <strong>Web3Forms</strong> (web3forms.com) za isporuku poruka. Web3Forms prima podatke koje unesete u formu (ime, email, poruka) i dostavlja ih na naš email. Web3Forms ne postavlja kolačiće na vašem uređaju.</p>
-  <p>Web stranica učitava fontove putem <strong>Google Fonts</strong>. Preporučamo da pogledate <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google politiku privatnosti</a> za više informacija.</p>
+  <h2 id="s3h">3. Third-party services</h2>
+  <p id="s3p1">The contact form uses <strong>Web3Forms</strong> (web3forms.com) to deliver messages. Web3Forms receives the data you enter in the form (name, email, message) and forwards it to our email. Web3Forms does not set cookies on your device.</p>
+  <p id="s3p2">The website loads fonts via <strong>Google Fonts</strong>. We recommend reviewing the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a> for more information.</p>
 
-  <h2>4. Upravljanje kolačićima</h2>
-  <p>Možete upravljati kolačićima i localStorage podacima putem postavki vašeg preglednika:</p>
-  <ul>
-    <li><strong>Chrome:</strong> Postavke → Privatnost i sigurnost → Kolačići i drugi podaci stranica</li>
-    <li><strong>Firefox:</strong> Postavke → Privatnost i sigurnost → Kolačići i podaci stranica</li>
-    <li><strong>Safari:</strong> Postavke → Privatnost → Upravljanje podacima web stranica</li>
-    <li><strong>Edge:</strong> Postavke → Kolačići i dozvole stranica</li>
+  <h2 id="s4h">4. Managing cookies</h2>
+  <p id="s4p">You can manage cookies and localStorage data through your browser settings:</p>
+  <ul id="s4list">
+    <li><strong>Chrome:</strong> Settings → Privacy and security → Cookies and other site data</li>
+    <li><strong>Firefox:</strong> Settings → Privacy & Security → Cookies and Site Data</li>
+    <li><strong>Safari:</strong> Preferences → Privacy → Manage Website Data</li>
+    <li><strong>Edge:</strong> Settings → Cookies and site permissions</li>
   </ul>
-  <p>Brisanjem lokalnih podataka za <strong>codigit.hr</strong> uklonit ćete i pohranjenu suglasnost, a cookie banner će se prikazati pri sljedećoj posjeti.</p>
+  <p id="s4p2">By clearing local data for <strong>codigit.hr</strong> you will also remove the stored consent, and the cookie banner will appear again on your next visit.</p>
 
-  <h2>5. Vaša prava (GDPR)</h2>
-  <p>Kao stanovnik EU-a imate pravo na pristup, ispravak i brisanje vaših osobnih podataka, kao i pravo na prigovor na obradu. Budući da ova stranica ne prikuplja osobne podatke izvan kontakt forme (koja se obrađuje na temelju vaše suglasnosti pri slanju poruke), vaša prava možete ostvariti kontaktiranjem:</p>
+  <h2 id="s5h">5. Your rights (GDPR)</h2>
+  <p id="s5p">As an EU resident you have the right to access, rectify and erase your personal data, as well as the right to object to processing. Since this website does not collect personal data outside the contact form (which is processed on the basis of your consent when sending a message), you can exercise your rights by contacting:</p>
   <ul>
-    <li><strong>Tvrtka:</strong> CO DIGIT d.o.o.</li>
-    <li><strong>Adresa:</strong> Obrež 20, Zagreb, Hrvatska</li>
+    <li><strong id="li-company-label">Company:</strong> CO DIGIT d.o.o.</li>
+    <li><strong id="li-address-label">Address:</strong> Obrež 20, Zagreb, Croatia</li>
     <li><strong>OIB:</strong> 34317148047</li>
     <li><strong>Email:</strong> <a href="mailto:marino@codigit.hr">marino@codigit.hr</a></li>
   </ul>
 
-  <h2>6. Izmjene ove politike</h2>
-  <p>Zadržavamo pravo izmjene ovog dokumenta. U slučaju značajnih izmjena, datum "Zadnja izmjena" bit će ažuriran. Preporučamo da povremeno provjerite ovu stranicu.</p>
+  <h2 id="s6h">6. Changes to this policy</h2>
+  <p id="s6p">We reserve the right to amend this document. In the event of significant changes, the "Last updated" date will be updated. We recommend checking this page periodically.</p>
 </div>
 
 <footer>
-  <p>© 2026 Co Digit d.o.o. · Zagreb, Hrvatska · <a href="/">codigit.hr</a></p>
+  <p id="footerCopy">© 2026 Co Digit d.o.o. · Zagreb, Croatia · <a href="/">codigit.hr</a></p>
 </footer>
 
+<script>
+  const cp = {
+    en: {
+      backLink: '← Back to site',
+      pageLabel: 'Legal',
+      pageMeta: 'Last updated: 23 March 2026 · CO DIGIT d.o.o., Zagreb, Croatia',
+      s1h: '1. What are cookies?',
+      s1p: 'Cookies are small text files that a website stores on your device (computer, phone or tablet) when you visit it. They allow the site to "remember" certain information about your visit — such as your preferences — which improves your user experience.',
+      s2h: '2. Which cookies do we use?',
+      s2p: 'Our website <strong>codigit.hr</strong> uses only necessary (technical) cookies. We do not use tracking, analytics or marketing cookies without your explicit consent.',
+      th1: 'Name', th2: 'Type', th3: 'Purpose', th4: 'Duration',
+      'td-type': 'Functional',
+      'td-purpose': 'Stores your decision to accept or decline cookies so the banner is not shown on every visit.',
+      'td-duration': 'Permanent (localStorage)',
+      s2note: '<strong>Note:</strong> <code>cookieConsent</code> is not a classic cookie but a value stored in your browser\'s <strong>localStorage</strong> — it is not sent to any server and does not track you across domains.',
+      s3h: '3. Third-party services',
+      s3p1: 'The contact form uses <strong>Web3Forms</strong> (web3forms.com) to deliver messages. Web3Forms receives the data you enter in the form (name, email, message) and forwards it to our email. Web3Forms does not set cookies on your device.',
+      s3p2: 'The website loads fonts via <strong>Google Fonts</strong>. We recommend reviewing the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a> for more information.',
+      s4h: '4. Managing cookies',
+      s4p: 'You can manage cookies and localStorage data through your browser settings:',
+      s4list: '<li><strong>Chrome:</strong> Settings → Privacy and security → Cookies and other site data</li><li><strong>Firefox:</strong> Settings → Privacy &amp; Security → Cookies and Site Data</li><li><strong>Safari:</strong> Preferences → Privacy → Manage Website Data</li><li><strong>Edge:</strong> Settings → Cookies and site permissions</li>',
+      s4p2: 'By clearing local data for <strong>codigit.hr</strong> you will also remove the stored consent, and the cookie banner will appear again on your next visit.',
+      s5h: '5. Your rights (GDPR)',
+      s5p: 'As an EU resident you have the right to access, rectify and erase your personal data, as well as the right to object to processing. Since this website does not collect personal data outside the contact form (which is processed on the basis of your consent when sending a message), you can exercise your rights by contacting:',
+      'li-company-label': 'Company:',
+      'li-address-label': 'Address:',
+      s6h: '6. Changes to this policy',
+      s6p: 'We reserve the right to amend this document. In the event of significant changes, the "Last updated" date will be updated. We recommend checking this page periodically.',
+      footerCopy: '© 2026 Co Digit d.o.o. · Zagreb, Croatia · <a href="/">codigit.hr</a>',
+    },
+    hr: {
+      backLink: '← Natrag na stranicu',
+      pageLabel: 'Pravni dokumenti',
+      pageMeta: 'Zadnja izmjena: 23. ožujka 2026. · CO DIGIT d.o.o., Zagreb, Hrvatska',
+      s1h: '1. Što su kolačići?',
+      s1p: 'Kolačići (cookies) su male tekstualne datoteke koje web stranica pohranjuje na vašem uređaju (računalu, mobitelu ili tabletu) kada je posjetite. Koriste se kako bi stranica mogla "zapamtiti" određene informacije o vašoj posjeti — npr. vaše preferencije — što poboljšava vaše korisničko iskustvo.',
+      s2h: '2. Koje kolačiće koristimo?',
+      s2p: 'Naša web stranica <strong>codigit.hr</strong> koristi isključivo nužne (tehničke) kolačiće. Ne koristimo kolačiće za praćenje, analitiku niti marketing bez vaše izričite suglasnosti.',
+      th1: 'Naziv', th2: 'Vrsta', th3: 'Svrha', th4: 'Trajanje',
+      'td-type': 'Funkcionalni',
+      'td-purpose': 'Pohranjuje vašu odluku o prihvaćanju ili odbijanju kolačića kako banner ne bi prikazivao svaki put.',
+      'td-duration': 'Trajno (localStorage)',
+      s2note: '<strong>Napomena:</strong> <code>cookieConsent</code> nije klasični cookie nego vrijednost pohranjena u <strong>localStorage</strong> vašeg preglednika — ne šalje se na server i ne prati vas između domena.',
+      s3h: '3. Kolačići trećih strana',
+      s3p1: 'Kontakt forma koristi servis <strong>Web3Forms</strong> (web3forms.com) za isporuku poruka. Web3Forms prima podatke koje unesete u formu (ime, email, poruka) i dostavlja ih na naš email. Web3Forms ne postavlja kolačiće na vašem uređaju.',
+      s3p2: 'Web stranica učitava fontove putem <strong>Google Fonts</strong>. Preporučamo da pogledate <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google politiku privatnosti</a> za više informacija.',
+      s4h: '4. Upravljanje kolačićima',
+      s4p: 'Možete upravljati kolačićima i localStorage podacima putem postavki vašeg preglednika:',
+      s4list: '<li><strong>Chrome:</strong> Postavke → Privatnost i sigurnost → Kolačići i drugi podaci stranica</li><li><strong>Firefox:</strong> Postavke → Privatnost i sigurnost → Kolačići i podaci stranica</li><li><strong>Safari:</strong> Postavke → Privatnost → Upravljanje podacima web stranica</li><li><strong>Edge:</strong> Postavke → Kolačići i dozvole stranica</li>',
+      s4p2: 'Brisanjem lokalnih podataka za <strong>codigit.hr</strong> uklonit ćete i pohranjenu suglasnost, a cookie banner će se prikazati pri sljedećoj posjeti.',
+      s5h: '5. Vaša prava (GDPR)',
+      s5p: 'Kao stanovnik EU-a imate pravo na pristup, ispravak i brisanje vaših osobnih podataka, kao i pravo na prigovor na obradu. Budući da ova stranica ne prikuplja osobne podatke izvan kontakt forme (koja se obrađuje na temelju vaše suglasnosti pri slanju poruke), vaša prava možete ostvariti kontaktiranjem:',
+      'li-company-label': 'Tvrtka:',
+      'li-address-label': 'Adresa:',
+      s6h: '6. Izmjene ove politike',
+      s6p: 'Zadržavamo pravo izmjene ovog dokumenta. U slučaju značajnih izmjena, datum "Zadnja izmjena" bit će ažuriran. Preporučamo da povremeno provjerite ovu stranicu.',
+      footerCopy: '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska · <a href="/">codigit.hr</a>',
+    }
+  };
+
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    localStorage.setItem('lang', lang);
+    const d = cp[lang];
+    Object.keys(d).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = d[id];
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+  }
+
+  const savedLang = localStorage.getItem('lang');
+  const browserLang = navigator.language.startsWith('hr') ? 'hr' : 'en';
+  applyLang(savedLang || browserLang);
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
+</script>
 </body>
 </html>
