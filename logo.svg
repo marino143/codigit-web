@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 262 60" width="262" height="60">
+  <!-- CO width=82, dot r=7 gap=6, DIGIT -->
+  <text x="0" y="52"
+    font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
+    font-weight="900"
+    font-size="52"
+    letter-spacing="-1"
+    fill="white">CO</text>
+  <circle cx="96" cy="46" r="7" fill="#e63946"/>
+  <text x="110" y="52"
+    font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
+    font-weight="900"
+    font-size="52"
+    letter-spacing="-1"
+    fill="white">DIGIT</text>
+</svg>

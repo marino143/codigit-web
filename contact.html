@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Co Digit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
+      --border: #222222; --text: #f0f0f0; --muted: #888;
+      --accent: #e63946; --white: #ffffff;
+      --nav-bg: rgba(10,10,10,0.9);
+    }
+    [data-theme="light"] {
+      --bg: #ffffff; --bg2: #f4f4f5; --bg3: #e8e8ea;
+      --border: #e0e0e0; --text: #111111; --muted: #666666;
+      --white: #0a0a0a; --nav-bg: rgba(255,255,255,0.95);
+    }
+    [data-theme="light"] .form-card { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
+    [data-theme="light"] footer { background: var(--bg2); }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    nav a.back { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    nav a.back:hover { color: var(--white); }
+
+    .lang-switcher { display: flex; align-items: center; gap: 4px; }
+    .lang-btn {
+      background: none; border: 1px solid transparent; color: var(--muted);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 4px 8px; border-radius: 4px; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .lang-btn:hover { color: var(--white); }
+    .lang-btn.active { color: var(--white); border-color: var(--border); }
+    .lang-sep { color: #333; font-size: 11px; }
+    .theme-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--muted); font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .theme-btn:hover { color: var(--text); border-color: var(--muted); }
+
+    /* MAIN */
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 80px 60px;
+      gap: 80px;
+      align-items: start;
+    }
+
+    /* LEFT */
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      color: var(--accent); text-transform: uppercase; margin-bottom: 16px;
+    }
+    .divider { width: 48px; height: 3px; background: var(--accent); margin-bottom: 32px; border-radius: 2px; }
+    h1 { font-size: clamp(32px, 3.5vw, 52px); font-weight: 900; letter-spacing: -1.5px; color: var(--white); line-height: 1.1; margin-bottom: 20px; }
+    .contact-sub { color: var(--muted); font-size: 16px; line-height: 1.7; margin-bottom: 48px; }
+
+    .contact-details { display: flex; flex-direction: column; gap: 20px; }
+    .contact-detail { display: flex; gap: 14px; align-items: flex-start; }
+    .contact-detail-icon {
+      width: 40px; height: 40px; min-width: 40px;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px;
+    }
+    .contact-detail-text strong { display: block; font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+    .contact-detail-text span { font-size: 13px; color: var(--muted); }
+
+    /* RIGHT — FORM */
+    .form-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+    }
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    input, textarea, select {
+      width: 100%;
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--text); padding: 14px 18px;
+      border-radius: 8px; font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s; outline: none;
+    }
+    input::placeholder, textarea::placeholder { color: #555; }
+    input:focus, textarea:focus, select:focus { border-color: var(--muted); }
+    textarea { resize: vertical; min-height: 140px; }
+    select option { background: var(--bg3); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 14px 28px; border-radius: 8px;
+      font-size: 15px; font-weight: 600; font-family: inherit;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: all 0.2s; width: 100%;
+    }
+    .btn-primary { background: var(--accent); color: var(--white); }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo { font-size: 14px; font-weight: 800; color: var(--white); }
+    .footer-logo span { color: var(--accent); }
+    footer p { font-size: 12px; color: #555; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: #555; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--muted); }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      main { grid-template-columns: 1fr; padding: 48px 24px; gap: 48px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+      .form-card { padding: 24px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">CO<span>.</span>DIGIT</a>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="hr">HR</button>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">🌙</button>
+    <a href="/" class="back" id="backLink">← Back</a>
+  </div>
+</nav>
+
+<main>
+  <!-- LEFT -->
+  <div>
+    <div class="section-label" id="label">Get in touch</div>
+    <div class="divider"></div>
+    <h1 id="heading">Let's build something great together.</h1>
+    <p class="contact-sub" id="subtext">You know about us. Now let's talk about you. If you have a project in mind or are simply interested in finding out more, get in touch and let's get things moving.</p>
+
+    <div class="contact-details">
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📍</div>
+        <div class="contact-detail-text">
+          <strong id="l-address">Address</strong>
+          <span>Obrež 20, Zagreb, Croatia</span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">🏢</div>
+        <div class="contact-detail-text">
+          <strong id="l-company">Company</strong>
+          <span>CO DIGIT d.o.o. · OIB: 34317148047</span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">✉️</div>
+        <div class="contact-detail-text">
+          <strong id="l-email">Email</strong>
+          <span><a href="mailto:marino@codigit.hr" style="color:var(--accent)">marino@codigit.hr</a></span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">🌐</div>
+        <div class="contact-detail-text">
+          <strong id="l-website">Website</strong>
+          <span>codigit.hr</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="form-card">
+    <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+      <input type="hidden" name="access_key" value="6b317dda-123e-4b6f-8e01-5d634a9976be">
+      <input type="hidden" name="subject" value="New enquiry from codigit.hr">
+      <input type="hidden" name="from_name" value="Co Digit Website">
+      <input type="checkbox" name="botcheck" style="display:none">
+      <div class="form-row">
+        <input type="text" name="name" id="f-name" placeholder="Name *" required />
+        <input type="text" name="company" id="f-company" placeholder="Company" />
+      </div>
+      <input type="email" name="email" id="f-email" placeholder="Email *" required />
+      <select name="service" id="f-select">
+        <option value="" disabled selected id="f-select-default">— What are you interested in? —</option>
+        <option id="f-opt1">Web design & development</option>
+        <option id="f-opt2">Strategy & consulting</option>
+        <option id="f-opt3">Search Engine Optimization</option>
+        <option id="f-opt4">Digital transformation</option>
+        <option id="f-opt5">AI-powered solutions</option>
+        <option id="f-opt6">Other</option>
+      </select>
+      <textarea name="message" id="f-message" placeholder="Tell us about your project *" required></textarea>
+      <button type="submit" id="submitBtn" class="btn btn-primary">Send message →</button>
+      <p id="formMsg" style="display:none; font-size:14px; margin-top:4px;"></p>
+    </form>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-logo">CO<span>.</span>DIGIT</div>
+  <p id="footer-copy">© 2026 Co Digit d.o.o. · Zagreb, Croatia</p>
+  <div class="footer-links">
+    <a href="/" id="fl-home">Home</a>
+    <a href="/cookie-policy.html" id="fl-cookies">Cookie Policy</a>
+    <a href="/privacy-policy.html" id="fl-privacy">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  const t = {
+    en: {
+      backLink: '← Back',
+      label: 'Get in touch', heading: "Let's build something great together.",
+      subtext: "You know about us. Now let's talk about you. If you have a project in mind or are simply interested in finding out more, get in touch and let's get things moving.",
+      'l-address': 'Address', 'l-company': 'Company', 'l-email': 'Email', 'l-website': 'Website',
+      'f-name': 'Name *', 'f-company': 'Company', 'f-email': 'Email *',
+      'f-select-default': '— What are you interested in? —',
+      'f-opt1': 'Web design & development', 'f-opt2': 'Strategy & consulting',
+      'f-opt3': 'Search Engine Optimization', 'f-opt4': 'Digital transformation',
+      'f-opt5': 'AI-powered solutions', 'f-opt6': 'Other',
+      'f-message': 'Tell us about your project *',
+      submitBtn: 'Send message →', sending: 'Sending…', success: '✓ Message sent!',
+      'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Croatia',
+      'fl-home': 'Home', 'fl-cookies': 'Cookie Policy', 'fl-privacy': 'Privacy Policy',
+    },
+    hr: {
+      backLink: '← Natrag',
+      label: 'Kontaktirajte nas', heading: 'Izgradimo nešto sjajno zajedno.',
+      subtext: 'Znate tko smo. Sada razgovarajmo o vama. Ako imate projekt na umu ili jednostavno želite saznati više, javite nam se i krenimo.',
+      'l-address': 'Adresa', 'l-company': 'Tvrtka', 'l-email': 'Email', 'l-website': 'Web stranica',
+      'f-name': 'Ime *', 'f-company': 'Tvrtka', 'f-email': 'Email *',
+      'f-select-default': '— Što vas zanima? —',
+      'f-opt1': 'Web dizajn i razvoj', 'f-opt2': 'Strategija i savjetovanje',
+      'f-opt3': 'Optimizacija za tražilice (SEO)', 'f-opt4': 'Digitalna transformacija',
+      'f-opt5': 'AI rješenja', 'f-opt6': 'Ostalo',
+      'f-message': 'Opišite nam vaš projekt *',
+      submitBtn: 'Pošalji poruku →', sending: 'Slanje…', success: '✓ Poruka poslana!',
+      'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska',
+      'fl-home': 'Početna', 'fl-cookies': 'Politika kolačića', 'fl-privacy': 'Politika privatnosti',
+    }
+  };
+
+  let lang = 'en';
+
+  function applyLang(l) {
+    lang = l;
+    document.documentElement.lang = l;
+    localStorage.setItem('lang', l);
+    const d = t[l];
+    Object.keys(d).forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = d[id];
+      else if (el.tagName === 'OPTION') el.textContent = d[id];
+      else el.textContent = d[id];
+    });
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+    document.getElementById('submitBtn').textContent = d.submitBtn;
+  }
+
+  // Theme
+  const themeBtn = document.getElementById('themeBtn');
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    themeBtn.textContent = theme === 'light' ? '🌙' : '☀️';
+  }
+  const savedTheme = localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  applyTheme(savedTheme);
+  themeBtn.addEventListener('click', () => {
+    applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+  });
+
+  const saved = localStorage.getItem('lang');
+  const browser = navigator.language.startsWith('hr') ? 'hr' : 'en';
+  applyLang(saved || browser);
+
+  document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const btn = document.getElementById('submitBtn');
+    const msg = document.getElementById('formMsg');
+    btn.textContent = t[lang].sending;
+    btn.disabled = true;
+    msg.style.display = 'none';
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(form) });
+      const data = await res.json();
+      if (data.success) {
+        btn.textContent = t[lang].success;
+        btn.style.background = '#28a745';
+        form.reset();
+        setTimeout(() => {
+          btn.textContent = t[lang].submitBtn;
+          btn.style.background = '';
+          btn.disabled = false;
+        }, 4000);
+      } else throw new Error(data.message || 'Something went wrong.');
+    } catch (err) {
+      btn.textContent = t[lang].submitBtn;
+      btn.disabled = false;
+      msg.textContent = err.message;
+      msg.style.display = 'block';
+      msg.style.color = '#e63946';
+    }
+  }
+</script>
+</body>
+</html>
