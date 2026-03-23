@@ -744,6 +744,41 @@
     }
     .reveal.visible { opacity: 1; transform: none; }
 
+    /* ─── LANG SWITCHER ─── */
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: 24px;
+    }
+    .lang-btn {
+      background: none;
+      border: 1px solid transparent;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .lang-btn:hover { color: var(--white); }
+    .lang-btn.active { color: var(--white); border-color: var(--border); }
+    .lang-sep { color: #333; font-size: 11px; }
+    .mobile-lang {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .mobile-lang .lang-btn {
+      font-size: 16px;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+    }
+    .mobile-lang .lang-btn.active { border-color: var(--accent); color: var(--accent); }
+
     /* ─── HAMBURGER ─── */
     .hamburger {
       display: none;
@@ -892,32 +927,41 @@
 
 <!-- COOKIE BANNER -->
 <div id="cookieBanner">
-  <p>Koristimo kolačiće kako bismo poboljšali vaše iskustvo na stranici. <a href="/cookie-policy.html">Više o kolačićima</a></p>
+  <p data-i18n-html="cookie.p">We use cookies to improve your experience. <a href="/cookie-policy.html">Learn more</a></p>
   <div class="cookie-btns">
-    <button id="cookieAccept">Prihvati sve</button>
-    <button id="cookieDecline">Odbij</button>
+    <button id="cookieAccept" data-i18n="cookie.accept">Accept all</button>
+    <button id="cookieDecline" data-i18n="cookie.decline">Decline</button>
   </div>
 </div>
 
 <!-- MOBILE MENU -->
 <div id="mobileMenu">
-  <a href="#services">Services</a>
-  <a href="#ai">AI-Powered</a>
-  <a href="#about">About</a>
-  <a href="#certs">Certifications</a>
-  <a href="#contact" class="mobile-cta">Get in touch</a>
+  <a href="#services" data-i18n="nav.services">Services</a>
+  <a href="#ai" data-i18n="nav.ai">AI-Powered</a>
+  <a href="#about" data-i18n="nav.about">About</a>
+  <a href="#certs" data-i18n="nav.certs">Certifications</a>
+  <a href="#contact" class="mobile-cta" data-i18n="nav.cta">Get in touch</a>
+  <div class="mobile-lang">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="hr">HR</button>
+  </div>
 </div>
 
 <!-- NAV -->
 <nav id="nav">
   <a href="#" class="nav-logo">CO<span>.</span>DIGIT</a>
   <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#ai">AI-Powered</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#certs">Certifications</a></li>
-    <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+    <li><a href="#services" data-i18n="nav.services">Services</a></li>
+    <li><a href="#ai" data-i18n="nav.ai">AI-Powered</a></li>
+    <li><a href="#about" data-i18n="nav.about">About</a></li>
+    <li><a href="#certs" data-i18n="nav.certs">Certifications</a></li>
+    <li><a href="#contact" class="nav-cta" data-i18n="nav.cta">Get in touch</a></li>
   </ul>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn" data-lang="hr">HR</button>
+  </div>
   <button class="hamburger" id="menuBtn" aria-label="Toggle menu">
     <span></span><span></span><span></span>
   </button>
@@ -928,36 +972,36 @@
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
   <div class="hero-content">
-    <div class="hero-badge">Zagreb, Croatia</div>
-    <h1>
+    <div class="hero-badge" data-i18n="hero.badge">Zagreb, Croatia</div>
+    <h1 data-i18n-html="hero.h1">
       We build web<br/>
       technology that<br/>
       <em>actually grows</em><br/>
       your business.
     </h1>
-    <p class="hero-sub">
+    <p class="hero-sub" data-i18n="hero.sub">
       We bridge the gap between strategy and execution — fusing deep technical expertise with custom development and AI to deliver digital transformation that delivers real results.
     </p>
     <div class="hero-actions">
-      <a href="#contact" class="btn btn-primary">Start a project →</a>
-      <a href="#services" class="btn btn-outline">Our services</a>
+      <a href="#contact" class="btn btn-primary" data-i18n="hero.cta1">Start a project →</a>
+      <a href="#services" class="btn btn-outline" data-i18n="hero.cta2">Our services</a>
     </div>
     <div class="hero-stats">
       <div>
         <div class="stat-number">12+</div>
-        <div class="stat-label">Happy clients</div>
+        <div class="stat-label" data-i18n="hero.stat1">Happy clients</div>
       </div>
       <div>
         <div class="stat-number">30+</div>
-        <div class="stat-label">Projects delivered</div>
+        <div class="stat-label" data-i18n="hero.stat2">Projects delivered</div>
       </div>
       <div>
         <div class="stat-number">8+</div>
-        <div class="stat-label">Certifications</div>
+        <div class="stat-label" data-i18n="hero.stat3">Certifications</div>
       </div>
       <div>
         <div class="stat-number">3×</div>
-        <div class="stat-label">Faster with AI</div>
+        <div class="stat-label" data-i18n="hero.stat4">Faster with AI</div>
       </div>
     </div>
   </div>
@@ -965,7 +1009,7 @@
 
 <!-- CLIENTS -->
 <div class="clients-section">
-  <p class="clients-label">Trusted by teams across Croatia and beyond</p>
+  <p class="clients-label" data-i18n="clients.label">Trusted by teams across Croatia and beyond</p>
   <div class="clients-track-wrap">
     <div class="clients-track" id="clients-track">
       <span class="client-name">Medihive</span>
@@ -1004,39 +1048,39 @@
     <div>
       <div class="ai-tag">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-        AI-Powered Development
+        <span data-i18n="ai.tag">AI-Powered Development</span>
       </div>
-      <h2>We move <em>3× faster</em><br/>because we use AI.<br/>You pay less for more.</h2>
-      <p class="section-desc" style="margin-top: 16px;">
+      <h2 data-i18n-html="ai.h2">We move <em>3× faster</em><br/>because we use AI.<br/>You pay less for more.</h2>
+      <p class="section-desc" style="margin-top: 16px;" data-i18n="ai.desc">
         While others are still copy-pasting Stack Overflow, we've integrated AI into every layer of our workflow — from design ideation to code generation, testing, and SEO. The result? Higher quality, shorter timelines, and better pricing.
       </p>
       <div class="ai-benefits">
         <div class="ai-benefit">
           <div class="ai-benefit-icon">⚡</div>
           <div class="ai-benefit-text">
-            <strong>Drastically shorter delivery times</strong>
-            <p>AI handles the repetitive heavy-lifting — boilerplate, documentation, test generation — so our engineers focus on architecture and strategy that actually moves the needle.</p>
+            <strong data-i18n="ai.b1.title">Drastically shorter delivery times</strong>
+            <p data-i18n="ai.b1.desc">AI handles the repetitive heavy-lifting — boilerplate, documentation, test generation — so our engineers focus on architecture and strategy that actually moves the needle.</p>
           </div>
         </div>
         <div class="ai-benefit">
           <div class="ai-benefit-icon">🎯</div>
           <div class="ai-benefit-text">
-            <strong>Higher quality, fewer bugs</strong>
-            <p>AI-assisted code review and automated testing catch issues before they reach production. Every line of code is reviewed twice — once by us, once by the machine.</p>
+            <strong data-i18n="ai.b2.title">Higher quality, fewer bugs</strong>
+            <p data-i18n="ai.b2.desc">AI-assisted code review and automated testing catch issues before they reach production. Every line of code is reviewed twice — once by us, once by the machine.</p>
           </div>
         </div>
         <div class="ai-benefit">
           <div class="ai-benefit-icon">💰</div>
           <div class="ai-benefit-text">
-            <strong>Better pricing for you</strong>
-            <p>Efficiency gains translate directly to cost savings we pass on to you. You get enterprise-grade output at a competitive price — without cutting corners.</p>
+            <strong data-i18n="ai.b3.title">Better pricing for you</strong>
+            <p data-i18n="ai.b3.desc">Efficiency gains translate directly to cost savings we pass on to you. You get enterprise-grade output at a competitive price — without cutting corners.</p>
           </div>
         </div>
         <div class="ai-benefit">
           <div class="ai-benefit-icon">🔍</div>
           <div class="ai-benefit-text">
-            <strong>AI-driven SEO & content strategy</strong>
-            <p>We use AI to analyze competitors, find keyword gaps, and craft content strategies that rank — turning your website into an actual revenue channel.</p>
+            <strong data-i18n="ai.b4.title">AI-driven SEO & content strategy</strong>
+            <p data-i18n="ai.b4.desc">We use AI to analyze competitors, find keyword gaps, and craft content strategies that rank — turning your website into an actual revenue channel.</p>
           </div>
         </div>
       </div>
@@ -1078,19 +1122,19 @@
       <div class="ai-metrics">
         <div class="ai-metric">
           <div class="ai-metric-val">3×</div>
-          <div class="ai-metric-lbl">Faster delivery</div>
+          <div class="ai-metric-lbl" data-i18n="ai.m1">Faster delivery</div>
         </div>
         <div class="ai-metric">
           <div class="ai-metric-val">40%</div>
-          <div class="ai-metric-lbl">Lower cost</div>
+          <div class="ai-metric-lbl" data-i18n="ai.m2">Lower cost</div>
         </div>
         <div class="ai-metric">
           <div class="ai-metric-val">↓60%</div>
-          <div class="ai-metric-lbl">Fewer bugs</div>
+          <div class="ai-metric-lbl" data-i18n="ai.m3">Fewer bugs</div>
         </div>
         <div class="ai-metric">
           <div class="ai-metric-val">↑2×</div>
-          <div class="ai-metric-lbl">SEO results</div>
+          <div class="ai-metric-lbl" data-i18n="ai.m4">SEO results</div>
         </div>
       </div>
     </div>
@@ -1101,19 +1145,19 @@
 <section class="services-section reveal" id="services">
   <div class="services-header">
     <div>
-      <div class="section-label">What we do</div>
+      <div class="section-label" data-i18n="svc.label">What we do</div>
       <div class="divider"></div>
-      <h2>Services built around your growth</h2>
+      <h2 data-i18n="svc.h2">Services built around your growth</h2>
     </div>
-    <p class="section-desc">
+    <p class="section-desc" data-i18n="svc.desc">
       We uncover problems, design solutions, and build digital products that perform — from the first pixel to the last line of code.
     </p>
   </div>
   <div class="services-grid">
     <div class="service-card">
       <div class="service-icon">🌐</div>
-      <h3>Website Development</h3>
-      <p>Websites that focus on and drastically improve the metrics that matter — conversions, sales, and engagement. Tell us your goals, and we'll build you something that knocks it out of the park.</p>
+      <h3 data-i18n="svc.1.title">Website Development</h3>
+      <p data-i18n="svc.1.desc">Websites that focus on and drastically improve the metrics that matter — conversions, sales, and engagement. Tell us your goals, and we'll build you something that knocks it out of the park.</p>
       <div class="service-tags">
         <span class="service-tag">React / Next.js</span>
         <span class="service-tag">WordPress</span>
@@ -1124,8 +1168,8 @@
     </div>
     <div class="service-card">
       <div class="service-icon">🔄</div>
-      <h3>Digital Transformation</h3>
-      <p>You've built an amazing brand — your digital presence should reflect that and take it to the next level. Every element will align perfectly with your brand voice and business objectives.</p>
+      <h3 data-i18n="svc.2.title">Digital Transformation</h3>
+      <p data-i18n="svc.2.desc">You've built an amazing brand — your digital presence should reflect that and take it to the next level. Every element will align perfectly with your brand voice and business objectives.</p>
       <div class="service-tags">
         <span class="service-tag">Process Automation</span>
         <span class="service-tag">CMS Integration</span>
@@ -1135,8 +1179,8 @@
     </div>
     <div class="service-card">
       <div class="service-icon">📈</div>
-      <h3>Search Engine Optimization</h3>
-      <p>Data-driven SEO strategies that turn your website into an organic revenue channel. We handle everything from technical audits to content strategy and link building.</p>
+      <h3 data-i18n="svc.3.title">Search Engine Optimization</h3>
+      <p data-i18n="svc.3.desc">Data-driven SEO strategies that turn your website into an organic revenue channel. We handle everything from technical audits to content strategy and link building.</p>
       <div class="service-tags">
         <span class="service-tag">Technical SEO</span>
         <span class="service-tag">Keyword Research</span>
@@ -1146,8 +1190,8 @@
     </div>
     <div class="service-card">
       <div class="service-icon">🧭</div>
-      <h3>Strategy & Consulting</h3>
-      <p>At whichever point in the project you are, we can contribute. Designing, developing, or consulting — we keep you moving forward and help you make the right decisions faster.</p>
+      <h3 data-i18n="svc.4.title">Strategy & Consulting</h3>
+      <p data-i18n="svc.4.desc">At whichever point in the project you are, we can contribute. Designing, developing, or consulting — we keep you moving forward and help you make the right decisions faster.</p>
       <div class="service-tags">
         <span class="service-tag">UX Research</span>
         <span class="service-tag">Brand Strategy</span>
@@ -1160,9 +1204,9 @@
 
 <!-- CAPABILITIES -->
 <section class="caps-section reveal">
-  <div class="section-label">Our stack</div>
+  <div class="section-label" data-i18n="caps.label">Our stack</div>
   <div class="divider"></div>
-  <h2>Full-stack capabilities</h2>
+  <h2 data-i18n="caps.h2">Full-stack capabilities</h2>
   <div class="caps-inner">
     <div class="cap-group">
       <h4>Design</h4>
@@ -1213,10 +1257,10 @@
 
 <!-- CERTIFICATIONS -->
 <section class="certs-section reveal" id="certs">
-  <div class="section-label">Credentials</div>
+  <div class="section-label" data-i18n="certs.label">Credentials</div>
   <div class="divider"></div>
-  <h2>Our certifications speak for themselves</h2>
-  <p class="section-desc">
+  <h2 data-i18n="certs.h2">Our certifications speak for themselves</h2>
+  <p class="section-desc" data-i18n="certs.desc">
     Every professional on our team has a deep technical background — from hardware to high-level software. Our certifications reflect years of hands-on expertise.
   </p>
   <div class="certs-grid">
@@ -1270,21 +1314,21 @@
       <div class="about-image-inner">💻</div>
     </div>
     <div>
-      <div class="section-label">About Co Digit</div>
+      <div class="section-label" data-i18n="about.label">About Co Digit</div>
       <div class="divider"></div>
-      <h2>No style over substance — we deliver both.</h2>
-      <p class="section-desc" style="max-width: 100%; margin-top: 16px;">
+      <h2 data-i18n="about.h2">No style over substance — we deliver both.</h2>
+      <p class="section-desc" style="max-width: 100%; margin-top: 16px;" data-i18n="about.p1">
         We bring together form and function to create something that looks great and performs even better. Every single professional on our team has a deep tech background — going all the way back to hardware and microcontrollers. That puts us way above the industry baseline.
       </p>
-      <p class="section-desc" style="max-width: 100%; margin-top: 16px;">
+      <p class="section-desc" style="max-width: 100%; margin-top: 16px;" data-i18n="about.p2">
         We also believe in the transfer of knowledge and have actively participated in guest lecturing — from high schools to universities. That experience taught us how to approach each client clearly and cut through technical complexity.
       </p>
       <div class="about-points">
-        <div class="about-point">Grow your digital business</div>
-        <div class="about-point">Strategy development & consulting</div>
-        <div class="about-point">Connect to more online customers</div>
-        <div class="about-point">Continuous support, long-term partnership</div>
-        <div class="about-point">AI-accelerated delivery on every project</div>
+        <div class="about-point" data-i18n="about.pt1">Grow your digital business</div>
+        <div class="about-point" data-i18n="about.pt2">Strategy development & consulting</div>
+        <div class="about-point" data-i18n="about.pt3">Connect to more online customers</div>
+        <div class="about-point" data-i18n="about.pt4">Continuous support, long-term partnership</div>
+        <div class="about-point" data-i18n="about.pt5">AI-accelerated delivery on every project</div>
       </div>
     </div>
   </div>
@@ -1294,31 +1338,31 @@
 <section class="contact-section reveal" id="contact">
   <div class="contact-inner">
     <div class="contact-info">
-      <div class="section-label">Get in touch</div>
+      <div class="section-label" data-i18n="contact.label">Get in touch</div>
       <div class="divider"></div>
-      <h2>Let's build something great together.</h2>
-      <p>
+      <h2 data-i18n="contact.h2">Let's build something great together.</h2>
+      <p data-i18n="contact.p">
         You know about us. Now let's talk about you. If you have a project in mind or are simply interested in finding out more, get in touch and let's get things moving.
       </p>
       <div class="contact-details">
         <div class="contact-detail">
           <div class="contact-detail-icon">📍</div>
           <div class="contact-detail-text">
-            <strong>Address</strong>
+            <strong data-i18n="contact.address">Address</strong>
             <span>Obrež 20, Zagreb, Croatia</span>
           </div>
         </div>
         <div class="contact-detail">
           <div class="contact-detail-icon">🏢</div>
           <div class="contact-detail-text">
-            <strong>Company</strong>
+            <strong data-i18n="contact.company">Company</strong>
             <span>CO DIGIT d.o.o. · OIB: 34317148047</span>
           </div>
         </div>
         <div class="contact-detail">
           <div class="contact-detail-icon">🌐</div>
           <div class="contact-detail-text">
-            <strong>Website</strong>
+            <strong data-i18n="contact.website">Website</strong>
             <span>codigit.hr</span>
           </div>
         </div>
@@ -1331,21 +1375,21 @@
         <input type="hidden" name="from_name" value="Co Digit Website">
         <input type="checkbox" name="botcheck" style="display:none">
         <div class="form-row">
-          <input type="text" name="name" placeholder="Name *" required />
-          <input type="text" name="company" placeholder="Company" />
+          <input type="text" name="name" placeholder="Name *" data-i18n-placeholder="contact.name" required />
+          <input type="text" name="company" placeholder="Company" data-i18n-placeholder="contact.companyField" />
         </div>
-        <input type="email" name="email" placeholder="Email *" required />
-        <select name="service">
-          <option value="" disabled selected>— What are you interested in? —</option>
-          <option>Web design &amp; development</option>
-          <option>Strategy &amp; consulting</option>
-          <option>Search Engine Optimization</option>
-          <option>Digital transformation</option>
-          <option>AI-powered solutions</option>
-          <option>Other</option>
+        <input type="email" name="email" placeholder="Email *" data-i18n-placeholder="contact.email" required />
+        <select name="service" id="contactSelect">
+          <option value="" disabled selected data-i18n="contact.select">— What are you interested in? —</option>
+          <option data-i18n="contact.opt1">Web design &amp; development</option>
+          <option data-i18n="contact.opt2">Strategy &amp; consulting</option>
+          <option data-i18n="contact.opt3">Search Engine Optimization</option>
+          <option data-i18n="contact.opt4">Digital transformation</option>
+          <option data-i18n="contact.opt5">AI-powered solutions</option>
+          <option data-i18n="contact.opt6">Other</option>
         </select>
-        <textarea name="message" placeholder="Tell us about your project *" required></textarea>
-        <button type="submit" id="submitBtn" class="btn btn-primary" style="justify-content: center;">Send message →</button>
+        <textarea name="message" placeholder="Tell us about your project *" data-i18n-placeholder="contact.message" required></textarea>
+        <button type="submit" id="submitBtn" class="btn btn-primary" style="justify-content: center;" data-i18n="contact.send">Send message →</button>
         <p id="formMsg" style="display:none; font-size:14px; margin-top:4px;"></p>
       </form>
     </div>
@@ -1358,17 +1402,133 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">CO<span>.</span>DIGIT</div>
-  <p>© 2026 Co Digit d.o.o. · Zagreb, Croatia</p>
+  <p data-i18n="footer.copy">© 2026 Co Digit d.o.o. · Zagreb, Croatia</p>
   <div class="footer-links">
-    <a href="#services">Services</a>
-    <a href="#ai">AI</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-    <a href="/cookie-policy.html">Cookie Policy</a>
+    <a href="#services" data-i18n="footer.services">Services</a>
+    <a href="#ai" data-i18n="footer.ai">AI</a>
+    <a href="#about" data-i18n="footer.about">About</a>
+    <a href="#contact" data-i18n="footer.contact">Contact</a>
+    <a href="/cookie-policy.html" data-i18n="footer.cookies">Cookie Policy</a>
   </div>
 </footer>
 
 <script>
+  // ─── i18n ───
+  const translations = {
+    en: {
+      'nav.services':'Services','nav.ai':'AI-Powered','nav.about':'About','nav.certs':'Certifications','nav.cta':'Get in touch',
+      'hero.badge':'Zagreb, Croatia',
+      'hero.h1':'We build web<br/>technology that<br/><em>actually grows</em><br/>your business.',
+      'hero.sub':'We bridge the gap between strategy and execution — fusing deep technical expertise with custom development and AI to deliver digital transformation that delivers real results.',
+      'hero.cta1':'Start a project →','hero.cta2':'Our services',
+      'hero.stat1':'Happy clients','hero.stat2':'Projects delivered','hero.stat3':'Certifications','hero.stat4':'Faster with AI',
+      'clients.label':'Trusted by teams across Croatia and beyond',
+      'ai.tag':'AI-Powered Development',
+      'ai.h2':'We move <em>3× faster</em><br/>because we use AI.<br/>You pay less for more.',
+      'ai.desc':"While others are still copy-pasting Stack Overflow, we've integrated AI into every layer of our workflow — from design ideation to code generation, testing, and SEO. The result? Higher quality, shorter timelines, and better pricing.",
+      'ai.b1.title':'Drastically shorter delivery times','ai.b1.desc':'AI handles the repetitive heavy-lifting — boilerplate, documentation, test generation — so our engineers focus on architecture and strategy that actually moves the needle.',
+      'ai.b2.title':'Higher quality, fewer bugs','ai.b2.desc':'AI-assisted code review and automated testing catch issues before they reach production. Every line of code is reviewed twice — once by us, once by the machine.',
+      'ai.b3.title':'Better pricing for you','ai.b3.desc':'Efficiency gains translate directly to cost savings we pass on to you. You get enterprise-grade output at a competitive price — without cutting corners.',
+      'ai.b4.title':'AI-driven SEO & content strategy','ai.b4.desc':'We use AI to analyze competitors, find keyword gaps, and craft content strategies that rank — turning your website into an actual revenue channel.',
+      'ai.m1':'Faster delivery','ai.m2':'Lower cost','ai.m3':'Fewer bugs','ai.m4':'SEO results',
+      'svc.label':'What we do','svc.h2':'Services built around your growth','svc.desc':'We uncover problems, design solutions, and build digital products that perform — from the first pixel to the last line of code.',
+      'svc.1.title':'Website Development','svc.1.desc':"Websites that focus on and drastically improve the metrics that matter — conversions, sales, and engagement. Tell us your goals, and we'll build you something that knocks it out of the park.",
+      'svc.2.title':'Digital Transformation','svc.2.desc':"You've built an amazing brand — your digital presence should reflect that and take it to the next level. Every element will align perfectly with your brand voice and business objectives.",
+      'svc.3.title':'Search Engine Optimization','svc.3.desc':'Data-driven SEO strategies that turn your website into an organic revenue channel. We handle everything from technical audits to content strategy and link building.',
+      'svc.4.title':'Strategy & Consulting','svc.4.desc':'At whichever point in the project you are, we can contribute. Designing, developing, or consulting — we keep you moving forward and help you make the right decisions faster.',
+      'caps.label':'Our stack','caps.h2':'Full-stack capabilities',
+      'certs.label':'Credentials','certs.h2':'Our certifications speak for themselves','certs.desc':'Every professional on our team has a deep technical background — from hardware to high-level software. Our certifications reflect years of hands-on expertise.',
+      'about.label':'About Co Digit','about.h2':'No style over substance — we deliver both.',
+      'about.p1':"We bring together form and function to create something that looks great and performs even better. Every single professional on our team has a deep tech background — going all the way back to hardware and microcontrollers. That puts us way above the industry baseline.",
+      'about.p2':'We also believe in the transfer of knowledge and have actively participated in guest lecturing — from high schools to universities. That experience taught us how to approach each client clearly and cut through technical complexity.',
+      'about.pt1':'Grow your digital business','about.pt2':'Strategy development & consulting','about.pt3':'Connect to more online customers','about.pt4':'Continuous support, long-term partnership','about.pt5':'AI-accelerated delivery on every project',
+      'contact.label':'Get in touch','contact.h2':"Let's build something great together.",'contact.p':"You know about us. Now let's talk about you. If you have a project in mind or are simply interested in finding out more, get in touch and let's get things moving.",
+      'contact.address':'Address','contact.company':'Company','contact.website':'Website',
+      'contact.name':'Name *','contact.companyField':'Company','contact.email':'Email *',
+      'contact.select':'— What are you interested in? —',
+      'contact.opt1':'Web design & development','contact.opt2':'Strategy & consulting','contact.opt3':'Search Engine Optimization','contact.opt4':'Digital transformation','contact.opt5':'AI-powered solutions','contact.opt6':'Other',
+      'contact.message':'Tell us about your project *','contact.send':'Send message →','contact.sending':'Sending…','contact.success':'✓ Message sent!',
+      'footer.services':'Services','footer.ai':'AI','footer.about':'About','footer.contact':'Contact','footer.cookies':'Cookie Policy',
+      'footer.copy':'© 2026 Co Digit d.o.o. · Zagreb, Croatia',
+      'cookie.p':'We use cookies to improve your experience. <a href="/cookie-policy.html">Learn more</a>',
+      'cookie.accept':'Accept all','cookie.decline':'Decline',
+    },
+    hr: {
+      'nav.services':'Usluge','nav.ai':'AI razvoj','nav.about':'O nama','nav.certs':'Certifikati','nav.cta':'Kontaktirajte nas',
+      'hero.badge':'Zagreb, Hrvatska',
+      'hero.h1':'Gradimo web<br/>tehnologiju koja<br/><em>stvarno potiče</em><br/>vaš rast.',
+      'hero.sub':'Premošćujemo jaz između strategije i izvršenja — spajamo duboku tehničku stručnost s prilagođenim razvojem i AI-jem kako bismo isporučili digitalnu transformaciju koja donosi stvarne rezultate.',
+      'hero.cta1':'Pokrenimo projekt →','hero.cta2':'Naše usluge',
+      'hero.stat1':'Zadovoljnih klijenata','hero.stat2':'Isporučenih projekata','hero.stat3':'Certifikata','hero.stat4':'Brže uz AI',
+      'clients.label':'Klijenti koji nam vjeruju u Hrvatskoj i šire',
+      'ai.tag':'AI-potencirani razvoj',
+      'ai.h2':'Radimo <em>3× brže</em><br/>jer koristimo AI.<br/>Vi plaćate manje, dobivate više.',
+      'ai.desc':'Dok drugi još uvijek kopiraju rješenja sa Stack Overflowa, mi smo integrirali AI u svaki sloj našeg radnog tijeka — od dizajnerske ideje do generiranja koda, testiranja i SEO-a. Rezultat? Viša kvaliteta, kraći rokovi i bolje cijene.',
+      'ai.b1.title':'Drastično kraće vrijeme isporuke','ai.b1.desc':'AI preuzima repetitivne zadatke — boilerplate, dokumentaciju, generiranje testova — tako da se naši inženjeri fokusiraju na arhitekturu i strategiju koja zaista pomiče granice.',
+      'ai.b2.title':'Viša kvaliteta, manje grešaka','ai.b2.desc':'AI-potpomognuti pregled koda i automatsko testiranje otkrivaju probleme prije nego dostignu produkciju. Svaki redak koda pregledavamo dvaput — jednom mi, jednom stroj.',
+      'ai.b3.title':'Bolje cijene za vas','ai.b3.desc':'Dobitci od učinkovitosti direktno se pretvaraju u uštedine koje prenosimo vama. Dobivate rezultate enterprise kvalitete po konkurentnoj cijeni — bez kompromisa.',
+      'ai.b4.title':'AI-vođena SEO i sadržajna strategija','ai.b4.desc':'Koristimo AI za analizu konkurencije, pronalazak keyword praznina i kreiranje sadržajnih strategija koje se rangiraju — pretvarajući vašu stranicu u pravi prihodni kanal.',
+      'ai.m1':'Brža isporuka','ai.m2':'Niži troškovi','ai.m3':'Manje grešaka','ai.m4':'SEO rezultati',
+      'svc.label':'Što radimo','svc.h2':'Usluge izgrađene oko vašeg rasta','svc.desc':'Otkrivamo probleme, dizajniramo rješenja i gradimo digitalne proizvode koji isporučuju — od prvog piksela do zadnjeg retka koda.',
+      'svc.1.title':'Izrada web stranica','svc.1.desc':'Web stranice koje se fokusiraju i drastično poboljšavaju metrike koje su važne — konverzije, prodaja i angažman. Recite nam svoje ciljeve, a mi ćemo izgraditi nešto što nadmašuje očekivanja.',
+      'svc.2.title':'Digitalna transformacija','svc.2.desc':'Izgradili ste odličan brend — vaša digitalna prisutnost treba to odražavati i podići na novu razinu. Svaki element savršeno se usklađuje s glasom vašeg brenda i poslovnim ciljevima.',
+      'svc.3.title':'Optimizacija za tražilice (SEO)','svc.3.desc':'Podatkama vođene SEO strategije koje vašu web stranicu pretvaraju u organski prihodni kanal. Brinemo o svemu — od tehničkih audita do sadržajne strategije i izgradnje linkova.',
+      'svc.4.title':'Strategija i savjetovanje','svc.4.desc':'U kojoj god fazi projekta bili, možemo doprinijeti. Dizajn, razvoj ili savjetovanje — pomažemo vam napredovati i donositi prave odluke brže.',
+      'caps.label':'Naš stack','caps.h2':'Full-stack sposobnosti',
+      'certs.label':'Vjerodostojnost','certs.h2':'Naši certifikati govore sami za sebe','certs.desc':'Svaki stručnjak u našem timu ima duboku tehničku pozadinu — od hardvera do high-level softvera. Naši certifikati odražavaju godine iskustva.',
+      'about.label':'O Co Digitu','about.h2':'Bez forme bez sadržaja — isporučujemo oboje.',
+      'about.p1':'Spajamo formu i funkciju kako bismo stvorili nešto što izgleda sjajno i funkcionira još bolje. Svaki stručnjak u našem timu ima duboku tehničku pozadinu — sve do hardvera i mikrokontrolera. To nas stavlja daleko iznad industrijske baseline.',
+      'about.p2':'Vjerujemo i u transfer znanja te smo aktivno sudjelovali u gostujućim predavanjima — od srednjih škola do sveučilišta. To iskustvo naučilo nas je kako pristupiti svakom klijentu jasno i probiti se kroz tehničku složenost.',
+      'about.pt1':'Razvijte svoje digitalno poslovanje','about.pt2':'Razvoj strategije i savjetovanje','about.pt3':'Povežite se s više online kupaca','about.pt4':'Kontinuirana podrška, dugoročno partnerstvo','about.pt5':'AI-ubrzana isporuka na svakom projektu',
+      'contact.label':'Kontaktirajte nas','contact.h2':'Izgradimo nešto sjajno zajedno.','contact.p':'Znate tko smo. Sada razgovarajmo o vama. Ako imate projekt na umu ili jednostavno želite saznati više, javite nam se i krenimo.',
+      'contact.address':'Adresa','contact.company':'Tvrtka','contact.website':'Web stranica',
+      'contact.name':'Ime *','contact.companyField':'Tvrtka','contact.email':'Email *',
+      'contact.select':'— Što vas zanima? —',
+      'contact.opt1':'Web dizajn i razvoj','contact.opt2':'Strategija i savjetovanje','contact.opt3':'Optimizacija za tražilice (SEO)','contact.opt4':'Digitalna transformacija','contact.opt5':'AI rješenja','contact.opt6':'Ostalo',
+      'contact.message':'Opišite nam vaš projekt *','contact.send':'Pošalji poruku →','contact.sending':'Slanje…','contact.success':'✓ Poruka poslana!',
+      'footer.services':'Usluge','footer.ai':'AI','footer.about':'O nama','footer.contact':'Kontakt','footer.cookies':'Politika kolačića',
+      'footer.copy':'© 2026 Co Digit d.o.o. · Zagreb, Hrvatska',
+      'cookie.p':'Koristimo kolačiće kako bismo poboljšali vaše iskustvo. <a href="/cookie-policy.html">Više o kolačićima</a>',
+      'cookie.accept':'Prihvati sve','cookie.decline':'Odbij',
+    }
+  };
+
+  let currentLang = 'en';
+
+  function t(key) {
+    return translations[currentLang][key] || translations['en'][key] || key;
+  }
+
+  function applyLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    localStorage.setItem('lang', lang);
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      el.textContent = t(el.dataset.i18n);
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      el.innerHTML = t(el.dataset.i18nHtml);
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      el.placeholder = t(el.dataset.i18nPlaceholder);
+    });
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+  }
+
+  // Detect language
+  const savedLang = localStorage.getItem('lang');
+  const browserLang = navigator.language.startsWith('hr') ? 'hr' : 'en';
+  applyLang(savedLang || browserLang);
+
+  // Lang switcher click handler
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
+
   // Sticky nav
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
@@ -1434,7 +1594,7 @@
     const btn  = document.getElementById('submitBtn');
     const msg  = document.getElementById('formMsg');
 
-    btn.textContent = 'Sending…';
+    btn.textContent = t('contact.sending');
     btn.disabled = true;
     msg.style.display = 'none';
 
@@ -1446,11 +1606,11 @@
       const data = await res.json();
 
       if (data.success) {
-        btn.textContent = '✓ Message sent!';
+        btn.textContent = t('contact.success');
         btn.style.background = '#28a745';
         form.reset();
         setTimeout(() => {
-          btn.textContent = 'Send message →';
+          btn.textContent = t('contact.send');
           btn.style.background = '';
           btn.disabled = false;
         }, 4000);
@@ -1458,7 +1618,7 @@
         throw new Error(data.message || 'Something went wrong.');
       }
     } catch (err) {
-      btn.textContent = 'Send message →';
+      btn.textContent = t('contact.send');
       btn.disabled = false;
       msg.textContent = err.message;
       msg.style.display = 'block';
