@@ -8,3 +8,4 @@ deployment:
     - /bin/cp favicon.svg $DEPLOYPATH
     - /bin/cp contact.php $DEPLOYPATH
     - /bin/cp cookie-policy.html $DEPLOYPATH
+    - /bin/cp privacy-policy.html $DEPLOYPATH

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Co Digit</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #0a0a0a; --border: #222222; --muted: #888; --accent: #e63946; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: #f0f0f0; line-height: 1.7; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: rgba(10,10,10,0.9);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; color: #fff; text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    nav a.back { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    nav a.back:hover { color: #fff; }
+
+    .lang-switcher { display: flex; align-items: center; gap: 4px; }
+    .lang-btn {
+      background: none; border: 1px solid transparent; color: var(--muted);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 4px 8px; border-radius: 4px; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .lang-btn:hover { color: #fff; }
+    .lang-btn.active { color: #fff; border-color: var(--border); }
+    .lang-sep { color: #333; font-size: 11px; }
+
+    .page { max-width: 760px; margin: 0 auto; padding: 72px 24px 120px; }
+    .label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; margin-bottom: 16px; }
+    h1 { font-size: 48px; font-weight: 900; letter-spacing: -1.5px; color: #fff; line-height: 1.1; margin-bottom: 16px; }
+    .meta { font-size: 13px; color: var(--muted); margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+    h2 { font-size: 20px; font-weight: 700; color: #fff; margin: 48px 0 16px; }
+    p { color: #bbb; margin-bottom: 16px; font-size: 15px; }
+    ul { color: #bbb; font-size: 15px; padding-left: 20px; margin-bottom: 16px; }
+    ul li { margin-bottom: 10px; }
+    ul li strong { color: #fff; }
+    a { color: var(--accent); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 24px; }
+    th { text-align: left; padding: 12px 16px; background: #111; color: #fff; font-weight: 600; border-bottom: 1px solid var(--border); }
+    td { padding: 12px 16px; border-bottom: 1px solid #1a1a1a; color: #bbb; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+    @media (max-width: 700px) {
+      nav { padding: 16px 20px; }
+      h1 { font-size: 32px; }
+      .page { padding: 48px 20px 80px; }
+      table { font-size: 12px; }
+      th, td { padding: 10px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">CO<span>.</span>DIGIT</a>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="hr">HR</button>
+    </div>
+    <a href="/" class="back" id="backLink">← Back to site</a>
+  </div>
+</nav>
+
+<div class="page">
+  <p class="label" id="pageLabel">Legal</p>
+  <h1 id="pageTitle">Privacy Policy</h1>
+  <p class="meta" id="pageMeta">Last updated: 23 March 2026 · CO DIGIT d.o.o., Zagreb, Croatia</p>
+
+  <h2 id="s1h">1. Data controller</h2>
+  <p id="s1p">The data controller responsible for processing your personal data is:</p>
+  <ul id="s1list">
+    <li><strong id="l-company">Company:</strong> CO DIGIT d.o.o.</li>
+    <li><strong id="l-address">Address:</strong> Obrež 20, Zagreb, Croatia</li>
+    <li><strong id="l-oib">OIB:</strong> 34317148047</li>
+    <li><strong id="l-email">Email:</strong> <a href="mailto:marino@codigit.hr">marino@codigit.hr</a></li>
+  </ul>
+
+  <h2 id="s2h">2. What data we collect and why</h2>
+  <p id="s2intro">We only collect personal data that you voluntarily provide through our contact form. We do not use tracking pixels, advertising cookies, or behavioural analytics.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th id="th-data">Data</th>
+        <th id="th-purpose">Purpose</th>
+        <th id="th-basis">Legal basis</th>
+        <th id="th-retention">Retention</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="td1-data">Name, email address, company (optional), message</td>
+        <td id="td1-purpose">Responding to your enquiry</td>
+        <td id="td1-basis">Legitimate interest (Art. 6(1)(f) GDPR) / consent</td>
+        <td id="td1-retention">Until the enquiry is resolved, max. 2 years</td>
+      </tr>
+      <tr>
+        <td id="td2-data">Browser language preference (localStorage)</td>
+        <td id="td2-purpose">Displaying the site in your preferred language</td>
+        <td id="td2-basis">Legitimate interest (Art. 6(1)(f) GDPR)</td>
+        <td id="td2-retention">Until you clear browser data</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="s3h">3. Third-party processors</h2>
+  <p id="s3intro">We use the following third-party services that may process your data:</p>
+  <ul id="s3list">
+    <li><strong>Web3Forms</strong> — contact form delivery service. Receives your name, email and message in order to forward them to our inbox. <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">Privacy policy</a></li>
+    <li><strong>Google Fonts</strong> — font loading service. Your IP address may be processed by Google's servers when fonts are loaded. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy policy</a></li>
+  </ul>
+  <p id="s3note">We do not sell, rent or share your personal data with any other third parties.</p>
+
+  <h2 id="s4h">4. Your rights</h2>
+  <p id="s4intro">Under GDPR you have the following rights regarding your personal data:</p>
+  <ul id="s4list">
+    <li><strong id="r1">Right of access</strong> — <span id="r1d">you can request a copy of the personal data we hold about you.</span></li>
+    <li><strong id="r2">Right to rectification</strong> — <span id="r2d">you can request correction of inaccurate data.</span></li>
+    <li><strong id="r3">Right to erasure</strong> — <span id="r3d">you can request deletion of your data ("right to be forgotten").</span></li>
+    <li><strong id="r4">Right to restriction</strong> — <span id="r4d">you can request that we limit the processing of your data.</span></li>
+    <li><strong id="r5">Right to object</strong> — <span id="r5d">you can object to processing based on legitimate interest.</span></li>
+    <li><strong id="r6">Right to data portability</strong> — <span id="r6d">you can request your data in a machine-readable format.</span></li>
+  </ul>
+  <p id="s4contact">To exercise any of these rights, contact us at <a href="mailto:marino@codigit.hr">marino@codigit.hr</a>. We will respond within 30 days.</p>
+
+  <h2 id="s5h">5. Right to lodge a complaint</h2>
+  <p id="s5p">If you believe your data is being processed unlawfully, you have the right to lodge a complaint with the Croatian Personal Data Protection Agency (AZOP):</p>
+  <ul id="s5list">
+    <li><strong>AZOP</strong> — Agencija za zaštitu osobnih podataka</li>
+    <li><strong id="l-web">Website:</strong> <a href="https://azop.hr" target="_blank" rel="noopener">azop.hr</a></li>
+    <li><strong id="l-emailazop">Email:</strong> <a href="mailto:azop@azop.hr">azop@azop.hr</a></li>
+  </ul>
+
+  <h2 id="s6h">6. Data security</h2>
+  <p id="s6p">All data submitted through the contact form is transmitted over an encrypted HTTPS connection. We do not store form submissions on our own servers — messages are delivered directly to our email inbox via Web3Forms.</p>
+
+  <h2 id="s7h">7. Changes to this policy</h2>
+  <p id="s7p">We reserve the right to update this Privacy Policy. The "Last updated" date at the top of this page will reflect any changes. We recommend reviewing this page periodically.</p>
+</div>
+
+<footer>
+  <p id="footerCopy">© 2026 Co Digit d.o.o. · Zagreb, Croatia · <a href="/">codigit.hr</a></p>
+</footer>
+
+<script>
+  const pp = {
+    en: {
+      backLink: '← Back to site',
+      pageLabel: 'Legal',
+      pageTitle: 'Privacy Policy',
+      pageMeta: 'Last updated: 23 March 2026 · CO DIGIT d.o.o., Zagreb, Croatia',
+      s1h: '1. Data controller',
+      s1p: 'The data controller responsible for processing your personal data is:',
+      'l-company': 'Company:', 'l-address': 'Address:', 'l-oib': 'OIB:', 'l-email': 'Email:',
+      s2h: '2. What data we collect and why',
+      s2intro: 'We only collect personal data that you voluntarily provide through our contact form. We do not use tracking pixels, advertising cookies, or behavioural analytics.',
+      'th-data': 'Data', 'th-purpose': 'Purpose', 'th-basis': 'Legal basis', 'th-retention': 'Retention',
+      'td1-data': 'Name, email address, company (optional), message',
+      'td1-purpose': 'Responding to your enquiry',
+      'td1-basis': 'Legitimate interest (Art. 6(1)(f) GDPR) / consent',
+      'td1-retention': 'Until the enquiry is resolved, max. 2 years',
+      'td2-data': 'Browser language preference (localStorage)',
+      'td2-purpose': 'Displaying the site in your preferred language',
+      'td2-basis': 'Legitimate interest (Art. 6(1)(f) GDPR)',
+      'td2-retention': 'Until you clear browser data',
+      s3h: '3. Third-party processors',
+      s3intro: 'We use the following third-party services that may process your data:',
+      s3list: '<li><strong>Web3Forms</strong> — contact form delivery service. Receives your name, email and message in order to forward them to our inbox. <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">Privacy policy</a></li><li><strong>Google Fonts</strong> — font loading service. Your IP address may be processed by Google\'s servers when fonts are loaded. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy policy</a></li>',
+      s3note: 'We do not sell, rent or share your personal data with any other third parties.',
+      s4h: '4. Your rights',
+      s4intro: 'Under GDPR you have the following rights regarding your personal data:',
+      r1: 'Right of access', r1d: 'you can request a copy of the personal data we hold about you.',
+      r2: 'Right to rectification', r2d: 'you can request correction of inaccurate data.',
+      r3: 'Right to erasure', r3d: 'you can request deletion of your data ("right to be forgotten").',
+      r4: 'Right to restriction', r4d: 'you can request that we limit the processing of your data.',
+      r5: 'Right to object', r5d: 'you can object to processing based on legitimate interest.',
+      r6: 'Right to data portability', r6d: 'you can request your data in a machine-readable format.',
+      s4contact: 'To exercise any of these rights, contact us at <a href="mailto:marino@codigit.hr">marino@codigit.hr</a>. We will respond within 30 days.',
+      s5h: '5. Right to lodge a complaint',
+      s5p: 'If you believe your data is being processed unlawfully, you have the right to lodge a complaint with the Croatian Personal Data Protection Agency (AZOP):',
+      s5list: '<li><strong>AZOP</strong> — Agencija za zaštitu osobnih podataka</li><li><strong>Website:</strong> <a href="https://azop.hr" target="_blank" rel="noopener">azop.hr</a></li><li><strong>Email:</strong> <a href="mailto:azop@azop.hr">azop@azop.hr</a></li>',
+      s6h: '6. Data security',
+      s6p: 'All data submitted through the contact form is transmitted over an encrypted HTTPS connection. We do not store form submissions on our own servers — messages are delivered directly to our email inbox via Web3Forms.',
+      s7h: '7. Changes to this policy',
+      s7p: 'We reserve the right to update this Privacy Policy. The "Last updated" date at the top of this page will reflect any changes. We recommend reviewing this page periodically.',
+      footerCopy: '© 2026 Co Digit d.o.o. · Zagreb, Croatia · <a href="/">codigit.hr</a>',
+    },
+    hr: {
+      backLink: '← Natrag na stranicu',
+      pageLabel: 'Pravni dokumenti',
+      pageTitle: 'Politika privatnosti',
+      pageMeta: 'Zadnja izmjena: 23. ožujka 2026. · CO DIGIT d.o.o., Zagreb, Hrvatska',
+      s1h: '1. Voditelj obrade',
+      s1p: 'Voditelj obrade odgovoran za obradu vaših osobnih podataka je:',
+      'l-company': 'Tvrtka:', 'l-address': 'Adresa:', 'l-oib': 'OIB:', 'l-email': 'Email:',
+      s2h: '2. Koje podatke prikupljamo i zašto',
+      s2intro: 'Prikupljamo isključivo osobne podatke koje dobrovoljno unesete putem naše kontakt forme. Ne koristimo piksele za praćenje, reklamne kolačiće niti bihevioralnu analitiku.',
+      'th-data': 'Podaci', 'th-purpose': 'Svrha', 'th-basis': 'Pravna osnova', 'th-retention': 'Čuvanje',
+      'td1-data': 'Ime, email adresa, tvrtka (opcionalno), poruka',
+      'td1-purpose': 'Odgovaranje na vaš upit',
+      'td1-basis': 'Legitimni interes (čl. 6(1)(f) GDPR) / pristanak',
+      'td1-retention': 'Do rješavanja upita, najviše 2 godine',
+      'td2-data': 'Jezična preferencija preglednika (localStorage)',
+      'td2-purpose': 'Prikaz stranice na željenom jeziku',
+      'td2-basis': 'Legitimni interes (čl. 6(1)(f) GDPR)',
+      'td2-retention': 'Do brisanja podataka preglednika',
+      s3h: '3. Treće strane procesori',
+      s3intro: 'Koristimo sljedeće usluge trećih strana koje mogu obrađivati vaše podatke:',
+      s3list: '<li><strong>Web3Forms</strong> — servis za dostavu poruka kontakt forme. Prima vaše ime, email i poruku radi prosljeđivanja u naš inbox. <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">Politika privatnosti</a></li><li><strong>Google Fonts</strong> — servis za učitavanje fontova. Vaša IP adresa može biti obrađena od strane Googleovih servera pri učitavanju fontova. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Politika privatnosti</a></li>',
+      s3note: 'Ne prodajemo, iznajmljujemo niti dijelimo vaše osobne podatke s trećim stranama.',
+      s4h: '4. Vaša prava',
+      s4intro: 'Prema GDPR-u imate sljedeća prava u pogledu vaših osobnih podataka:',
+      r1: 'Pravo na pristup', r1d: 'možete zatražiti kopiju osobnih podataka koje o vama čuvamo.',
+      r2: 'Pravo na ispravak', r2d: 'možete zatražiti ispravak netočnih podataka.',
+      r3: 'Pravo na brisanje', r3d: 'možete zatražiti brisanje vaših podataka ("pravo na zaborav").',
+      r4: 'Pravo na ograničenje obrade', r4d: 'možete zatražiti da ograničimo obradu vaših podataka.',
+      r5: 'Pravo na prigovor', r5d: 'možete uložiti prigovor na obradu temeljenu na legitimnom interesu.',
+      r6: 'Pravo na prenosivost podataka', r6d: 'možete zatražiti svoje podatke u strojno čitljivom formatu.',
+      s4contact: 'Za ostvarivanje bilo kojeg od ovih prava kontaktirajte nas na <a href="mailto:marino@codigit.hr">marino@codigit.hr</a>. Odgovorit ćemo u roku od 30 dana.',
+      s5h: '5. Pravo na pritužbu',
+      s5p: 'Ako smatrate da se vaši podaci obrađuju nezakonito, imate pravo podnijeti pritužbu Agenciji za zaštitu osobnih podataka (AZOP):',
+      s5list: '<li><strong>AZOP</strong> — Agencija za zaštitu osobnih podataka</li><li><strong>Web:</strong> <a href="https://azop.hr" target="_blank" rel="noopener">azop.hr</a></li><li><strong>Email:</strong> <a href="mailto:azop@azop.hr">azop@azop.hr</a></li>',
+      s6h: '6. Sigurnost podataka',
+      s6p: 'Svi podaci poslani putem kontakt forme prenose se putem šifrirane HTTPS veze. Ne pohranjujemo zapise forme na vlastitim serverima — poruke se direktno dostavljaju u naš email inbox putem Web3Forms servisa.',
+      s7h: '7. Izmjene ove politike',
+      s7p: 'Zadržavamo pravo ažuriranja ove Politike privatnosti. Datum "Zadnja izmjena" na vrhu stranice odražavat će sve promjene. Preporučamo povremenu provjeru ove stranice.',
+      footerCopy: '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska · <a href="/">codigit.hr</a>',
+    }
+  };
+
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    localStorage.setItem('lang', lang);
+    const d = pp[lang];
+    Object.keys(d).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = d[id];
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+  }
+
+  const savedLang = localStorage.getItem('lang');
+  const browserLang = navigator.language.startsWith('hr') ? 'hr' : 'en';
+  applyLang(savedLang || browserLang);
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
+</script>
+</body>
+</html>
