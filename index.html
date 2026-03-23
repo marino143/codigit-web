@@ -801,6 +801,68 @@
       font-size: 20px !important;
     }
 
+    /* ─── COOKIE BANNER ─── */
+    #cookieBanner {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 20px 24px;
+      max-width: 560px;
+      width: calc(100% - 48px);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    }
+    #cookieBanner.hidden { display: none; }
+    #cookieBanner p {
+      font-size: 13px;
+      color: #aaa;
+      line-height: 1.5;
+      flex: 1;
+    }
+    #cookieBanner p a {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+    .cookie-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    #cookieAccept {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    #cookieDecline {
+      background: transparent;
+      color: #666;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 8px 20px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    @media (max-width: 600px) {
+      #cookieBanner { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .cookie-btns { flex-direction: row; width: 100%; }
+      #cookieAccept, #cookieDecline { flex: 1; text-align: center; }
+    }
+
     /* ─── MOBILE ─── */
     @media (max-width: 900px) {
       nav { padding: 16px 24px; }
@@ -827,6 +889,15 @@
   </style>
 </head>
 <body>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner">
+  <p>Koristimo kolačiće kako bismo poboljšali vaše iskustvo na stranici. <a href="/cookie-policy.html">Više o kolačićima</a></p>
+  <div class="cookie-btns">
+    <button id="cookieAccept">Prihvati sve</button>
+    <button id="cookieDecline">Odbij</button>
+  </div>
+</div>
 
 <!-- MOBILE MENU -->
 <div id="mobileMenu">
@@ -1293,6 +1364,7 @@
     <a href="#ai">AI</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
+    <a href="/cookie-policy.html">Cookie Policy</a>
   </div>
 </footer>
 
@@ -1340,6 +1412,20 @@
     });
   }, { threshold: 0.08 });
   reveals.forEach(el => observer.observe(el));
+
+  // Cookie banner
+  const cookieBanner = document.getElementById('cookieBanner');
+  if (localStorage.getItem('cookieConsent')) {
+    cookieBanner.classList.add('hidden');
+  }
+  document.getElementById('cookieAccept').addEventListener('click', () => {
+    localStorage.setItem('cookieConsent', 'accepted');
+    cookieBanner.classList.add('hidden');
+  });
+  document.getElementById('cookieDecline').addEventListener('click', () => {
+    localStorage.setItem('cookieConsent', 'declined');
+    cookieBanner.classList.add('hidden');
+  });
 
   // Contact form
   async function handleSubmit(e) {

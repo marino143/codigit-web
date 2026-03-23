@@ -7,3 +7,4 @@ deployment:
     - /bin/cp webhook.php $DEPLOYPATH
     - /bin/cp favicon.svg $DEPLOYPATH
     - /bin/cp contact.php $DEPLOYPATH
+    - /bin/cp cookie-policy.html $DEPLOYPATH
