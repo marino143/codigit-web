@@ -10,3 +10,5 @@ deployment:
     - /bin/cp contact.html $DEPLOYPATH
     - /bin/cp cookie-policy.html $DEPLOYPATH
     - /bin/cp privacy-policy.html $DEPLOYPATH
+    - /bin/mkdir -p ${DEPLOYPATH}logos
+    - /bin/cp logos/mountmedia.svg ${DEPLOYPATH}logos/

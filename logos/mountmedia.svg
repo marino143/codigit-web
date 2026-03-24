@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 80" width="220" height="80">
+  <!-- Target/crosshair icon -->
+  <circle cx="32" cy="40" r="28" fill="none" stroke="#666" stroke-width="3"/>
+  <circle cx="32" cy="40" r="18" fill="none" stroke="#666" stroke-width="2"/>
+  <circle cx="32" cy="40" r="8" fill="#F7941D"/>
+  <line x1="32" y1="10" x2="32" y2="24" stroke="#666" stroke-width="2"/>
+  <line x1="32" y1="56" x2="32" y2="70" stroke="#666" stroke-width="2"/>
+  <line x1="2"  y1="40" x2="16" y2="40" stroke="#666" stroke-width="2"/>
+  <line x1="48" y1="40" x2="62" y2="40" stroke="#666" stroke-width="2"/>
+  <!-- MOUNT text -->
+  <text x="72" y="36" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-size="22" fill="#555" letter-spacing="1">MOUNT</text>
+  <!-- MEDIA text -->
+  <text x="72" y="62" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-size="22" fill="#F7941D" letter-spacing="1">MEDIA</text>
+</svg>
