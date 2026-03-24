@@ -12,3 +12,4 @@ deployment:
     - /bin/cp privacy-policy.html $DEPLOYPATH
     - /bin/mkdir -p ${DEPLOYPATH}logos
     - /bin/cp logos/mountmedia.svg ${DEPLOYPATH}logos/
+    - /bin/cp logos/hgspot.svg ${DEPLOYPATH}logos/
