@@ -1,0 +1,40 @@
+# robots.txt for https://codigit.hr/
+# Co Digit d.o.o. — AI-Powered Web Development & SEO Agency
+
+User-agent: *
+Allow: /
+Disallow: /contact.php
+Disallow: /webhook.php
+Disallow: /privacy-policy.html
+Disallow: /cookie-policy.html
+Disallow: /.git/
+Disallow: /.github/
+
+# Allow major search engines to access all public content
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Block known aggressive crawlers/scrapers
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 10
+
+# Sitemap
+Sitemap: https://codigit.hr/sitemap.xml

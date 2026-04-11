@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://codigit.hr/</loc>
+    <lastmod>2026-04-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codigit.hr/"/>
+    <xhtml:link rel="alternate" hreflang="hr" href="https://codigit.hr/?lang=hr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codigit.hr/"/>
+    <image:image>
+      <image:loc>https://codigit.hr/logo.svg</image:loc>
+      <image:title>Co Digit — AI-Powered Web Development &amp; SEO Agency</image:title>
+      <image:caption>Co Digit logo</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://codigit.hr/contact.html</loc>
+    <lastmod>2026-04-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codigit.hr/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="hr" href="https://codigit.hr/contact.html?lang=hr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codigit.hr/contact.html"/>
+  </url>
+
+</urlset>
