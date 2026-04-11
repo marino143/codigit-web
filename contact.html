@@ -2,12 +2,107 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact — Co Digit</title>
+
+  <!-- Primary Meta Tags -->
+  <title>Contact Co Digit — Web Development & SEO Agency in Zagreb, Croatia</title>
+  <meta name="title" content="Contact Co Digit — Web Development & SEO Agency in Zagreb, Croatia" />
+  <meta name="description" content="Get in touch with Co Digit — AI-powered web development and SEO agency in Zagreb, Croatia. Tell us about your project and let's build something great together." />
+  <meta name="keywords" content="contact Co Digit, web development Zagreb contact, SEO agency Croatia contact, hire web developer Zagreb" />
+  <meta name="author" content="Co Digit d.o.o." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+
+  <!-- Canonical & Alternate Languages -->
+  <link rel="canonical" href="https://codigit.hr/contact.html" />
+  <link rel="alternate" hreflang="en" href="https://codigit.hr/contact.html" />
+  <link rel="alternate" hreflang="hr" href="https://codigit.hr/contact.html?lang=hr" />
+  <link rel="alternate" hreflang="x-default" href="https://codigit.hr/contact.html" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Co Digit" />
+  <meta property="og:url" content="https://codigit.hr/contact.html" />
+  <meta property="og:title" content="Contact Co Digit — Web Development & SEO Agency in Zagreb" />
+  <meta property="og:description" content="Get in touch with Co Digit — AI-powered web development and SEO agency in Zagreb, Croatia. Let's build something great together." />
+  <meta property="og:image" content="https://codigit.hr/logo.svg" />
+  <meta property="og:image:alt" content="Co Digit — Contact Us" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="hr_HR" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://codigit.hr/contact.html" />
+  <meta name="twitter:title" content="Contact Co Digit — Web Development & SEO Agency in Zagreb" />
+  <meta name="twitter:description" content="Get in touch with Co Digit — AI-powered web development and SEO agency in Zagreb, Croatia." />
+  <meta name="twitter:image" content="https://codigit.hr/logo.svg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
+
+  <!-- Performance: Resource Hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Structured Data: ContactPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Co Digit",
+    "description": "Contact Co Digit — AI-powered web development and SEO agency in Zagreb, Croatia.",
+    "url": "https://codigit.hr/contact.html",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Co Digit",
+      "legalName": "CO DIGIT d.o.o.",
+      "email": "marino@codigit.hr",
+      "url": "https://codigit.hr/",
+      "logo": "https://codigit.hr/logo.svg",
+      "taxID": "34317148047",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Obrež 20",
+        "addressLocality": "Zagreb",
+        "postalCode": "10000",
+        "addressCountry": "HR"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "marino@codigit.hr",
+        "contactType": "sales",
+        "areaServed": ["HR","EU"],
+        "availableLanguage": ["English","Croatian"]
+      }
+    }
+  }
+  </script>
+
+  <!-- Structured Data: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://codigit.hr/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Contact",
+        "item": "https://codigit.hr/contact.html"
+      }
+    ]
+  }
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -276,6 +371,25 @@
 
   let lang = 'en';
 
+  // SEO meta translations
+  const seoMeta = {
+    en: {
+      title: 'Contact Co Digit — Web Development & SEO Agency in Zagreb, Croatia',
+      description: "Get in touch with Co Digit — AI-powered web development and SEO agency in Zagreb, Croatia. Tell us about your project and let's build something great together.",
+      ogLocale: 'en_US'
+    },
+    hr: {
+      title: 'Kontakt — Co Digit | Izrada web stranica i SEO agencija u Zagrebu',
+      description: 'Kontaktirajte Co Digit — AI-potpomognutu agenciju za izradu web stranica i SEO u Zagrebu, Hrvatska. Recite nam o vašem projektu i izgradimo nešto sjajno zajedno.',
+      ogLocale: 'hr_HR'
+    }
+  };
+
+  function setMeta(selector, attr, value) {
+    const el = document.querySelector(selector);
+    if (el) el.setAttribute(attr, value);
+  }
+
   function applyLang(l) {
     lang = l;
     document.documentElement.lang = l;
@@ -290,6 +404,17 @@
     });
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
     document.getElementById('submitBtn').textContent = d.submitBtn;
+
+    // Update SEO meta tags per language
+    const meta = seoMeta[l] || seoMeta.en;
+    document.title = meta.title;
+    setMeta('meta[name="description"]', 'content', meta.description);
+    setMeta('meta[name="title"]', 'content', meta.title);
+    setMeta('meta[property="og:title"]', 'content', meta.title);
+    setMeta('meta[property="og:description"]', 'content', meta.description);
+    setMeta('meta[property="og:locale"]', 'content', meta.ogLocale);
+    setMeta('meta[name="twitter:title"]', 'content', meta.title);
+    setMeta('meta[name="twitter:description"]', 'content', meta.description);
   }
 
   // Theme
