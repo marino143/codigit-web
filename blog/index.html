@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T97BQ3VRV1');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — Co Digit</title>
+  <meta name="description" content="Insights on web development, AI, digital transformation, and SEO from the Co Digit team in Zagreb, Croatia." />
+  <link rel="canonical" href="https://codigit.hr/blog/" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://codigit.hr/blog/" />
+  <meta property="og:title" content="Blog — Co Digit" />
+  <meta property="og:description" content="Insights on web development, AI, digital transformation, and SEO from the Co Digit team." />
+  <meta property="og:image" content="https://codigit.hr/og-image.png" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Co Digit" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Blog — Co Digit" />
+  <meta name="twitter:description" content="Insights on web development, AI, digital transformation, and SEO from the Co Digit team." />
+  <meta name="twitter:image" content="https://codigit.hr/og-image.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
+      --border: #222222; --text: #f0f0f0; --muted: #888;
+      --accent: #e63946; --white: #ffffff;
+      --nav-bg: rgba(10,10,10,0.9);
+    }
+    [data-theme="light"] {
+      --bg: #ffffff; --bg2: #f4f4f5; --bg3: #e8e8ea;
+      --border: #e0e0e0; --text: #111111; --muted: #666666;
+      --white: #0a0a0a; --nav-bg: rgba(255,255,255,0.95);
+    }
+    [data-theme="light"] .post-card { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
+    [data-theme="light"] footer { background: var(--bg2); }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    nav a.back { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    nav a.back:hover { color: var(--white); }
+
+    .lang-switcher { display: flex; align-items: center; gap: 4px; }
+    .lang-btn {
+      background: none; border: 1px solid transparent; color: var(--muted);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 4px 8px; border-radius: 4px; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .lang-btn:hover { color: var(--white); }
+    .lang-btn.active { color: var(--white); border-color: var(--border); }
+    .lang-sep { color: #333; font-size: 11px; }
+    .theme-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--muted); font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .theme-btn:hover { color: var(--text); border-color: var(--muted); }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 80px 60px 48px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      color: var(--accent); text-transform: uppercase; margin-bottom: 16px;
+    }
+    .divider { width: 48px; height: 3px; background: var(--accent); margin: 0 auto 32px; border-radius: 2px; }
+    h1 { font-size: clamp(32px, 3.5vw, 52px); font-weight: 900; letter-spacing: -1.5px; color: var(--white); line-height: 1.1; margin-bottom: 20px; }
+    .hero-sub { color: var(--muted); font-size: 16px; line-height: 1.7; }
+
+    /* GRID */
+    .posts-section {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .post-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .post-card:hover { background: var(--bg3); border-color: var(--muted); }
+    .post-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .post-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+      color: var(--accent); background: rgba(230,57,70,0.1);
+      padding: 4px 10px; border-radius: 4px; text-transform: uppercase;
+    }
+    .post-card h2 {
+      font-size: 20px; font-weight: 700; color: var(--white);
+      line-height: 1.3; margin-bottom: 12px; letter-spacing: -0.3px;
+    }
+    .post-card h2 a { color: inherit; text-decoration: none; transition: color 0.2s; }
+    .post-card h2 a:hover { color: var(--accent); }
+    .post-date { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+    .post-excerpt { font-size: 14px; color: var(--muted); line-height: 1.7; flex: 1; margin-bottom: 20px; }
+    .read-more {
+      font-size: 13px; font-weight: 600; color: var(--accent);
+      text-decoration: none; transition: opacity 0.2s;
+    }
+    .read-more:hover { opacity: 0.75; }
+
+    /* EMPTY STATE */
+    .no-posts { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 15px; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto;
+    }
+    .footer-logo { font-size: 14px; font-weight: 800; color: var(--white); }
+    .footer-logo span { color: var(--accent); }
+    footer p { font-size: 12px; color: #555; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: #555; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--muted); }
+
+    @media (max-width: 1024px) {
+      .posts-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .hero { padding: 48px 24px 32px; }
+      .posts-section { padding: 0 24px 48px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+    @media (max-width: 600px) {
+      .posts-grid { grid-template-columns: 1fr; }
+      .post-card { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">CO<span>.</span>DIGIT</a>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="hr">HR</button>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">&#127769;</button>
+    <a href="/" class="back" id="backLink">&larr; Back</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="section-label" id="label">Blog</div>
+  <div class="divider"></div>
+  <h1 id="heading">Insights &amp; Ideas</h1>
+  <p class="hero-sub" id="subtext">Thoughts on web development, AI, design, and digital strategy from the Co Digit team.</p>
+</section>
+
+<section class="posts-section">
+  <div class="posts-grid" id="postsGrid"></div>
+  <div class="no-posts" id="noPosts" style="display:none;"></div>
+</section>
+
+<footer>
+  <div class="footer-logo">CO<span>.</span>DIGIT</div>
+  <p id="footer-copy">&copy; 2026 Co Digit d.o.o. &middot; Zagreb, Croatia</p>
+  <div class="footer-links">
+    <a href="/" id="fl-home">Home</a>
+    <a href="/blog/" id="fl-blog">Blog</a>
+    <a href="/cookie-policy.html" id="fl-cookies">Cookie Policy</a>
+    <a href="/privacy-policy.html" id="fl-privacy">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  const t = {
+    en: {
+      backLink: '\u2190 Back',
+      label: 'Blog',
+      heading: 'Insights & Ideas',
+      subtext: 'Thoughts on web development, AI, design, and digital strategy from the Co Digit team.',
+      readMore: 'Read more \u2192',
+      noPosts: 'No posts yet. Check back soon!',
+      'footer-copy': '\u00a9 2026 Co Digit d.o.o. \u00b7 Zagreb, Croatia',
+      'fl-home': 'Home', 'fl-blog': 'Blog', 'fl-cookies': 'Cookie Policy', 'fl-privacy': 'Privacy Policy',
+    },
+    hr: {
+      backLink: '\u2190 Natrag',
+      label: 'Blog',
+      heading: 'Uvidi i ideje',
+      subtext: 'Razmišljanja o web developmentu, AI-ju, dizajnu i digitalnoj strategiji od tima Co Digit.',
+      readMore: 'Pročitaj više \u2192',
+      noPosts: 'Još nema objava. Vratite se uskoro!',
+      'footer-copy': '\u00a9 2026 Co Digit d.o.o. \u00b7 Zagreb, Hrvatska',
+      'fl-home': 'Početna', 'fl-blog': 'Blog', 'fl-cookies': 'Politika kolačića', 'fl-privacy': 'Politika privatnosti',
+    }
+  };
+
+  let lang = 'en';
+  let posts = [];
+
+  function applyLang(l) {
+    lang = l;
+    document.documentElement.lang = l;
+    localStorage.setItem('lang', l);
+    const d = t[l];
+    Object.keys(d).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = d[id];
+    });
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+    renderPosts();
+  }
+
+  function formatDate(dateStr, locale) {
+    const d = new Date(dateStr + 'T00:00:00');
+    return d.toLocaleDateString(locale === 'hr' ? 'hr-HR' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function renderPosts() {
+    const grid = document.getElementById('postsGrid');
+    const noPostsEl = document.getElementById('noPosts');
+    if (posts.length === 0) {
+      grid.innerHTML = '';
+      noPostsEl.style.display = 'block';
+      noPostsEl.textContent = t[lang].noPosts;
+      return;
+    }
+    noPostsEl.style.display = 'none';
+    grid.innerHTML = posts.map(post => {
+      const title = lang === 'hr' ? post.title_hr : post.title_en;
+      const excerpt = lang === 'hr' ? post.excerpt_hr : post.excerpt_en;
+      const date = formatDate(post.date, lang);
+      const tags = post.tags.map(tag => '<span class="post-tag">' + tag + '</span>').join('');
+      const url = '/blog/' + post.slug + '.html';
+      return '<article class="post-card">'
+        + '<div class="post-tags">' + tags + '</div>'
+        + '<h2><a href="' + url + '">' + title + '</a></h2>'
+        + '<div class="post-date">' + date + '</div>'
+        + '<p class="post-excerpt">' + excerpt + '</p>'
+        + '<a href="' + url + '" class="read-more">' + t[lang].readMore + '</a>'
+        + '</article>';
+    }).join('');
+  }
+
+  // Theme
+  const themeBtn = document.getElementById('themeBtn');
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    themeBtn.textContent = theme === 'light' ? '\uD83C\uDF19' : '\u2600\uFE0F';
+  }
+  const savedTheme = localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  applyTheme(savedTheme);
+  themeBtn.addEventListener('click', () => {
+    applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+  });
+
+  // Lang init
+  const saved = localStorage.getItem('lang');
+  const browser = navigator.language.startsWith('hr') ? 'hr' : 'en';
+
+  // Fetch posts then apply lang
+  fetch('/blog/posts.json')
+    .then(r => r.json())
+    .then(data => {
+      posts = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+      applyLang(saved || browser);
+    })
+    .catch(() => {
+      posts = [];
+      applyLang(saved || browser);
+    });
+
+  document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+</script>
+</body>
+</html>
