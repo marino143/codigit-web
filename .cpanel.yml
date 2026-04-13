@@ -10,6 +10,13 @@ deployment:
     - /bin/cp contact.html $DEPLOYPATH
     - /bin/cp cookie-policy.html $DEPLOYPATH
     - /bin/cp privacy-policy.html $DEPLOYPATH
+    - /bin/cp logo.svg $DEPLOYPATH
+    - /bin/cp logo-white.svg $DEPLOYPATH
+    - /bin/cp og-image.png $DEPLOYPATH
+    - /bin/cp robots.txt $DEPLOYPATH
+    - /bin/cp sitemap.xml $DEPLOYPATH
     - /bin/mkdir -p ${DEPLOYPATH}logos
     - /bin/cp logos/mountmedia.svg ${DEPLOYPATH}logos/
     - /bin/cp logos/hgspot.svg ${DEPLOYPATH}logos/
+    - /bin/mkdir -p ${DEPLOYPATH}blog/images
+    - cp -r blog/* ${DEPLOYPATH}blog/
