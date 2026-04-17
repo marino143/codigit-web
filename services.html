@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T97BQ3VRV1');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — Co Digit</title>
+  <meta name="description" content="Expert consulting services for your digital project. From discovery calls to ongoing growth partnerships — get the guidance you need to launch with confidence." />
+  <link rel="canonical" href="https://codigit.hr/services.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://codigit.hr/services.html" />
+  <meta property="og:title" content="Services — Co Digit" />
+  <meta property="og:description" content="Expert consulting services for your digital project. From discovery calls to ongoing growth partnerships." />
+  <meta property="og:image" content="https://codigit.hr/og-image.png" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Co Digit" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Services — Co Digit" />
+  <meta name="twitter:description" content="Expert consulting services for your digital project. From discovery calls to ongoing growth partnerships." />
+  <meta name="twitter:image" content="https://codigit.hr/og-image.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
+      --border: #222222; --text: #f0f0f0; --muted: #888;
+      --accent: #e63946; --white: #ffffff;
+      --nav-bg: rgba(10,10,10,0.9);
+    }
+    [data-theme="light"] {
+      --bg: #ffffff; --bg2: #f4f4f5; --bg3: #e8e8ea;
+      --border: #e0e0e0; --text: #111111; --muted: #666666;
+      --white: #0a0a0a; --nav-bg: rgba(255,255,255,0.95);
+    }
+    [data-theme="light"] .pricing-card { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
+    [data-theme="light"] .pricing-card.highlighted { box-shadow: 0 4px 30px rgba(230,57,70,0.1); }
+    [data-theme="light"] footer { background: var(--bg2); }
+    [data-theme="light"] .step-num { box-shadow: 0 2px 12px rgba(230,57,70,0.15); }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    nav a.back { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    nav a.back:hover { color: var(--white); }
+
+    .lang-switcher { display: flex; align-items: center; gap: 4px; }
+    .lang-btn {
+      background: none; border: 1px solid transparent; color: var(--muted);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 4px 8px; border-radius: 4px; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .lang-btn:hover { color: var(--white); }
+    .lang-btn.active { color: var(--white); border-color: var(--border); }
+    .lang-sep { color: #333; font-size: 11px; }
+    .theme-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--muted); font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .theme-btn:hover { color: var(--text); border-color: var(--muted); }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 80px 60px 60px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      color: var(--accent); text-transform: uppercase; margin-bottom: 16px;
+    }
+    .divider { width: 48px; height: 3px; background: var(--accent); margin: 0 auto 32px; border-radius: 2px; }
+    h1 { font-size: clamp(32px, 3.5vw, 52px); font-weight: 900; letter-spacing: -1.5px; color: var(--white); line-height: 1.1; margin-bottom: 20px; }
+    .hero-sub { color: var(--muted); font-size: 16px; line-height: 1.7; max-width: 700px; margin: 0 auto; }
+
+    /* PRICING GRID */
+    .pricing-section {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+    .pricing-row-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .pricing-row-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+    }
+
+    /* CARD */
+    .pricing-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    .pricing-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+    .pricing-card.highlighted {
+      border-color: var(--accent);
+      background: linear-gradient(180deg, rgba(230,57,70,0.06) 0%, var(--bg2) 40%);
+    }
+    .pricing-card.highlighted:hover {
+      box-shadow: 0 8px 40px rgba(230,57,70,0.15);
+    }
+    .popular-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 16px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .card-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .card-price {
+      font-size: 40px;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .card-period {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .card-duration {
+      display: inline-block;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+    .card-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .card-features {
+      list-style: none;
+      flex: 1;
+      margin-bottom: 24px;
+    }
+    .card-features li {
+      font-size: 14px;
+      color: var(--muted);
+      padding: 6px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .card-features li::before {
+      content: "\2713";
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 14px 28px; border-radius: 8px;
+      font-size: 15px; font-weight: 600; font-family: inherit;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: all 0.2s; width: 100%; text-align: center;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--muted);
+      transform: translateY(-1px);
+    }
+
+    /* HOW IT WORKS */
+    .how-section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 80px 60px;
+      text-align: center;
+    }
+    .how-section h2 {
+      font-size: clamp(24px, 2.5vw, 36px);
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -1px;
+      margin-bottom: 48px;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .step-num {
+      width: 48px; height: 48px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .step-connector {
+      display: none;
+    }
+
+    /* FAQ */
+    .faq-section {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 0 60px 80px;
+    }
+    .faq-section h2 {
+      font-size: clamp(24px, 2.5vw, 36px);
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -1px;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+    .faq-q {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .faq-q::after {
+      content: "+";
+      font-size: 20px;
+      color: var(--muted);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .faq-item.open .faq-q::after {
+      transform: rotate(45deg);
+    }
+    .faq-a {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    .faq-item.open .faq-a {
+      max-height: 200px;
+      padding-top: 12px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo { font-size: 14px; font-weight: 800; color: var(--white); }
+    .footer-logo span { color: var(--accent); }
+    footer p { font-size: 12px; color: #555; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: #555; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--muted); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .hero { padding: 48px 24px 40px; }
+      .pricing-section { padding: 0 24px 48px; }
+      .pricing-row-top,
+      .pricing-row-bottom {
+        grid-template-columns: 1fr;
+      }
+      .how-section { padding: 48px 24px; }
+      .steps { grid-template-columns: 1fr; gap: 24px; }
+      .step { flex-direction: row; text-align: left; }
+      .faq-section { padding: 0 24px 48px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+    @media (min-width: 901px) and (max-width: 1100px) {
+      .pricing-row-bottom {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">CO<span>.</span>DIGIT</a>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="hr">HR</button>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">&#127769;</button>
+    <a href="/" class="back" id="backLink">&larr; Back</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="section-label" id="label">SERVICES</div>
+  <div class="divider"></div>
+  <h1 id="heading">Expert Consulting for Your Digital Project</h1>
+  <p class="hero-sub" id="subtext">Not sure where to start? Whether you're launching a new project, scaling your business, or need technical guidance &mdash; we'll help you build a clear path forward.</p>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section">
+  <!-- Row 1: Discovery + Strategy -->
+  <div class="pricing-row-top">
+
+    <!-- Discovery Call -->
+    <div class="pricing-card">
+      <div class="card-name" id="tier1-name">Discovery Call</div>
+      <div class="card-price">&euro;50</div>
+      <div class="card-period" id="tier1-period">one-time</div>
+      <div class="card-duration" id="tier1-duration">15 min video call</div>
+      <p class="card-desc" id="tier1-desc">Quick intro call to understand your project, assess feasibility, and point you in the right direction.</p>
+      <ul class="card-features">
+        <li id="tier1-f1">15-minute video call</li>
+        <li id="tier1-f2">Project feasibility assessment</li>
+        <li id="tier1-f3">Initial recommendations</li>
+        <li id="tier1-f4">No commitment required</li>
+      </ul>
+      <a href="/contact.html" class="btn btn-outline" id="tier1-cta">Book a Call &rarr;</a>
+    </div>
+
+    <!-- Strategy Session (Highlighted) -->
+    <div class="pricing-card highlighted">
+      <div class="popular-badge" id="popular-badge">Most Popular</div>
+      <div class="card-name" id="tier2-name">Strategy Session</div>
+      <div class="card-price">&euro;100</div>
+      <div class="card-period" id="tier2-period">one-time</div>
+      <div class="card-duration" id="tier2-duration">40 min video call</div>
+      <p class="card-desc" id="tier2-desc">Deep-dive into your project. Get expert advice on technology choices, architecture, timeline, and budget.</p>
+      <ul class="card-features">
+        <li id="tier2-f1">40-minute 1:1 video call</li>
+        <li id="tier2-f2">Technology stack recommendations</li>
+        <li id="tier2-f3">Architecture &amp; approach guidance</li>
+        <li id="tier2-f4">Timeline &amp; budget estimation</li>
+        <li id="tier2-f5">Written summary of key takeaways</li>
+      </ul>
+      <a href="/contact.html" class="btn btn-primary" id="tier2-cta">Book a Session &rarr;</a>
+    </div>
+
+  </div>
+
+  <!-- Row 2: Roadmap + Launch + Growth -->
+  <div class="pricing-row-bottom">
+
+    <!-- Project Roadmap -->
+    <div class="pricing-card">
+      <div class="card-name" id="tier3-name">Project Roadmap</div>
+      <div class="card-price">&euro;499</div>
+      <div class="card-period" id="tier3-period">one-time</div>
+      <p class="card-desc" id="tier3-desc">Everything in Strategy Session, plus a comprehensive written document with your project blueprint.</p>
+      <ul class="card-features">
+        <li id="tier3-f1">Strategy Session included</li>
+        <li id="tier3-f2">Detailed project roadmap document</li>
+        <li id="tier3-f3">Technical architecture plan</li>
+        <li id="tier3-f4">Recommended tech stack &amp; tools</li>
+        <li id="tier3-f5">Realistic timeline &amp; milestones</li>
+        <li id="tier3-f6">Budget estimation &amp; resource plan</li>
+      </ul>
+      <a href="/contact.html" class="btn btn-outline" id="tier3-cta">Get Your Roadmap &rarr;</a>
+    </div>
+
+    <!-- Launch Package -->
+    <div class="pricing-card">
+      <div class="card-name" id="tier4-name">Launch Package</div>
+      <div class="card-price">&euro;999</div>
+      <div class="card-period" id="tier4-period">one-time</div>
+      <p class="card-desc" id="tier4-desc">Full project kickstart. Roadmap plus ongoing guidance to ensure you launch with confidence.</p>
+      <ul class="card-features">
+        <li id="tier4-f1">Everything in Project Roadmap</li>
+        <li id="tier4-f2">3 follow-up sessions (3 hours total)</li>
+        <li id="tier4-f3">Vendor &amp; team selection guidance</li>
+        <li id="tier4-f4">Code &amp; progress review</li>
+        <li id="tier4-f5">Launch checklist &amp; QA strategy</li>
+      </ul>
+      <a href="/contact.html" class="btn btn-outline" id="tier4-cta">Start Your Project &rarr;</a>
+    </div>
+
+    <!-- Growth Partner -->
+    <div class="pricing-card">
+      <div class="card-name" id="tier5-name">Growth Partner</div>
+      <div class="card-price">&euro;1,999</div>
+      <div class="card-period" id="tier5-period">/mo</div>
+      <p class="card-desc" id="tier5-desc">Your dedicated digital consultant. Ongoing strategic and technical support to grow your business.</p>
+      <ul class="card-features">
+        <li id="tier5-f1">8 hours of consulting per month</li>
+        <li id="tier5-f2">Priority support &amp; availability</li>
+        <li id="tier5-f3">Technical strategy &amp; code review</li>
+        <li id="tier5-f4">Performance optimization</li>
+        <li id="tier5-f5">Monthly progress reviews</li>
+        <li id="tier5-f6">Direct access via Slack/email</li>
+      </ul>
+      <a href="/contact.html" class="btn btn-outline" id="tier5-cta">Become a Partner &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <h2 id="how-title">How It Works</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text" id="step1">Choose a service</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text" id="step2">Book &amp; pay</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text" id="step3">We meet &amp; strategize</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text" id="step4">You launch with confidence</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <h2 id="faq-title">Frequently Asked Questions</h2>
+
+  <div class="faq-item">
+    <div class="faq-q" id="faq1-q" onclick="this.parentElement.classList.toggle('open')">What happens during a Strategy Session?</div>
+    <div class="faq-a" id="faq1-a">We'll spend 40 minutes on a 1:1 video call diving deep into your project. We'll discuss your goals, evaluate technology options, outline a recommended approach, and estimate timelines and budgets. Afterwards, you'll receive a written summary of everything we discussed.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" id="faq2-q" onclick="this.parentElement.classList.toggle('open')">Can I upgrade from one package to another?</div>
+    <div class="faq-a" id="faq2-a">Absolutely. If you start with a Discovery Call and later decide you need a full Project Roadmap, we'll credit what you've already paid toward the upgrade.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" id="faq3-q" onclick="this.parentElement.classList.toggle('open')">What video call platform do you use?</div>
+    <div class="faq-a" id="faq3-a">We typically use Google Meet or Zoom, but we're flexible. Just let us know your preference when booking and we'll accommodate.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" id="faq4-q" onclick="this.parentElement.classList.toggle('open')">Is there a refund policy?</div>
+    <div class="faq-a" id="faq4-a">If you're not satisfied with your session, let us know within 24 hours and we'll work with you to make it right. For packages that include deliverables, we offer revisions until you're happy with the result.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">CO<span>.</span>DIGIT</div>
+  <p id="footer-copy">&copy; 2026 Co Digit d.o.o. &middot; Zagreb, Croatia</p>
+  <div class="footer-links">
+    <a href="/" id="fl-home">Home</a>
+    <a href="/blog/">Blog</a>
+    <a href="/cookie-policy.html" id="fl-cookies">Cookie Policy</a>
+    <a href="/privacy-policy.html" id="fl-privacy">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  const t = {
+    en: {
+      backLink: '\u2190 Back',
+      label: 'SERVICES',
+      heading: 'Expert Consulting for Your Digital Project',
+      subtext: "Not sure where to start? Whether you're launching a new project, scaling your business, or need technical guidance \u2014 we'll help you build a clear path forward.",
+      // Tier 1
+      'tier1-name': 'Discovery Call', 'tier1-period': 'one-time', 'tier1-duration': '15 min video call',
+      'tier1-desc': 'Quick intro call to understand your project, assess feasibility, and point you in the right direction.',
+      'tier1-f1': '15-minute video call', 'tier1-f2': 'Project feasibility assessment',
+      'tier1-f3': 'Initial recommendations', 'tier1-f4': 'No commitment required',
+      'tier1-cta': 'Book a Call \u2192',
+      // Tier 2
+      'popular-badge': 'Most Popular',
+      'tier2-name': 'Strategy Session', 'tier2-period': 'one-time', 'tier2-duration': '40 min video call',
+      'tier2-desc': 'Deep-dive into your project. Get expert advice on technology choices, architecture, timeline, and budget.',
+      'tier2-f1': '40-minute 1:1 video call', 'tier2-f2': 'Technology stack recommendations',
+      'tier2-f3': 'Architecture & approach guidance', 'tier2-f4': 'Timeline & budget estimation',
+      'tier2-f5': 'Written summary of key takeaways', 'tier2-cta': 'Book a Session \u2192',
+      // Tier 3
+      'tier3-name': 'Project Roadmap', 'tier3-period': 'one-time',
+      'tier3-desc': 'Everything in Strategy Session, plus a comprehensive written document with your project blueprint.',
+      'tier3-f1': 'Strategy Session included', 'tier3-f2': 'Detailed project roadmap document',
+      'tier3-f3': 'Technical architecture plan', 'tier3-f4': 'Recommended tech stack & tools',
+      'tier3-f5': 'Realistic timeline & milestones', 'tier3-f6': 'Budget estimation & resource plan',
+      'tier3-cta': 'Get Your Roadmap \u2192',
+      // Tier 4
+      'tier4-name': 'Launch Package', 'tier4-period': 'one-time',
+      'tier4-desc': 'Full project kickstart. Roadmap plus ongoing guidance to ensure you launch with confidence.',
+      'tier4-f1': 'Everything in Project Roadmap', 'tier4-f2': '3 follow-up sessions (3 hours total)',
+      'tier4-f3': 'Vendor & team selection guidance', 'tier4-f4': 'Code & progress review',
+      'tier4-f5': 'Launch checklist & QA strategy', 'tier4-cta': 'Start Your Project \u2192',
+      // Tier 5
+      'tier5-name': 'Growth Partner', 'tier5-period': '/mo',
+      'tier5-desc': 'Your dedicated digital consultant. Ongoing strategic and technical support to grow your business.',
+      'tier5-f1': '8 hours of consulting per month', 'tier5-f2': 'Priority support & availability',
+      'tier5-f3': 'Technical strategy & code review', 'tier5-f4': 'Performance optimization',
+      'tier5-f5': 'Monthly progress reviews', 'tier5-f6': 'Direct access via Slack/email',
+      'tier5-cta': 'Become a Partner \u2192',
+      // How it works
+      'how-title': 'How It Works',
+      'step1': 'Choose a service', 'step2': 'Book & pay',
+      'step3': 'We meet & strategize', 'step4': 'You launch with confidence',
+      // FAQ
+      'faq-title': 'Frequently Asked Questions',
+      'faq1-q': 'What happens during a Strategy Session?',
+      'faq1-a': "We'll spend 40 minutes on a 1:1 video call diving deep into your project. We'll discuss your goals, evaluate technology options, outline a recommended approach, and estimate timelines and budgets. Afterwards, you'll receive a written summary of everything we discussed.",
+      'faq2-q': 'Can I upgrade from one package to another?',
+      'faq2-a': "Absolutely. If you start with a Discovery Call and later decide you need a full Project Roadmap, we'll credit what you've already paid toward the upgrade.",
+      'faq3-q': 'What video call platform do you use?',
+      'faq3-a': "We typically use Google Meet or Zoom, but we're flexible. Just let us know your preference when booking and we'll accommodate.",
+      'faq4-q': 'Is there a refund policy?',
+      'faq4-a': "If you're not satisfied with your session, let us know within 24 hours and we'll work with you to make it right. For packages that include deliverables, we offer revisions until you're happy with the result.",
+      // Footer
+      'footer-copy': '\u00a9 2026 Co Digit d.o.o. \u00b7 Zagreb, Croatia',
+      'fl-home': 'Home', 'fl-cookies': 'Cookie Policy', 'fl-privacy': 'Privacy Policy',
+    },
+    hr: {
+      backLink: '\u2190 Natrag',
+      label: 'USLUGE',
+      heading: 'Stru\u010dne konzultacije za va\u0161 digitalni projekt',
+      subtext: 'Niste sigurni odakle po\u010deti? Bilo da pokre\u0107ete novi projekt, ska\u010dete poslovanje ili trebate tehni\u010dko vodstvo \u2014 pomo\u0107i \u0107emo vam izgraditi jasan put naprijed.',
+      // Tier 1
+      'tier1-name': 'Upoznavanje', 'tier1-period': 'jednokratno', 'tier1-duration': '15 min video poziv',
+      'tier1-desc': 'Kratki upoznavaju\u0107i poziv kako bismo razumjeli va\u0161 projekt, procijenili izvedivost i usmjerili vas u pravom smjeru.',
+      'tier1-f1': '15-minutni video poziv', 'tier1-f2': 'Procjena izvedivosti projekta',
+      'tier1-f3': 'Po\u010detne preporuke', 'tier1-f4': 'Bez obveza',
+      'tier1-cta': 'Zakažite poziv \u2192',
+      // Tier 2
+      'popular-badge': 'Najpopularnije',
+      'tier2-name': 'Strategijska sesija', 'tier2-period': 'jednokratno', 'tier2-duration': '40 min video poziv',
+      'tier2-desc': 'Dubinska analiza va\u0161eg projekta. Dobijte stru\u010dne savjete o tehnologiji, arhitekturi, vremenskim okvirima i bud\u017eetu.',
+      'tier2-f1': '40-minutni 1:1 video poziv', 'tier2-f2': 'Preporuke tehnolo\u0161kog stacka',
+      'tier2-f3': 'Vodstvo za arhitekturu i pristup', 'tier2-f4': 'Procjena vremena i bud\u017eeta',
+      'tier2-f5': 'Pisani sa\u017eetak klju\u010dnih zaklju\u010daka', 'tier2-cta': 'Zakažite sesiju \u2192',
+      // Tier 3
+      'tier3-name': 'Projektni plan', 'tier3-period': 'jednokratno',
+      'tier3-desc': 'Sve iz Strategijske sesije, plus sveobuhvatan pisani dokument s nacrtom va\u0161eg projekta.',
+      'tier3-f1': 'Strategijska sesija uklju\u010dena', 'tier3-f2': 'Detaljan dokument projektnog plana',
+      'tier3-f3': 'Plan tehni\u010dke arhitekture', 'tier3-f4': 'Preporu\u010deni tech stack i alati',
+      'tier3-f5': 'Realni vremenski plan i prekretnice', 'tier3-f6': 'Procjena bud\u017eeta i resursa',
+      'tier3-cta': 'Zatražite plan \u2192',
+      // Tier 4
+      'tier4-name': 'Paket za pokretanje', 'tier4-period': 'jednokratno',
+      'tier4-desc': 'Potpuni start projekta. Plan plus kontinuirano vodstvo kako biste pokrenuli projekt s povjerenjem.',
+      'tier4-f1': 'Sve iz Projektnog plana', 'tier4-f2': '3 follow-up sesije (ukupno 3 sata)',
+      'tier4-f3': 'Vodstvo pri odabiru dobavlja\u010da i tima', 'tier4-f4': 'Pregled koda i napretka',
+      'tier4-f5': 'Lista za pokretanje i QA strategija', 'tier4-cta': 'Pokrenite projekt \u2192',
+      // Tier 5
+      'tier5-name': 'Partner za rast', 'tier5-period': '/mj',
+      'tier5-desc': 'Va\u0161 posve\u0107eni digitalni konzultant. Kontinuirana strate\u0161ka i tehni\u010dka podr\u0161ka za rast va\u0161eg poslovanja.',
+      'tier5-f1': '8 sati konzultacija mjese\u010dno', 'tier5-f2': 'Prioritetna podr\u0161ka i dostupnost',
+      'tier5-f3': 'Tehni\u010dka strategija i pregled koda', 'tier5-f4': 'Optimizacija performansi',
+      'tier5-f5': 'Mjese\u010dni pregledi napretka', 'tier5-f6': 'Direktan pristup putem Slack/email',
+      'tier5-cta': 'Postanite partner \u2192',
+      // How it works
+      'how-title': 'Kako funkcionira',
+      'step1': 'Odaberite uslugu', 'step2': 'Zakažite i platite',
+      'step3': 'Sastajemo se i planiramo', 'step4': 'Pokrenete projekt s povjerenjem',
+      // FAQ
+      'faq-title': '\u010cesto postavljana pitanja',
+      'faq1-q': '\u0160to se doga\u0111a tijekom Strategijske sesije?',
+      'faq1-a': 'Provest \u0107emo 40 minuta na 1:1 video pozivu duboko analiziraju\u0107i va\u0161 projekt. Razgovarat \u0107emo o va\u0161im ciljevima, procijeniti tehnolo\u0161ke opcije, opisati preporu\u010deni pristup i procijeniti vremenske okvire i bud\u017eet. Nakon toga \u0107ete dobiti pisani sa\u017eetak svega \u0161to smo razgovarali.',
+      'faq2-q': 'Mogu li nadograditi s jednog paketa na drugi?',
+      'faq2-a': 'Naravno. Ako zapo\u010dnete s Upoznavanjem i kasnije odlu\u010dite da trebate potpuni Projektni plan, odobriti \u0107emo ve\u0107 pla\u0107eni iznos kao kredit prema nadogradnji.',
+      'faq3-q': 'Koju platformu za video pozive koristite?',
+      'faq3-a': 'Obi\u010dno koristimo Google Meet ili Zoom, ali smo fleksibilni. Javite nam va\u0161u preferenciju prilikom rezervacije i prilagodit \u0107emo se.',
+      'faq4-q': 'Postoji li politika povrata?',
+      'faq4-a': 'Ako niste zadovoljni sesijom, javite nam u roku od 24 sata i radit \u0107emo s vama da to ispravimo. Za pakete koji uklju\u010duju deliverable, nudimo revizije dok ne budete zadovoljni rezultatom.',
+      // Footer
+      'footer-copy': '\u00a9 2026 Co Digit d.o.o. \u00b7 Zagreb, Hrvatska',
+      'fl-home': 'Po\u010detna', 'fl-cookies': 'Politika kola\u010di\u0107a', 'fl-privacy': 'Politika privatnosti',
+    }
+  };
+
+  let lang = 'en';
+
+  function applyLang(l) {
+    lang = l;
+    document.documentElement.lang = l;
+    localStorage.setItem('lang', l);
+    const d = t[l];
+    Object.keys(d).forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = d[id];
+      else if (el.tagName === 'OPTION') el.textContent = d[id];
+      else el.textContent = d[id];
+    });
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  }
+
+  // Theme
+  const themeBtn = document.getElementById('themeBtn');
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    themeBtn.textContent = theme === 'light' ? '\uD83C\uDF19' : '\u2600\uFE0F';
+  }
+  const savedTheme = localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  applyTheme(savedTheme);
+  themeBtn.addEventListener('click', () => {
+    applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+  });
+
+  const saved = localStorage.getItem('lang');
+  const browser = navigator.language.startsWith('hr') ? 'hr' : 'en';
+  applyLang(saved || browser);
+
+  document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+</script>
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Co Digit Consulting Services",
+  "url": "https://codigit.hr/services.html",
+  "provider": {
+    "@type": "Organization",
+    "name": "Co Digit",
+    "url": "https://codigit.hr"
+  },
+  "description": "Expert consulting services for digital projects. From discovery calls to ongoing growth partnerships.",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Consulting Packages",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "name": "Discovery Call",
+        "price": "50",
+        "priceCurrency": "EUR",
+        "description": "15-minute intro video call to assess your project"
+      },
+      {
+        "@type": "Offer",
+        "name": "Strategy Session",
+        "price": "100",
+        "priceCurrency": "EUR",
+        "description": "40-minute deep-dive into your project with written summary"
+      },
+      {
+        "@type": "Offer",
+        "name": "Project Roadmap",
+        "price": "499",
+        "priceCurrency": "EUR",
+        "description": "Comprehensive project blueprint document with technical architecture"
+      },
+      {
+        "@type": "Offer",
+        "name": "Launch Package",
+        "price": "999",
+        "priceCurrency": "EUR",
+        "description": "Full project kickstart with roadmap and ongoing guidance"
+      },
+      {
+        "@type": "Offer",
+        "name": "Growth Partner",
+        "price": "1999",
+        "priceCurrency": "EUR",
+        "unitCode": "MON",
+        "description": "Dedicated digital consultant with 8 hours monthly"
+      }
+    ]
+  }
+}
+</script>
+</body>
+</html>
