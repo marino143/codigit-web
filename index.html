@@ -403,18 +403,7 @@
       gap: 16px;
       align-items: flex-start;
     }
-    .ai-benefit-icon {
-      width: 40px;
-      height: 40px;
-      min-width: 40px;
-      background: rgba(69,123,157,0.1);
-      border: 1px solid rgba(69,123,157,0.2);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
+    .ai-benefit-accent { width: 32px; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 16px; }
     .ai-benefit-text strong {
       display: block;
       font-size: 15px;
@@ -582,7 +571,6 @@
       transition: border-color 0.2s, transform 0.2s;
     }
     .cert-card:hover { border-color: var(--muted); transform: translateY(-2px); }
-    .cert-icon { font-size: 36px; margin-bottom: 12px; }
     .cert-name {
       font-size: 13px;
       font-weight: 700;
@@ -1179,28 +1167,28 @@
       </p>
       <div class="ai-benefits">
         <div class="ai-benefit">
-          <div class="ai-benefit-icon"></div>
+          <div class="ai-benefit-accent"></div>
           <div class="ai-benefit-text">
             <strong data-i18n="ai.b1.title">Drastically shorter delivery times</strong>
             <p data-i18n="ai.b1.desc">AI handles the repetitive heavy-lifting — boilerplate, documentation, test generation — so our engineers focus on architecture and strategy that actually moves the needle.</p>
           </div>
         </div>
         <div class="ai-benefit">
-          <div class="ai-benefit-icon"></div>
+          <div class="ai-benefit-accent"></div>
           <div class="ai-benefit-text">
             <strong data-i18n="ai.b2.title">Higher quality, fewer bugs</strong>
             <p data-i18n="ai.b2.desc">AI-assisted code review and automated testing catch issues before they reach production. Every line of code is reviewed twice — once by us, once by the machine.</p>
           </div>
         </div>
         <div class="ai-benefit">
-          <div class="ai-benefit-icon"></div>
+          <div class="ai-benefit-accent"></div>
           <div class="ai-benefit-text">
             <strong data-i18n="ai.b3.title">Better pricing for you</strong>
             <p data-i18n="ai.b3.desc">Efficiency gains translate directly to cost savings we pass on to you. You get enterprise-grade output at a competitive price — without cutting corners.</p>
           </div>
         </div>
         <div class="ai-benefit">
-          <div class="ai-benefit-icon"></div>
+          <div class="ai-benefit-accent"></div>
           <div class="ai-benefit-text">
             <strong data-i18n="ai.b4.title">AI-driven SEO & content strategy</strong>
             <p data-i18n="ai.b4.desc">We use AI to analyze competitors, find keyword gaps, and craft content strategies that rank — turning your website into an actual revenue channel.</p>
@@ -1388,42 +1376,34 @@
   </p>
   <div class="certs-grid">
     <div class="cert-card">
-      <div class="cert-icon"></div>
       <div class="cert-name">Cisco Certified CCNA</div>
       <div class="cert-issuer">Cisco Systems</div>
     </div>
     <div class="cert-card">
-      <div class="cert-icon"></div>
       <div class="cert-name">CCNP Routing & Switching</div>
       <div class="cert-issuer">Cisco Systems</div>
     </div>
     <div class="cert-card">
-      <div class="cert-icon"></div>
       <div class="cert-name">ITIL Foundation</div>
       <div class="cert-issuer">Axelos</div>
     </div>
     <div class="cert-card">
-      <div class="cert-icon"></div>
       <div class="cert-name">FCE — First Certificate in English</div>
       <div class="cert-issuer">University of Cambridge</div>
     </div>
     <div class="cert-card">
-      <div class="cert-icon"></div>
       <div class="cert-name">Google UX Design Certificate</div>
       <div class="cert-issuer">Google / Coursera</div>
     </div>
     <div class="cert-card">
-      <div class="cert-icon"></div>
       <div class="cert-name">Google Data Analytics Certificate</div>
       <div class="cert-issuer">Google / Coursera</div>
     </div>
     <div class="cert-card">
-      <div class="cert-icon"></div>
       <div class="cert-name">SEMrush Academy Certified</div>
       <div class="cert-issuer">SEMrush</div>
     </div>
     <div class="cert-card">
-      <div class="cert-icon"></div>
       <div class="cert-name">Shopify Partner</div>
       <div class="cert-issuer">Shopify</div>
     </div>
@@ -1434,7 +1414,7 @@
 <section class="about-section reveal" id="about">
   <div class="about-inner">
     <div class="about-image">
-      <div class="about-image-inner"></div>
+      <div class="about-image-inner">CD</div>
     </div>
     <div>
       <div class="section-label" data-i18n="about.label">About Co Digit</div>
