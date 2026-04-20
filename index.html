@@ -633,9 +633,20 @@
       justify-content: center;
     }
     .about-image-inner {
-      font-size: 80px;
-      opacity: 0.1;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), #457b9d, var(--accent));
+      background-size: 200% 200%;
+      animation: breathe 4s ease-in-out infinite;
+      opacity: 0.7;
+      filter: blur(1px);
     }
+    @keyframes breathe {
+      0%, 100% { background-position: 0% 50%; transform: scale(1); opacity: 0.7; }
+      50% { background-position: 100% 50%; transform: scale(1.15); opacity: 0.4; }
+    }
+    @media (prefers-reduced-motion: reduce) { .about-image-inner { animation: none; } }
     .about-points {
       margin-top: 32px;
       display: flex;
@@ -1414,7 +1425,7 @@
 <section class="about-section reveal" id="about">
   <div class="about-inner">
     <div class="about-image">
-      <div class="about-image-inner">CD</div>
+      <div class="about-image-inner"></div>
     </div>
     <div>
       <div class="section-label" data-i18n="about.label">About Co Digit</div>
