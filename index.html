@@ -115,8 +115,8 @@
       text-decoration: none;
     }
     .nav-logo span { color: var(--accent); }
-    .logo-dot { color: #e9b94a !important; display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
-    @keyframes codigit-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .logo-dot { display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
+    @keyframes codigit-blink { 0%, 100% { color: var(--white); } 50% { color: var(--accent); } }
     @media (prefers-reduced-motion: reduce) { .logo-dot { animation: none; } }
 
     .nav-links { display: flex; gap: 36px; list-style: none; }

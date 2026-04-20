@@ -44,8 +44,8 @@
     }
     .nav-logo { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; color: #fff; text-decoration: none; }
     .nav-logo span { color: var(--accent); }
-    .logo-dot { color: #e9b94a !important; display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
-    @keyframes codigit-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .logo-dot { display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
+    @keyframes codigit-blink { 0%, 100% { color: var(--white); } 50% { color: var(--accent); } }
     @media (prefers-reduced-motion: reduce) { .logo-dot { animation: none; } }
     .nav-right { display: flex; align-items: center; gap: 20px; }
     nav a.back { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
