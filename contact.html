@@ -60,6 +60,9 @@
     }
     .nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: var(--white); text-decoration: none; }
     .nav-logo span { color: var(--accent); }
+    .logo-dot { color: #e9b94a !important; display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
+    @keyframes codigit-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    @media (prefers-reduced-motion: reduce) { .logo-dot { animation: none; } }
     .nav-right { display: flex; align-items: center; gap: 24px; }
     nav a.back { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     nav a.back:hover { color: var(--white); }
@@ -173,7 +176,7 @@
 <body>
 
 <nav>
-  <a href="/" class="nav-logo">CO<span>.</span>DIGIT</a>
+  <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
   <div class="nav-right">
     <div class="lang-switcher">
       <button class="lang-btn active" data-lang="en">EN</button>
@@ -254,7 +257,7 @@
 </main>
 
 <footer>
-  <div class="footer-logo">CO<span>.</span>DIGIT</div>
+  <div class="footer-logo">CO<span class="logo-dot">.</span>DIGIT</div>
   <p id="footer-copy">© 2026 Co Digit d.o.o. · Zagreb, Croatia</p>
   <div class="footer-links">
     <a href="/" id="fl-home">Home</a>
