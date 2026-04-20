@@ -632,21 +632,16 @@
       align-items: center;
       justify-content: center;
     }
-    .about-image-inner {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, var(--accent), #457b9d, var(--accent));
-      background-size: 200% 200%;
-      animation: breathe 4s ease-in-out infinite;
-      opacity: 0.7;
-      filter: blur(1px);
+    .about-image { cursor: pointer; }
+    .about-image canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .game-prompt {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; z-index: 2;
+      transition: opacity 0.3s;
     }
-    @keyframes breathe {
-      0%, 100% { background-position: 0% 50%; transform: scale(1); opacity: 0.7; }
-      50% { background-position: 100% 50%; transform: scale(1.15); opacity: 0.4; }
-    }
-    @media (prefers-reduced-motion: reduce) { .about-image-inner { animation: none; } }
+    .game-prompt.hidden { opacity: 0; pointer-events: none; }
+    .game-prompt-text { font-size: 13px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
+    .game-prompt-icon { font-size: 28px; margin-bottom: 12px; color: var(--accent); }
     .about-points {
       margin-top: 32px;
       display: flex;
@@ -1424,8 +1419,14 @@
 <!-- ABOUT -->
 <section class="about-section reveal" id="about">
   <div class="about-inner">
-    <div class="about-image">
-      <div class="about-image-inner"></div>
+    <div class="about-image" id="gameContainer">
+      <div class="game-prompt" id="gamePrompt">
+        <div class="game-prompt-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+        <div class="game-prompt-text">Click to play</div>
+      </div>
+      <canvas id="breakoutCanvas"></canvas>
     </div>
     <div>
       <div class="section-label" data-i18n="about.label">About Co Digit</div>
@@ -1706,6 +1707,178 @@
       msg.style.color = '#e63946';
     }
   }
+</script>
+
+<!-- Breakout Game -->
+<script>
+(function() {
+  const container = document.getElementById('gameContainer');
+  const canvas = document.getElementById('breakoutCanvas');
+  const prompt = document.getElementById('gamePrompt');
+  const ctx = canvas.getContext('2d');
+  let running = false, raf;
+
+  function resize() {
+    canvas.width = container.offsetWidth;
+    canvas.height = container.offsetHeight;
+  }
+
+  // Game state
+  let ball, paddle, bricks, score, lives, dx, dy;
+  const colors = ['#e63946','#457b9d','#e9b94a','#2a9d8f','#e76f51'];
+
+  function init() {
+    resize();
+    const W = canvas.width, H = canvas.height;
+    const cols = 8, rows = 5;
+    const brickW = (W - (cols + 1) * 4) / cols;
+    const brickH = Math.min(18, H * 0.04);
+    const topOffset = H * 0.08;
+
+    bricks = [];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        bricks.push({
+          x: 4 + c * (brickW + 4),
+          y: topOffset + r * (brickH + 4),
+          w: brickW, h: brickH,
+          color: colors[r % colors.length],
+          alive: true
+        });
+      }
+    }
+
+    paddle = { w: W * 0.18, h: Math.max(8, H * 0.02) };
+    paddle.x = (W - paddle.w) / 2;
+    paddle.y = H - paddle.h - H * 0.06;
+
+    ball = { r: Math.max(5, Math.min(8, W * 0.015)) };
+    ball.x = W / 2;
+    ball.y = paddle.y - ball.r - 2;
+
+    const speed = Math.max(2, W * 0.005);
+    dx = speed * (Math.random() > 0.5 ? 1 : -1);
+    dy = -speed;
+    score = 0;
+    lives = 3;
+  }
+
+  function draw() {
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    // Bricks
+    bricks.forEach(b => {
+      if (!b.alive) return;
+      ctx.fillStyle = b.color;
+      ctx.beginPath();
+      ctx.roundRect(b.x, b.y, b.w, b.h, 3);
+      ctx.fill();
+    });
+
+    // Paddle
+    ctx.fillStyle = '#f0f0f0';
+    ctx.beginPath();
+    ctx.roundRect(paddle.x, paddle.y, paddle.w, paddle.h, 4);
+    ctx.fill();
+
+    // Ball
+    ctx.fillStyle = '#e63946';
+    ctx.beginPath();
+    ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Score
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.font = '600 11px Inter, sans-serif';
+    ctx.fillText('Score: ' + score, 8, H - 8);
+
+    // Lives
+    for (let i = 0; i < lives; i++) {
+      ctx.fillStyle = '#e63946';
+      ctx.beginPath();
+      ctx.arc(W - 12 - i * 16, H - 12, 4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function update() {
+    const W = canvas.width, H = canvas.height;
+    ball.x += dx;
+    ball.y += dy;
+
+    // Wall collisions
+    if (ball.x - ball.r < 0 || ball.x + ball.r > W) dx = -dx;
+    if (ball.y - ball.r < 0) dy = -dy;
+
+    // Paddle collision
+    if (ball.y + ball.r >= paddle.y && ball.y + ball.r <= paddle.y + paddle.h + 4 &&
+        ball.x >= paddle.x && ball.x <= paddle.x + paddle.w) {
+      dy = -Math.abs(dy);
+      const hit = (ball.x - (paddle.x + paddle.w / 2)) / (paddle.w / 2);
+      dx = hit * Math.max(3, Math.abs(dx) + 0.5);
+    }
+
+    // Brick collision
+    bricks.forEach(b => {
+      if (!b.alive) return;
+      if (ball.x + ball.r > b.x && ball.x - ball.r < b.x + b.w &&
+          ball.y + ball.r > b.y && ball.y - ball.r < b.y + b.h) {
+        b.alive = false;
+        dy = -dy;
+        score += 10;
+      }
+    });
+
+    // Ball lost
+    if (ball.y > H) {
+      lives--;
+      if (lives <= 0) {
+        init();
+        return;
+      }
+      ball.x = W / 2;
+      ball.y = paddle.y - ball.r - 2;
+      const speed = Math.max(2, W * 0.005);
+      dx = speed * (Math.random() > 0.5 ? 1 : -1);
+      dy = -speed;
+    }
+
+    // Win
+    if (bricks.every(b => !b.alive)) init();
+  }
+
+  function loop() {
+    update();
+    draw();
+    raf = requestAnimationFrame(loop);
+  }
+
+  // Mouse / touch control
+  function moveHandler(e) {
+    if (!running) return;
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const x = (clientX - rect.left) * (canvas.width / rect.width);
+    paddle.x = Math.max(0, Math.min(canvas.width - paddle.w, x - paddle.w / 2));
+  }
+
+  container.addEventListener('mousemove', moveHandler);
+  container.addEventListener('touchmove', function(e) { e.preventDefault(); moveHandler(e); }, { passive: false });
+
+  container.addEventListener('click', function() {
+    if (running) return;
+    running = true;
+    prompt.classList.add('hidden');
+    init();
+    loop();
+  });
+
+  // Resize handler
+  window.addEventListener('resize', function() {
+    if (running) { cancelAnimationFrame(raf); init(); loop(); }
+  });
+})();
 </script>
 
 <!-- Structured Data -->
