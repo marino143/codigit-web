@@ -66,9 +66,12 @@
     .logo-dot { display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
     @keyframes codigit-blink { 0%, 100% { color: var(--white); } 50% { color: var(--accent); } }
     @media (prefers-reduced-motion: reduce) { .logo-dot { animation: none; } }
+    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; letter-spacing: 0.3px; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 18px; border-radius: 6px; font-weight: 600 !important; transition: opacity 0.2s !important; font-size: 13px !important; }
+    .nav-cta:hover { opacity: 0.85; }
     .nav-right { display: flex; align-items: center; gap: 24px; }
-    nav a.back { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-    nav a.back:hover { color: var(--white); }
 
     .lang-switcher { display: flex; align-items: center; gap: 4px; }
     .lang-btn {
@@ -157,6 +160,7 @@
 
     @media (max-width: 900px) {
       nav { padding: 16px 24px; }
+      .nav-links { display: none; }
       .article-wrapper { padding: 40px 20px 60px; }
       footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
       .footer-links { flex-wrap: wrap; justify-content: center; }
@@ -167,6 +171,15 @@
 
 <nav>
   <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#ai">AI-Powered</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#certs">Certifications</a></li>
+    <li><a href="/services.html">Consulting</a></li>
+    <li><a href="/blog/">Notes</a></li>
+    <li><a href="/contact.html" class="nav-cta">Get in touch</a></li>
+  </ul>
   <div class="nav-right">
     <div class="lang-switcher">
       <button class="lang-btn active" data-lang="en">EN</button>
@@ -174,7 +187,6 @@
       <button class="lang-btn" data-lang="hr">HR</button>
     </div>
     <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
-    <a href="/blog/" class="back" id="backLink">&larr; Back to blog</a>
   </div>
 </nav>
 
@@ -334,7 +346,6 @@
 <script>
   const t = {
     en: {
-      backLink: '\u2190 Back to blog',
       postTitle: 'Core Web Vitals in 2026: The Complete Guide to Google Rankings',
       postDate: 'April 13, 2026',
       backToBlog: '\u2190 Back to blog',
@@ -342,7 +353,6 @@
       'fl-home': 'Home', 'fl-blog': 'Notes', 'fl-cookies': 'Cookie Policy', 'fl-privacy': 'Privacy Policy',
     },
     hr: {
-      backLink: '\u2190 Natrag na blog',
       postTitle: 'Core Web Vitals u 2026.: Kompletan vodič za Google rangiranje',
       postDate: '13. travnja 2026.',
       backToBlog: '\u2190 Natrag na blog',
