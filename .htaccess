@@ -17,6 +17,36 @@ DirectoryIndex index.html index.php
     AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml application/xml text/xml text/plain
 </IfModule>
 
+# Security Headers
+<IfModule mod_headers.c>
+    # Force HTTPS (HSTS) — browsers will always use HTTPS for 1 year
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    # Prevent clickjacking — page can't be embedded in iframes
+    Header always set X-Frame-Options "SAMEORIGIN"
+    # Prevent MIME-sniffing attacks
+    Header always set X-Content-Type-Options "nosniff"
+    # Referrer policy — don't leak sensitive data to other sites
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    # Disable unnecessary browser features
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(self 'https://buy.stripe.com' 'https://checkout.stripe.com')"
+    # XSS protection
+    Header always set X-XSS-Protection "1; mode=block"
+    # Remove server version info
+    Header unset Server
+    Header unset X-Powered-By
+</IfModule>
+
+# Block access to sensitive files
+<FilesMatch "^\.(htaccess|htpasswd|git|env|cpanel\.yml)|\.(bak|config|sql|ini|log)$">
+    Require all denied
+</FilesMatch>
+
+# Prevent directory listing
+Options -Indexes
+
+# Disable server signature
+ServerSignature Off
+
 # Browser Caching
 <IfModule mod_expires.c>
     ExpiresActive On
