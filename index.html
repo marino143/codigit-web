@@ -634,14 +634,6 @@
     }
     .about-image { cursor: pointer; }
     .about-image canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-    .game-prompt {
-      position: absolute; inset: 0; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; z-index: 2;
-      transition: opacity 0.3s;
-    }
-    .game-prompt.hidden { opacity: 0; pointer-events: none; }
-    .game-prompt-text { font-size: 13px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
-    .game-prompt-icon { font-size: 28px; margin-bottom: 12px; color: var(--accent); }
     .about-points {
       margin-top: 32px;
       display: flex;
@@ -1420,12 +1412,6 @@
 <section class="about-section reveal" id="about">
   <div class="about-inner">
     <div class="about-image" id="gameContainer">
-      <div class="game-prompt" id="gamePrompt">
-        <div class="game-prompt-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        </div>
-        <div class="game-prompt-text">Click to play</div>
-      </div>
       <canvas id="breakoutCanvas"></canvas>
     </div>
     <div>
@@ -1714,9 +1700,8 @@
 (function() {
   const container = document.getElementById('gameContainer');
   const canvas = document.getElementById('breakoutCanvas');
-  const prompt = document.getElementById('gamePrompt');
   const ctx = canvas.getContext('2d');
-  let running = false, raf;
+  let running = false, raf, userControlled = false;
 
   function resize() {
     canvas.width = container.offsetWidth;
@@ -1804,6 +1789,7 @@
 
   function update() {
     const W = canvas.width, H = canvas.height;
+    if (!userControlled) autopilot();
     ball.x += dx;
     ball.y += dy;
 
@@ -1854,9 +1840,17 @@
     raf = requestAnimationFrame(loop);
   }
 
-  // Mouse / touch control
+  // Autopilot — paddle follows ball with slight delay
+  function autopilot() {
+    const target = ball.x - paddle.w / 2;
+    paddle.x += (target - paddle.x) * 0.08;
+    paddle.x = Math.max(0, Math.min(canvas.width - paddle.w, paddle.x));
+  }
+
+  // Mouse / touch control — takes over from autopilot
   function moveHandler(e) {
     if (!running) return;
+    userControlled = true;
     const rect = canvas.getBoundingClientRect();
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const x = (clientX - rect.left) * (canvas.width / rect.width);
@@ -1865,19 +1859,17 @@
 
   container.addEventListener('mousemove', moveHandler);
   container.addEventListener('touchmove', function(e) { e.preventDefault(); moveHandler(e); }, { passive: false });
-
-  container.addEventListener('click', function() {
-    if (running) return;
-    running = true;
-    prompt.classList.add('hidden');
-    init();
-    loop();
-  });
+  container.addEventListener('mouseleave', function() { userControlled = false; });
 
   // Resize handler
   window.addEventListener('resize', function() {
     if (running) { cancelAnimationFrame(raf); init(); loop(); }
   });
+
+  // Auto-start
+  init();
+  running = true;
+  loop();
 })();
 </script>
 
