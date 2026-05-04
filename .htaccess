@@ -3,6 +3,29 @@ DirectoryIndex index.html index.php
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
+
+    # Force HTTPS
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^(.*)$ https://codigit.hr/$1 [L,R=301]
+
+    # Force non-www (redirect www.codigit.hr → codigit.hr)
+    RewriteCond %{HTTP_HOST} ^www\.codigit\.hr$ [NC]
+    RewriteRule ^(.*)$ https://codigit.hr/$1 [L,R=301]
+
+    # Redirect /index.html to / (canonical)
+    RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+    RewriteRule ^index\.html$ / [L,R=301]
+
+    # Redirect old WordPress URLs to homepage
+    RewriteRule ^category/?(.*)$ / [L,R=301]
+    RewriteRule ^tag/?(.*)$ / [L,R=301]
+    RewriteRule ^author/?(.*)$ / [L,R=301]
+
+    # Redirect old blog post URLs to new blog
+    RewriteRule ^blog/the-impact-of-ai-on-web-development-trends-to-watch-in-2025/?$ /blog/how-ai-is-changing-web-development.html [L,R=301]
+    RewriteRule ^blog/pwas-vs-native/?$ /blog/ [L,R=301]
+    RewriteRule ^portfolio/?$ / [L,R=301]
+
     # Serve index.html for root requests
     RewriteRule ^$ index.html [L]
     # Don't rewrite existing files or directories
