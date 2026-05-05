@@ -294,7 +294,7 @@
       const url = '/apps/' + app.slug + '.html';
       const platform = app.platform.includes('macOS') ? 'macOS' : app.platform;
       const meta = app.category + ' · ' + platform;
-      return '<a href="' + url + '" class="app-card">'
+      return '<a href="' + url + '" class="app-card" data-app-name="' + app.name + '" data-app-slug="' + app.slug + '">'
         + '<div class="app-icon">' + app.icon + '</div>'
         + '<h3>' + app.name + '</h3>'
         + '<span class="app-meta">' + meta + '</span>'
@@ -303,6 +303,20 @@
         + '</a>';
     }).join('');
   }
+
+  // GA4 event tracking — delegated click on grid for dynamically rendered cards
+  document.getElementById('appsGrid').addEventListener('click', (e) => {
+    const card = e.target.closest('.app-card');
+    if (!card) return;
+    if (typeof gtag === 'function') {
+      gtag('event', 'app_card_click', {
+        app_name: card.dataset.appName,
+        app_slug: card.dataset.appSlug,
+        event_category: 'Navigation',
+        event_label: 'Apps Listing Click'
+      });
+    }
+  });
 
   // Theme
   const themeBtn = document.getElementById('themeBtn');

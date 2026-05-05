@@ -437,6 +437,14 @@
   const copyBtn = document.getElementById('copyLinkBtn');
   const copyLabel = document.getElementById('copy-label');
   copyBtn.addEventListener('click', async () => {
+    if (typeof gtag === 'function') {
+      gtag('event', 'app_share', {
+        app_name: 'Native Browser',
+        app_slug: 'native-browser',
+        share_method: 'copy_link',
+        event_category: 'Engagement'
+      });
+    }
     const url = window.location.href.split('#')[0];
     try {
       await navigator.clipboard.writeText(url);
@@ -455,6 +463,64 @@
       setTimeout(() => { copyBtn.classList.remove('copied'); copyLabel.textContent = t[lang]['copy-label']; }, 2000);
     }
   });
+
+  // GA4 event tracking
+  const ctaDownload = document.getElementById('cta-download');
+  if (ctaDownload) {
+    ctaDownload.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'app_download', {
+          app_name: 'Native Browser',
+          app_slug: 'native-browser',
+          app_version: '0.1.0',
+          event_category: 'Engagement',
+          event_label: 'Direct Download'
+        });
+      }
+    });
+  }
+
+  const ctaGithub = document.getElementById('cta-github');
+  if (ctaGithub) {
+    ctaGithub.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'app_github_view', {
+          app_name: 'Native Browser',
+          app_slug: 'native-browser',
+          event_category: 'Engagement',
+          event_label: 'GitHub Repo View'
+        });
+      }
+    });
+  }
+
+  const shareLinkedin = document.getElementById('share-linkedin');
+  if (shareLinkedin) {
+    shareLinkedin.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'app_share', {
+          app_name: 'Native Browser',
+          app_slug: 'native-browser',
+          share_method: 'linkedin',
+          event_category: 'Engagement'
+        });
+      }
+    });
+  }
+
+  const shareTwitter = document.getElementById('share-twitter');
+  if (shareTwitter) {
+    shareTwitter.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'app_share', {
+          app_name: 'Native Browser',
+          app_slug: 'native-browser',
+          share_method: 'twitter',
+          event_category: 'Engagement'
+        });
+      }
+    });
+  }
 </script>
 <!-- Structured Data -->
 <script type="application/ld+json">
