@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T97BQ3VRV1');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sleep Toggle — One-Click Sleep for Mac | Co Digit</title>
+  <meta name="description" content="Put your Mac to sleep with a single click from the menu bar. Free native app for Apple Silicon." />
+  <link rel="canonical" href="https://codigit.hr/apps/sleep-toggle.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://codigit.hr/apps/sleep-toggle.html" />
+  <meta property="og:title" content="Sleep Toggle — One-Click Sleep for Mac | Co Digit" />
+  <meta property="og:description" content="Put your Mac to sleep with a single click from the menu bar. Free native app for Apple Silicon." />
+  <meta property="og:image" content="https://codigit.hr/og-image.png" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Co Digit" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Sleep Toggle — One-Click Sleep for Mac | Co Digit" />
+  <meta name="twitter:description" content="Put your Mac to sleep with a single click from the menu bar. Free native app for Apple Silicon." />
+  <meta name="twitter:image" content="https://codigit.hr/og-image.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
+      --border: #222222; --text: #f0f0f0; --muted: #888;
+      --accent: #e63946; --white: #ffffff;
+      --nav-bg: rgba(10,10,10,0.9);
+    }
+    [data-theme="light"] {
+      --bg: #ffffff; --bg2: #f4f4f5; --bg3: #e8e8ea;
+      --border: #e0e0e0; --text: #111111; --muted: #666666;
+      --white: #0a0a0a; --nav-bg: rgba(255,255,255,0.95);
+    }
+    [data-theme="light"] footer { background: var(--bg2); }
+    [data-theme="light"] .app-hero, [data-theme="light"] .app-section { box-shadow: 0 2px 20px rgba(0,0,0,0.04); }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .logo-dot { display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
+    @keyframes codigit-blink { 0%, 100% { color: var(--white); } 50% { color: var(--accent); } }
+    @media (prefers-reduced-motion: reduce) { .logo-dot { animation: none; } }
+    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; letter-spacing: 0.3px; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 18px; border-radius: 6px; font-weight: 600 !important; transition: opacity 0.2s !important; font-size: 13px !important; }
+    .nav-cta:hover { opacity: 0.85; }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+
+    .lang-switcher { display: flex; align-items: center; gap: 4px; }
+    .lang-btn {
+      background: none; border: 1px solid transparent; color: var(--muted);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 4px 8px; border-radius: 4px; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .lang-btn:hover { color: var(--white); }
+    .lang-btn.active { color: var(--white); border-color: var(--border); }
+    .lang-sep { color: #333; font-size: 11px; }
+    .theme-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--muted); font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .theme-btn:hover { color: var(--text); border-color: var(--muted); }
+
+    /* MAIN WRAPPER */
+    .app-wrapper {
+      flex: 1;
+      max-width: 880px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+
+    /* HERO */
+    .app-hero {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+    .app-hero-icon {
+      width: 120px; height: 120px;
+      border-radius: 24px;
+      background: var(--bg3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 64px;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+    .app-hero-content { flex: 1; }
+    .app-platform-badge {
+      display: inline-block;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+      color: var(--accent); background: rgba(230,57,70,0.1);
+      padding: 4px 10px; border-radius: 4px; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .app-hero h1 {
+      font-size: clamp(32px, 4vw, 48px); font-weight: 900;
+      letter-spacing: -1.5px; color: var(--white); line-height: 1.1; margin-bottom: 12px;
+    }
+    .app-tagline {
+      font-size: 17px; color: var(--muted); line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .app-cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 12px 22px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; font-family: inherit;
+      text-decoration: none; border: 1px solid transparent; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--white); border-color: var(--border); }
+    .btn-outline:hover { border-color: var(--muted); }
+
+    /* DIVIDER */
+    .section-divider { width: 48px; height: 3px; background: var(--accent); border-radius: 2px; margin: 56px 0 24px; }
+
+    /* SECTIONS */
+    .app-section { margin-bottom: 16px; }
+    .app-section h2 {
+      font-size: 22px; font-weight: 800; color: var(--white);
+      letter-spacing: -0.5px; margin-bottom: 16px;
+    }
+    .app-section p { color: var(--text); font-size: 16px; line-height: 1.8; margin-bottom: 16px; }
+    .benefit-list {
+      list-style: none; padding: 0; margin: 16px 0;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+    }
+    .benefit-list li {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px 18px;
+      font-size: 14px; color: var(--text); line-height: 1.5;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .benefit-list li::before {
+      content: '✓'; color: var(--accent); font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .info-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+      margin-top: 8px;
+    }
+    .info-card p { font-size: 15px; line-height: 1.7; }
+    .info-card a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .info-card a:hover { opacity: 0.8; }
+
+    /* SHARE */
+    .share-section { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border); }
+    .share-section h2 { margin-bottom: 16px; }
+    .share-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+    .share-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 16px; border-radius: 8px;
+      background: var(--bg2); border: 1px solid var(--border);
+      color: var(--text); font-size: 13px; font-weight: 500;
+      text-decoration: none; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .share-btn:hover { background: var(--bg3); border-color: var(--muted); }
+    .share-btn svg { flex-shrink: 0; }
+    .share-btn.copied { color: var(--accent); border-color: var(--accent); }
+
+    /* BACK */
+    .back-to-apps {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 56px; padding: 12px 24px;
+      font-size: 13px; font-weight: 600; color: var(--muted);
+      text-decoration: none; border: 1px solid var(--border);
+      border-radius: 8px; transition: all 0.2s;
+    }
+    .back-to-apps:hover { color: var(--white); border-color: var(--muted); }
+
+    /* LANG TOGGLE */
+    .lang-content { display: none; }
+    .lang-content.active { display: block; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto;
+    }
+    .footer-logo { font-size: 14px; font-weight: 800; color: var(--white); }
+    .footer-logo span { color: var(--accent); }
+    footer p { font-size: 12px; color: #555; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: #555; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--muted); }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .app-wrapper { padding: 40px 20px 60px; }
+      .app-hero { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .app-hero-icon { width: 96px; height: 96px; font-size: 52px; border-radius: 20px; }
+      .benefit-list { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
+  <ul class="nav-links">
+    <li><a href="/#services">Capabilities</a></li>
+    <li><a href="/#ai">AI-Powered</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#certs">Certifications</a></li>
+    <li><a href="/services.html">Services</a></li>
+    <li><a href="/blog/">Notes</a></li>
+    <li><a href="/apps/">Apps</a></li>
+    <li><a href="/contact.html" class="nav-cta">Get in touch</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="hr">HR</button>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+  </div>
+</nav>
+
+<main class="app-wrapper">
+
+  <!-- HERO -->
+  <section class="app-hero">
+    <div class="app-hero-icon">💤</div>
+    <div class="app-hero-content">
+      <span class="app-platform-badge" id="platform-badge">macOS · Apple Silicon · Free</span>
+      <h1 id="app-name">Sleep Toggle</h1>
+      <p class="app-tagline" id="app-tagline">Put your Mac to sleep — or wake it — with a single click.</p>
+      <div class="app-cta-row">
+        <a href="#download" class="btn btn-primary" id="cta-download">Download free →</a>
+        <a href="#github" class="btn btn-outline" id="cta-github">View on GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IT DOES -->
+  <div class="section-divider"></div>
+  <section class="app-section">
+    <h2 id="h-what">What it does</h2>
+    <div class="lang-content active" data-lang="en">
+      <p>A tiny menu bar app that adds a single icon: click to put your Mac to sleep instantly, click again to wake. No keyboard shortcuts, no Apple menu hunting. Built native for Apple Silicon — uses zero CPU when idle.</p>
+      <ul class="benefit-list">
+        <li>Single click to sleep or wake</li>
+        <li>Lives in your menu bar</li>
+        <li>Native Apple Silicon performance</li>
+        <li>Zero memory footprint</li>
+      </ul>
+    </div>
+    <div class="lang-content" data-lang="hr">
+      <p>Mala menu bar aplikacija koja dodaje jednu ikonu: klik za trenutno usnivanje Maca, ponovni klik za buđenje. Bez tipkovničkih prečaca, bez kopanja po Apple izborniku. Izgrađena nativno za Apple Silicon — koristi nula CPU-a kad miruje.</p>
+      <ul class="benefit-list">
+        <li>Jedan klik za sleep ili buđenje</li>
+        <li>Živi u vašem menu baru</li>
+        <li>Nativne Apple Silicon performanse</li>
+        <li>Bez tragova u memoriji</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- WHY NATIVE -->
+  <section class="app-section">
+    <h2 id="h-why">Why native?</h2>
+    <div class="lang-content active" data-lang="en">
+      <p>Sleep Toggle is small on purpose. It does one thing — toggle your Mac's sleep state — and lives quietly in your menu bar. Most utility apps in this category are 100MB Electron monsters that hold a full Chromium runtime in RAM just to draw an icon. That's absurd. Sleep Toggle is under a megabyte.</p>
+      <p>Built in Swift on Apple Silicon, it launches in under 50ms, idles at zero CPU, and uses Apple's official IOKit power management APIs to handle sleep cleanly. There's no shell-out to <code>pmset</code>, no dock icon clutter, no preferences pane — just a tiny menu bar item that does exactly what you'd expect.</p>
+      <p>And like every other Co Digit app: zero telemetry, zero analytics, zero network traffic.</p>
+    </div>
+    <div class="lang-content" data-lang="hr">
+      <p>Sleep Toggle je namjerno malen. Radi jednu stvar — mijenja stanje sleepa vašeg Maca — i tiho živi u vašem menu baru. Većina alata u ovoj kategoriji su Electron čudovišta od 100MB koja drže cijeli Chromium runtime u RAM-u samo da bi nacrtali ikonu. To je apsurdno. Sleep Toggle je manji od megabajta.</p>
+      <p>Izgrađen u Swiftu na Apple Siliconu, pokreće se u manje od 50ms, miruje na nula CPU-a i koristi Appleove službene IOKit API-je za upravljanje energijom kako bi čisto obradio sleep. Nema poziva na <code>pmset</code>, nema natrpanog dock ikona, nema panela s postavkama — samo majušna stavka u menu baru koja radi točno ono što očekujete.</p>
+      <p>I kao i svaka druga Co Digit aplikacija: nula telemetrije, nula analitike, nula mrežnog prometa.</p>
+    </div>
+  </section>
+
+  <!-- BUILD JOURNEY -->
+  <section class="app-section">
+    <h2 id="h-journey">Build journey</h2>
+    <div class="info-card">
+      <div class="lang-content active" data-lang="en">
+        <p>Following the build of Sleep Toggle on LinkedIn? Find all my posts about the development process, challenges, and design decisions <a href="#linkedin">here →</a></p>
+      </div>
+      <div class="lang-content" data-lang="hr">
+        <p>Pratite razvoj Sleep Togglea na LinkedInu? Sve moje objave o razvojnom procesu, izazovima i dizajnerskim odlukama nalaze se <a href="#linkedin">ovdje →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHARE -->
+  <section class="share-section">
+    <h2 id="h-share">Found this useful? Share it.</h2>
+    <div class="share-buttons">
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcodigit.hr%2Fapps%2Fsleep-toggle.html" target="_blank" rel="noopener" class="share-btn" id="share-linkedin">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        <span>Share on LinkedIn</span>
+      </a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fcodigit.hr%2Fapps%2Fsleep-toggle.html&text=" target="_blank" rel="noopener" class="share-btn" id="share-twitter">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <span>Share on X</span>
+      </a>
+      <button type="button" class="share-btn" id="copyLinkBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <span id="copy-label">Copy link</span>
+      </button>
+    </div>
+  </section>
+
+  <a href="/apps/" class="back-to-apps" id="backToApps">← Back to all apps</a>
+</main>
+
+<footer>
+  <div class="footer-logo">CO<span class="logo-dot">.</span>DIGIT</div>
+  <p id="footer-copy">&copy; 2026 Co Digit d.o.o. &middot; Zagreb, Croatia</p>
+  <div class="footer-links">
+    <a href="/" id="fl-home">Home</a>
+    <a href="/blog/" id="fl-blog">Notes</a>
+    <a href="/apps/" id="fl-apps">Apps</a>
+    <a href="/cookie-policy.html" id="fl-cookies">Cookie Policy</a>
+    <a href="/privacy-policy.html" id="fl-privacy">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  const t = {
+    en: {
+      'platform-badge': 'macOS · Apple Silicon · Free',
+      'app-tagline': 'Put your Mac to sleep — or wake it — with a single click.',
+      'cta-download': 'Download free →',
+      'cta-github': 'View on GitHub',
+      'h-what': 'What it does',
+      'h-why': 'Why native?',
+      'h-journey': 'Build journey',
+      'h-share': 'Found this useful? Share it.',
+      'copy-label': 'Copy link',
+      copied: '✓ Copied!',
+      'backToApps': '← Back to all apps',
+      'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Croatia',
+      'fl-home': 'Home', 'fl-blog': 'Notes', 'fl-apps': 'Apps',
+      'fl-cookies': 'Cookie Policy', 'fl-privacy': 'Privacy Policy',
+    },
+    hr: {
+      'platform-badge': 'macOS · Apple Silicon · Besplatno',
+      'app-tagline': 'Stavite svoj Mac u sleep — ili ga probudite — jednim klikom.',
+      'cta-download': 'Preuzmi besplatno →',
+      'cta-github': 'Pogledaj na GitHubu',
+      'h-what': 'Što radi',
+      'h-why': 'Zašto nativno?',
+      'h-journey': 'Razvojni put',
+      'h-share': 'Smatrate ovo korisnim? Podijelite.',
+      'copy-label': 'Kopiraj link',
+      copied: '✓ Kopirano!',
+      'backToApps': '← Natrag na sve aplikacije',
+      'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska',
+      'fl-home': 'Početna', 'fl-blog': 'Bilješke', 'fl-apps': 'Aplikacije',
+      'fl-cookies': 'Politika kolačića', 'fl-privacy': 'Politika privatnosti',
+    }
+  };
+
+  let lang = 'en';
+
+  function applyLang(l) {
+    lang = l;
+    document.documentElement.lang = l;
+    localStorage.setItem('lang', l);
+    const d = t[l];
+    Object.keys(d).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = d[id];
+    });
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+    document.querySelectorAll('.lang-content').forEach(el => {
+      el.classList.toggle('active', el.getAttribute('data-lang') === l);
+    });
+  }
+
+  // Theme
+  const themeBtn = document.getElementById('themeBtn');
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    themeBtn.innerHTML = theme === 'light' ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+  }
+  const savedTheme = localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  applyTheme(savedTheme);
+  themeBtn.addEventListener('click', () => {
+    applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+  });
+
+  const saved = localStorage.getItem('lang');
+  const browser = navigator.language.startsWith('hr') ? 'hr' : 'en';
+  applyLang(saved || browser);
+
+  document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+
+  // Copy link
+  const copyBtn = document.getElementById('copyLinkBtn');
+  const copyLabel = document.getElementById('copy-label');
+  copyBtn.addEventListener('click', async () => {
+    const url = window.location.href.split('#')[0];
+    try {
+      await navigator.clipboard.writeText(url);
+      copyBtn.classList.add('copied');
+      copyLabel.textContent = t[lang].copied;
+      setTimeout(() => {
+        copyBtn.classList.remove('copied');
+        copyLabel.textContent = t[lang]['copy-label'];
+      }, 2000);
+    } catch (err) {
+      const ta = document.createElement('textarea');
+      ta.value = url; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); copyBtn.classList.add('copied'); copyLabel.textContent = t[lang].copied; } catch (e) {}
+      document.body.removeChild(ta);
+      setTimeout(() => { copyBtn.classList.remove('copied'); copyLabel.textContent = t[lang]['copy-label']; }, 2000);
+    }
+  });
+</script>
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Sleep Toggle",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "macOS",
+  "description": "Put your Mac to sleep with a single click from the menu bar. Free native app for Apple Silicon.",
+  "url": "https://codigit.hr/apps/sleep-toggle.html",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "ratingCount": "1"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Co Digit",
+    "url": "https://codigit.hr"
+  }
+}
+</script>
+</body>
+</html>

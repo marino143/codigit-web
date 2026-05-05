@@ -21,3 +21,5 @@ deployment:
     - /bin/cp logos/hgspot.svg ${DEPLOYPATH}logos/
     - /bin/mkdir -p ${DEPLOYPATH}blog/images
     - cp -r blog/* ${DEPLOYPATH}blog/
+    - /bin/mkdir -p ${DEPLOYPATH}apps/images
+    - cp -r apps/* ${DEPLOYPATH}apps/

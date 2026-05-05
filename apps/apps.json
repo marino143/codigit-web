@@ -1,0 +1,53 @@
+[
+  {
+    "slug": "native-browser",
+    "name": "Native Browser",
+    "tagline_en": "A lightweight, privacy-first browser built natively for Apple Silicon.",
+    "tagline_hr": "Lagani browser usmjeren na privatnost, izgrađen nativno za Apple Silicon.",
+    "description_en": "Stop running Chrome's bloat on your M-series Mac. Native Browser uses WebKit and Apple's native frameworks for blazing-fast performance, minimal RAM usage, and zero telemetry.",
+    "description_hr": "Prestanite trošiti resurse svog M-serija Maca na Chromeov bloat. Native Browser koristi WebKit i Appleove izvorne okvire za munjevitu izvedbu, minimalnu potrošnju RAM-a i bez ikakve telemetrije.",
+    "category": "Productivity",
+    "platform": "macOS (Apple Silicon)",
+    "version": "1.0.0",
+    "release_date": "2026-04-15",
+    "icon": "🌐",
+    "download_url": "#download",
+    "github_url": "#github",
+    "linkedin_posts": [],
+    "featured": true
+  },
+  {
+    "slug": "dock-lock",
+    "name": "Dock Lock",
+    "tagline_en": "Lock your macOS Dock so it never moves, resizes, or rearranges again.",
+    "tagline_hr": "Zaključajte svoj macOS Dock — bez slučajnog pomicanja, promjene veličine ili rasporeda.",
+    "description_en": "Tired of accidentally dragging icons off your Dock or resizing it by mistake? Dock Lock prevents accidental changes while keeping the Dock fully functional. One toggle in your menu bar — that's it.",
+    "description_hr": "Umorni ste od slučajnog povlačenja ikona s Docka ili promjene veličine? Dock Lock sprječava slučajne promjene dok zadržava punu funkcionalnost Docka. Jedan prekidač u menu baru — i gotovo.",
+    "category": "Utility",
+    "platform": "macOS (Apple Silicon)",
+    "version": "1.0.0",
+    "release_date": "2026-03-20",
+    "icon": "🔒",
+    "download_url": "#download",
+    "github_url": "#github",
+    "linkedin_posts": [],
+    "featured": false
+  },
+  {
+    "slug": "sleep-toggle",
+    "name": "Sleep Toggle",
+    "tagline_en": "Put your Mac to sleep — or wake it — with a single click.",
+    "tagline_hr": "Stavite svoj Mac u sleep — ili ga probudite — jednim klikom.",
+    "description_en": "A tiny menu bar app that adds a single icon: click to put your Mac to sleep instantly, click again to wake. No keyboard shortcuts, no Apple menu hunting. Built native for Apple Silicon — uses zero CPU when idle.",
+    "description_hr": "Mala menu bar aplikacija koja dodaje jednu ikonu: klik za trenutno usnivanje Maca, ponovni klik za buđenje. Bez tipkovničkih prečaca, bez kopanja po Apple izborniku. Izgrađena nativno za Apple Silicon — koristi nula CPU-a kad miruje.",
+    "category": "Utility",
+    "platform": "macOS (Apple Silicon)",
+    "version": "1.0.0",
+    "release_date": "2026-04-01",
+    "icon": "💤",
+    "download_url": "#download",
+    "github_url": "#github",
+    "linkedin_posts": [],
+    "featured": false
+  }
+]
