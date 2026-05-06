@@ -26,6 +26,9 @@ DirectoryIndex index.html index.php
     RewriteRule ^blog/pwas-vs-native/?$ /blog/ [L,R=301]
     RewriteRule ^portfolio/?$ / [L,R=301]
 
+    # Redirect renamed apps
+    RewriteRule ^apps/sleep-toggle\.html$ /apps/stayawake.html [L,R=301]
+
     # Block hacked PHP spam URLs (return 410 Gone — tells Google to remove from index)
     # Allow only known legitimate PHP files
     RewriteCond %{REQUEST_URI} !^/(webhook|contact)\.php$ [NC]
