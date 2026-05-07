@@ -153,6 +153,51 @@
     .btn-primary { background: var(--accent); color: var(--white); }
     .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
 
+    /* CONTACT EXTRA SECTIONS */
+    .contact-extra { max-width: 1200px; width: 100%; margin: 0 auto; padding: 0 60px 80px; }
+    .contact-extra-section { margin-top: 64px; }
+    .contact-extra h2 {
+      font-size: clamp(24px, 2.5vw, 32px);
+      font-weight: 800; letter-spacing: -0.5px;
+      color: var(--white); margin-bottom: 32px;
+    }
+    .response-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .response-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px;
+    }
+    .response-card-num {
+      display: inline-block; padding: 4px 10px;
+      background: var(--bg3); border-radius: 6px;
+      font-family: 'Courier New', monospace; font-size: 12px;
+      color: var(--accent); margin-bottom: 14px;
+    }
+    .response-card h3 {
+      font-size: 16px; font-weight: 700;
+      color: var(--white); margin-bottom: 8px;
+    }
+    .response-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    .faq-list { display: flex; flex-direction: column; gap: 14px; }
+    .faq-item {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px 24px;
+    }
+    .faq-q {
+      font-size: 15px; font-weight: 600;
+      color: var(--white); margin-bottom: 8px;
+    }
+    .faq-a { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    @media (max-width: 760px) {
+      .contact-extra { padding: 0 24px 48px; }
+      .response-grid { grid-template-columns: 1fr; gap: 12px; }
+    }
+
     /* FOOTER */
     footer {
       border-top: 1px solid var(--border);
@@ -268,6 +313,61 @@
     </form>
   </div>
 </main>
+
+<!-- WHAT HAPPENS NEXT -->
+<section class="contact-extra">
+  <div class="contact-extra-section">
+    <h2 id="what-next-h">What happens after you send the message</h2>
+    <div class="response-grid">
+      <div class="response-card">
+        <span class="response-card-num">01 / SAME DAY</span>
+        <h3 id="step1-h">You get a personal reply</h3>
+        <p id="step1-p">No autoresponders, no chatbots, no "we will get back to you within 5 business days" template. Marino reads every message that lands in this inbox and replies the same business day — usually within a few hours during European working hours (CET).</p>
+      </div>
+      <div class="response-card">
+        <span class="response-card-num">02 / DAY 1–2</span>
+        <h3 id="step2-h">A short discovery call (optional)</h3>
+        <p id="step2-p">If your project is larger than a quick question, we'll suggest a 15-minute video call to understand the goal, the constraints, and the deadline. No obligation, no pitch deck — just a focused conversation about whether we are a good fit for what you need.</p>
+      </div>
+      <div class="response-card">
+        <span class="response-card-num">03 / DAY 3–7</span>
+        <h3 id="step3-h">A written proposal</h3>
+        <p id="step3-p">If we move forward, you receive a written scope with concrete deliverables, a realistic timeline, and a fixed price (or a clear hourly model for ongoing work). No vague estimates, no surprise line items at the end of the project.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT FAQ -->
+  <div class="contact-extra-section">
+    <h2 id="faq-h">Before you write — a few common questions</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" id="faq1-q">How quickly will I hear back?</div>
+        <div class="faq-a" id="faq1-a">Same business day for messages sent before 17:00 CET. If you write in the evening or on a weekend, you will hear back the next working morning. We do not use auto-replies — every reply is written by a human who has read your message.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" id="faq2-q">Do you only work with clients in Croatia?</div>
+        <div class="faq-a" id="faq2-a">No. Around half of our clients are based outside of Croatia — primarily in the EU, the UK, and North America. We bill in EUR or USD depending on the client. Time zone differences up to about 9 hours have not been a problem in practice; we run async by default and align on calls when needed.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" id="faq3-q">Can you sign an NDA before we discuss details?</div>
+        <div class="faq-a" id="faq3-a">Yes. Send us your standard NDA in your first email and we will sign and return it before the discovery call. If you need a mutual NDA, we have a short template we can share. We treat client information as confidential by default, NDA or no NDA.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" id="faq4-q">What information should I include in the first message?</div>
+        <div class="faq-a" id="faq4-a">A short description of the problem you are trying to solve is more useful than a long technical specification. Mention the rough timeline and budget range if you have one — even "I have no idea what this should cost" is a useful starting point. Links to existing systems, designs, or references are welcome but not required.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" id="faq5-q">I am not sure if my project is a good fit. Should I still write?</div>
+        <div class="faq-a" id="faq5-a">Yes, please do. We turn down projects that are not a good fit, but we usually know who is. If we are not the right team for what you need, we will tell you honestly and, when possible, point you to someone who is. There is no cost or obligation to that conversation.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" id="faq6-q">Where are you physically located?</div>
+        <div class="faq-a" id="faq6-a">Our registered office is at Obrež 20 in Zagreb, Croatia (CO DIGIT d.o.o., OIB 34317148047). We work primarily remotely, but in-person meetings in Zagreb are possible by arrangement. For clients elsewhere in Croatia or the EU, we travel to on-site kickoff meetings when the project warrants it.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer>
   <div class="footer-logo">CO<span class="logo-dot">.</span>DIGIT</div>
