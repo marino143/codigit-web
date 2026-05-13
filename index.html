@@ -929,6 +929,25 @@
       gap: 36px;
     }
     #mobileMenu.open { display: flex; }
+    #mobileMenu .menu-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      background: none;
+      border: none;
+      color: var(--white);
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    #mobileMenu .menu-close:hover { background: var(--bg2); }
+    #mobileMenu .menu-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     #mobileMenu a {
       color: var(--white);
       text-decoration: none;
@@ -1047,6 +1066,9 @@
 
 <!-- MOBILE MENU -->
 <div id="mobileMenu">
+  <button class="menu-close" id="menuCloseBtn" aria-label="Close menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
   <a href="#services" data-i18n="nav.services">Capabilities</a>
   <a href="#ai" data-i18n="nav.ai">AI-Powered</a>
   <a href="#about" data-i18n="nav.about">About</a>
@@ -1616,12 +1638,17 @@
     menuBtn.classList.toggle('open', open);
     document.body.style.overflow = open ? 'hidden' : '';
   });
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('open');
+    menuBtn.classList.remove('open');
+    document.body.style.overflow = '';
+  }
   mobileMenu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      menuBtn.classList.remove('open');
-      document.body.style.overflow = '';
-    });
+    a.addEventListener('click', closeMobileMenu);
+  });
+  document.getElementById('menuCloseBtn').addEventListener('click', closeMobileMenu);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMobileMenu();
   });
 
   // Back to top
