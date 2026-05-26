@@ -1,5 +1,22 @@
 [
   {
+    "slug": "activitybar",
+    "name": "ActivityBar",
+    "tagline_en": "Live CPU, RAM and SSD usage in your macOS menu bar. ~45 MB RAM, zero bloat.",
+    "tagline_hr": "Praćenje CPU-a, RAM-a i SSD-a uživo u macOS menu baru. ~45 MB RAM, bez bloata.",
+    "description_en": "Activity Monitor makes you switch windows. Paid alternatives ship 200 features you don't need. ActivityBar does one thing: shows live CPU, RAM and SSD in the corner of your screen. Native Swift, single ~150-line file, ad-hoc signed .app — and the icon is generated programmatically. Open source on GitHub.",
+    "description_hr": "Activity Monitor te tjera da napustiš prozor u kojem radiš. Plaćene alternative dolaze s 200 značajki koje ti ne trebaju. ActivityBar radi jednu stvar: prikazuje CPU, RAM i SSD uživo u kutu ekrana. Nativni Swift, jedna datoteka od ~150 linija, ad-hoc potpisani .app — a ikona je generirana programski. Open source na GitHubu.",
+    "category": "Utility",
+    "platform": "macOS (Apple Silicon)",
+    "version": "1.0",
+    "release_date": "2026-05-25",
+    "icon": "📊",
+    "download_url": "https://github.com/marino143/macos-activity-bar",
+    "github_url": "https://github.com/marino143/macos-activity-bar",
+    "linkedin_posts": [],
+    "featured": true
+  },
+  {
     "slug": "native-browser",
     "name": "Native Browser",
     "tagline_en": "A lightweight, privacy-first browser built natively for Apple Silicon.",
