@@ -1,5 +1,15 @@
 [
   {
+    "slug": "the-robots-txt-mistake",
+    "title_en": "The robots.txt Mistake That's Hiding Your Pages From Google",
+    "title_hr": "Greška u robots.txt koja skriva vaše stranice od Googlea",
+    "excerpt_en": "Most site owners use robots.txt to keep pages out of Google. It doesn't work — and the warning Search Console sends about it confuses everyone. Here's what actually happens and the proper fix.",
+    "excerpt_hr": "Većina vlasnika sajta koristi robots.txt da sakrije stranice od Googlea. Ne radi — a upozorenje koje Search Console šalje o tome zbunjuje sve. Evo što se zapravo događa i kako to pravilno popraviti.",
+    "date": "2026-05-18",
+    "tags": ["SEO", "Technical SEO"],
+    "author": "Co Digit"
+  },
+  {
     "slug": "digital-transformation-croatian-smb-2026",
     "title_en": "Digital Transformation for Croatian SMBs in 2026: A Practical Guide",
     "title_hr": "Digitalna transformacija za hrvatske male i srednje tvrtke u 2026.: Praktični vodič",
