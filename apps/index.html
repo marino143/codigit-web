@@ -373,8 +373,9 @@
   const saved = localStorage.getItem('lang');
   const browser = navigator.language.startsWith('hr') ? 'hr' : 'en';
 
-  // Fetch apps then apply lang
-  fetch('/apps/apps.json')
+  // Fetch apps then apply lang. Bypass HTTP cache so newly-shipped apps
+  // appear immediately after deploy without users having to hard-reload.
+  fetch('/apps/apps.json', { cache: 'no-store' })
     .then(r => r.json())
     .then(data => {
       // Featured first, then by release_date desc
