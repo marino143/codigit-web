@@ -1,5 +1,23 @@
 [
   {
+    "slug": "hideicons",
+    "name": "Hide Icons",
+    "tagline_en": "Hide your macOS menu bar icons with one click. No private APIs, no Accessibility permission.",
+    "tagline_hr": "Sakrij ikone u macOS menu baru jednim klikom. Bez private API-ja, bez Accessibility dozvole.",
+    "description_en": "Your menu bar gets cluttered fast. Bartender is paid and asks for Accessibility permission. Hidden Bar works but feels stuck in 2015. Hide Icons is a one-file Swift utility that does the spacer trick — Cmd-drag the icons you want to hide to the left of the chevron, click the chevron, they're pushed off screen. Click again, they're back. ~5 MB RAM, no helper process, no telemetry, no Accessibility prompt. Open source on GitHub.",
+    "description_hr": "Menu bar se brzo zatrpa ikonama. Bartender se plaća i traži Accessibility dozvolu. Hidden Bar radi, ali UI je zaglavljen u 2015. Hide Icons je Swift utility koji koristi spacer trik — Cmd-drag ikone koje želiš sakriti lijevo od chevrona, klikni chevron, izguraju se izvan ekrana. Klikni opet — vraćaju se. ~5 MB RAM, bez helper procesa, bez telemetrije, bez Accessibility prompta. Open source na GitHubu.",
+    "category": "Utility",
+    "platform": "macOS (Apple Silicon)",
+    "version": "1.0",
+    "release_date": "2026-05-28",
+    "icon": "◀️",
+    "download_url": "https://github.com/marino143/hide-icons",
+    "github_url": "https://github.com/marino143/hide-icons",
+    "buymeacoffee_url": "https://buymeacoffee.com/marino143",
+    "linkedin_posts": [],
+    "featured": true
+  },
+  {
     "slug": "activitybar",
     "name": "ActivityBar",
     "tagline_en": "Live CPU, RAM and SSD usage in your macOS menu bar. ~45 MB RAM, zero bloat.",
