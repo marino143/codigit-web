@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://codigit.hr/sitemap.xml
+Sitemap: https://codigit.io/sitemap.xml

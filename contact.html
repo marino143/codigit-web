@@ -14,20 +14,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Us — Send a Message | Co Digit Zagreb</title>
   <meta name="description" content="Send us a message about your web development, AI integration, SEO, or digital transformation project. Located at Obrež 20, Zagreb. Email marino@codigit.hr or use the form below." />
-  <link rel="canonical" href="https://codigit.hr/contact.html" />
+  <link rel="canonical" href="https://codigit.io/contact.html" />
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://codigit.hr/contact.html" />
+  <meta property="og:url" content="https://codigit.io/contact.html" />
   <meta property="og:title" content="Contact Us — Send a Message | Co Digit Zagreb" />
   <meta property="og:description" content="Send us a message about your project. Located in Zagreb, Croatia." />
-  <meta property="og:image" content="https://codigit.hr/og-image.png" />
+  <meta property="og:image" content="https://codigit.io/og-image.png" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:site_name" content="Co Digit" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Contact Us — Send a Message | Co Digit Zagreb" />
   <meta name="twitter:description" content="Send us a message about your project. Located in Zagreb, Croatia." />
-  <meta name="twitter:image" content="https://codigit.hr/og-image.png" />
+  <meta name="twitter:image" content="https://codigit.io/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -280,7 +280,7 @@
         <div class="contact-detail-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
         <div class="contact-detail-text">
           <strong id="l-website">Website</strong>
-          <span>codigit.hr</span>
+          <span>codigit.io</span>
         </div>
       </div>
     </div>
@@ -288,11 +288,11 @@
 
   <!-- RIGHT -->
   <div class="form-card">
-    <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
-      <input type="hidden" name="access_key" value="6b317dda-123e-4b6f-8e01-5d634a9976be">
-      <input type="hidden" name="subject" value="New enquiry from codigit.hr">
-      <input type="hidden" name="from_name" value="Co Digit Website">
-      <input type="checkbox" name="botcheck" style="display:none">
+    <form class="contact-form" id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleSubmit(event)">
+      <input type="hidden" name="form-name" value="contact" />
+      <p style="display:none">
+        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+      </p>
       <div class="form-row">
         <input type="text" name="name" id="f-name" placeholder="Name *" required />
         <input type="text" name="company" id="f-company" placeholder="Company" />
@@ -459,9 +459,15 @@
     btn.disabled = true;
     msg.style.display = 'none';
     try {
-      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(form) });
-      const data = await res.json();
-      if (data.success) {
+      // Netlify Forms: POST form data url-encoded to the current page
+      const formData = new FormData(form);
+      const body = new URLSearchParams(formData).toString();
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body
+      });
+      if (res.ok) {
         btn.textContent = t[lang].success;
         btn.style.background = '#28a745';
         form.reset();
@@ -470,7 +476,7 @@
           btn.style.background = '';
           btn.disabled = false;
         }, 4000);
-      } else throw new Error(data.message || 'Something went wrong.');
+      } else throw new Error('Submission failed. Please try again or email marino@codigit.io directly.');
     } catch (err) {
       btn.textContent = t[lang].submitBtn;
       btn.disabled = false;
@@ -486,11 +492,11 @@
   "@context": "https://schema.org",
   "@type": "ContactPage",
   "name": "Contact Co Digit",
-  "url": "https://codigit.hr/contact.html",
+  "url": "https://codigit.io/contact.html",
   "mainEntity": {
     "@type": "Organization",
     "name": "Co Digit",
-    "url": "https://codigit.hr"
+    "url": "https://codigit.io"
   }
 }
 </script>

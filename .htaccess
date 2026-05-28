@@ -1,74 +1,27 @@
+# codigit.hr — minimal config after migration to codigit.io (Netlify)
+# Purpose: 301 redirect ALL web traffic to codigit.io, preserving paths.
+# Email (MX records) is unaffected — handled separately by cPanel DNS.
+
 DirectoryIndex index.html index.php
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
 
-    # Force HTTPS
+    # Force HTTPS first (so we redirect to the correct scheme)
     RewriteCond %{HTTPS} !=on
-    RewriteRule ^(.*)$ https://codigit.hr/$1 [L,R=301]
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [L,R=301]
 
-    # Force non-www (redirect www.codigit.hr → codigit.hr)
+    # Force non-www
     RewriteCond %{HTTP_HOST} ^www\.codigit\.hr$ [NC]
     RewriteRule ^(.*)$ https://codigit.hr/$1 [L,R=301]
 
-    # Redirect /index.html to / (canonical)
-    RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
-    RewriteRule ^index\.html$ / [L,R=301]
-
-    # Redirect old WordPress URLs to homepage
-    RewriteRule ^category/?(.*)$ / [L,R=301]
-    RewriteRule ^tag/?(.*)$ / [L,R=301]
-    RewriteRule ^author/?(.*)$ / [L,R=301]
-
-    # Redirect old blog post URLs to new blog
-    RewriteRule ^blog/the-impact-of-ai-on-web-development-trends-to-watch-in-2025/?$ /blog/how-ai-is-changing-web-development.html [L,R=301]
-    RewriteRule ^blog/pwas-vs-native/?$ /blog/ [L,R=301]
-    RewriteRule ^portfolio/?$ / [L,R=301]
-
-    # Redirect renamed apps
-    RewriteRule ^apps/sleep-toggle\.html$ /apps/stayawake.html [L,R=301]
-    RewriteRule ^apps/dock-lock\.html$ /apps/dockguard.html [L,R=301]
-
-    # Block hacked PHP spam URLs (return 410 Gone — tells Google to remove from index)
-    # Allow only known legitimate PHP files
-    RewriteCond %{REQUEST_URI} !^/(webhook|contact)\.php$ [NC]
-    RewriteRule \.php$ - [G,L]
-
-    # Serve index.html for root requests
-    RewriteRule ^$ index.html [L]
-    # Don't rewrite existing files or directories
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    # Fallback to index.html for SPA-style routing
-    RewriteRule . /index.html [L]
+    # 301 redirect EVERYTHING to codigit.io (preserve path + query string)
+    RewriteCond %{HTTP_HOST} ^codigit\.hr$ [NC]
+    RewriteRule ^(.*)$ https://codigit.io/$1 [L,R=301]
 </IfModule>
 
-# GZIP Compression
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml application/xml text/xml text/plain
-</IfModule>
-
-# Security Headers
-<IfModule mod_headers.c>
-    # Force HTTPS (HSTS) — browsers will always use HTTPS for 1 year
-    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
-    # Prevent clickjacking — page can't be embedded in iframes
-    Header always set X-Frame-Options "SAMEORIGIN"
-    # Prevent MIME-sniffing attacks
-    Header always set X-Content-Type-Options "nosniff"
-    # Referrer policy — don't leak sensitive data to other sites
-    Header always set Referrer-Policy "strict-origin-when-cross-origin"
-    # Disable unnecessary browser features
-    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(self 'https://buy.stripe.com' 'https://checkout.stripe.com')"
-    # XSS protection
-    Header always set X-XSS-Protection "1; mode=block"
-    # Remove server version info
-    Header unset Server
-    Header unset X-Powered-By
-</IfModule>
-
-# Block access to sensitive files
+# Block sensitive files (still applies to anything not redirected, e.g. .well-known checks)
 <FilesMatch "^\.(htaccess|htpasswd|git|env|cpanel\.yml)|\.(bak|config|sql|ini|log)$">
     Require all denied
 </FilesMatch>
@@ -78,17 +31,3 @@ Options -Indexes
 
 # Disable server signature
 ServerSignature Off
-
-# Browser Caching
-<IfModule mod_expires.c>
-    ExpiresActive On
-    ExpiresByType image/svg+xml "access plus 1 month"
-    ExpiresByType image/png "access plus 1 month"
-    ExpiresByType image/jpeg "access plus 1 month"
-    ExpiresByType image/webp "access plus 1 month"
-    ExpiresByType text/css "access plus 1 week"
-    ExpiresByType application/javascript "access plus 1 week"
-    ExpiresByType application/x-font-woff2 "access plus 1 month"
-    ExpiresByType font/woff2 "access plus 1 month"
-    ExpiresByType text/html "access plus 1 hour"
-</IfModule>
