@@ -7,6 +7,25 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    // Consent Mode v2: default deny analytics + ads until user opts in.
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied',
+      'wait_for_update': 500
+    });
+    // Restore previous consent from localStorage (runs before any page logic).
+    try {
+      if (localStorage.getItem('cookieConsent') === 'accepted') {
+        gtag('consent', 'update', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      }
+    } catch(e) {}
     gtag('js', new Date());
     gtag('config', 'G-T97BQ3VRV1');
   </script>
@@ -1673,17 +1692,35 @@
   }, { threshold: 0.08 });
   reveals.forEach(el => observer.observe(el));
 
-  // Cookie banner
+  // Cookie banner + Google Consent Mode v2
+  // Default consent is set to 'denied' in the GA snippet at the top of the page.
+  // Here we update the consent based on the user's choice, and persist it.
   const cookieBanner = document.getElementById('cookieBanner');
   if (localStorage.getItem('cookieConsent')) {
     cookieBanner.classList.add('hidden');
   }
   document.getElementById('cookieAccept').addEventListener('click', () => {
     localStorage.setItem('cookieConsent', 'accepted');
+    if (typeof gtag === 'function') {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted'
+      });
+    }
     cookieBanner.classList.add('hidden');
   });
   document.getElementById('cookieDecline').addEventListener('click', () => {
     localStorage.setItem('cookieConsent', 'declined');
+    if (typeof gtag === 'function') {
+      gtag('consent', 'update', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied'
+      });
+    }
     cookieBanner.classList.add('hidden');
   });
 
