@@ -469,6 +469,21 @@
 
   document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
 
+  // Pre-fill when arriving from a pricing card (/contact.html?package=Launch Package)
+  (function() {
+    const pkg = new URLSearchParams(window.location.search).get('package');
+    if (!pkg) return;
+    const msg = document.getElementById('f-message');
+    if (msg && !msg.value) {
+      msg.value = (lang === 'hr')
+        ? 'Pozdrav! Zainteresiran/a sam za paket "' + pkg + '". '
+        : 'Hi! I’m interested in the "' + pkg + '" package. ';
+    }
+    // These tiers are consulting engagements — default the dropdown to Strategy & consulting
+    const sel = document.getElementById('f-select');
+    if (sel) sel.selectedIndex = 2;
+  })();
+
   async function handleSubmit(e) {
     e.preventDefault();
     const form = e.target;

@@ -314,6 +314,23 @@
       line-height: 1.7;
     }
 
+    /* ─── TRUST BAND ─── */
+    .trust-band {
+      display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch;
+      gap: 0; max-width: 1000px; margin: 0 auto; padding: 0 24px;
+    }
+    .trust-item {
+      flex: 1; min-width: 220px; padding: 24px 28px; text-align: center;
+      border-left: 1px solid var(--border);
+    }
+    .trust-item:first-child { border-left: none; }
+    .trust-item-title { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .trust-item-sub { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    @media (max-width: 760px) {
+      .trust-item { flex-basis: 100%; border-left: none; border-top: 1px solid var(--border); padding: 20px; }
+      .trust-item:first-child { border-top: none; }
+    }
+
     /* ─── CLIENTS ─── */
     .clients-section { background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 60px; }
     .clients-label { text-align: center; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; }
@@ -1131,7 +1148,7 @@
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
   <div class="hero-content">
-    <div class="hero-badge" data-i18n="hero.badge">Zagreb, Croatia</div>
+    <div class="hero-badge" data-i18n="hero.badge">Zagreb, Croatia · Works US hours</div>
     <h1 data-i18n-html="hero.h1">
       We build web<br/>
       technology that<br/>
@@ -1139,7 +1156,7 @@
       your business.
     </h1>
     <p class="hero-sub" data-i18n="hero.sub">
-      We bridge the gap between strategy and execution — fusing deep technical expertise with custom development and AI to deliver digital transformation that delivers real results.
+      Senior web development and AI integration for US and EU companies — the technical depth of a top agency, at European rates, with working hours that overlap your day.
     </p>
     <div class="hero-actions">
       <a href="/contact.html" class="btn btn-primary" data-i18n="hero.cta1">Start a project →</a>
@@ -1166,9 +1183,27 @@
   </div>
 </section>
 
+<!-- TRUST BAND -->
+<div class="clients-section" style="padding-top:40px; padding-bottom:40px;">
+  <div class="trust-band">
+    <div class="trust-item">
+      <div class="trust-item-title" data-i18n="trust.1t">Overlapping US hours</div>
+      <div class="trust-item-sub" data-i18n="trust.1s">We work an 8-hour window that overlaps the US East Coast workday — real-time, not next-day.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-item-title" data-i18n="trust.2t">Billed in USD</div>
+      <div class="trust-item-sub" data-i18n="trust.2s">Pay by card or US bank transfer (ACH). Senior EU talent at a fraction of US agency rates.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-item-title" data-i18n="trust.3t">NDA standard</div>
+      <div class="trust-item-sub" data-i18n="trust.3s">Your code and IP are yours from day one. We sign your NDA before the first call.</div>
+    </div>
+  </div>
+</div>
+
 <!-- CLIENTS -->
 <div class="clients-section">
-  <p class="clients-label" data-i18n="clients.label">Trusted by teams across Croatia and beyond</p>
+  <p class="clients-label" data-i18n="clients.label">Trusted by companies across the EU and US</p>
   <div class="clients-track-wrap">
     <div class="clients-track" id="clients-track">
       <a class="client-link" href="https://www.medihive.com" target="_blank" rel="noopener"><img class="client-logo" src="https://www.medihive.com/wp-content/uploads/2024/04/logo-medihive.svg" alt="Medihive"></a>
@@ -1514,12 +1549,15 @@
   const translations = {
     en: {
       'nav.services':'Capabilities','nav.ai':'AI-Powered','nav.about':'About','nav.certs':'Certifications','nav.cta':'Get in touch',
-      'hero.badge':'Zagreb, Croatia',
+      'hero.badge':'Zagreb, Croatia · Works US hours',
       'hero.h1':'We build web<br/>technology that<br/><em>actually grows</em><br/>your business.',
-      'hero.sub':'We bridge the gap between strategy and execution — fusing deep technical expertise with custom development and AI to deliver digital transformation that delivers real results.',
+      'hero.sub':'Senior web development and AI integration for US and EU companies — the technical depth of a top agency, at European rates, with working hours that overlap your day.',
       'hero.cta1':'Start a project →','hero.cta2':'Our services',
       'hero.stat1':'Happy clients','hero.stat2':'Projects delivered','hero.stat3':'Certifications','hero.stat4':'Faster with AI',
-      'clients.label':'Trusted by teams across Croatia and beyond',
+      'clients.label':'Trusted by companies across the EU and US',
+      'trust.1t':'Overlapping US hours','trust.1s':'We work an 8-hour window that overlaps the US East Coast workday — real-time, not next-day.',
+      'trust.2t':'Billed in USD','trust.2s':'Pay by card or US bank transfer (ACH). Senior EU talent at a fraction of US agency rates.',
+      'trust.3t':'NDA standard','trust.3s':'Your code and IP are yours from day one. We sign your NDA before the first call.',
       'ai.tag':'AI-Powered Development',
       'ai.h2':'We move <em>5× faster</em><br/>because we use AI.<br/>You pay less for more.',
       'ai.desc':"While others are still copy-pasting Stack Overflow, we've integrated AI into every layer of our workflow — from design ideation to code generation, testing, and SEO. The result? Higher quality, shorter timelines, and better pricing.",
@@ -1558,6 +1596,9 @@
       'hero.cta1':'Pokrenimo projekt →','hero.cta2':'Naše usluge',
       'hero.stat1':'Zadovoljnih klijenata','hero.stat2':'Isporučenih projekata','hero.stat3':'Certifikata','hero.stat4':'Brže uz AI',
       'clients.label':'Klijenti koji nam vjeruju u Hrvatskoj i šire',
+      'trust.1t':'Radno vrijeme za SAD','trust.1s':'Radimo u 8-satnom prozoru koji se preklapa s radnim danom istočne obale SAD-a — u stvarnom vremenu.',
+      'trust.2t':'Naplata u USD','trust.2s':'Plaćanje karticom ili bankovnom doznakom. Senior EU stručnost po dijelu cijene američkih agencija.',
+      'trust.3t':'NDA standardno','trust.3s':'Vaš kod i intelektualno vlasništvo su vaši od prvog dana. NDA potpisujemo prije prvog poziva.',
       'ai.tag':'AI-potencirani razvoj',
       'ai.h2':'Radimo <em>5× brže</em><br/>jer koristimo AI.<br/>Vi plaćate manje, dobivate više.',
       'ai.desc':'Dok drugi još uvijek kopiraju rješenja sa Stack Overflowa, mi smo integrirali AI u svaki sloj našeg radnog tijeka — od dizajnerske ideje do generiranja koda, testiranja i SEO-a. Rezultat? Viša kvaliteta, kraći rokovi i bolje cijene.',
