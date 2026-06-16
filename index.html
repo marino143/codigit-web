@@ -314,6 +314,31 @@
       line-height: 1.7;
     }
 
+    /* ─── TESTIMONIALS ─── */
+    .testimonials-section { background: var(--bg); }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 48px;
+    }
+    .testimonial-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .testimonial-card:hover { border-color: var(--muted); transform: translateY(-2px); }
+    .testimonial-stars { color: var(--accent); font-size: 14px; letter-spacing: 3px; margin-bottom: 18px; }
+    .testimonial-quote { font-size: 15px; line-height: 1.75; color: var(--text); margin-bottom: 24px; flex: 1; }
+    .testimonial-author { border-top: 1px solid var(--border); padding-top: 18px; }
+    .testimonial-name { font-size: 14px; font-weight: 700; color: var(--white); }
+    .testimonial-role { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    @media (max-width: 900px) { .testimonial-grid { grid-template-columns: 1fr; } }
+
     /* ─── TRUST BAND ─── */
     .trust-band {
       display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch;
@@ -1514,6 +1539,44 @@
   </div>
 </section>
 
+<!-- TESTIMONIALS -->
+<section class="testimonials-section reveal" id="testimonials">
+  <div class="section-label" data-i18n="testi.label">Client references</div>
+  <div class="divider"></div>
+  <h2 data-i18n="testi.h2">What clients say about working with us</h2>
+  <p class="section-desc" data-i18n="testi.desc">Every quote below comes from a signed reference letter — not a paraphrase. Several of these relationships have run four and five years.</p>
+  <div class="testimonial-grid">
+
+    <div class="testimonial-card">
+      <div class="testimonial-stars" aria-label="5 out of 5">★★★★★</div>
+      <p class="testimonial-quote">“Marino’s reliability and flexibility made him a valuable asset to our team, and his keen attention to detail greatly contributed to the quality of our project. I wholeheartedly recommend him.”</p>
+      <div class="testimonial-author">
+        <div class="testimonial-name">Gerrit Gruesgen</div>
+        <div class="testimonial-role">Head of Development, Game Lounge</div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-stars" aria-label="5 out of 5">★★★★★</div>
+      <p class="testimonial-quote">“Marino has looked after every aspect of our WordPress sites for over four years — design, hosting, SSL, SEO, backups. Friendly, hardworking, and always willing to put in the extra effort. He’s great to work with.”</p>
+      <div class="testimonial-author">
+        <div class="testimonial-name">Chris Pollock</div>
+        <div class="testimonial-role">Mount Media Online · United Kingdom</div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-stars" aria-label="5 out of 5">★★★★★</div>
+      <p class="testimonial-quote">“Marino is honest, easy to work with, and a real benefit to any team — equally strong working independently or collaboratively. A delight to work with, and I wouldn’t hesitate to hire him again.”</p>
+      <div class="testimonial-author">
+        <div class="testimonial-name">Marija Ziterbart</div>
+        <div class="testimonial-role">CTO, The Lowdown · Founder, Tilde Loop</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- CONTACT CTA -->
 <section class="contact-cta-section reveal">
   <div class="contact-cta-inner">
@@ -1558,6 +1621,7 @@
       'trust.1t':'Overlapping US hours','trust.1s':'We work an 8-hour window that overlaps the US East Coast workday — real-time, not next-day.',
       'trust.2t':'Billed in USD','trust.2s':'Pay by card or US bank transfer (ACH). Senior EU talent at a fraction of US agency rates.',
       'trust.3t':'NDA standard','trust.3s':'Your code and IP are yours from day one. We sign your NDA before the first call.',
+      'testi.label':'Client references','testi.h2':'What clients say about working with us','testi.desc':'Every quote below comes from a signed reference letter — not a paraphrase. Several of these relationships have run four and five years.',
       'ai.tag':'AI-Powered Development',
       'ai.h2':'We move <em>5× faster</em><br/>because we use AI.<br/>You pay less for more.',
       'ai.desc':"While others are still copy-pasting Stack Overflow, we've integrated AI into every layer of our workflow — from design ideation to code generation, testing, and SEO. The result? Higher quality, shorter timelines, and better pricing.",
@@ -1599,6 +1663,7 @@
       'trust.1t':'Radno vrijeme za SAD','trust.1s':'Radimo u 8-satnom prozoru koji se preklapa s radnim danom istočne obale SAD-a — u stvarnom vremenu.',
       'trust.2t':'Naplata u USD','trust.2s':'Plaćanje karticom ili bankovnom doznakom. Senior EU stručnost po dijelu cijene američkih agencija.',
       'trust.3t':'NDA standardno','trust.3s':'Vaš kod i intelektualno vlasništvo su vaši od prvog dana. NDA potpisujemo prije prvog poziva.',
+      'testi.label':'Reference klijenata','testi.h2':'Što klijenti kažu o suradnji s nama','testi.desc':'Svaki citat dolazi iz potpisanog referentnog pisma — ne parafraza. Neke od ovih suradnji traju četiri i pet godina.',
       'ai.tag':'AI-potencirani razvoj',
       'ai.h2':'Radimo <em>5× brže</em><br/>jer koristimo AI.<br/>Vi plaćate manje, dobivate više.',
       'ai.desc':'Dok drugi još uvijek kopiraju rješenja sa Stack Overflowa, mi smo integrirali AI u svaki sloj našeg radnog tijeka — od dizajnerske ideje do generiranja koda, testiranja i SEO-a. Rezultat? Viša kvaliteta, kraći rokovi i bolje cijene.',
