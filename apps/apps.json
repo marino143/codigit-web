@@ -1,5 +1,24 @@
 [
   {
+    "slug": "libro",
+    "name": "libro",
+    "tagline_en": "Local personal accounting. Scans your folder, matches payments to invoices, AI-parses unknown PDFs. No SaaS.",
+    "tagline_hr": "Lokalno osobno računovodstvo. Skenira folder, matcha uplate s računima, AI parsira nepoznate PDF-ove. Bez SaaS-a.",
+    "description_en": "Cloud accounting tools want a recurring subscription, your tax ID, and read access to every invoice. libro doesn't. It runs on localhost:8765, scans a folder of PDF invoices and bank statements (XML camt.053 + PDF), matches payments to invoices by amount/date/supplier, and optionally forwards everything to your accountant via Gmail OAuth or Apple Mail. AI parsing via Claude is optional. Multi-bank parser, bilingual UI (EN/HR), dark mode, Swift WKWebView macOS wrapper. Live demo with fake data — try before you clone.",
+    "description_hr": "Cloud računovodstveni alati žele mjesečnu pretplatu, tvoj OIB i pristup svim tvojim računima. libro to ne traži. Radi na localhost:8765, skenira folder s PDF računima i bankovnim izvodima (XML camt.053 + PDF), matcha uplate s računima po iznosu/datumu/dobavljaču, i opcionalno forwardira sve knjigovođi preko Gmail OAuth-a ili Apple Mail-a. AI parsiranje (Claude) je opcionalno. Multi-bank parser, dvojezičan UI (EN/HR), dark mode, Swift WKWebView macOS wrapper. Live demo s lažnim podacima — probaj prije cloniranja.",
+    "category": "Productivity",
+    "platform": "macOS / cross-platform (Node.js)",
+    "version": "1.0",
+    "release_date": "2026-05-15",
+    "icon": "📒",
+    "download_url": "https://github.com/marino143/libro-public",
+    "github_url": "https://github.com/marino143/libro-public",
+    "demo_url": "https://libro-demo.netlify.app",
+    "buymeacoffee_url": "https://buymeacoffee.com/marino143",
+    "linkedin_posts": [],
+    "featured": true
+  },
+  {
     "slug": "hideicons",
     "name": "Hide Icons",
     "tagline_en": "Hide your macOS menu bar icons with one click. No private APIs, no Accessibility permission.",
