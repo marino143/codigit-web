@@ -1,25 +1,345 @@
+headersOrigin = "config"
+redirectsOrigin = "config"
 plugins = []
-headers = []
-redirects = []
 
 [functions]
 
 [functions."*"]
 
 [build]
-publish = "/Users/marinoglazarair/Documents/Co Work/codigit web"
-publishOrigin = "default"
+publish = "/Users/marinoglazarair/Documents/Co Work/codigit web/.claude/worktrees/pensive-wiles-8a257e"
+publishOrigin = "config"
+base = "/Users/marinoglazarair/Documents/Co Work/codigit web/.claude/worktrees/pensive-wiles-8a257e"
 
 [build.environment]
+NODE_VERSION = "20"
 
 [build.processing]
+skip_processing = false
 
 [build.processing.css]
+bundle = true
+minify = true
 
 [build.processing.html]
+pretty_urls = true
 
 [build.processing.images]
+compress = true
 
 [build.processing.js]
+bundle = false
+minify = true
 
 [build.services]
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+X-Frame-Options = "SAMEORIGIN"
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(self 'https://buy.stripe.com' 'https://checkout.stripe.com')"
+X-XSS-Protection = "1; mode=block"
+
+[[headers]]
+for = "/*.css"
+
+[headers.values]
+Cache-Control = "public, max-age=604800, must-revalidate"
+
+[[headers]]
+for = "/*.js"
+
+[headers.values]
+Cache-Control = "public, max-age=604800, must-revalidate"
+
+[[headers]]
+for = "/*.svg"
+
+[headers.values]
+Cache-Control = "public, max-age=2592000, must-revalidate"
+
+[[headers]]
+for = "/*.png"
+
+[headers.values]
+Cache-Control = "public, max-age=2592000, must-revalidate"
+
+[[headers]]
+for = "/*.jpg"
+
+[headers.values]
+Cache-Control = "public, max-age=2592000, must-revalidate"
+
+[[headers]]
+for = "/*.webp"
+
+[headers.values]
+Cache-Control = "public, max-age=2592000, must-revalidate"
+
+[[headers]]
+for = "/*.woff2"
+
+[headers.values]
+Cache-Control = "public, max-age=2592000, must-revalidate"
+
+[[headers]]
+for = "/*.html"
+
+[headers.values]
+Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[redirects]]
+from = "http://codigit.io/*"
+to = "https://codigit.io/:splat"
+status = 301.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "https://www.codigit.io/*"
+to = "https://codigit.io/:splat"
+status = 301.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/index.html"
+to = "/"
+status = 301.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/category/*"
+to = "/"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/tag/*"
+to = "/"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/author/*"
+to = "/"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/portfolio"
+to = "/"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/portfolio/*"
+to = "/"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/blog/the-impact-of-ai-on-web-development-trends-to-watch-in-2025/"
+to = "/blog/how-ai-is-changing-web-development.html"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/blog/the-impact-of-ai-on-web-development-trends-to-watch-in-2025"
+to = "/blog/how-ai-is-changing-web-development.html"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/blog/pwas-vs-native"
+to = "/blog/"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/blog/pwas-vs-native/"
+to = "/blog/"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/apps/sleep-toggle.html"
+to = "/apps/stayawake.html"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/apps/dock-lock.html"
+to = "/apps/dockguard.html"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/ammika.php"
+to = "/410.html"
+status = 410.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/ammika.php/*"
+to = "/410.html"
+status = 410.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/saiga.php"
+to = "/410.html"
+status = 410.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/saiga.php/*"
+to = "/410.html"
+status = 410.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/wp-content/*"
+to = "/410.html"
+status = 410.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/wp-admin/*"
+to = "/410.html"
+status = 410.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/wp-includes/*"
+to = "/410.html"
+status = 410.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]

@@ -32,7 +32,7 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Co Digit — Web Development & AI Solutions in Zagreb, Croatia</title>
-  <meta name="description" content="Co Digit is a web development and AI consulting studio in Zagreb, Croatia. We build fast, search-optimized websites and modern apps for ambitious businesses." />
+  <meta name="description" content="Co Digit is a web, mobile, and desktop development and AI consulting studio in Zagreb, Croatia, working US, UK, and EU hours. Fast, search-optimized websites and apps for ambitious businesses." />
   <link rel="canonical" href="https://codigit.io/" />
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -164,7 +164,9 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding: 120px 60px 80px;
+      justify-content: space-between;
+      gap: 64px;
+      padding: 120px max(60px, calc((100% - 1240px) / 2)) 80px;
       position: relative;
       overflow: hidden;
     }
@@ -192,7 +194,36 @@
 
     .hero-content {
       position: relative;
-      max-width: 900px;
+      max-width: 640px;
+      flex: 1 1 auto;
+    }
+
+    /* hero right-side visual — working-hours overlap card */
+    .hero-visual { flex: 0 0 360px; }
+    .hero-clock-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .hero-clock-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 20px;
+    }
+    .hero-clock-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 0; border-top: 1px solid var(--border);
+    }
+    .hero-clock-row:first-of-type { border-top: none; }
+    .hero-clock-city { font-size: 14px; font-weight: 600; color: var(--white); }
+    .hero-clock-time { font-family: 'Courier New', monospace; font-size: 13px; color: var(--muted); }
+    .hero-clock-dot {
+      display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+      background: #3fb950; margin-left: 10px; vertical-align: middle;
+    }
+    .hero-clock-note {
+      font-size: 12px; color: var(--muted); line-height: 1.6;
+      margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border);
     }
 
     .hero-badge {
@@ -279,9 +310,9 @@
       border-top: 1px solid var(--border);
     }
     .stat-number {
-      font-size: 36px;
-      font-weight: 900;
-      letter-spacing: -1px;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
       color: var(--white);
     }
     .stat-label {
@@ -291,7 +322,8 @@
     }
 
     /* ─── SECTION BASE ─── */
-    section { padding: 100px 60px; }
+    /* Consistent centred content column across all sections (1240px grid) */
+    section { padding: 100px max(60px, calc((100% - 1240px) / 2)); }
     .section-label {
       font-size: 11px;
       font-weight: 700;
@@ -359,30 +391,16 @@
     /* ─── CLIENTS ─── */
     .clients-section { background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 60px; }
     .clients-label { text-align: center; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; }
-    .clients-track-wrap { overflow: hidden; position: relative; }
-    .clients-track-wrap::before,
-    .clients-track-wrap::after {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 120px;
-      z-index: 2;
-    }
-    .clients-track-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
-    .clients-track-wrap::after { right: 0; background: linear-gradient(-90deg, var(--bg), transparent); }
+    .clients-track-wrap { position: relative; }
 
     .clients-track {
       display: flex;
-      gap: 60px;
+      flex-wrap: wrap;
+      gap: 40px 64px;
       align-items: center;
-      animation: scroll-track 30s linear infinite;
-      width: max-content;
-    }
-    .clients-track:hover { animation-play-state: paused; }
-
-    @keyframes scroll-track {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+      justify-content: center;
+      max-width: 1000px;
+      margin: 0 auto;
     }
 
     .client-link { display: flex; align-items: center; text-decoration: none; color: inherit; }
@@ -402,10 +420,13 @@
     /* logos with own background — no invert */
     .client-logo-color { filter: opacity(0.8) !important; border-radius: 4px; }
     .client-logo-color:hover { filter: opacity(1) !important; }
+    /* brand-color wordmark (e.g. Bitly) — no grayscale filter */
+    .client-logo-brand { height: 26px; display: block; opacity: 0.9; transition: opacity 0.3s; }
+    .client-logo-brand:hover { opacity: 1; }
 
     /* ─── AI SECTION ─── */
     .ai-section {
-      background: linear-gradient(135deg, #0d0d0d 0%, #111827 100%);
+      background: var(--bg2);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
       position: relative;
@@ -543,10 +564,10 @@
       text-align: center;
     }
     .ai-metric-val {
-      font-size: 28px;
-      font-weight: 800;
-      color: #3fb950;
-      letter-spacing: -1px;
+      font-size: 22px;
+      font-weight: 700;
+      color: #c9d1d9;
+      letter-spacing: -0.5px;
     }
     .ai-metric-lbl {
       font-size: 11px;
@@ -677,10 +698,7 @@
     /* ─── ABOUT ─── */
     .about-section { background: var(--bg); }
     .about-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
+      max-width: 760px;
     }
     .about-image {
       position: relative;
@@ -1094,7 +1112,9 @@
       .nav-links { display: none; }
       .hamburger { display: flex; }
       section { padding: 70px 24px; }
-      .hero { padding: 100px 24px 60px; }
+      .hero { padding: 100px 24px 60px; flex-direction: column; align-items: flex-start; gap: 40px; }
+      .hero-content { max-width: 100%; }
+      .hero-visual { flex: 1 1 auto; width: 100%; max-width: 420px; }
       .hero h1 { font-size: 42px; }
       .hero-stats { gap: 0; flex-wrap: nowrap; }
       .hero-stats > div { flex: 1; padding: 0 8px; }
@@ -1170,10 +1190,8 @@
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
   <div class="hero-content">
-    <div class="hero-badge" data-i18n="hero.badge">Zagreb, Croatia · Works US hours</div>
+    <div class="hero-badge" data-i18n="hero.badge">Zagreb, Croatia · Serving the US, UK & EU</div>
     <h1 data-i18n-html="hero.h1">
       We build web<br/>
       technology that<br/>
@@ -1181,7 +1199,7 @@
       your business.
     </h1>
     <p class="hero-sub" data-i18n="hero.sub">
-      Senior web development and AI integration for US and EU companies — the technical depth of a top agency, at European rates, with working hours that overlap your day.
+      Senior web, mobile, and desktop app development plus AI integration for US, UK, and EU companies — the technical depth of a top agency, at European rates.
     </p>
     <div class="hero-actions">
       <a href="/contact.html" class="btn btn-primary" data-i18n="hero.cta1">Start a project →</a>
@@ -1206,14 +1224,33 @@
       </div>
     </div>
   </div>
+
+  <div class="hero-visual">
+    <div class="hero-clock-card">
+      <div class="hero-clock-label" data-i18n="clock.label">Online in your hours</div>
+      <div class="hero-clock-row">
+        <span class="hero-clock-city">New York</span>
+        <span><span class="hero-clock-time">8:00 – 16:00 EST</span><span class="hero-clock-dot"></span></span>
+      </div>
+      <div class="hero-clock-row">
+        <span class="hero-clock-city">London</span>
+        <span><span class="hero-clock-time">13:00 – 21:00 GMT</span><span class="hero-clock-dot"></span></span>
+      </div>
+      <div class="hero-clock-row">
+        <span class="hero-clock-city">Zagreb</span>
+        <span><span class="hero-clock-time">14:00 – 22:00 CET</span><span class="hero-clock-dot"></span></span>
+      </div>
+      <div class="hero-clock-note" data-i18n="clock.note">Full-time overlap with your workday — real-time collaboration, every business day.</div>
+    </div>
+  </div>
 </section>
 
 <!-- TRUST BAND -->
 <div class="clients-section" style="padding-top:40px; padding-bottom:40px;">
   <div class="trust-band">
     <div class="trust-item">
-      <div class="trust-item-title" data-i18n="trust.1t">Overlapping US hours</div>
-      <div class="trust-item-sub" data-i18n="trust.1s">We work an 8-hour window that overlaps the US East Coast workday — real-time, not next-day.</div>
+      <div class="trust-item-title" data-i18n="trust.1t">We work your hours</div>
+      <div class="trust-item-sub" data-i18n="trust.1s">Full-time inside your business hours — US, UK, or EU. Real-time collaboration through your workday, not next-day email.</div>
     </div>
     <div class="trust-item">
       <div class="trust-item-title" data-i18n="trust.2t">Billed in USD</div>
@@ -1228,21 +1265,14 @@
 
 <!-- CLIENTS -->
 <div class="clients-section">
-  <p class="clients-label" data-i18n="clients.label">Trusted by companies across the EU and US</p>
+  <p class="clients-label" data-i18n="clients.label">Trusted by companies across the US, UK and EU</p>
   <div class="clients-track-wrap">
     <div class="clients-track" id="clients-track">
-      <a class="client-link" href="https://bitly.com" target="_blank" rel="noopener"><span class="client-name">Bitly</span></a>
-      <a class="client-link" href="https://www.medihive.com" target="_blank" rel="noopener"><img class="client-logo" src="https://www.medihive.com/wp-content/uploads/2024/04/logo-medihive.svg" alt="Medihive"></a>
-      <a class="client-link" href="https://www.crocontrol.hr" target="_blank" rel="noopener"><span class="client-name">CROATIA CONTROL</span></a>
-      <a class="client-link" href="https://www.hgshop.hr" target="_blank" rel="noopener"><img class="client-logo client-logo-color" src="logos/hgspot.svg" alt="HGSPOT"></a>
-      <a class="client-link" href="https://www.autozubak.hr" target="_blank" rel="noopener"><img class="client-logo" src="https://www.autozubak.hr/wp-content/themes/auto-zubak/public/img/logo.svg" alt="Auto Zubak"></a>
-      <a class="client-link" href="https://mountmedia.online" target="_blank" rel="noopener"><img class="client-logo" src="logos/mountmedia.svg" alt="MountMedia"></a>
-      <a class="client-link" href="https://nomago.hr" target="_blank" rel="noopener"><img class="client-logo" src="https://nomago.hr/themes/shuttle/assets/img/nomago.svg" alt="Nomago"></a>
-      <a class="client-link" href="https://sial.charity" target="_blank" rel="noopener"><img class="client-logo" src="https://sial.charity/wp-content/uploads/2020/08/cropped-SIALcharity_logo_01-RGB_H_pos-1.png" alt="SIAL Charity"></a>
-      <a class="client-link" href="https://tildeloop.com" target="_blank" rel="noopener"><img class="client-logo" src="http://tildeloop.com/wp-content/uploads/2020/09/logo-transparency-2.png" alt="Tilde Loop"></a>
-      <a class="client-link" href="https://www.gamelounge.com" target="_blank" rel="noopener"><img class="client-logo" src="https://www.gamelounge.com/wp-content/uploads/2024/09/gameLoungeLogo.svg" alt="Game Lounge"></a>
-      <!-- duplicate for seamless loop -->
-      <a class="client-link" href="https://bitly.com" target="_blank" rel="noopener"><span class="client-name">Bitly</span></a>
+      <a class="client-link" href="https://bitly.com" target="_blank" rel="noopener" aria-label="Bitly">
+        <svg class="client-logo-brand" viewBox="0 0 90 32" height="26" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bitly">
+          <text x="0" y="25" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="800" letter-spacing="-1.5" fill="#EE6123">bitly</text>
+        </svg>
+      </a>
       <a class="client-link" href="https://www.medihive.com" target="_blank" rel="noopener"><img class="client-logo" src="https://www.medihive.com/wp-content/uploads/2024/04/logo-medihive.svg" alt="Medihive"></a>
       <a class="client-link" href="https://www.crocontrol.hr" target="_blank" rel="noopener"><span class="client-name">CROATIA CONTROL</span></a>
       <a class="client-link" href="https://www.hgshop.hr" target="_blank" rel="noopener"><img class="client-logo client-logo-color" src="logos/hgspot.svg" alt="HGSPOT"></a>
@@ -1258,7 +1288,6 @@
 
 <!-- AI SECTION -->
 <section class="ai-section reveal" id="ai">
-  <div class="ai-bg-lines"></div>
   <div class="ai-inner">
     <div>
       <div class="ai-tag">
@@ -1365,20 +1394,21 @@
       <h2 data-i18n="svc.h2">Services built around your growth</h2>
     </div>
     <p class="section-desc" data-i18n="svc.desc">
-      We uncover problems, design solutions, and build digital products that perform — from the first pixel to the last line of code.
+      Four ways we plug into your business — from a full website build to ongoing SEO and senior technical guidance. Tell us where you are; we take it from there.
     </p>
   </div>
   <div class="services-grid">
     <div class="service-card">
       <div class="service-number">01</div>
-      <h3 data-i18n="svc.1.title">Website Development</h3>
-      <p data-i18n="svc.1.desc">Websites that focus on and drastically improve the metrics that matter — conversions, sales, and engagement. Tell us your goals, and we'll build you something that knocks it out of the park.</p>
+      <h3 data-i18n="svc.1.title">Web, Mobile & Desktop Apps</h3>
+      <p data-i18n="svc.1.desc">Websites, mobile apps, and native desktop software — built to move the metrics that matter: conversions, retention, and revenue. One senior team across every platform you ship on.</p>
       <div class="service-tags">
         <span class="service-tag">React / Next.js</span>
+        <span class="service-tag">React Native</span>
+        <span class="service-tag">iOS / Android</span>
+        <span class="service-tag">macOS Desktop</span>
         <span class="service-tag">WordPress</span>
         <span class="service-tag">Shopify</span>
-        <span class="service-tag">Magento 2</span>
-        <span class="service-tag">PWA</span>
       </div>
     </div>
     <div class="service-card">
@@ -1417,59 +1447,6 @@
   </div>
 </section>
 
-<!-- CAPABILITIES -->
-<section class="caps-section reveal">
-  <div class="section-label" data-i18n="caps.label">Our stack</div>
-  <div class="divider"></div>
-  <h2 data-i18n="caps.h2">Full-stack capabilities</h2>
-  <div class="caps-inner">
-    <div class="cap-group">
-      <h4>Design</h4>
-      <ul class="cap-list">
-        <li>Award-Winning Design</li>
-        <li>Responsive Web Design</li>
-        <li>UX Research & Design</li>
-        <li>User Interface Design</li>
-        <li>Illustrations & Branding</li>
-        <li>Creative Research</li>
-      </ul>
-    </div>
-    <div class="cap-group">
-      <h4>Development</h4>
-      <ul class="cap-list">
-        <li>Front-End Engineering</li>
-        <li>Back-End Development</li>
-        <li>WordPress & Shopify</li>
-        <li>Magento 2</li>
-        <li>Progressive Web Apps</li>
-        <li>CMS Integration</li>
-      </ul>
-    </div>
-    <div class="cap-group">
-      <h4>Strategy</h4>
-      <ul class="cap-list">
-        <li>Brand Development</li>
-        <li>Creative Lead</li>
-        <li>Growth Consulting</li>
-        <li>Digital Transformation</li>
-        <li>Customer Acquisition</li>
-        <li>Continuous Support</li>
-      </ul>
-    </div>
-    <div class="cap-group">
-      <h4>SEO & Analytics</h4>
-      <ul class="cap-list">
-        <li>Website Audit</li>
-        <li>Competitor Analysis</li>
-        <li>Keyword Research</li>
-        <li>On-Page & Off-Page SEO</li>
-        <li>Drive Engagement</li>
-        <li>Performance Tracking</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
 <!-- CERTIFICATIONS -->
 <section class="certs-section reveal" id="certs">
   <div class="section-label" data-i18n="certs.label">Credentials</div>
@@ -1479,22 +1456,6 @@
     Every professional on our team has a deep technical background — from hardware to high-level software. Our certifications reflect years of hands-on expertise.
   </p>
   <div class="certs-grid">
-    <div class="cert-card">
-      <div class="cert-name">Cisco Certified CCNA</div>
-      <div class="cert-issuer">Cisco Systems</div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-name">CCNP Routing & Switching</div>
-      <div class="cert-issuer">Cisco Systems</div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-name">ITIL Foundation</div>
-      <div class="cert-issuer">Axelos</div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-name">FCE — First Certificate in English</div>
-      <div class="cert-issuer">University of Cambridge</div>
-    </div>
     <div class="cert-card">
       <div class="cert-name">Google UX Design Certificate</div>
       <div class="cert-issuer">Google / Coursera</div>
@@ -1517,9 +1478,6 @@
 <!-- ABOUT -->
 <section class="about-section reveal" id="about">
   <div class="about-inner">
-    <div class="about-image" id="gameContainer">
-      <canvas id="breakoutCanvas"></canvas>
-    </div>
     <div>
       <div class="section-label" data-i18n="about.label">About Co Digit</div>
       <div class="divider"></div>
@@ -1614,13 +1572,14 @@
   const translations = {
     en: {
       'nav.services':'Capabilities','nav.ai':'AI-Powered','nav.about':'About','nav.certs':'Certifications','nav.cta':'Get in touch',
-      'hero.badge':'Zagreb, Croatia · Works US hours',
+      'hero.badge':'Zagreb, Croatia · Serving the US, UK & EU',
       'hero.h1':'We build web<br/>technology that<br/><em>actually grows</em><br/>your business.',
-      'hero.sub':'Senior web development and AI integration for US and EU companies — the technical depth of a top agency, at European rates, with working hours that overlap your day.',
+      'hero.sub':'Senior web, mobile, and desktop app development plus AI integration for US, UK, and EU companies — the technical depth of a top agency, at European rates.',
+      'clock.label':'Online in your hours','clock.note':'Full-time overlap with your workday — real-time collaboration, every business day.',
       'hero.cta1':'Start a project →','hero.cta2':'Our services',
       'hero.stat1':'Happy clients','hero.stat2':'Projects delivered','hero.stat3':'Certifications','hero.stat4':'Faster with AI',
-      'clients.label':'Trusted by companies across the EU and US',
-      'trust.1t':'Overlapping US hours','trust.1s':'We work an 8-hour window that overlaps the US East Coast workday — real-time, not next-day.',
+      'clients.label':'Trusted by companies across the US, UK and EU',
+      'trust.1t':'We work your hours','trust.1s':'Full-time inside your business hours — US, UK, or EU. Real-time collaboration through your workday, not next-day email.',
       'trust.2t':'Billed in USD','trust.2s':'Pay by card or US bank transfer (ACH). Senior EU talent at a fraction of US agency rates.',
       'trust.3t':'NDA standard','trust.3s':'Your code and IP are yours from day one. We sign your NDA before the first call.',
       'testi.label':'Client references','testi.h2':'What clients say about working with us','testi.desc':'Every quote below comes from a signed reference letter — not a paraphrase. Several of these relationships have run four and five years.',
@@ -1632,8 +1591,8 @@
       'ai.b3.title':'Better pricing for you','ai.b3.desc':'Efficiency gains translate directly to cost savings we pass on to you. You get enterprise-grade output at a competitive price — without cutting corners.',
       'ai.b4.title':'AI-driven SEO & content strategy','ai.b4.desc':'We use AI to analyze competitors, find keyword gaps, and craft content strategies that rank — turning your website into an actual revenue channel.',
       'ai.m1':'Faster delivery','ai.m2':'Lower cost','ai.m3':'Fewer bugs','ai.m4':'SEO results',
-      'svc.label':'What we do','svc.h2':'Services built around your growth','svc.desc':'We uncover problems, design solutions, and build digital products that perform — from the first pixel to the last line of code.',
-      'svc.1.title':'Website Development','svc.1.desc':"Websites that focus on and drastically improve the metrics that matter — conversions, sales, and engagement. Tell us your goals, and we'll build you something that knocks it out of the park.",
+      'svc.label':'What we do','svc.h2':'Services built around your growth','svc.desc':'Four ways we plug into your business — from a full website build to ongoing SEO and senior technical guidance. Tell us where you are; we take it from there.',
+      'svc.1.title':'Web, Mobile & Desktop Apps','svc.1.desc':'Websites, mobile apps, and native desktop software — built to move the metrics that matter: conversions, retention, and revenue. One senior team across every platform you ship on.',
       'svc.2.title':'Digital Transformation','svc.2.desc':"You've built an amazing brand — your digital presence should reflect that and take it to the next level. Every element will align perfectly with your brand voice and business objectives.",
       'svc.3.title':'Search Engine Optimization','svc.3.desc':'Data-driven SEO strategies that turn your website into an organic revenue channel. We handle everything from technical audits to content strategy and link building.',
       'svc.4.title':'Strategy & Consulting','svc.4.desc':'At whichever point in the project you are, we can contribute. Designing, developing, or consulting — we keep you moving forward and help you make the right decisions faster.',
@@ -1659,10 +1618,11 @@
       'hero.badge':'Zagreb, Hrvatska',
       'hero.h1':'Gradimo web<br/>tehnologiju koja<br/><em>stvarno potiče</em><br/>vaš rast.',
       'hero.sub':'Premošćujemo jaz između strategije i izvršenja — spajamo duboku tehničku stručnost s prilagođenim razvojem i AI-jem kako bismo isporučili digitalnu transformaciju koja donosi stvarne rezultate.',
+      'clock.label':'Online u vašim satima','clock.note':'Puno radno vrijeme preklopljeno s vašim danom — suradnja u stvarnom vremenu, svaki radni dan.',
       'hero.cta1':'Pokrenimo projekt →','hero.cta2':'Naše usluge',
       'hero.stat1':'Zadovoljnih klijenata','hero.stat2':'Isporučenih projekata','hero.stat3':'Certifikata','hero.stat4':'Brže uz AI',
-      'clients.label':'Klijenti koji nam vjeruju u Hrvatskoj i šire',
-      'trust.1t':'Radno vrijeme za SAD','trust.1s':'Radimo u 8-satnom prozoru koji se preklapa s radnim danom istočne obale SAD-a — u stvarnom vremenu.',
+      'clients.label':'Klijenti koji nam vjeruju u SAD-u, UK-u i EU',
+      'trust.1t':'Radimo u vašem radnom vremenu','trust.1s':'Puno radno vrijeme unutar vaših radnih sati — SAD, UK ili EU. Suradnja u stvarnom vremenu kroz vaš radni dan, ne sutradan.',
       'trust.2t':'Naplata u USD','trust.2s':'Plaćanje karticom ili bankovnom doznakom. Senior EU stručnost po dijelu cijene američkih agencija.',
       'trust.3t':'NDA standardno','trust.3s':'Vaš kod i intelektualno vlasništvo su vaši od prvog dana. NDA potpisujemo prije prvog poziva.',
       'testi.label':'Reference klijenata','testi.h2':'Što klijenti kažu o suradnji s nama','testi.desc':'Svaki citat dolazi iz potpisanog referentnog pisma — ne parafraza. Neke od ovih suradnji traju četiri i pet godina.',
@@ -1674,8 +1634,8 @@
       'ai.b3.title':'Bolje cijene za vas','ai.b3.desc':'Dobitci od učinkovitosti direktno se pretvaraju u uštedine koje prenosimo vama. Dobivate rezultate enterprise kvalitete po konkurentnoj cijeni — bez kompromisa.',
       'ai.b4.title':'AI-vođena SEO i sadržajna strategija','ai.b4.desc':'Koristimo AI za analizu konkurencije, pronalazak keyword praznina i kreiranje sadržajnih strategija koje se rangiraju — pretvarajući vašu stranicu u pravi prihodni kanal.',
       'ai.m1':'Brža isporuka','ai.m2':'Niži troškovi','ai.m3':'Manje grešaka','ai.m4':'SEO rezultati',
-      'svc.label':'Što radimo','svc.h2':'Usluge izgrađene oko vašeg rasta','svc.desc':'Otkrivamo probleme, dizajniramo rješenja i gradimo digitalne proizvode koji isporučuju — od prvog piksela do zadnjeg retka koda.',
-      'svc.1.title':'Izrada web stranica','svc.1.desc':'Web stranice koje se fokusiraju i drastično poboljšavaju metrike koje su važne — konverzije, prodaja i angažman. Recite nam svoje ciljeve, a mi ćemo izgraditi nešto što nadmašuje očekivanja.',
+      'svc.label':'Što radimo','svc.h2':'Usluge izgrađene oko vašeg rasta','svc.desc':'Četiri načina kako se uključujemo u vaše poslovanje — od kompletne izrade weba do kontinuiranog SEO-a i senior tehničkog vodstva. Recite nam gdje ste; preuzimamo odatle.',
+      'svc.1.title':'Web, mobilne i desktop aplikacije','svc.1.desc':'Web stranice, mobilne aplikacije i native desktop softver — građeni da pomiču metrike koje su važne: konverzije, zadržavanje i prihod. Jedan senior tim na svakoj platformi na kojoj radite.',
       'svc.2.title':'Digitalna transformacija','svc.2.desc':'Izgradili ste odličan brend — vaša digitalna prisutnost treba to odražavati i podići na novu razinu. Svaki element savršeno se usklađuje s glasom vašeg brenda i poslovnim ciljevima.',
       'svc.3.title':'Optimizacija za tražilice (SEO)','svc.3.desc':'Podatkama vođene SEO strategije koje vašu web stranicu pretvaraju u organski prihodni kanal. Brinemo o svemu — od tehničkih audita do sadržajne strategije i izgradnje linkova.',
       'svc.4.title':'Strategija i savjetovanje','svc.4.desc':'U kojoj god fazi projekta bili, možemo doprinijeti. Dizajn, razvoj ili savjetovanje — pomažemo vam napredovati i donositi prave odluke brže.',
@@ -1877,6 +1837,7 @@
 (function() {
   const container = document.getElementById('gameContainer');
   const canvas = document.getElementById('breakoutCanvas');
+  if (!container || !canvas) return; // game removed for cleaner design
   const ctx = canvas.getContext('2d');
   let running = false, raf, userControlled = false;
 
