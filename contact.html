@@ -502,6 +502,10 @@
         body
       });
       if (res.ok) {
+        // GA4 conversion event — fires only if analytics consent granted
+        if (typeof gtag === 'function') {
+          gtag('event', 'generate_lead', { form_name: 'contact', page_location: window.location.href });
+        }
         btn.textContent = t[lang].success;
         btn.style.background = '#28a745';
         form.reset();
