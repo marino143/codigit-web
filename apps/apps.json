@@ -1,5 +1,23 @@
 [
   {
+    "slug": "bridge",
+    "name": "Bridge",
+    "tagline_en": "One private console to run a dev agency — clients, revenue split, a unified calendar, and a daily-standup hub for your team.",
+    "tagline_hr": "Jedan privatni konzol za vođenje dev agencije — klijenti, podjela prihoda, objedinjeni kalendar i daily-standup hub za tim.",
+    "description_en": "Bridge is a single locked web console for a small dev agency or two-partner studio. Per-client revenue with the dev fee off the top and a profit split (5:5, 4:6, custom), dual-confirmation settlement (both partners confirm sent + received before it turns green), per-payment invoices and a full ledger. A unified calendar merges every client's Google or Outlook iCal feed into one subscribe link for all your devices. A daily-standup hub lets developers post Work / Blockers / Plan with screenshot previews, while role-based logins keep each developer to their own updates — enforced by Postgres row-level security, not just the UI. Dark mode, mobile-first, installable as an app. White-label: deploy your own on a free Supabase + Netlify in an afternoon. Live demo with sample data — no sign-up.",
+    "description_hr": "Bridge je jedan zaključani web konzol za malu dev agenciju ili studio s dva partnera. Prihod po klijentu uz dev fee s vrha i podjelu profita (5:5, 4:6, custom), naplata s dvostrukom potvrdom (oba partnera potvrde poslano + primljeno prije nego se zazeleni), računi po uplati i kompletan ledger. Objedinjeni kalendar spaja svaki klijentski Google ili Outlook iCal feed u jedan link za sve uređaje. Daily-standup hub gdje developeri pišu Što / Blokeri / Plan uz preglede screenshotova, dok prijave po ulogama drže svakog developera na njegovim unosima — kroz Postgres row-level security, ne samo UI. Dark mode, mobile-first, instalira se kao aplikacija. White-label: svoju instancu digneš na besplatnom Supabaseu + Netlifyju u jedno popodne. Demo uživo s uzorcima podataka — bez registracije.",
+    "category": "Productivity",
+    "platform": "Web app",
+    "version": "1.0",
+    "release_date": "2026-06-18",
+    "icon": "🔗",
+    "download_url": "https://bridge-client-console-demo.netlify.app",
+    "demo_url": "https://bridge-client-console-demo.netlify.app",
+    "buymeacoffee_url": "https://buymeacoffee.com/marino143",
+    "linkedin_posts": [],
+    "featured": true
+  },
+  {
     "slug": "libro",
     "name": "libro",
     "tagline_en": "Local personal accounting. Scans your folder, matches payments to invoices, AI-parses unknown PDFs. No SaaS.",
