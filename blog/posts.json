@@ -1,5 +1,15 @@
 [
   {
+    "slug": "console-for-a-two-person-studio",
+    "title_en": "Why We Built Our Own Console to Run a Two-Person Dev Studio",
+    "title_hr": "Zašto smo izgradili vlastiti konzol za vođenje dvočlanog dev studija",
+    "excerpt_en": "Our whole back office lived in a Google Sheet until the day it gave two partners two different numbers. What we learned building Bridge — the console that replaced it — about money, calendars, and trusting the database over the UI.",
+    "excerpt_hr": "Cijeli naš back office živio je u Google Sheetu dok jednog dana dvojici partnera nije dao dva različita broja. Što smo naučili gradeći Bridge — konzol koji ga je zamijenio — o novcu, kalendarima i povjerenju u bazu umjesto u UI.",
+    "date": "2026-06-29",
+    "tags": ["Build in Public", "Internal Tools"],
+    "author": "Co Digit"
+  },
+  {
     "slug": "the-robots-txt-mistake",
     "title_en": "The robots.txt Mistake That's Hiding Your Pages From Google",
     "title_hr": "Greška u robots.txt koja skriva vaše stranice od Googlea",
