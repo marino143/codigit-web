@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    // Consent Mode v2: default deny analytics + ads until user opts in.
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied',
+      'wait_for_update': 500
+    });
+    try {
+      if (localStorage.getItem('cookieConsent') === 'accepted') {
+        gtag('consent', 'update', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      }
+    } catch(e) {}
+    gtag('js', new Date());
+    gtag('config', 'G-T97BQ3VRV1');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>macOS App Development Company — Native Swift & SwiftUI Apps | Co Digit</title>
+  <meta name="description" content="Co Digit is a macOS app development company building native Swift & SwiftUI apps — menu bar utilities, developer tools, and full desktop products. Senior European team working US hours, billed in USD. We ship our own Mac apps." />
+  <link rel="canonical" href="https://codigit.io/services/macos-app-development" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://codigit.io/services/macos-app-development" />
+  <meta property="og:title" content="macOS App Development Company — Native Swift & SwiftUI Apps | Co Digit" />
+  <meta property="og:description" content="Native Mac apps in Swift & SwiftUI — menu bar utilities, developer tools, full desktop products. Senior EU team, US working hours. We ship our own Mac apps: download them and judge the quality yourself." />
+  <meta property="og:image" content="https://codigit.io/og-image.png" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Co Digit" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="macOS App Development Company — Native Swift & SwiftUI Apps | Co Digit" />
+  <meta name="twitter:description" content="Native Mac apps in Swift & SwiftUI. Senior EU team, US working hours, billed in USD. We ship our own Mac apps — download them and judge the quality yourself." />
+  <meta name="twitter:image" content="https://codigit.io/og-image.png" />
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Co Digit — macOS App Development",
+    "url": "https://codigit.io/services/macos-app-development",
+    "image": "https://codigit.io/og-image.png",
+    "description": "Native macOS app development in Swift and SwiftUI: menu bar utilities, developer tools, Electron-to-native rewrites, and AI-powered Mac apps.",
+    "address": { "@type": "PostalAddress", "streetAddress": "Obrež 20", "addressLocality": "Zagreb", "addressCountry": "HR" },
+    "email": "marino@codigit.io",
+    "areaServed": ["United States", "United Kingdom", "European Union"],
+    "parentOrganization": { "@type": "Organization", "name": "Co Digit d.o.o.", "url": "https://codigit.io/" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do you build Mac apps in Swift or Electron?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Native Swift and SwiftUI by default. Native apps launch instantly, use a fraction of the memory, and integrate properly with the menu bar, notifications, Shortcuts, and Keychain. If your product genuinely fits Electron better — for example a large cross-platform web codebase — we will tell you honestly on the first call." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you support both Apple Silicon and Intel Macs?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. We build Apple Silicon-first and ship universal binaries that run natively on both Apple Silicon and Intel Macs when your user base requires it." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you handle App Store review, sandboxing, and notarization?",
+        "acceptedAnswer": { "@type": "Answer", "text": "End to end. Sandboxing and entitlements, App Store submission and review, or notarized direct distribution with Sparkle auto-updates if you prefer to sell outside the App Store." }
+      },
+      {
+        "@type": "Question",
+        "name": "What time zone does your team work in?",
+        "acceptedAnswer": { "@type": "Answer", "text": "We work a schedule with full-time overlap with the US East Coast working day (8:00–16:00 ET) and UK business hours — real-time standups, Slack, and code review, not next-day email." }
+      },
+      {
+        "@type": "Question",
+        "name": "How does pricing work for a macOS app project?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A 30-minute scoping call, then a fixed quote within 48 hours. Billed in USD by card or US bank transfer (ACH). Senior European engineering at European rates — typically a fraction of an equivalent US agency." }
+      },
+      {
+        "@type": "Question",
+        "name": "Who owns the code?",
+        "acceptedAnswer": { "@type": "Answer", "text": "You do, from the first commit. We sign your NDA before the first call, and all IP transfers to you as part of the standard contract." }
+      }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
+      --border: #222222; --text: #f0f0f0; --muted: #888;
+      --accent: #e63946; --white: #ffffff;
+      --nav-bg: rgba(10,10,10,0.9);
+    }
+    [data-theme="light"] {
+      --bg: #ffffff; --bg2: #f4f4f5; --bg3: #e8e8ea;
+      --border: #e0e0e0; --text: #111111; --muted: #666666;
+      --white: #0a0a0a; --nav-bg: rgba(255,255,255,0.95);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .logo-dot { display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
+    @keyframes codigit-blink { 0%, 100% { color: var(--white); } 50% { color: var(--accent); } }
+    @media (prefers-reduced-motion: reduce) { .logo-dot { animation: none; } }
+    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; letter-spacing: 0.3px; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 18px; border-radius: 6px; font-weight: 600 !important; transition: opacity 0.2s !important; font-size: 13px !important; }
+    .nav-cta:hover { opacity: 0.85; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .theme-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--muted); font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .theme-btn:hover { color: var(--text); border-color: var(--muted); }
+
+    /* LAYOUT */
+    section { padding: 90px max(24px, calc((100% - 1100px) / 2)); }
+    .section-kicker {
+      font-size: 12px; font-weight: 700; letter-spacing: 2px;
+      color: var(--accent); text-transform: uppercase; margin-bottom: 14px;
+    }
+    h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 800; letter-spacing: -1px; color: var(--white); line-height: 1.15; margin-bottom: 14px; }
+    .section-sub { font-size: 16px; color: var(--muted); max-width: 680px; }
+
+    /* HERO */
+    .hero { padding: 110px max(24px, calc((100% - 1100px) / 2)) 70px; border-bottom: 1px solid var(--border); }
+    .hero h1 { font-size: clamp(34px, 6vw, 60px); font-weight: 900; letter-spacing: -2px; line-height: 1.05; color: var(--white); margin-bottom: 22px; max-width: 800px; }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero-sub { font-size: 18px; color: var(--muted); max-width: 640px; margin-bottom: 34px; line-height: 1.7; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 38px; }
+    .btn { display: inline-block; padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-outline { border: 1px solid var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--muted); }
+    .hero-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      font-size: 12.5px; font-weight: 600; color: var(--muted);
+      border: 1px solid var(--border); border-radius: 100px; padding: 7px 14px;
+    }
+    .chip strong { color: var(--white); font-weight: 700; }
+
+    /* PROOF — our own apps */
+    .proof { background: var(--bg2); border-bottom: 1px solid var(--border); }
+    .apps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+    .app-card {
+      display: block; text-decoration: none;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 14px;
+      padding: 24px; transition: border-color 0.2s, transform 0.2s;
+    }
+    .app-card:hover { border-color: var(--muted); transform: translateY(-2px); }
+    .app-card h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .app-card p { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+    .proof-note { margin-top: 26px; font-size: 14px; color: var(--muted); }
+    .proof-note a { color: var(--text); }
+
+    /* WHAT WE BUILD */
+    .build-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+    .build-card { border: 1px solid var(--border); border-radius: 14px; padding: 26px; background: var(--bg2); }
+    .build-card h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+    .build-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* WHY NATIVE */
+    .native { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .native-cols { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: start; margin-top: 34px; }
+    .native ul { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+    .native li { padding-left: 26px; position: relative; font-size: 15px; color: var(--text); line-height: 1.65; }
+    .native li::before { content: '—'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+    .native li strong { color: var(--white); }
+    .stat-box { border: 1px solid var(--border); border-radius: 14px; background: var(--bg); padding: 8px; display: grid; grid-template-columns: 1fr 1fr; }
+    .stat-cell { padding: 22px; text-align: center; }
+    .stat-cell .n { font-size: 26px; font-weight: 800; color: var(--white); letter-spacing: -1px; }
+    .stat-cell .l { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .native-honest { margin-top: 22px; font-size: 13.5px; color: var(--muted); font-style: italic; }
+
+    /* PROCESS */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
+    .step { border: 1px solid var(--border); border-radius: 14px; padding: 24px; background: var(--bg2); }
+    .step .num { font-family: 'Courier New', monospace; font-size: 13px; color: var(--accent); font-weight: 700; margin-bottom: 10px; }
+    .step h3 { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .step p { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+
+    /* TRUST */
+    .trust-band { display: flex; flex-wrap: wrap; align-items: stretch; margin-top: 40px; border: 1px solid var(--border); border-radius: 14px; background: var(--bg2); }
+    .trust-item { flex: 1; min-width: 220px; padding: 26px 28px; border-left: 1px solid var(--border); }
+    .trust-item:first-child { border-left: none; }
+    .trust-item-title { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .trust-item-sub { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+    /* FAQ */
+    .faq-list { margin-top: 40px; max-width: 800px; }
+    details { border-bottom: 1px solid var(--border); padding: 22px 0; }
+    details:first-of-type { border-top: 1px solid var(--border); }
+    summary { font-size: 16px; font-weight: 600; color: var(--white); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '+'; color: var(--muted); font-size: 20px; font-weight: 400; flex-shrink: 0; }
+    details[open] summary::after { content: '–'; }
+    details p { margin-top: 14px; font-size: 14.5px; color: var(--muted); line-height: 1.7; max-width: 720px; }
+
+    /* FINAL CTA */
+    .final { text-align: center; }
+    .final h2 { margin-bottom: 12px; }
+    .final .section-sub { margin: 0 auto 30px; }
+
+    /* FOOTER */
+    footer {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      padding: 32px max(24px, calc((100% - 1100px) / 2));
+      border-top: 1px solid var(--border); background: var(--bg2);
+    }
+    .footer-logo { font-size: 14px; font-weight: 800; color: var(--white); }
+    .footer-logo span { color: var(--accent); }
+    footer p { font-size: 12px; color: #555; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: #555; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--muted); }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .apps-grid, .build-grid { grid-template-columns: 1fr; }
+      .native-cols { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .trust-item { flex-basis: 100%; border-left: none; border-top: 1px solid var(--border); }
+      .trust-item:first-child { border-top: none; }
+    }
+    @media (max-width: 540px) { .steps { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
+  <ul class="nav-links">
+    <li><a href="/#services">Capabilities</a></li>
+    <li><a href="/#ai">AI-Powered</a></li>
+    <li><a href="/services.html">Services</a></li>
+    <li><a href="/blog/">Notes</a></li>
+    <li><a href="/apps/">Apps</a></li>
+    <li><a href="/contact.html" class="nav-cta">Get in touch</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="section-kicker">macOS · Swift · SwiftUI</div>
+  <h1>macOS app development, <em>done natively.</em></h1>
+  <p class="hero-sub">
+    We're a macOS app development company that builds native Mac apps in Swift and SwiftUI —
+    menu bar utilities, developer tools, and full desktop products. Senior European engineers,
+    full-time overlap with your US or UK workday, and a portfolio you can actually download.
+  </p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="/contact.html?package=macOS%20App%20Development">Start your Mac app →</a>
+    <a class="btn btn-outline" href="#proof">See the apps we ship</a>
+  </div>
+  <div class="hero-chips">
+    <span class="chip"><strong>100% native Swift</strong> — no Electron by default</span>
+    <span class="chip"><strong>US & UK hours</strong> — real-time collaboration</span>
+    <span class="chip"><strong>Billed in USD</strong> — card or ACH</span>
+    <span class="chip"><strong>NDA first</strong> — your IP from day one</span>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="proof" id="proof">
+  <div class="section-kicker">Proof, not promises</div>
+  <h2>We ship our own Mac apps.</h2>
+  <p class="section-sub">
+    Most agencies show you mockups. We ship production macOS software under our own brand —
+    download any of these, put them in your menu bar, and judge the code quality yourself.
+  </p>
+  <div class="apps-grid">
+    <a class="app-card" href="/apps/activitybar.html">
+      <h3>ActivityBar</h3>
+      <p>Live CPU, RAM and SSD usage in your macOS menu bar. ~45 MB RAM, zero bloat.</p>
+    </a>
+    <a class="app-card" href="/apps/native-browser.html">
+      <h3>Native Browser</h3>
+      <p>A lightweight, privacy-first browser built natively for Apple Silicon.</p>
+    </a>
+    <a class="app-card" href="/apps/libro.html">
+      <h3>libro</h3>
+      <p>Local personal accounting. Scans a folder, matches payments to invoices, AI-parses PDFs. No SaaS.</p>
+    </a>
+    <a class="app-card" href="/apps/hideicons.html">
+      <h3>Hide Icons</h3>
+      <p>Hide your macOS menu bar icons with one click. No private APIs, no Accessibility permission.</p>
+    </a>
+    <a class="app-card" href="/apps/dockguard.html">
+      <h3>DockGuard</h3>
+      <p>Lock your macOS Dock so it never moves, resizes, or rearranges again.</p>
+    </a>
+    <a class="app-card" href="/apps/stayawake.html">
+      <h3>StayAwake</h3>
+      <p>Keep your Mac awake when you need it. One click in your menu bar.</p>
+    </a>
+  </div>
+  <p class="proof-note">Several of these are <a href="/apps/">free and open source</a> — read our Swift before you hire us. We also build <a href="/apps/bridge.html">Bridge</a>, the console we run our own studio on.</p>
+</section>
+
+<!-- WHAT WE BUILD -->
+<section>
+  <div class="section-kicker">What we build</div>
+  <h2>From menu bar utility to full desktop product.</h2>
+  <div class="build-grid">
+    <div class="build-card">
+      <h3>Menu bar utilities</h3>
+      <p>Always-on tools that live in the macOS menu bar — our specialty. Five of our own apps live there.</p>
+    </div>
+    <div class="build-card">
+      <h3>Productivity & developer tools</h3>
+      <p>Focused desktop tools for teams and professionals: file automation, monitoring, internal workflows.</p>
+    </div>
+    <div class="build-card">
+      <h3>Electron-to-native rewrites</h3>
+      <p>Cut memory usage by 5–10×, fix launch times, and make your app feel at home on macOS.</p>
+    </div>
+    <div class="build-card">
+      <h3>AI-powered Mac apps</h3>
+      <p>LLM features done right on the desktop — local models or API-backed, with privacy-first design.</p>
+    </div>
+    <div class="build-card">
+      <h3>Internal tools for teams</h3>
+      <p>The boring-but-critical software your company runs on, built fast and maintained long-term.</p>
+    </div>
+    <div class="build-card">
+      <h3>Distribution, done right</h3>
+      <p>App Store submission and review, or notarized direct download with Sparkle auto-updates.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY NATIVE -->
+<section class="native">
+  <div class="section-kicker">Why native</div>
+  <h2>Swift beats Electron on the Mac.</h2>
+  <div class="native-cols">
+    <ul>
+      <li><strong>A fraction of the memory.</strong> Our ActivityBar runs in ~45 MB of RAM. Typical Electron equivalents idle at 300–500 MB.</li>
+      <li><strong>Instant launch, native feel.</strong> Real menus, keyboard shortcuts, drag & drop, and windows that behave the way Mac users expect.</li>
+      <li><strong>Deep OS integration.</strong> Menu bar, Notifications, Shortcuts, Keychain, Login Items, Universal Clipboard — first-class, not bolted on.</li>
+      <li><strong>Apple Silicon first.</strong> Built and profiled on M-series chips, shipped as universal binaries when you need Intel too.</li>
+      <li><strong>Smaller, safer binaries.</strong> No bundled Chromium to patch — less attack surface, faster updates, happier IT departments.</li>
+    </ul>
+    <div>
+      <div class="stat-box">
+        <div class="stat-cell"><div class="n">~45 MB</div><div class="l">RAM — our menu bar apps</div></div>
+        <div class="stat-cell"><div class="n">0</div><div class="l">Electron in our stack</div></div>
+        <div class="stat-cell"><div class="n">7</div><div class="l">Mac apps shipped & live</div></div>
+        <div class="stat-cell"><div class="n">100%</div><div class="l">Swift & SwiftUI</div></div>
+      </div>
+      <p class="native-honest">When Electron genuinely fits better — a large cross-platform web codebase, for instance — we'll tell you on the first call. It's your product, not our ideology.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section>
+  <div class="section-kicker">How it works</div>
+  <h2>Scoped in days, shipped in weeks.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="num">01</div>
+      <h3>Scoping call</h3>
+      <p>30 minutes. We map what you need, flag risks, and answer the Swift-vs-Electron question honestly.</p>
+    </div>
+    <div class="step">
+      <div class="num">02</div>
+      <h3>Fixed quote in 48h</h3>
+      <p>A written scope with a fixed price in USD. No hourly meter, no surprises.</p>
+    </div>
+    <div class="step">
+      <div class="num">03</div>
+      <h3>Weekly builds</h3>
+      <p>A signed, notarized build in your hands every week — feedback goes straight into the next one.</p>
+    </div>
+    <div class="step">
+      <div class="num">04</div>
+      <h3>Launch & support</h3>
+      <p>App Store review or direct distribution with auto-updates, plus post-launch support.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section style="padding-top: 0;">
+  <div class="section-kicker">Why Co Digit</div>
+  <h2>Senior EU engineering, on your clock.</h2>
+  <div class="trust-band">
+    <div class="trust-item">
+      <div class="trust-item-title">We work your hours</div>
+      <div class="trust-item-sub">Full-time overlap with the US East Coast day (8:00–16:00 ET) and UK hours. Standups, Slack, and reviews in real time.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-item-title">European rates</div>
+      <div class="trust-item-sub">The technical depth of a top agency at a fraction of US agency pricing. Billed in USD, card or ACH.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-item-title">Direct line to the engineer</div>
+      <div class="trust-item-sub">You talk to the person writing the Swift — no project-manager telephone game.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-item-title">NDA standard</div>
+      <div class="trust-item-sub">Signed before the first call. Your code and IP are yours from the first commit.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="padding-top: 30px;">
+  <div class="section-kicker">FAQ</div>
+  <h2>Questions US founders ask us.</h2>
+  <div class="faq-list">
+    <details>
+      <summary>Do you build in Swift or Electron?</summary>
+      <p>Native Swift and SwiftUI by default. Native apps launch instantly, use a fraction of the memory, and integrate properly with the menu bar, notifications, Shortcuts, and Keychain. If your product genuinely fits Electron better — a large cross-platform web codebase, say — we'll tell you honestly on the first call.</p>
+    </details>
+    <details>
+      <summary>Do you support both Apple Silicon and Intel Macs?</summary>
+      <p>Yes. We build Apple Silicon-first and ship universal binaries that also run natively on Intel Macs when your user base requires it.</p>
+    </details>
+    <details>
+      <summary>Can you handle App Store review, sandboxing, and notarization?</summary>
+      <p>End to end: sandboxing and entitlements, App Store submission and review — or notarized direct distribution with Sparkle auto-updates if you'd rather sell outside the App Store.</p>
+    </details>
+    <details>
+      <summary>What time zone do you work in?</summary>
+      <p>We're based in Zagreb, Croatia (CET), and work a schedule with full-time overlap with the US East Coast working day (8:00–16:00 ET) and UK business hours — real-time standups and code review, not next-day email.</p>
+    </details>
+    <details>
+      <summary>How does pricing work?</summary>
+      <p>A 30-minute scoping call, then a fixed quote within 48 hours. Billed in USD by card or US bank transfer (ACH). Most focused menu-bar utilities ship in 3–6 weeks; larger products get a milestone plan.</p>
+    </details>
+    <details>
+      <summary>Who owns the code?</summary>
+      <p>You do, from the first commit. We sign your NDA before the first call, and all IP transfers to you as part of the standard contract.</p>
+    </details>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final" style="border-top: 1px solid var(--border); background: var(--bg2);">
+  <h2>Have a Mac app in mind?</h2>
+  <p class="section-sub">Tell us what it should do. You'll get a reply from the engineer who'd build it — within one business day, in your time zone.</p>
+  <a class="btn btn-primary" href="/contact.html?package=macOS%20App%20Development">Start your Mac app →</a>
+</section>
+
+<footer>
+  <div class="footer-logo">CO<span class="logo-dot">.</span>DIGIT</div>
+  <p>&copy; 2026 Co Digit d.o.o. &middot; Zagreb, Croatia</p>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="/blog/">Notes</a>
+    <a href="/apps/">Apps</a>
+    <a href="/cookie-policy.html">Cookie Policy</a>
+    <a href="/privacy-policy.html">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle (shared convention with the rest of the site)
+  const themeBtn = document.getElementById('themeBtn');
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+  themeBtn.addEventListener('click', () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (isLight) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', 'light');
+    }
+  });
+</script>
+
+</body>
+</html>
