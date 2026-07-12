@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kamp Slapić — Kamp na rijeci Mrežnici | Duga Resa, Hrvatska</title>
+<meta name="description" content="Obiteljski kamp s 4 zvjezdice na obali rijeke Mrežnice. Parcele, mobilne kućice i drveni šatori uz rijeku. Bazen, restoran, kanui i plaža — 50 km od Zagreba.">
+<link rel="canonical" href="https://www.campslapic.hr/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kamp Slapić — Kamp na rijeci Mrežnici">
+<meta property="og:description" content="Obiteljski kamp s 4 zvjezdice na obali rijeke Mrežnice. Najbolji mali kamp u Hrvatskoj 2010. – 2019.">
+<meta property="og:image" content="https://www.campslapic.hr/img/hero.jpg">
+<meta property="og:locale" content="hr_HR">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Campground",
+  "name": "Kamp Slapić",
+  "description": "Obiteljski kamp s 4 zvjezdice na obali rijeke Mrežnice.",
+  "url": "https://www.campslapic.hr/",
+  "telephone": "+385988606 01",
+  "email": "info@campslapic.hr",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Mrežnički Brig bb",
+    "addressLocality": "Duga Resa",
+    "addressCountry": "HR"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 45.4074, "longitude": 15.5017 },
+  "starRating": { "@type": "Rating", "ratingValue": "4" },
+  "petsAllowed": true
+}
+</script>
+<style>
+:root{
+  --green-950:#122b21;
+  --green-900:#1b4332;
+  --green-700:#2d6a4f;
+  --green-500:#40916c;
+  --teal:#2ec4b6;
+  --teal-dark:#1a9e91;
+  --sand:#faf7f1;
+  --sand-deep:#f2ecdf;
+  --ink:#22302b;
+  --muted:#5c6b64;
+  --wood:#b08968;
+  --white:#ffffff;
+  --radius:18px;
+  --shadow:0 10px 40px rgba(18,43,33,.10);
+  --font-display:"Fraunces",Georgia,serif;
+  --font-body:"Inter",system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);color:var(--ink);background:var(--sand);line-height:1.65;font-size:16px}
+img{max-width:100%;display:block}
+a{color:var(--green-700)}
+.container{width:min(1160px,92%);margin:0 auto}
+h1,h2,h3{font-family:var(--font-display);color:var(--green-900);line-height:1.15}
+h2{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:600}
+h3{font-size:1.35rem;font-weight:600}
+.section{padding:clamp(3.5rem,8vw,6.5rem) 0}
+.kicker{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:.9rem}
+.lead{font-size:1.1rem;color:var(--muted);max-width:46rem}
+.section-head{max-width:52rem;margin-bottom:clamp(2rem,4vw,3.2rem)}
+
+/* Header */
+.header{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .3s,box-shadow .3s;padding:.9rem 0}
+.header.scrolled{background:rgba(250,247,241,.95);backdrop-filter:blur(12px);box-shadow:0 2px 20px rgba(18,43,33,.08)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.brand{display:flex;align-items:center;gap:.65rem;text-decoration:none}
+.brand svg{width:40px;height:40px}
+.brand-name{font-family:var(--font-display);font-weight:700;font-size:1.3rem;color:#fff;transition:color .3s}
+.header.scrolled .brand-name{color:var(--green-900)}
+.nav{display:flex;align-items:center;gap:1.6rem}
+.nav a{font-size:.92rem;font-weight:600;text-decoration:none;color:rgba(255,255,255,.92);transition:color .2s}
+.header.scrolled .nav a{color:var(--ink)}
+.nav a:hover{color:var(--teal)}
+.nav .btn{color:#fff}
+.nav-toggle{display:none;background:none;border:0;cursor:pointer;padding:.4rem;z-index:110}
+.nav-toggle span{display:block;width:24px;height:2px;background:#fff;margin:5px 0;transition:.3s}
+.header.scrolled .nav-toggle span{background:var(--green-900)}
+
+.btn{display:inline-block;padding:.8rem 1.7rem;border-radius:999px;font-weight:600;font-size:.95rem;text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s;cursor:pointer;border:0}
+.btn-primary{background:var(--teal);color:#fff;box-shadow:0 6px 20px rgba(46,196,182,.35)}
+.btn-primary:hover{background:var(--teal-dark);transform:translateY(-2px)}
+.btn-outline{border:2px solid rgba(255,255,255,.7);color:#fff;background:transparent}
+.btn-outline:hover{background:rgba(255,255,255,.15)}
+
+/* Hero */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;color:#fff;isolation:isolate;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:-2;background:url("img/hero.jpg") center/cover no-repeat}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(18,43,33,.55) 0%,rgba(18,43,33,.25) 45%,rgba(18,43,33,.72) 100%)}
+.hero-content{padding:8rem 0 6rem;max-width:44rem}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(6px);padding:.45rem 1.1rem;border-radius:999px;font-size:.85rem;font-weight:600;margin-bottom:1.4rem}
+.hero h1{color:#fff;font-size:clamp(2.6rem,6.5vw,4.4rem);font-weight:600;margin-bottom:1.2rem;text-wrap:balance}
+.hero p{font-size:clamp(1.05rem,2vw,1.25rem);color:rgba(255,255,255,.9);max-width:36rem;margin-bottom:2.2rem}
+.hero-actions{display:flex;gap:.9rem;flex-wrap:wrap}
+.hero-scroll{position:absolute;bottom:1.6rem;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.75);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;animation:float 2.4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+/* Awards strip */
+.awards{background:var(--green-900);color:#fff;padding:1.3rem 0}
+.awards-inner{display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem 2.6rem}
+.award{display:flex;align-items:center;gap:.6rem;font-size:.88rem;font-weight:500;color:rgba(255,255,255,.9)}
+.award svg{width:20px;height:20px;flex:none;color:#ffd166}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-top:2.6rem}
+.stat{background:#fff;border-radius:var(--radius);padding:1.4rem 1.2rem;text-align:center;box-shadow:var(--shadow)}
+.stat b{display:block;font-family:var(--font-display);font-size:2rem;color:var(--green-700)}
+.stat span{font-size:.85rem;color:var(--muted)}
+
+.about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+.about-media{position:relative}
+.about-media img{border-radius:var(--radius);box-shadow:var(--shadow);width:100%;height:100%;object-fit:cover}
+.about-media .floating{position:absolute;right:-8%;bottom:-12%;width:52%;border:6px solid var(--sand);border-radius:var(--radius);box-shadow:var(--shadow)}
+
+/* Amenities */
+.amenities{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;margin-top:1.5rem}
+.amenity{display:flex;align-items:center;gap:.9rem;background:#fff;border-radius:14px;padding:1rem 1.1rem;box-shadow:0 4px 16px rgba(18,43,33,.06)}
+.amenity svg{width:26px;height:26px;flex:none;color:var(--teal-dark)}
+.amenity span{font-size:.92rem;font-weight:500}
+
+/* Accommodation cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.6rem}
+.card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:transform .25s}
+.card:hover{transform:translateY(-6px)}
+.card-media{position:relative;aspect-ratio:3/2;overflow:hidden}
+.card-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.card:hover .card-media img{transform:scale(1.05)}
+.card-tag{position:absolute;top:1rem;left:1rem;background:rgba(18,43,33,.75);backdrop-filter:blur(4px);color:#fff;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.35rem .85rem;border-radius:999px}
+.card-body{padding:1.6rem;display:flex;flex-direction:column;gap:.8rem;flex:1}
+.card-body p{color:var(--muted);font-size:.95rem;flex:1}
+.card-meta{display:flex;flex-wrap:wrap;gap:.45rem}
+.chip{background:var(--sand-deep);border-radius:999px;padding:.3rem .8rem;font-size:.78rem;font-weight:600;color:var(--green-700)}
+.card-price{font-weight:700;color:var(--green-900)}
+.card-price small{font-weight:500;color:var(--muted)}
+
+/* Split sections */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+.split-media{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.split-media img{border-radius:var(--radius);box-shadow:var(--shadow);width:100%;height:100%;object-fit:cover;aspect-ratio:4/5}
+.split-media img:last-child{margin-top:2.2rem}
+.feature-list{list-style:none;margin-top:1.4rem;display:grid;gap:.75rem}
+.feature-list li{display:flex;gap:.7rem;align-items:flex-start;font-size:.98rem}
+.feature-list svg{width:21px;height:21px;flex:none;color:var(--teal-dark);margin-top:.15rem}
+
+.band{background:var(--green-900);color:#fff}
+.band h2,.band h3{color:#fff}
+.band .lead{color:rgba(255,255,255,.78)}
+.band .kicker{color:var(--teal)}
+
+/* Gallery */
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:190px;gap:.9rem}
+.gallery a{position:relative;border-radius:14px;overflow:hidden;display:block}
+.gallery img{width:100%;height:100%;object-fit:cover;transition:transform .45s}
+.gallery a:hover img{transform:scale(1.06)}
+.gallery a:nth-child(1),.gallery a:nth-child(6){grid-column:span 2;grid-row:span 2}
+dialog.lightbox{border:0;background:rgba(12,20,17,.92);width:100vw;height:100vh;max-width:100vw;max-height:100vh;display:grid;place-items:center;padding:2rem}
+dialog.lightbox:not([open]){display:none}
+dialog.lightbox img{max-width:min(1000px,92vw);max-height:86vh;border-radius:12px}
+dialog.lightbox button{position:fixed;top:1.2rem;right:1.6rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:1.4rem;line-height:1;width:44px;height:44px;border-radius:50%;cursor:pointer}
+
+/* Pricing */
+.price-note{font-size:.9rem;color:var(--muted);margin-bottom:2rem}
+.price-block{margin-bottom:2.6rem}
+.price-block h3{margin-bottom:1rem}
+.table-wrap{overflow-x:auto;border-radius:var(--radius);box-shadow:var(--shadow);background:#fff}
+table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:640px}
+th,td{padding:.85rem 1.1rem;text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{background:var(--green-900);color:#fff;font-weight:600;font-size:.8rem;letter-spacing:.05em}
+tbody tr:nth-child(even){background:var(--sand)}
+tbody td:first-child{font-weight:600;color:var(--green-900)}
+
+/* Contact */
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(2rem,4vw,3.5rem);align-items:stretch}
+.contact-info{display:grid;gap:1.1rem;align-content:start}
+.contact-item{display:flex;gap:1rem;align-items:flex-start;background:#fff;padding:1.2rem 1.3rem;border-radius:14px;box-shadow:0 4px 16px rgba(18,43,33,.06)}
+.contact-item svg{width:24px;height:24px;flex:none;color:var(--teal-dark);margin-top:.2rem}
+.contact-item b{display:block;font-size:.95rem;color:var(--green-900)}
+.contact-item a{text-decoration:none;font-weight:600}
+.contact-item p,.contact-item span{font-size:.92rem;color:var(--muted)}
+.map-wrap{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);min-height:420px}
+.map-wrap iframe{width:100%;height:100%;min-height:420px;border:0;display:block}
+
+/* Footer */
+.footer{background:var(--green-950);color:rgba(255,255,255,.75);padding:3rem 0 2rem;font-size:.9rem}
+.footer-inner{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between;align-items:center}
+.footer .brand-name{color:#fff}
+.footer a{color:rgba(255,255,255,.85)}
+
+@media (max-width:900px){
+  .about-grid,.split,.contact-grid{grid-template-columns:1fr}
+  .about-media .floating{display:none}
+  .gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px}
+  .gallery a:nth-child(1),.gallery a:nth-child(6){grid-column:span 2;grid-row:span 1}
+  .nav{position:fixed;inset:0;background:var(--green-950);flex-direction:column;justify-content:center;gap:2rem;transform:translateX(100%);transition:transform .35s}
+  .nav.open{transform:translateX(0)}
+  .nav a{color:#fff !important;font-size:1.25rem}
+  .nav-toggle{display:block}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .nav-toggle.open span{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<header class="header" id="top">
+  <div class="container header-inner">
+    <a class="brand" href="#top" aria-label="Kamp Slapić — početna">
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <circle cx="24" cy="24" r="24" fill="#2ec4b6"/>
+        <path d="M24 10 10 36h10l4-8 4 8h10L24 10Z" fill="#fff"/>
+        <path d="M8 38c3-2 6-2 9 0s6 2 9 0 6-2 9 0 4.5 1.5 5 1.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+      </svg>
+      <span class="brand-name">Kamp Slapić</span>
+    </a>
+    <button class="nav-toggle" aria-label="Izbornik" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav class="nav">
+      <a href="#smjestaj">Smještaj</a>
+      <a href="#restoran">Restoran</a>
+      <a href="#rekreacija">Rekreacija</a>
+      <a href="#galerija">Galerija</a>
+      <a href="#cjenik">Cjenik</a>
+      <a href="#kontakt">Kontakt</a>
+      <a class="btn btn-primary" href="mailto:info@campslapic.hr?subject=Rezervacija%20—%20Kamp%20Slapi%C4%87">Rezerviraj</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container">
+    <div class="hero-content">
+      <span class="eyebrow">★★★★ &nbsp;Obiteljski kamp na rijeci Mrežnici</span>
+      <h1>Vaš odmor na jednoj od najljepših hrvatskih rijeka</h1>
+      <p>Parcele u hladu stoljetnih stabala, mobilne kućice i drveni šatori iznad same rijeke. Kristalno čista Mrežnica, slapovi, kanu i miran san — samo 50 km od Zagreba.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="mailto:info@campslapic.hr?subject=Rezervacija%20—%20Kamp%20Slapi%C4%87">Rezerviraj smještaj</a>
+        <a class="btn btn-outline" href="#cjenik">Pogledaj cjenik</a>
+      </div>
+    </div>
+  </div>
+  <a class="hero-scroll" href="#o-kampu">Istraži kamp ↓</a>
+</section>
+
+<div class="awards">
+  <div class="container awards-inner">
+    <span class="award"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.56-5 4.4 1.5 6.5L12 16.3 6 19.7l1.5-6.5-5-4.4 6.6-.56L12 2z"/></svg>Croatia's Best Campsite 2010. – 2019.</span>
+    <span class="award"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.56-5 4.4 1.5 6.5L12 16.3 6 19.7l1.5-6.5-5-4.4 6.6-.56L12 2z"/></svg>Camping.info — 100 najboljih kampova 2015. i 2017.</span>
+    <span class="award"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.56-5 4.4 1.5 6.5L12 16.3 6 19.7l1.5-6.5-5-4.4 6.6-.56L12 2z"/></svg>Turistički cvijet — kvaliteta za Hrvatsku 2013.</span>
+    <span class="award"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.6.56-5 4.4 1.5 6.5L12 16.3 6 19.7l1.5-6.5-5-4.4 6.6-.56L12 2z"/></svg>OK Mini Camps — odabrani mali kampovi</span>
+  </div>
+</div>
+
+<section class="section" id="o-kampu">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <span class="kicker">Dobrodošli</span>
+        <h2>Obiteljski kamp na desnoj obali Mrežnice</h2>
+        <p class="lead" style="margin-top:1rem">Kamp Slapić, u vlasništvu obitelji Mataković, sa 100 smještajnih jedinica smješten je na desnoj obali rijeke Mrežnice te pruža idealnu priliku za odmor i rekreaciju. Moderni sanitarni čvorovi, atraktivan restoran, dječje igralište, sportski tereni i plaža na rijeci — sve na 4 hektara zelenila.</p>
+        <div class="stats">
+          <div class="stat"><b>4 ha</b><span>površine</span></div>
+          <div class="stat"><b>4★</b><span>kategorija</span></div>
+          <div class="stat"><b>300</b><span>gostiju</span></div>
+          <div class="stat"><b>100</b><span>parcela</span></div>
+        </div>
+      </div>
+      <div class="about-media">
+        <img src="img/parcele2.jpg" alt="Parcele u hladu stabala u Kampu Slapić" loading="lazy">
+        <img class="floating" src="img/rijeka.jpg" alt="Tirkizna rijeka Mrežnica" loading="lazy">
+      </div>
+    </div>
+    <div class="amenities">
+      <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 17c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0M2 12c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0"/><circle cx="12" cy="5" r="2.4"/></svg><span>Bazen</span></div>
+      <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2.5 9.5C8 4.5 16 4.5 21.5 9.5M5.5 13c4-3.5 9-3.5 13 0M8.5 16.5c2-1.8 5-1.8 7 0"/><circle cx="12" cy="19.5" r="1.3" fill="currentColor"/></svg><span>Besplatan WiFi</span></div>
+      <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 21V7a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v14M4 21h16M10 8h4"/></svg><span>Sanitarije s toplom vodom</span></div>
+      <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 3v2"/></svg><span>Perilica i sušilica rublja</span></div>
+      <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>Kupaonice za osobe s invaliditetom</span></div>
+      <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 16l4-9 4 6 3-4 5 7H4Z"/><path d="M2 19h20"/></svg><span>Servis za kampere</span></div>
+      <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 5.5C8 4 5 4.5 4 7c-1 2.4.5 4.5 2.5 5.5L10 14l3.5-1.5C15.5 11.5 17 9.4 16 7c-1-2.5-4-3-6-1.5Z"/><path d="M14 14l4 6M8 15l-2 5"/></svg><span>Kućni ljubimci dobrodošli</span></div>
+      <div class="amenity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 10h19"/></svg><span>Kartično plaćanje</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="smjestaj" style="background:var(--sand-deep)">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Smještaj</span>
+      <h2>Odaberite svoj kutak uz rijeku</h2>
+      <p class="lead" style="margin-top:.8rem">Sto smještajnih jedinica — od prostranih parcela za šator, prikolicu ili kamper do potpuno opremljenih mobilnih kućica i romantičnih drvenih šatora iznad rijeke.</p>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <div class="card-media"><img src="img/parcele.jpg" alt="Kamp parcela s kamperom u hladu" loading="lazy"><span class="card-tag">Kamp</span></div>
+        <div class="card-body">
+          <h3>Parcele</h3>
+          <p>100 omeđenih parcela površine 90 – 120 m² s priključcima na struju i vodu, u hladu zelenila na par koraka od rijeke. Dostupni su moderni sanitarni čvorovi, a 25 parcela ima i odvod otpadne vode.</p>
+          <div class="card-meta"><span class="chip">90 – 120 m²</span><span class="chip">88 sa strujom</span><span class="chip">25 s odvodom</span></div>
+          <span class="card-price">od 7 € <small>/ osoba / dan</small></span>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-media"><img src="img/mobilne.jpg" alt="Mobilne kućice s natkrivenim terasama" loading="lazy"><span class="card-tag">Komfor</span></div>
+        <div class="card-body">
+          <h3>Mobilne kućice</h3>
+          <p>Kućice površine 30 m² (7,5 × 4 m) s dvije potpuno namještene spavaće sobe — bračni krevet i soba s 3 dječja kreveta — dnevnim boravkom s kuhinjom, kupaonicom i natkrivenom terasom.</p>
+          <div class="card-meta"><span class="chip">30 m²</span><span class="chip">2 spavaće sobe</span><span class="chip">Do 5 osoba</span><span class="chip">Terasa</span></div>
+          <span class="card-price">od 70 € <small>/ noć</small></span>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-media"><img src="img/sator.jpg" alt="Drveni šatori s terasama iznad rijeke Mrežnice" loading="lazy"><span class="card-tag">Glamping</span></div>
+        <div class="card-body">
+          <h3>Drveni šatori</h3>
+          <p>Drveni šatori s terasama iznad same rijeke Mrežnice — idealan odmor za dvoje. Opremljeni su madracem i prostorom za stvari, a s vlastite terase spuštate se ravno na rijeku.</p>
+          <div class="card-meta"><span class="chip">Za dvoje</span><span class="chip">Terasa nad rijekom</span><span class="chip">Priroda</span></div>
+          <span class="card-price">od 40 € <small>/ noć</small></span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="restoran">
+  <div class="container split">
+    <div>
+      <span class="kicker">Restoran &amp; Bar</span>
+      <h2>Okusi uz šum rijeke</h2>
+      <p class="lead" style="margin-top:1rem">U sklopu kampa nalazi se atraktivan restoran s ribljim i mesnim jelovnicima à la carte, smješten u prekrasnom okruženju s puno zelenila i osvježavajućeg hlada.</p>
+      <ul class="feature-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Terasa na samoj rijeci Mrežnici</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Natkrivena terasa koja se u potpunosti zatvara za hladnijeg vremena</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Riblja i mesna jela à la carte</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Osoblje koje se raduje vašem dolasku</li>
+      </ul>
+    </div>
+    <div class="split-media">
+      <img src="img/restoran.jpg" alt="Terasa restorana s velikim suncobranima" loading="lazy">
+      <img src="img/hrana.jpg" alt="Plata s roštiljem u restoranu kampa" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section class="section band" id="rekreacija">
+  <div class="container split">
+    <div class="split-media">
+      <img src="img/kanu.jpg" alt="Obitelj u kanuu na rijeci Mrežnici" loading="lazy">
+      <img src="img/bazen.jpg" alt="Bazen u Kampu Slapić" loading="lazy">
+    </div>
+    <div>
+      <span class="kicker">Sport &amp; Rekreacija</span>
+      <h2>Osvježenje za dušu i tijelo</h2>
+      <p class="lead" style="margin-top:1rem">Atraktivna plaža na rijeci Mrežnici s intimnim otočićima i slapovima poziva na kupanje i ribolov, a za najmlađe je tu novo uređeno dječje igralište.</p>
+      <ul class="feature-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Plaža, slapovi i kupanje u kristalno čistoj rijeci</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Najam kanua i SUP-ova te ribolov</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Najam bicikala i biciklističke staze u okolici</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Tenis, odbojka na pijesku, stolni tenis i paintball u blizini</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Dječje igralište u sklopu kampa</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="galerija">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Galerija</span>
+      <h2>Djelić atmosfere iz kampa</h2>
+    </div>
+    <div class="gallery">
+      <a href="img/hero.jpg" aria-label="Pogled na kamp iz zraka"><img src="img/hero.jpg" alt="Kamp Slapić iz zraka — rijeka Mrežnica" loading="lazy"></a>
+      <a href="img/sator-rijeka.jpg" aria-label="Drveni šator uz rijeku"><img src="img/sator-rijeka.jpg" alt="Drveni šator i kanu na rijeci" loading="lazy"></a>
+      <a href="img/mobilne-interijer.jpg" aria-label="Unutrašnjost mobilne kućice"><img src="img/mobilne-interijer.jpg" alt="Dnevni boravak s kuhinjom u mobilnoj kućici" loading="lazy"></a>
+      <a href="img/rijeka.jpg" aria-label="Rijeka Mrežnica"><img src="img/rijeka.jpg" alt="Tirkizna voda rijeke Mrežnice" loading="lazy"></a>
+      <a href="img/igraliste.jpg" aria-label="Dječje igralište"><img src="img/igraliste.jpg" alt="Djeca na ljuljačkama na igralištu" loading="lazy"></a>
+      <a href="img/sator2.jpg" aria-label="Drveni šatori iznad rijeke"><img src="img/sator2.jpg" alt="Terase drvenih šatora iznad Mrežnice" loading="lazy"></a>
+      <a href="img/mobilne-spavaca.jpg" aria-label="Dječja soba u mobilnoj kućici"><img src="img/mobilne-spavaca.jpg" alt="Dječja spavaća soba u mobilnoj kućici" loading="lazy"></a>
+      <a href="img/sanitarije.jpg" aria-label="Sanitarni čvor"><img src="img/sanitarije.jpg" alt="Moderni sanitarni čvor u kampu" loading="lazy"></a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="cjenik" style="background:var(--sand-deep)">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Cjenik</span>
+      <h2>Cjenik 2026.</h2>
+      <p class="price-note">Cijene su izražene u eurima i sadrže PDV. Kamp je otvoren od 1. travnja do 31. listopada.</p>
+    </div>
+
+    <div class="price-block">
+      <h3>Parcele — po danu</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>01.04. – 31.05.</th><th>01.06. – 30.06.</th><th>01.07. – 31.08.</th><th>01.09. – 30.09.</th><th>01.10. – 31.10.</th></tr></thead>
+          <tbody>
+            <tr><td>Odrasli</td><td>7,00 €</td><td>8,00 €</td><td>10,00 €</td><td>8,00 €</td><td>7,00 €</td></tr>
+            <tr><td>Djeca 5 – 11,99 god.</td><td>4,00 €</td><td>5,00 €</td><td>7,00 €</td><td>5,00 €</td><td>4,00 €</td></tr>
+            <tr><td>Djeca do 4,99 god.</td><td>gratis</td><td>gratis</td><td>gratis</td><td>gratis</td><td>gratis</td></tr>
+            <tr><td>Automobil</td><td>6,00 €</td><td>7,00 €</td><td>8,00 €</td><td>7,00 €</td><td>6,00 €</td></tr>
+            <tr><td>Šator</td><td>6,00 €</td><td>7,00 €</td><td>9,00 €</td><td>7,00 €</td><td>6,00 €</td></tr>
+            <tr><td>Kamp prikolica</td><td>8,00 €</td><td>9,00 €</td><td>10,00 €</td><td>9,00 €</td><td>8,00 €</td></tr>
+            <tr><td>Kamper / kombi</td><td>11,00 €</td><td>13,00 €</td><td>15,00 €</td><td>13,00 €</td><td>11,00 €</td></tr>
+            <tr><td>Motor</td><td>5,00 €</td><td>6,00 €</td><td>7,00 €</td><td>6,00 €</td><td>5,00 €</td></tr>
+            <tr><td>Struja</td><td>6,00 €</td><td>6,00 €</td><td>6,00 €</td><td>6,00 €</td><td>6,00 €</td></tr>
+            <tr><td>Kućni ljubimac</td><td>3,00 €</td><td>3,00 €</td><td>3,00 €</td><td>3,00 €</td><td>3,00 €</td></tr>
+            <tr><td>Obiteljska kupaonica</td><td>8,00 €</td><td>8,00 €</td><td>8,00 €</td><td>8,00 €</td><td>8,00 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="price-note" style="margin-top:.9rem">Kartice ACSI / ADAC / Avtokampi.si / UKH: paušal 25,00 € u razdobljima 01.04. – 06.07. i 01.09. – 31.10.</p>
+    </div>
+
+    <div class="price-block">
+      <h3>Mobilne kućice — po noći</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>01.04. – 30.04.</th><th>01.05. – 20.06.</th><th>21.06. – 31.08.</th><th>01.09. – 30.09.</th><th>01.10. – 31.10.</th></tr></thead>
+          <tbody>
+            <tr><td>Mobilna kućica</td><td>70,00 €</td><td>110,00 €</td><td>150,00 €</td><td>110,00 €</td><td>70,00 €</td></tr>
+            <tr><td>Kućni ljubimac</td><td>4,00 €</td><td>4,00 €</td><td>4,00 €</td><td>4,00 €</td><td>4,00 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="price-block">
+      <h3>Drveni šatori — po noći</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>01.04. – 30.04.</th><th>01.05. – 20.06.</th><th>21.06. – 31.08.</th><th>01.09. – 30.09.</th><th>01.10. – 31.10.</th></tr></thead>
+          <tbody>
+            <tr><td>Drveni šator</td><td>40,00 €</td><td>60,00 €</td><td>80,00 €</td><td>60,00 €</td><td>40,00 €</td></tr>
+            <tr><td>Kućni ljubimac</td><td>4,00 €</td><td>4,00 €</td><td>4,00 €</td><td>4,00 €</td><td>4,00 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="price-block">
+      <h3>Turistička pristojba — po danu</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>01.04. – 30.09.</th><th>01.10. – 31.10.</th></tr></thead>
+          <tbody>
+            <tr><td>Odrasli</td><td>1,40 €</td><td>1,00 €</td></tr>
+            <tr><td>Djeca 12 – 18 god.</td><td>0,70 €</td><td>0,50 €</td></tr>
+            <tr><td>Djeca do 12 god.</td><td>gratis</td><td>gratis</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="price-block">
+      <h3>Najam &amp; dodatne usluge</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>01.04. – 31.10.</th></tr></thead>
+          <tbody>
+            <tr><td>Hladnjak</td><td>4,00 € / dan</td></tr>
+            <tr><td>Perilica rublja</td><td>4,00 €</td></tr>
+            <tr><td>Sušilica rublja</td><td>4,00 €</td></tr>
+            <tr><td>Kanu</td><td>7,00 € / 1 h</td></tr>
+            <tr><td>SUP</td><td>12,00 € / 2 h · 30,00 € / dan</td></tr>
+            <tr><td>Bicikl</td><td>10,00 € / dan</td></tr>
+            <tr><td>Posteljina</td><td>8,00 €</td></tr>
+            <tr><td>Naknada za rezervaciju</td><td>10,00 €</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="kontakt">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Kontakt &amp; Lokacija</span>
+      <h2>Kako do nas?</h2>
+      <p class="lead" style="margin-top:.8rem">Smješteni smo na rijeci Mrežnici, 50-ak km južno od Zagreba i svega 10-ak km od Karlovca. Najjednostavniji dolazak: izlaz s autoceste u Karlovcu, kroz Dugu Resu prema Senju — od Karlovca vas do kampa vode putokazi. Putujete li vlakom ili autobusom, najbliža postaja je Belavići, oko 10 minuta hoda od kampa.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+          <div><b>Adresa</b><span>Kamp Slapić, Mrežnički Brig bb, 47250 Duga Resa</span></div>
+        </div>
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>
+          <div><b>Telefon</b>
+            <a href="tel:+38598860601">+385 98 860 601</a><br>
+            <span><a href="tel:+38547854754">+385 47 854 754</a> (travanj – listopad)</span><br>
+            <span><a href="tel:+38547854700">+385 47 854 700</a> (listopad – travanj)</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <div><b>E-mail</b><a href="mailto:info@campslapic.hr">info@campslapic.hr</a><br><span>za informacije i rezervacije</span></div>
+        </div>
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <div><b>Sezona</b><span>1. travnja – 31. listopada</span></div>
+        </div>
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19l4-14 4 9 3-5 5 10H4Z"/></svg>
+          <div><b>Izleti u okolicu</b><span>Karlovac, Ogulin, Zagreb i NP Plitvička jezera</span></div>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <iframe title="Karta — Kamp Slapić, Mrežnički Brig, Duga Resa" src="https://www.google.com/maps?q=Kamp%20Slapi%C4%87%2C%20Mre%C5%BEni%C4%8Dki%20Brig%2C%20Duga%20Resa&z=13&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <a class="brand" href="#top" style="text-decoration:none">
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true" width="34" height="34">
+        <circle cx="24" cy="24" r="24" fill="#2ec4b6"/>
+        <path d="M24 10 10 36h10l4-8 4 8h10L24 10Z" fill="#fff"/>
+      </svg>
+      <span class="brand-name">Kamp Slapić</span>
+    </a>
+    <span>Mrežnički Brig bb, Duga Resa · <a href="tel:+38598860601">+385 98 860 601</a> · <a href="mailto:info@campslapic.hr">info@campslapic.hr</a></span>
+    <span>© 2016. – 2026. Kamp Slapić. Sva prava pridržana.</span>
+  </div>
+</footer>
+
+<dialog class="lightbox" id="lightbox">
+  <button type="button" aria-label="Zatvori" onclick="document.getElementById('lightbox').close()">×</button>
+  <img src="" alt="Fotografija iz galerije">
+</dialog>
+
+<script>
+const header=document.querySelector('.header');
+addEventListener('scroll',()=>header.classList.toggle('scrolled',scrollY>40),{passive:true});
+const nav=document.querySelector('.nav'),toggle=document.querySelector('.nav-toggle');
+toggle.addEventListener('click',()=>{const open=nav.classList.toggle('open');toggle.classList.toggle('open',open);toggle.setAttribute('aria-expanded',open);});
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');toggle.classList.remove('open');}));
+const lb=document.getElementById('lightbox'),lbImg=lb.querySelector('img');
+document.querySelectorAll('.gallery a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();lbImg.src=a.href;lb.showModal();}));
+lb.addEventListener('click',e=>{if(e.target===lb)lb.close();});
+</script>
+</body>
+</html>
