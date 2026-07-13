@@ -1,5 +1,25 @@
 [
   {
+    "slug": "ai-chatbots-small-business-2026",
+    "title_en": "AI Chatbots for Small Business: A Practical Guide to Automating Customer Support in 2026",
+    "title_hr": "AI chatbotovi za male tvrtke: Praktični vodič za automatizaciju korisničke podrške u 2026.",
+    "excerpt_en": "AI chatbots have gone from frustrating to genuinely useful. For a small business, the right setup answers most customer questions instantly, captures leads overnight, and frees your team from repetitive replies. Here's how to do it well.",
+    "excerpt_hr": "AI chatbotovi su od frustrirajućih postali stvarno korisni. Za malu tvrtku, ispravna postavka odgovara na većinu pitanja korisnika trenutno, hvata potencijalne klijente preko noći i oslobađa vaš tim od repetitivnih odgovora. Evo kako to napraviti dobro.",
+    "date": "2026-07-13",
+    "tags": ["AI", "Automation"],
+    "author": "Co Digit"
+  },
+  {
+    "slug": "the-six-hour-head-start",
+    "title_en": "The Six-Hour Head Start: How US Founders Actually Work With a Croatian Dev Studio",
+    "title_hr": "Šest sati prednosti: kako američki osnivači zapravo rade s hrvatskim dev studijem",
+    "excerpt_en": "US founders assume a six-hour gap with Croatia is a liability. Run right, it's a second shift — you send feedback at the end of your day and wake up to it shipped. The timezone math and the daily rhythm that make it work.",
+    "excerpt_hr": "Američki osnivači pretpostavljaju da je šest sati razlike s Hrvatskom teret. Posloženo kako treba, to je druga smjena — pošaljete povratne informacije na kraju dana i probudite se na gotov posao. Matematika vremenske zone i dnevni ritam koji to čine mogućim.",
+    "date": "2026-07-13",
+    "tags": ["US Clients", "Remote Work"],
+    "author": "Co Digit"
+  },
+  {
     "slug": "console-for-a-two-person-studio",
     "title_en": "Why We Built Our Own Console to Run a Two-Person Dev Studio",
     "title_hr": "Zašto smo izgradili vlastiti konzol za vođenje dvočlanog dev studija",

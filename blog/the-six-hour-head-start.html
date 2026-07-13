@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    // Consent Mode v2: default deny analytics + ads until user opts in.
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied',
+      'wait_for_update': 500
+    });
+    // Restore previous consent from localStorage (runs before any page logic).
+    try {
+      if (localStorage.getItem('cookieConsent') === 'accepted') {
+        gtag('consent', 'update', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      }
+    } catch(e) {}
+    gtag('js', new Date());
+    gtag('config', 'G-T97BQ3VRV1');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Six-Hour Head Start: How US Founders Actually Work With a Croatian Dev Studio — Co Digit</title>
+  <meta name="description" content="US founders assume a six-hour gap with Croatia is a liability. Run right, it's a second shift: you send feedback at 6pm and wake up to it shipped. Here's the timezone math and the daily rhythm that makes it work." />
+  <link rel="canonical" href="https://codigit.io/blog/the-six-hour-head-start.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://codigit.io/blog/the-six-hour-head-start.html" />
+  <meta property="og:title" content="The Six-Hour Head Start: How US Founders Actually Work With a Croatian Dev Studio — Co Digit" />
+  <meta property="og:description" content="US founders assume a six-hour gap with Croatia is a liability. Run right, it's a second shift: you send feedback at 6pm and wake up to it shipped. Here's the timezone math and the daily rhythm that makes it work." />
+  <meta property="og:image" content="https://codigit.io/og-image.png" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Co Digit" />
+  <meta property="article:published_time" content="2026-07-13" />
+  <meta property="article:author" content="Co Digit" />
+  <meta property="article:tag" content="US Clients" />
+  <meta property="article:tag" content="Remote Work" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="The Six-Hour Head Start: How US Founders Actually Work With a Croatian Dev Studio — Co Digit" />
+  <meta name="twitter:description" content="US founders assume a six-hour gap with Croatia is a liability. Run right, it's a second shift: you send feedback at 6pm and wake up to it shipped. Here's the timezone math and the daily rhythm that makes it work." />
+  <meta name="twitter:image" content="https://codigit.io/og-image.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
+      --border: #222222; --text: #f0f0f0; --muted: #888;
+      --accent: #e63946; --white: #ffffff;
+      --nav-bg: rgba(10,10,10,0.9);
+    }
+    [data-theme="light"] {
+      --bg: #ffffff; --bg2: #f4f4f5; --bg3: #e8e8ea;
+      --border: #e0e0e0; --text: #111111; --muted: #666666;
+      --white: #0a0a0a; --nav-bg: rgba(255,255,255,0.95);
+    }
+    [data-theme="light"] footer { background: var(--bg2); }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .logo-dot { display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
+    @keyframes codigit-blink { 0%, 100% { color: var(--white); } 50% { color: var(--accent); } }
+    @media (prefers-reduced-motion: reduce) { .logo-dot { animation: none; } }
+    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; letter-spacing: 0.3px; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 18px; border-radius: 6px; font-weight: 600 !important; transition: opacity 0.2s !important; font-size: 13px !important; }
+    .nav-cta:hover { opacity: 0.85; }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+
+    .lang-switcher { display: flex; align-items: center; gap: 4px; }
+    .lang-btn {
+      background: none; border: 1px solid transparent; color: var(--muted);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 4px 8px; border-radius: 4px; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .lang-btn:hover { color: var(--white); }
+    .lang-btn.active { color: var(--white); border-color: var(--border); }
+    .lang-sep { color: #333; font-size: 11px; }
+    .theme-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--muted); font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .theme-btn:hover { color: var(--text); border-color: var(--muted); }
+
+    /* ARTICLE */
+    .article-wrapper {
+      flex: 1;
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+    .post-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .post-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+      color: var(--accent); background: rgba(230,57,70,0.1);
+      padding: 4px 10px; border-radius: 4px; text-transform: uppercase;
+    }
+    .article-wrapper h1 {
+      font-size: clamp(28px, 3.5vw, 44px); font-weight: 900;
+      letter-spacing: -1.2px; color: var(--white); line-height: 1.15; margin-bottom: 20px;
+    }
+    .post-meta {
+      font-size: 13px; color: var(--muted); margin-bottom: 8px;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    .post-meta-sep { color: var(--border); }
+    .divider { width: 48px; height: 3px; background: var(--accent); margin: 32px 0; border-radius: 2px; }
+
+    /* ARTICLE BODY */
+    .article-body { line-height: 1.8; }
+    .article-body h2 {
+      font-size: 22px; font-weight: 800; color: var(--white);
+      letter-spacing: -0.5px; margin: 48px 0 16px;
+    }
+    .article-body p { margin-bottom: 20px; color: var(--text); font-size: 16px; }
+    .article-body ul {
+      margin: 0 0 20px 20px; color: var(--text); font-size: 16px;
+    }
+    .article-body ul li { margin-bottom: 8px; line-height: 1.7; }
+    .article-body strong { color: var(--white); font-weight: 600; }
+    .article-body code {
+      font-family: 'Courier New', monospace; font-size: 14px;
+      background: var(--bg3); border: 1px solid var(--border);
+      padding: 2px 6px; border-radius: 4px; color: var(--accent);
+    }
+    .article-body pre {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 20px 24px;
+      margin: 0 0 20px; overflow-x: auto;
+      font-family: 'Courier New', monospace; font-size: 14px;
+      line-height: 1.6; color: var(--text);
+    }
+    .article-body pre code {
+      background: none; border: none; padding: 0; color: var(--text);
+    }
+
+    /* LANG TOGGLE FOR ARTICLE CONTENT */
+    .lang-content { display: none; }
+    .lang-content.active { display: block; }
+
+    /* BACK LINK */
+    .back-to-blog {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 48px; padding: 12px 24px;
+      font-size: 13px; font-weight: 600; color: var(--muted);
+      text-decoration: none; border: 1px solid var(--border);
+      border-radius: 8px; transition: all 0.2s;
+    }
+    .back-to-blog:hover { color: var(--white); border-color: var(--muted); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto;
+    }
+    .footer-logo { font-size: 14px; font-weight: 800; color: var(--white); }
+    .footer-logo span { color: var(--accent); }
+    footer p { font-size: 12px; color: #555; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: #555; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--muted); }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .article-wrapper { padding: 40px 20px 60px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
+  <ul class="nav-links">
+    <li><a href="/#services">Capabilities</a></li>
+    <li><a href="/#ai">AI-Powered</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#certs">Certifications</a></li>
+    <li><a href="/services.html">Services</a></li>
+    <li><a href="/blog/">Notes</a></li>
+    <li><a href="/contact.html" class="nav-cta">Get in touch</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="hr">HR</button>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+  </div>
+</nav>
+
+<article class="article-wrapper">
+  <header>
+    <div class="post-tags">
+      <span class="post-tag">US Clients</span>
+      <span class="post-tag">Remote Work</span>
+    </div>
+    <h1 id="postTitle">The Six-Hour Head Start: How US Founders Actually Work With a Croatian Dev Studio</h1>
+    <div class="post-meta">
+      <time datetime="2026-07-13" id="postDate">July 13, 2026</time>
+      <span class="post-meta-sep">|</span>
+      <span>Co Digit</span>
+    </div>
+    <div class="divider"></div>
+  </header>
+
+  <!-- ENGLISH CONTENT -->
+  <div class="article-body lang-content active" data-lang="en">
+    <p>The first question almost every US founder asks us is some version of the same worry: "You're six hours ahead of me. Isn't that going to be a problem?" It is a fair thing to ask, and the honest answer is that it depends entirely on how you set up the work. Run the way most people instinctively run a team — everyone online at the same time, decisions made in meetings, questions answered in real time — a six-hour gap is a genuine drag. Run it the way it is meant to be run for distributed software work, and the same six hours turn into the single biggest advantage of hiring outside your own timezone.</p>
+    <p>We are a two-person studio in Zagreb, Croatia, and a large share of our work is for US software companies. We have spent enough mornings reading feedback that landed while we slept, and enough evenings shipping work that a client would wake up to, that the timezone question has stopped being an objection and started being a selling point. Here is the actual math, the daily rhythm we run, and the specific things that make it work or break it.</p>
+
+    <h2>The Real Overlap, Hour by Hour</h2>
+    <p>Let us start with numbers instead of vibes. In summer, Zagreb is on Central European Summer Time, which is UTC+2. New York on Eastern Daylight Time is UTC−4. That is a six-hour gap. Our normal working day of roughly 9:00 to 18:00 in Zagreb maps onto 3:00 to 12:00 on the US East Coast.</p>
+    <p>That looks brutal until you notice where the two days actually touch. From about <strong>15:00 to 18:00 in Zagreb</strong> — our afternoon — it is <strong>9:00 to 12:00 in New York</strong>, the client's morning. That is a clean three-hour window, every single day, when both sides are awake, caffeinated, and at their desks. It is more than enough for one focused sync, a screen-share, or a quick round of questions before the client's day fills up with everything else.</p>
+    <p>The Pacific coast is a wider gap — nine hours to Los Angeles — so the overlap shifts later. For West Coast clients we push our sync to the early evening: 18:00 to 20:00 in Zagreb is 9:00 to 11:00 in California. Still workable, still every day, just later in our afternoon than we would otherwise stop.</p>
+
+    <h2>The Head Start Nobody Counts On</h2>
+    <p>The overlap is the part people focus on. The part that actually changes how fast a project moves is the <em>non</em>-overlap.</p>
+    <p>Here is the shape of a normal day. A US East Coast client finishes their afternoon, writes up what they want changed, and logs off around 18:00 their time. That is midnight in Zagreb — we are asleep. We start at 9:00 the next morning, which is 3:00 a.m. for them, and we have a full, uninterrupted block of hours to work through their list before they are even awake. By the time they sit down at 9:00, the pull request is open, the staging link is live, and the thing they asked for last night is waiting for review.</p>
+    <p>Founders describe this as "it feels like the work happens overnight," and from their side, it does. They are not paying for a night shift. They are paying for a team whose normal daytime lands inside their sleep. The gap that sounds like a delay is really a second shift running while the first one rests.</p>
+    <p>This only compounds in your favor as the relationship matures. Early on, we need more real-time back-and-forth because context is still being built. Once we understand the product, most days need nothing more than that written handoff at the end of the client's day and a short sync in the overlap window. The distance stops being something we manage and becomes something we run on.</p>
+
+    <h2>Why Two People Beats a Big Agency Across a Timezone</h2>
+    <p>A lot of the horror stories US founders carry about offshore or nearshore development come from working with large agencies, and most of those stories are really about handoffs, not timezones. Your request goes to an account manager, who writes a ticket, which a project lead grooms, which a developer three seats away eventually picks up, and any question on the way back travels the same chain in reverse. Add a timezone to that and every question costs a full day, because the answer has to survive three sets of hands before it reaches the person who needs it.</p>
+    <p>A two-person studio does not have that chain. The person reading your message at 15:00 Zagreb time is the person writing the code. There is no translation layer, no ticket that loses half its meaning, no game of telephone across a six-hour gap. When something is ambiguous, we do not file it and wait — we make a sensible call, ship it behind the staging link, and show you the result in the morning so you can react to something real instead of a paragraph.</p>
+    <p>That is the difference that makes the distance survivable. Timezones punish handoffs. If you remove the handoffs, the timezone stops being the thing that slows you down.</p>
+
+    <h2>What Actually Breaks It</h2>
+    <p>None of this works automatically. The failure mode is trying to run a six-hour-gap relationship as if everyone were in the same room. If every decision needs a live meeting, if nothing moves without a real-time answer, if the client expects a reply within minutes at 14:00 their time — which is 20:00 for us — then the gap becomes exactly the problem it is feared to be.</p>
+    <p>The setup that works rests on a few habits, and they are worth stating plainly:</p>
+    <ul>
+      <li><strong>Async is the default; sync is the exception.</strong> Most communication is written, and written well enough that it does not need a follow-up call. The daily overlap window is reserved for the things that genuinely need two people talking.</li>
+      <li><strong>Write requests down.</strong> A one-paragraph description of what you want, sent at the end of your day, is worth more than a meeting, because it is waiting for us at the start of ours and it does not evaporate the moment the call ends.</li>
+      <li><strong>Decisions do not wait for permission.</strong> We are trusted to make small calls without a real-time sign-off, and to show the result rather than ask about it in advance. That is what keeps the overnight shift productive instead of blocked.</li>
+      <li><strong>One reliable sync beats five scattered pings.</strong> A single predictable overlap slot each day, that both sides protect, does more than being nominally "reachable" at random hours.</li>
+    </ul>
+    <p>Founders who come to us having already worked async — the ones running distributed teams, or who are heads-down builders themselves — feel at home immediately. The ones used to walking over to a developer's desk need a week or two to adjust. Almost all of them end up preferring it, because the written trail and the fixed rhythm turn out to be calmer than the interrupt-driven alternative.</p>
+
+    <h2>The Practical Stuff: Billing, Contracts, Currency</h2>
+    <p>The timezone is the question founders lead with, but it is rarely the one that decides anything. The concerns that actually matter are boring and easy to settle. We invoice in US dollars, so there is no currency conversion for the client to reason about and no surprise on the exchange rate between quote and payment. Contracts are straightforward, we are a registered Croatian company, and payment runs over normal international transfer with the same details every month.</p>
+    <p>The one genuine adjustment is communication cadence, and we set expectations for it on day one: which channel is for what, when the daily overlap window sits, and how fast a written message gets answered. Once that is agreed, the six-hour gap stops being a variable anyone has to think about. It just becomes the background rhythm of the work.</p>
+
+    <h2>Six Hours Ahead, Not Six Hours Behind</h2>
+    <p>So back to the question every founder opens with. Yes, we are six hours ahead of the East Coast, more of the West. And no, it is not a problem to be managed — it is the feature you are actually buying. You send your list at the end of your day and wake up to it done. You get one dependable window to talk face to face, and the rest of the time you get quiet, uninterrupted progress on the other side of the world. The gap that sounds like a liability on the first call is, a month in, the reason the work feels faster than a team sitting in your own city ever did.</p>
+    <p>Being ahead is only a disadvantage if you insist on standing still together. Set the work up to run on the distance instead of against it, and six hours ahead is just a head start you get for free, every single night.</p>
+  </div>
+
+  <!-- CROATIAN CONTENT -->
+  <div class="article-body lang-content" data-lang="hr">
+    <p>Gotovo svaki američki osnivač prvo nam postavi neku varijantu iste brige: "Šest ste sati ispred mene. Neće li to biti problem?" To je legitimno pitanje, a iskren odgovor je da sve ovisi o tome kako posložite posao. Ako radite onako kako većina instinktivno vodi tim — svi online istovremeno, odluke se donose na sastancima, pitanja se odgovaraju u realnom vremenu — razlika od šest sati stvarno usporava. Ako to posložite onako kako distribuirani softverski rad i traži, istih šest sati postaje najveća prednost angažiranja nekoga izvan vaše vremenske zone.</p>
+    <p>Mi smo dvočlani studio u Zagrebu, a velik dio našeg posla je za američke softverske tvrtke. Proveli smo dovoljno jutara čitajući povratne informacije koje su stigle dok smo spavali, i dovoljno večeri isporučujući posao na koji bi se klijent probudio, da pitanje vremenske zone više nije prigovor nego argument u našu korist. Evo konkretne matematike, dnevnog ritma po kojem radimo i onoga što taj model čini ili razbija.</p>
+
+    <h2>Stvarno preklapanje, sat po sat</h2>
+    <p>Krenimo od brojki umjesto od dojma. Ljeti je Zagreb na srednjoeuropskom ljetnom vremenu, što je UTC+2. New York na istočnom ljetnom vremenu je UTC−4. To je razlika od šest sati. Naš uobičajeni radni dan od otprilike 9:00 do 18:00 po Zagrebu preslikava se na 3:00 do 12:00 na američkoj istočnoj obali.</p>
+    <p>To izgleda brutalno dok ne primijetite gdje se dva dana zapravo dodiruju. Od otprilike <strong>15:00 do 18:00 po Zagrebu</strong> — naše poslijepodne — u New Yorku je <strong>9:00 do 12:00</strong>, klijentovo jutro. To je čist prozor od tri sata, svaki dan, kad su obje strane budne, na kavi i za stolom. Više je nego dovoljno za jedan fokusiran sync, dijeljenje ekrana ili kratak krug pitanja prije nego što se klijentov dan napuni svim ostalim.</p>
+    <p>Pacifička obala je šira razlika — devet sati do Los Angelesa — pa se preklapanje pomiče kasnije. Za klijente sa zapadne obale sync gurnemo u ranu večer: 18:00 do 20:00 po Zagrebu je 9:00 do 11:00 u Kaliforniji. I dalje je izvedivo, i dalje svaki dan, samo kasnije u našem poslijepodnevu nego što bismo inače stali.</p>
+
+    <h2>Prednost na koju nitko ne računa</h2>
+    <p>Preklapanje je dio na koji se svi fokusiraju. Dio koji zapravo mijenja brzinu projekta je <em>ne</em>-preklapanje.</p>
+    <p>Evo kako izgleda normalan dan. Klijent s istočne obale završi poslijepodne, zapiše što želi promijeniti i odjavi se oko 18:00 po svom vremenu. To je ponoć u Zagrebu — mi spavamo. Krećemo sljedeće jutro u 9:00, što je za njih 3:00 ujutro, i imamo cijeli, neprekinut blok sati da prođemo kroz njihov popis prije nego što se uopće probude. Dok sjednu u 9:00, pull request je otvoren, staging link je živ, a ono što su sinoć tražili čeka na pregled.</p>
+    <p>Osnivači to opisuju kao "kao da se posao odvija preko noći", i s njihove strane doista je tako. Ne plaćaju noćnu smjenu. Plaćaju tim čiji normalni radni dan pada usred njihovog sna. Razlika koja zvuči kao kašnjenje zapravo je druga smjena koja radi dok prva odmara.</p>
+    <p>To se s vremenom samo dodatno zbraja u vašu korist. Na početku nam treba više komunikacije u realnom vremenu jer se kontekst tek gradi. Kad jednom razumijemo proizvod, većini dana ne treba ništa više od tog pisanog predavanja posla na kraju klijentovog dana i kratkog synca u prozoru preklapanja. Udaljenost prestaje biti nešto čime upravljamo i postaje nešto na čemu radimo.</p>
+
+    <h2>Zašto dvoje ljudi pobjeđuje veliku agenciju preko vremenske zone</h2>
+    <p>Mnogo horor priča koje američki osnivači nose o offshore ili nearshore razvoju dolazi iz rada s velikim agencijama, a većina tih priča zapravo je o predajama posla, a ne o vremenskim zonama. Vaš zahtjev ide account manageru, koji piše tiket, koji projektni voditelj obrađuje, koji developer tri stolice dalje na kraju preuzme, a svako pitanje na povratku prolazi isti lanac unatrag. Dodajte tome vremensku zonu i svako pitanje košta cijeli dan, jer odgovor mora preživjeti tri para ruku prije nego stigne do onoga kome treba.</p>
+    <p>Dvočlani studio nema taj lanac. Osoba koja u 15:00 po Zagrebu čita vašu poruku ista je osoba koja piše kod. Nema sloja prijevoda, nema tiketa koji izgubi pola značenja, nema gluhih telefona preko šest sati razlike. Kad je nešto dvosmisleno, ne zavodimo to u sustav i čekamo — donesemo razumnu odluku, isporučimo iza staging linka i pokažemo vam rezultat ujutro, da reagirate na nešto stvarno umjesto na jedan odlomak.</p>
+    <p>To je razlika koja udaljenost čini podnošljivom. Vremenske zone kažnjavaju predaje posla. Ako maknete predaje, vremenska zona prestaje biti ono što vas usporava.</p>
+
+    <h2>Što to zapravo razbija</h2>
+    <p>Ništa od ovoga ne radi automatski. Način na koji se kvari jest pokušaj da se odnos sa šest sati razlike vodi kao da su svi u istoj sobi. Ako svaka odluka treba sastanak uživo, ako se ništa ne miče bez odgovora u realnom vremenu, ako klijent očekuje odgovor unutar par minuta u 14:00 po svom vremenu — što je 20:00 kod nas — tada razlika postaje upravo onaj problem od kojeg strahuju.</p>
+    <p>Postava koja radi počiva na nekoliko navika i vrijedi ih izreći izravno:</p>
+    <ul>
+      <li><strong>Async je zadano; sync je iznimka.</strong> Većina komunikacije je pisana, i napisana dovoljno dobro da ne treba naknadni poziv. Dnevni prozor preklapanja rezerviran je za ono što stvarno traži da dvoje ljudi razgovara.</li>
+      <li><strong>Zapišite zahtjeve.</strong> Opis od jednog odlomka onoga što želite, poslan na kraju vašeg dana, vrijedi više od sastanka, jer nas čeka na početku našeg i ne ispari čim poziv završi.</li>
+      <li><strong>Odluke ne čekaju dopuštenje.</strong> Vjeruje nam se da donesemo sitne odluke bez potvrde u realnom vremenu i da pokažemo rezultat umjesto da unaprijed pitamo. To je ono što noćnu smjenu drži produktivnom umjesto blokiranom.</li>
+      <li><strong>Jedan pouzdan sync pobjeđuje pet razbacanih poruka.</strong> Jedan predvidiv termin preklapanja svaki dan, koji obje strane čuvaju, vrijedi više od nominalne "dostupnosti" u nasumičnim satima.</li>
+    </ul>
+    <p>Osnivači koji nam dođu već naviknuti na async — oni koji vode distribuirane timove ili su sami graditelji zabijeni u posao — odmah se osjećaju kao kod kuće. Onima naviknutima da odšeću do developerovog stola treba tjedan-dva prilagodbe. Gotovo svi na kraju to preferiraju, jer se pisani trag i fiksni ritam pokažu mirnijima od alternative vođene prekidima.</p>
+
+    <h2>Praktične stvari: naplata, ugovori, valuta</h2>
+    <p>Vremenska zona je pitanje kojim osnivači otvaraju, ali rijetko je ono koje išta odlučuje. Brige koje stvarno znače su dosadne i lako rješive. Fakturiramo u američkim dolarima, pa nema konverzije valute o kojoj klijent mora razmišljati ni iznenađenja na tečaju između ponude i plaćanja. Ugovori su jednostavni, registrirana smo hrvatska tvrtka, a plaćanje ide preko uobičajene međunarodne doznake s istim podacima svaki mjesec.</p>
+    <p>Jedina prava prilagodba je ritam komunikacije, a očekivanja za to postavljamo prvi dan: koji kanal je za što, kada je dnevni prozor preklapanja i koliko brzo dobiva odgovor pisana poruka. Kad se to dogovori, razlika od šest sati prestaje biti varijabla o kojoj itko mora razmišljati. Jednostavno postane pozadinski ritam posla.</p>
+
+    <h2>Šest sati ispred, ne šest sati iza</h2>
+    <p>Vratimo se pitanju kojim svaki osnivač otvara. Da, šest smo sati ispred istočne obale, više ispred zapadne. I ne, to nije problem kojim treba upravljati — to je značajka koju zapravo kupujete. Pošaljete svoj popis na kraju dana i probudite se na njega gotovog. Dobijete jedan pouzdan prozor za razgovor licem u lice, a ostatak vremena dobijete tih, neprekinut napredak na drugom kraju svijeta. Razlika koja na prvom pozivu zvuči kao teret, mjesec dana kasnije je razlog zašto posao djeluje brže nego što je tim u vašem vlastitom gradu ikad bio.</p>
+    <p>Biti ispred je mana samo ako inzistirate da stojite u mjestu zajedno. Posložite posao tako da radi na udaljenosti umjesto protiv nje, i šest sati ispred je samo prednost koju dobivate besplatno, svake noći.</p>
+  </div>
+
+  <a href="/blog/" class="back-to-blog" id="backToBlog">&larr; Back to blog</a>
+</article>
+
+<footer>
+  <div class="footer-logo">CO<span class="logo-dot">.</span>DIGIT</div>
+  <p id="footer-copy">&copy; 2026 Co Digit d.o.o. &middot; Zagreb, Croatia</p>
+  <div class="footer-links">
+    <a href="/" id="fl-home">Home</a>
+    <a href="/blog/" id="fl-blog">Notes</a>
+    <a href="/cookie-policy.html" id="fl-cookies">Cookie Policy</a>
+    <a href="/privacy-policy.html" id="fl-privacy">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  const t = {
+    en: {
+      postTitle: 'The Six-Hour Head Start: How US Founders Actually Work With a Croatian Dev Studio',
+      postDate: 'July 13, 2026',
+      backToBlog: '← Back to blog',
+      'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Croatia',
+      'fl-home': 'Home', 'fl-blog': 'Notes', 'fl-cookies': 'Cookie Policy', 'fl-privacy': 'Privacy Policy',
+    },
+    hr: {
+      postTitle: 'Šest sati prednosti: kako američki osnivači zapravo rade s hrvatskim dev studijem',
+      postDate: '13. srpnja 2026.',
+      backToBlog: '← Natrag na blog',
+      'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska',
+      'fl-home': 'Početna', 'fl-blog': 'Bilješke', 'fl-cookies': 'Politika kolačića', 'fl-privacy': 'Politika privatnosti',
+    }
+  };
+
+  let lang = 'en';
+
+  function applyLang(l) {
+    lang = l;
+    document.documentElement.lang = l;
+    localStorage.setItem('lang', l);
+    const d = t[l];
+    Object.keys(d).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = d[id];
+    });
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+    // Toggle article content
+    document.querySelectorAll('.lang-content').forEach(el => {
+      el.classList.toggle('active', el.getAttribute('data-lang') === l);
+    });
+  }
+
+  // Theme
+  const themeBtn = document.getElementById('themeBtn');
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    themeBtn.innerHTML = theme === 'light' ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+  }
+  const savedTheme = localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  applyTheme(savedTheme);
+  themeBtn.addEventListener('click', () => {
+    applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+  });
+
+  const saved = localStorage.getItem('lang');
+  const browser = navigator.language.startsWith('hr') ? 'hr' : 'en';
+  applyLang(saved || browser);
+
+  document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+</script>
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "The Six-Hour Head Start: How US Founders Actually Work With a Croatian Dev Studio",
+  "description": "US founders assume a six-hour gap with Croatia is a liability. Run right, it's a second shift: you send feedback at 6pm and wake up to it shipped. Here's the timezone math and the daily rhythm that makes it work.",
+  "datePublished": "2026-07-13",
+  "author": {
+    "@type": "Organization",
+    "name": "Co Digit",
+    "url": "https://codigit.io"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Co Digit",
+    "url": "https://codigit.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://codigit.io/favicon.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://codigit.io/blog/the-six-hour-head-start.html"
+  },
+  "keywords": ["Croatia dev studio", "US clients", "timezone overlap", "remote development", "nearshore", "async collaboration", "EU development team"]
+}
+</script>
+</body>
+</html>
