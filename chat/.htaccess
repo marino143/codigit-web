@@ -1,0 +1,17 @@
+# Privatni chat — postavke servera
+Options -Indexes
+DirectoryIndex index.php
+
+# Ne dopusti indeksiranje tražilicama
+<IfModule mod_headers.c>
+    Header set X-Robots-Tag "noindex, nofollow"
+</IfModule>
+
+# Veći limiti za upload slika i videa (radi ako hosting dopušta php_value u .htaccess;
+# u suprotnom postavi isto u cPanel → "MultiPHP INI Editor")
+<IfModule mod_php.c>
+    php_value upload_max_filesize 200M
+    php_value post_max_size 210M
+    php_value max_execution_time 300
+    php_value memory_limit 256M
+</IfModule>

@@ -1,1 +1,5 @@
 .netlify/
+
+# Privatni podaci chata — nikad ne ide na GitHub
+chat/data/*
+!chat/data/.htaccess
