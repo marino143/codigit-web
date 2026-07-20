@@ -1,5 +1,15 @@
 [
   {
+    "slug": "why-we-self-host-client-logos",
+    "title_en": "The Client Logo That 404'd: Why We Self-Host Every Third-Party Image Now",
+    "title_hr": "Logo klijenta koji je vratio 404: zašto sada self-hostamo svaku sliku treće strane",
+    "excerpt_en": "A hotlinked client logo broke on our homepage and we only found out by looking at the page. The audit that followed found six external images — four pointing into WordPress uploads folders, one loading over plain HTTP.",
+    "excerpt_hr": "Hotlinkani logo klijenta puknuo je na našoj naslovnici, a saznali smo to tek kad smo pogledali stranicu. Revizija koja je uslijedila našla je šest vanjskih slika — četiri u WordPress uploads mapama, jednu preko običnog HTTP-a.",
+    "date": "2026-07-20",
+    "tags": ["Performance", "Web Development"],
+    "author": "Co Digit"
+  },
+  {
     "slug": "ai-chatbots-small-business-2026",
     "title_en": "AI Chatbots for Small Business: A Practical Guide to Automating Customer Support in 2026",
     "title_hr": "AI chatbotovi za male tvrtke: Praktični vodič za automatizaciju korisničke podrške u 2026.",
