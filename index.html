@@ -397,6 +397,13 @@
     .client-logo-white:hover { filter: grayscale(0) opacity(1); }
     [data-theme="light"] .client-logo-white { filter: invert(1) grayscale(1) opacity(0.5); }
     [data-theme="light"] .client-logo-white:hover { filter: invert(1) grayscale(0) opacity(1); }
+    /* text part of logo lockups (e.g. Croatia Control emblem + name) */
+    .client-name {
+      font-size: 14px; font-weight: 700; letter-spacing: 1.5px;
+      color: var(--muted); opacity: 0.75; white-space: nowrap;
+      margin-left: 10px; transition: color 0.2s, opacity 0.2s;
+    }
+    .client-link:hover .client-name { color: var(--text); opacity: 1; }
 
     /* ─── AI SECTION ─── */
     .ai-section {
@@ -1243,7 +1250,7 @@
     <div class="clients-track" id="clients-track">
       <a class="client-link" href="https://bitly.com" target="_blank" rel="noopener" aria-label="Bitly"><img class="client-logo" src="logos/bitly.svg" alt="Bitly"></a>
       <a class="client-link" href="https://www.medihive.com" target="_blank" rel="noopener"><img class="client-logo" src="logos/medihive.svg" alt="Medihive"></a>
-      <a class="client-link" href="https://www.crocontrol.hr" target="_blank" rel="noopener"><span class="client-name">CROATIA CONTROL</span></a>
+      <a class="client-link" href="https://www.crocontrol.hr" target="_blank" rel="noopener"><img class="client-logo" src="logos/crocontrol.png" alt="Croatia Control"><span class="client-name">CROATIA CONTROL</span></a>
       <a class="client-link" href="https://www.who.int" target="_blank" rel="noopener"><img class="client-logo" src="logos/who.svg" alt="World Health Organization"></a>
       <a class="client-link" href="https://www.hgshop.hr" target="_blank" rel="noopener"><img class="client-logo client-logo-color" src="logos/hgspot.svg" alt="HGSPOT"></a>
       <a class="client-link" href="https://www.autozubak.hr" target="_blank" rel="noopener"><img class="client-logo" src="logos/autozubak.svg" alt="Auto Zubak"></a>
