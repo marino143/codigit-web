@@ -148,19 +148,6 @@
     }
     .app-card:hover { background: var(--bg3); border-color: var(--muted); transform: translateY(-2px); }
 
-    /* BMC badge floating on top-right of card */
-    .app-card-wrapper { position: relative; display: flex; }
-    .app-card-wrapper > .app-card { flex: 1; }
-    .bmc-badge {
-      position: absolute; top: 14px; right: 14px; z-index: 2;
-      width: 34px; height: 34px; border-radius: 9px;
-      background: #FFDD00; color: #000;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 17px; text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-    }
-    .bmc-badge:hover { transform: scale(1.1) rotate(-6deg); box-shadow: 0 4px 14px rgba(255,221,0,0.45); }
     .app-icon {
       width: 64px; height: 64px;
       border-radius: 14px;
@@ -341,34 +328,12 @@
         + '<p class="app-tagline">' + tagline + '</p>'
         + '<span class="learn-more">' + t[lang].learnMore + '</span>'
         + '</a>';
-      if (app.buymeacoffee_url) {
-        const bmcLabel = lang === 'hr' ? 'Podrži razvoj — Buy me a coffee' : 'Support — Buy me a coffee';
-        return '<div class="app-card-wrapper">'
-          + cardHTML
-          + '<a href="' + app.buymeacoffee_url + '" target="_blank" rel="noopener" class="bmc-badge"'
-          + ' aria-label="' + bmcLabel + '" title="' + bmcLabel + '"'
-          + ' data-bmc-slug="' + app.slug + '">☕</a>'
-          + '</div>';
-      }
       return cardHTML;
     }).join('');
   }
 
   // GA4 event tracking — delegated click on grid for dynamically rendered cards
   document.getElementById('appsGrid').addEventListener('click', (e) => {
-    // BMC badge: track separately and let the link navigate to BMC in new tab.
-    // No stopPropagation needed — the badge is outside .app-card, so it won't trigger card click.
-    const bmc = e.target.closest('.bmc-badge');
-    if (bmc) {
-      if (typeof gtag === 'function') {
-        gtag('event', 'app_share', {
-          app_slug: bmc.dataset.bmcSlug,
-          share_method: 'bmc_badge_catalog',
-          event_category: 'Engagement'
-        });
-      }
-      return;
-    }
     const card = e.target.closest('.app-card');
     if (!card) return;
     if (typeof gtag === 'function') {

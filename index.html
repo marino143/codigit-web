@@ -226,34 +226,6 @@
       margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border);
     }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(230,57,70,0.1);
-      border: 1px solid rgba(230,57,70,0.3);
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: 100px;
-      margin-bottom: 32px;
-    }
-    .hero-badge::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.3); }
-    }
-
     .hero h1 {
       font-size: clamp(42px, 6vw, 80px);
       font-weight: 900;
@@ -1193,7 +1165,6 @@
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-content">
-    <div class="hero-badge" data-i18n="hero.badge">Zagreb, Croatia · Serving the US, UK & EU</div>
     <h1 data-i18n-html="hero.h1">
       We build web<br/>
       technology that<br/>
@@ -1571,7 +1542,6 @@
   const translations = {
     en: {
       'nav.services':'Capabilities','nav.ai':'AI-Powered','nav.about':'About','nav.certs':'Certifications','nav.cta':'Get in touch',
-      'hero.badge':'Zagreb, Croatia · Serving the US, UK & EU',
       'hero.h1':'We build web<br/>technology that<br/><em>actually grows</em><br/>your business.',
       'hero.sub':'Senior web, mobile, and desktop app development plus AI integration for US, UK, and EU companies — the technical depth of a top agency, at European rates.',
       'clock.label':'Online in your hours','clock.note':'Full-time overlap with your workday — real-time collaboration, every business day.',
@@ -1614,7 +1584,6 @@
     },
     hr: {
       'nav.services':'Mogućnosti','nav.ai':'AI razvoj','nav.about':'O nama','nav.certs':'Certifikati','nav.cta':'Kontaktirajte nas',
-      'hero.badge':'Zagreb, Hrvatska',
       'hero.h1':'Gradimo web<br/>tehnologiju koja<br/><em>stvarno potiče</em><br/>vaš rast.',
       'hero.sub':'Premošćujemo jaz između strategije i izvršenja — spajamo duboku tehničku stručnost s prilagođenim razvojem i AI-jem kako bismo isporučili digitalnu transformaciju koja donosi stvarne rezultate.',
       'clock.label':'Online u vašim satima','clock.note':'Puno radno vrijeme preklopljeno s vašim danom — suradnja u stvarnom vremenu, svaki radni dan.',
