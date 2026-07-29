@@ -32,6 +32,19 @@ videi spremaju se **isključivo na tvoj server** (SQLite baza + mapa `data/uploa
 > (ili stavi chat na poddomenu, npr. `chat.codigit.hr`, sa svojim vlastitim rootom —
 > to je najčišće rješenje.)
 
+## Instalacija (Mac — MacBook / Mac mini)
+
+1. Instaliraj [Homebrew](https://brew.sh) pa u Terminalu: `brew install php`
+2. Dvoklikni **`start-mac.command`** u mapi `chat/` — skripta pokrene server,
+   drži Mac budnim (`caffeinate`) i ispiše adrese: `http://localhost:8080` na
+   Macu i `http://IP-Maca:8080` za mobitele na istoj Wi-Fi mreži.
+   (Prvi put macOS zna pitati za dozvolu dolaznih veza — klikni *Allow*.)
+3. Kad si zadovoljan i seliš na "pravi" server: **samo prekopiraj mapu `chat/`** —
+   sve poruke, slike i računi su u `chat/data/`, ništa drugo ne treba migrirati.
+
+> `php -S` (ugrađeni PHP server) ne čita `.htaccess`, pa `start-mac.command`
+> koristi `router.php` koji jednako blokira direktan pristup `data/` mapi.
+
 ## Instalacija (kućni server — Raspberry Pi, NAS, stari laptop)
 
 Ako "lokalni server" znači doma:
@@ -39,7 +52,7 @@ Ako "lokalni server" znači doma:
 ```bash
 sudo apt install php php-sqlite3     # Debian/Ubuntu/Raspberry Pi OS
 cd /putanja/do/chat
-php -S 0.0.0.0:8080                  # za probu; za stalno koristi Apache/nginx + php-fpm
+php -S 0.0.0.0:8080 router.php       # za probu; za stalno koristi Apache/nginx + php-fpm
 ```
 
 Zatim na mobitelu otvori `http://IP-servera:8080/`.
