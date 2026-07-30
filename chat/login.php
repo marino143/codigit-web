@@ -16,17 +16,26 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = strtolower(trim((string)($_POST['user'] ?? '')));
     $pass = (string)($_POST['pass'] ?? '');
-    $row = user_row($user);
-    // blaga zaštita od pogađanja lozinke
-    usleep(400000);
-    if ($row !== null && (int)$row['active'] && password_verify($pass, $row['hash'])) {
-        session_regenerate_id(true);
-        $_SESSION['chat_user'] = $user;
-        touch_activity($user);
-        header('Location: ' . ((int)$row['must_change'] ? 'password.php' : 'index.php'));
-        exit;
+    $ipKey = 'ip:' . client_ip();
+    $userKey = 'user:' . $user;
+
+    usleep(400000); // uspori pogađanje i kad račun nije zaključan
+
+    if (login_locked($ipKey, $userKey)) {
+        $error = 'Too many failed attempts — try again in 15 minutes.';
+    } else {
+        $row = user_row($user);
+        if ($row !== null && (int)$row['active'] && password_verify($pass, $row['hash'])) {
+            login_clear($ipKey, $userKey);
+            session_regenerate_id(true);
+            $_SESSION['chat_user'] = $user;
+            touch_activity($user);
+            header('Location: ' . ((int)$row['must_change'] ? 'password.php' : 'index.php'));
+            exit;
+        }
+        login_fail($ipKey, $userKey);
+        $error = 'Wrong username or password.';
     }
-    $error = 'Wrong username or password.';
 }
 ?>
 <!DOCTYPE html>

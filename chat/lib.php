@@ -42,6 +42,47 @@ define('WHISPER_MODEL', dirname(__DIR__) . '/whisper/ggml-small.bin');
 
 const CHAT_USERNAME_RE = '/^[a-z0-9_.-]{2,30}$/';
 
+// Zaštita prijave od pogađanja lozinki (bitno otkad je chat javno dostupan preko Funnela)
+const CHAT_LOGIN_MAX_FAILS = 8;
+const CHAT_LOGIN_LOCK_SECS = 900; // 15 min
+
+/** Stvarna IP adresa klijenta (iza lokalnog proxyja — Funnel/HTTPS — čita X-Forwarded-For). */
+function client_ip(): string {
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+    if (($ip === '127.0.0.1' || $ip === '::1') && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $first = trim(explode(',', (string)$_SERVER['HTTP_X_FORWARDED_FOR'])[0]);
+        if ($first !== '') $ip = $first;
+    }
+    return $ip;
+}
+
+/** Je li prijava trenutno zaključana za bilo koji od ključeva (npr. IP, korisničko ime)? */
+function login_locked(string ...$keys): bool {
+    $st = db()->prepare('SELECT fails, last_fail FROM login_fails WHERE key = ?');
+    foreach ($keys as $k) {
+        $st->execute([$k]);
+        if (($row = $st->fetch())
+            && (int)$row['fails'] >= CHAT_LOGIN_MAX_FAILS
+            && time() - (int)$row['last_fail'] < CHAT_LOGIN_LOCK_SECS) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function login_fail(string ...$keys): void {
+    $st = db()->prepare('INSERT INTO login_fails (key, fails, last_fail) VALUES (?, 1, ?)
+        ON CONFLICT(key) DO UPDATE SET
+            fails = CASE WHEN ? - login_fails.last_fail > ' . CHAT_LOGIN_LOCK_SECS . ' THEN 1 ELSE login_fails.fails + 1 END,
+            last_fail = ?');
+    foreach ($keys as $k) $st->execute([$k, time(), time(), time()]);
+}
+
+function login_clear(string ...$keys): void {
+    $st = db()->prepare('DELETE FROM login_fails WHERE key = ?');
+    foreach ($keys as $k) $st->execute([$k]);
+}
+
 /** Radi li ovaj zahtjev preko HTTPS-a (izravno ili iza lokalnog proxyja)? */
 function chat_is_https(): bool {
     return !empty($_SERVER['HTTPS'])
@@ -117,6 +158,11 @@ function chat_migrate(PDO $pdo): void {
         username TEXT NOT NULL,
         last_read_id INTEGER NOT NULL DEFAULT 0,
         PRIMARY KEY (conversation_id, username)
+    )');
+    $pdo->exec('CREATE TABLE IF NOT EXISTS login_fails (
+        key TEXT PRIMARY KEY,
+        fails INTEGER NOT NULL DEFAULT 0,
+        last_fail INTEGER NOT NULL DEFAULT 0
     )');
     $pdo->exec('CREATE TABLE IF NOT EXISTS push_subs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

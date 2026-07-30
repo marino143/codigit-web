@@ -29,7 +29,11 @@ function tlsOptions() {
 }
 
 const server = https.createServer(tlsOptions(), (req, res) => {
-    const headers = { ...req.headers, 'x-forwarded-proto': 'https' };
+    const headers = {
+        ...req.headers,
+        'x-forwarded-proto': 'https',
+        'x-forwarded-for': req.socket.remoteAddress || '',
+    };
     const proxied = http.request(
         { ...TARGET, path: req.url, method: req.method, headers },
         pres => {
