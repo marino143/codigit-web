@@ -255,9 +255,7 @@
             }
         } else {
             const online = users.filter(u => u.username !== ME && serverNow - u.last_active < 15).length;
-            $peerStatus.textContent = activeType === 'channel'
-                ? 'channel — everyone' + (online ? ' · ' + online + ' online' : '')
-                : (online ? online + ' online' : '');
+            $peerStatus.textContent = online ? online + ' online' : '';
             $peerStatus.classList.remove('online');
         }
     }
@@ -309,8 +307,9 @@
             '<div id="groupUsers">' + userCheckboxes() + '</div>' +
             '<button class="modal-primary" id="createGroupBtn">Create group</button></div>' +
             (IS_ADMIN
-                ? '<div class="modal-section"><h3># New channel <span class="modal-tag">everyone joins automatically</span></h3>' +
+                ? '<div class="modal-section"><h3># New channel <span class="modal-tag">members you choose</span></h3>' +
                   '<input id="channelName" placeholder="Channel name" maxlength="50">' +
+                  '<div id="channelUsers">' + userCheckboxes() + '</div>' +
                   '<button class="modal-primary" id="createChannelBtn">Create channel</button></div>'
                 : '') +
             '<button class="modal-close" id="modalCloseBtn">Close</button>'
@@ -340,8 +339,9 @@
         if (chBtn) chBtn.addEventListener('click', async () => {
             const name = document.getElementById('channelName').value.trim();
             if (!name) { alert('Enter a channel name.'); return; }
+            const members = [...$modalCard.querySelectorAll('#channelUsers input:checked')].map(i => i.value);
             try {
-                const r = await api('create_channel', { name });
+                const r = await api('create_channel', { name, members: JSON.stringify(members) });
                 closeModal();
                 await refresh();
                 openConv(r.id);
@@ -379,8 +379,8 @@
                     + '</div>';
             }
         }
-        if (info.type === 'group' && info.created_by !== ME) {
-            html += '<button class="modal-mini danger" id="leaveBtn">Leave group</button>';
+        if (info.type !== 'dm' && info.created_by !== ME) {
+            html += '<button class="modal-mini danger" id="leaveBtn">Leave ' + (info.type === 'channel' ? 'channel' : 'group') + '</button>';
         }
         html += '<button class="modal-close" id="modalCloseBtn">Close</button>';
         openModal(html);
@@ -395,7 +395,7 @@
         }));
         const leaveBtn = document.getElementById('leaveBtn');
         if (leaveBtn) leaveBtn.addEventListener('click', async () => {
-            if (!confirm('Leave this group?')) return;
+            if (!confirm('Leave this conversation?')) return;
             try {
                 await api('leave', { conv: activeConv });
                 closeModal();

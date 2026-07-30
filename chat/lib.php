@@ -162,6 +162,20 @@ function chat_migrate(PDO $pdo): void {
         }
     }
 
+    // v4: kanali više nisu automatski vidljivi svima — imaju birane članove.
+    // Postojeći kanali (bez ijednog retka u members) dobivaju sve tadašnje
+    // aktivne korisnike, da se nikome ništa ne promijeni migracijom.
+    foreach ($pdo->query('SELECT id FROM conversations WHERE type = "channel"')->fetchAll(PDO::FETCH_COLUMN) as $chId) {
+        $has = $pdo->prepare('SELECT COUNT(*) FROM members WHERE conversation_id = ?');
+        $has->execute([(int)$chId]);
+        if ((int)$has->fetchColumn() === 0) {
+            $ins = $pdo->prepare('INSERT OR IGNORE INTO members (conversation_id, username, joined_at) VALUES (?, ?, ?)');
+            foreach ($pdo->query('SELECT username FROM users WHERE active = 1')->fetchAll(PDO::FETCH_COLUMN) as $u) {
+                $ins->execute([(int)$chId, $u, time()]);
+            }
+        }
+    }
+
     // 3) poruke bez razgovora → privatni razgovor prva dva korisnika
     $orphans = (int)$pdo->query('SELECT COUNT(*) FROM messages WHERE conversation_id = 0')->fetchColumn();
     if ($orphans > 0) {
@@ -269,17 +283,13 @@ function conv_get(int $id): ?array {
 
 /** @return string[] korisnička imena članova */
 function conv_members(array $conv): array {
-    if ($conv['type'] === 'channel') {
-        return db()->query('SELECT username FROM users WHERE active = 1')->fetchAll(PDO::FETCH_COLUMN);
-    }
     $st = db()->prepare('SELECT username FROM members WHERE conversation_id = ? ORDER BY joined_at');
     $st->execute([(int)$conv['id']]);
     return $st->fetchAll(PDO::FETCH_COLUMN);
 }
 
-/** Kanali su otvoreni svim aktivnim korisnicima; dm/grupa traže članstvo. */
+/** Svi tipovi razgovora (dm, grupa i kanal) traže eksplicitno članstvo. */
 function is_conv_member(array $conv, string $user): bool {
-    if ($conv['type'] === 'channel') return true; // pozivatelj je već prijavljen (dakle aktivan)
     $st = db()->prepare('SELECT 1 FROM members WHERE conversation_id = ? AND username = ?');
     $st->execute([(int)$conv['id'], $user]);
     return (bool)$st->fetchColumn();
@@ -294,9 +304,10 @@ function conv_display_name(array $conv, string $me): string {
     return display_name($me); // dm sam sa sobom ne postoji, ali za svaki slučaj
 }
 
-/** Smije li korisnik upravljati članstvom (grupe: osnivač ili admin). */
+/** Smije li korisnik upravljati članstvom (grupe i kanali: osnivač ili admin). */
 function can_manage_conv(array $conv, string $user): bool {
-    return $conv['type'] === 'group' && ($conv['created_by'] === $user || is_admin($user));
+    if ($conv['type'] === 'dm') return false;
+    return $conv['created_by'] === $user || is_admin($user);
 }
 
 // ---------- sesija / API pomoćne ----------

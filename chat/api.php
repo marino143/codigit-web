@@ -28,9 +28,7 @@ function require_conv(string $user, ?string $param = null): array {
 /** Popis razgovora korisnika sa zadnjom porukom i brojem nepročitanih. */
 function conv_list(PDO $pdo, string $user): array {
     $st = $pdo->prepare('SELECT c.* FROM conversations c
-        JOIN members m ON m.conversation_id = c.id AND m.username = ?
-        UNION
-        SELECT c.* FROM conversations c WHERE c.type = "channel"');
+        JOIN members m ON m.conversation_id = c.id AND m.username = ?');
     $st->execute([$user]);
     $out = [];
     foreach ($st->fetchAll() as $conv) {
@@ -205,9 +203,19 @@ switch ($action) {
         if (!is_admin($user)) json_out(['error' => 'forbidden'], 403);
         $name = trim((string)($_POST['name'] ?? ''));
         if ($name === '' || mb_strlen($name) > 50) json_out(['error' => 'name'], 400);
+        $members = json_decode((string)($_POST['members'] ?? '[]'), true);
+        if (!is_array($members)) $members = [];
+        $members = array_unique(array_merge([$user], array_map('strval', $members)));
+
         $pdo->prepare('INSERT INTO conversations (type, name, created_by, created_at) VALUES ("channel", ?, ?, ?)')
             ->execute([$name, $user, time()]);
-        json_out(['ok' => true, 'id' => (int)$pdo->lastInsertId()]);
+        $id = (int)$pdo->lastInsertId();
+        $st = $pdo->prepare('INSERT OR IGNORE INTO members (conversation_id, username, joined_at) VALUES (?, ?, ?)');
+        foreach ($members as $m) {
+            $row = user_row($m);
+            if ($row !== null && (int)$row['active']) $st->execute([$id, $m, time()]);
+        }
+        json_out(['ok' => true, 'id' => $id]);
     }
 
     case 'conv_info': {
@@ -248,8 +256,8 @@ switch ($action) {
     case 'leave': {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
         $conv = require_conv($user);
-        if ($conv['type'] !== 'group') json_out(['error' => 'type'], 400);
-        if ($conv['created_by'] === $user) json_out(['error' => 'owner', 'hint' => 'The owner cannot leave the group.'], 400);
+        if ($conv['type'] === 'dm') json_out(['error' => 'type'], 400);
+        if ($conv['created_by'] === $user) json_out(['error' => 'owner', 'hint' => 'The owner cannot leave.'], 400);
         $pdo->prepare('DELETE FROM members WHERE conversation_id = ? AND username = ?')
             ->execute([(int)$conv['id'], $user]);
         json_out(['ok' => true]);
