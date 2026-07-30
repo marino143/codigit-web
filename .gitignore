@@ -17,3 +17,7 @@ whisper/
 chat-data-backup*/
 
 .DS_Store
+
+# Cloudflare tunnel credentials i preuzete binarke
+bin/
+cloudflared-chat.yml
