@@ -4,22 +4,22 @@
 cd "$(dirname "$0")"
 
 if ! command -v php >/dev/null 2>&1; then
-    echo "PHP nije instaliran."
-    echo "1) Instaliraj Homebrew:  https://brew.sh"
-    echo "2) Zatim u Terminalu:    brew install php"
+    echo "PHP is not installed."
+    echo "1) Install Homebrew:  https://brew.sh"
+    echo "2) Then in Terminal:  brew install php"
     exit 1
 fi
 
-IP=$(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null || echo "IP-tvog-Maca")
+IP=$(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null || echo "your-Macs-IP")
 
 echo "────────────────────────────────────────────────────"
-echo "  💬 Naš chat je upaljen!"
+echo "  💬 Our Chat is running!"
 echo ""
-echo "  Na ovom Macu:  http://localhost:8080"
-echo "  S mobitela:    http://$IP:8080   (ista Wi-Fi mreža)"
+echo "  On this Mac:   http://localhost:8080"
+echo "  From phones:   http://$IP:8080   (same Wi-Fi network)"
 echo ""
-echo "  Prvi put te vodi na setup za kreiranje računa."
-echo "  Zaustavljanje: Ctrl+C (ili zatvori ovaj prozor)"
+echo "  The first visit takes you to setup to create an account."
+echo "  Stop: Ctrl+C (or close this window)"
 echo "────────────────────────────────────────────────────"
 
 # caffeinate -i: Mac ne ide u sleep dok server radi (poklopac mora ostati otvoren)

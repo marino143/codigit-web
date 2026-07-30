@@ -7,7 +7,7 @@
 declare(strict_types=1);
 
 $uri = urldecode((string)parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-if (preg_match('#(^|/)data(/|$)#', $uri)) {
+if (preg_match('#(^|/)(data|vendor)(/|$)#', $uri) || preg_match('#composer\.(json|lock)$#', $uri)) {
     http_response_code(403);
     exit('Forbidden');
 }

@@ -3,3 +3,17 @@
 # Privatni podaci chata — nikad ne ide na GitHub
 chat/data/*
 !chat/data/.htaccess
+
+# Composer paketi (instaliraju se s composer install)
+chat/vendor/
+
+# TLS certifikati (Tailscale)
+tls/
+
+# Whisper modeli (velike datoteke — skidaju se po INSTALL.md)
+whisper/
+
+# Lokalni backupovi podataka
+chat-data-backup*/
+
+.DS_Store

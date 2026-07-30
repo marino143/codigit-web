@@ -13,12 +13,19 @@ if ($user === null) {
 }
 
 $id = (int)($_GET['id'] ?? 0);
-$st = db()->prepare('SELECT file, mime FROM messages WHERE id = ? AND file IS NOT NULL');
+$st = db()->prepare('SELECT file, mime, conversation_id FROM messages WHERE id = ? AND file IS NOT NULL');
 $st->execute([$id]);
 $row = $st->fetch();
 if (!$row) {
     http_response_code(404);
     exit('Not found');
+}
+
+// Medije smiju vidjeti samo članovi razgovora
+$conv = conv_get((int)$row['conversation_id']);
+if ($conv === null || !is_conv_member($conv, $user)) {
+    http_response_code(403);
+    exit('Forbidden');
 }
 
 // basename() kao dodatna zaštita od path traversala

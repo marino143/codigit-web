@@ -1,6 +1,7 @@
 <?php
 /**
- * JSON API: poll (nove poruke + status partnera), send (tekst), upload (slika/video).
+ * JSON API: poll (poruke + popis razgovora + prisutnost), send, upload,
+ * kreiranje razgovora (dm/grupa/kanal), upravljanje članovima, promjena lozinke.
  */
 declare(strict_types=1);
 require __DIR__ . '/lib.php';
@@ -15,61 +16,130 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !csrf_check()) {
 $pdo = db();
 touch_activity($user);
 
+/** Razgovor iz parametra `conv` — 404/403 ako ne postoji ili korisnik nije član. */
+function require_conv(string $user, ?string $param = null): array {
+    $id = (int)($param ?? ($_GET['conv'] ?? $_POST['conv'] ?? 0));
+    $conv = conv_get($id);
+    if ($conv === null) json_out(['error' => 'no_conv'], 404);
+    if (!is_conv_member($conv, $user)) json_out(['error' => 'forbidden'], 403);
+    return $conv;
+}
+
+/** Popis razgovora korisnika sa zadnjom porukom i brojem nepročitanih. */
+function conv_list(PDO $pdo, string $user): array {
+    $st = $pdo->prepare('SELECT c.* FROM conversations c
+        JOIN members m ON m.conversation_id = c.id AND m.username = ?
+        UNION
+        SELECT c.* FROM conversations c WHERE c.type = "channel"');
+    $st->execute([$user]);
+    $out = [];
+    foreach ($st->fetchAll() as $conv) {
+        $cid = (int)$conv['id'];
+        $last = $pdo->prepare('SELECT sender, type, body, created_at, id FROM messages
+            WHERE conversation_id = ? ORDER BY id DESC LIMIT 1');
+        $last->execute([$cid]);
+        $lm = $last->fetch() ?: null;
+
+        $rd = $pdo->prepare('SELECT last_read_id FROM reads WHERE conversation_id = ? AND username = ?');
+        $rd->execute([$cid, $user]);
+        $lastRead = (int)$rd->fetchColumn();
+
+        $un = $pdo->prepare('SELECT COUNT(*) FROM messages
+            WHERE conversation_id = ? AND id > ? AND sender != ?');
+        $un->execute([$cid, $lastRead, $user]);
+
+        $out[] = [
+            'id'          => $cid,
+            'type'        => $conv['type'],
+            'name'        => conv_display_name($conv, $user),
+            'created_by'  => $conv['created_by'],
+            'unread'      => (int)$un->fetchColumn(),
+            'last_body'   => $lm ? ($lm['type'] === 'text' ? mb_substr($lm['body'], 0, 80)
+                : ($lm['type'] === 'image' ? '📷 Photo' : ($lm['type'] === 'audio' ? '🎤 Voice message' : '🎬 Video'))) : '',
+            'last_sender' => $lm ? display_name($lm['sender']) : '',
+            'last_ts'     => $lm ? (int)$lm['created_at'] : (int)$conv['created_at'],
+        ];
+    }
+    usort($out, fn($a, $b) => $b['last_ts'] <=> $a['last_ts']);
+    return $out;
+}
+
 switch ($action) {
 
     case 'poll': {
-        $since = max(0, (int)($_GET['since'] ?? 0));
+        $response = [
+            'convs' => conv_list($pdo, $user),
+            'users' => active_users(),
+            'me'    => ['username' => $user, 'name' => display_name($user), 'admin' => is_admin($user)],
+            'now'   => time(),
+        ];
 
-        // Klijent javlja do koje je poruke pročitao
-        $readUpTo = (int)($_GET['read'] ?? 0);
-        if ($readUpTo > 0) {
-            $st = $pdo->prepare('INSERT INTO user_state (username, last_read_id, last_active) VALUES (?, ?, ?)
-                ON CONFLICT(username) DO UPDATE SET
-                    last_read_id = MAX(user_state.last_read_id, excluded.last_read_id),
-                    last_active  = excluded.last_active');
-            $st->execute([$user, $readUpTo, time()]);
-        }
+        if (isset($_GET['conv']) && (int)$_GET['conv'] > 0) {
+            $conv = require_conv($user);
+            $cid = (int)$conv['id'];
+            $since = max(0, (int)($_GET['since'] ?? 0));
 
-        $st = $pdo->prepare('SELECT id, sender, type, body, file, mime, size, created_at
-            FROM messages WHERE id > ? ORDER BY id ASC LIMIT 500');
-        $st->execute([$since]);
-        $messages = $st->fetchAll();
+            // Klijent javlja do koje je poruke pročitao
+            $readUpTo = (int)($_GET['read'] ?? 0);
+            if ($readUpTo > 0) {
+                $st = $pdo->prepare('INSERT INTO reads (conversation_id, username, last_read_id) VALUES (?, ?, ?)
+                    ON CONFLICT(conversation_id, username) DO UPDATE SET
+                        last_read_id = MAX(reads.last_read_id, excluded.last_read_id)');
+                $st->execute([$cid, $user, $readUpTo]);
+            }
 
-        $partner = partner_of($user);
-        $pState = ['online' => false, 'last_active' => 0, 'last_read_id' => 0];
-        if ($partner !== null) {
-            $st = $pdo->prepare('SELECT last_read_id, last_active FROM user_state WHERE username = ?');
-            $st->execute([$partner]);
-            if ($row = $st->fetch()) {
-                $pState = [
-                    'online'       => (time() - (int)$row['last_active']) < 15,
-                    'last_active'  => (int)$row['last_active'],
-                    'last_read_id' => (int)$row['last_read_id'],
-                ];
+            $st = $pdo->prepare('SELECT id, sender, type, body, file, mime, size, created_at, transcript
+                FROM messages WHERE conversation_id = ? AND id > ? ORDER BY id ASC LIMIT 500');
+            $st->execute([$cid, $since]);
+            $messages = $st->fetchAll();
+            foreach ($messages as &$m) {
+                $m['sender_name'] = display_name($m['sender']);
+            }
+            unset($m);
+            $response['messages'] = $messages;
+
+            // Transkripti stižu naknadno (pozadinski posao) — šaljemo ih za već
+            // isporučene audio poruke da ih klijent može naknadno upisati
+            $tr = $pdo->prepare('SELECT id, transcript FROM messages
+                WHERE conversation_id = ? AND type = "audio" AND transcript IS NOT NULL');
+            $tr->execute([$cid]);
+            $response['transcripts'] = $tr->fetchAll(PDO::FETCH_KEY_PAIR);
+            $response['conv'] = ['id' => $cid, 'type' => $conv['type'], 'name' => conv_display_name($conv, $user)];
+
+            // Kvačice "pročitano" samo u privatnom razgovoru
+            if ($conv['type'] === 'dm') {
+                $partner = null;
+                foreach (explode('|', (string)$conv['dm_key']) as $u2) {
+                    if ($u2 !== $user) $partner = $u2;
+                }
+                $rd = $pdo->prepare('SELECT last_read_id FROM reads WHERE conversation_id = ? AND username = ?');
+                $rd->execute([$cid, $partner]);
+                $response['partner_read'] = (int)$rd->fetchColumn();
+                $response['partner'] = $partner;
             }
         }
-
-        json_out([
-            'messages' => $messages,
-            'partner'  => ['name' => display_name($partner)] + $pState,
-            'now'      => time(),
-        ]);
+        json_out($response);
     }
 
     case 'send': {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $conv = require_conv($user);
         $body = trim((string)($_POST['body'] ?? ''));
         if ($body === '' || mb_strlen($body) > 10000) json_out(['error' => 'empty'], 400);
-        $st = $pdo->prepare('INSERT INTO messages (sender, type, body, created_at) VALUES (?, "text", ?, ?)');
-        $st->execute([$user, $body, time()]);
-        json_out(['ok' => true, 'id' => (int)$pdo->lastInsertId()]);
+        $st = $pdo->prepare('INSERT INTO messages (conversation_id, sender, type, body, created_at)
+            VALUES (?, ?, "text", ?, ?)');
+        $st->execute([(int)$conv['id'], $user, $body, time()]);
+        $id = (int)$pdo->lastInsertId();
+        push_notify_async($id);
+        json_out(['ok' => true, 'id' => $id]);
     }
 
     case 'upload': {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $conv = require_conv($user);
         if (empty($_FILES['file']) || !is_uploaded_file($_FILES['file']['tmp_name'])) {
             // Najčešći razlog: datoteka veća od PHP limita (upload_max_filesize)
-            json_out(['error' => 'nofile', 'hint' => 'Datoteka nije stigla — vjerojatno je veća od limita servera.'], 400);
+            json_out(['error' => 'nofile', 'hint' => 'The file did not arrive — it is probably larger than the server limit.'], 400);
         }
         $f = $_FILES['file'];
         if ($f['error'] !== UPLOAD_ERR_OK) json_out(['error' => 'upload_' . $f['error']], 400);
@@ -77,8 +147,13 @@ switch ($action) {
 
         $mime = (string)(mime_content_type($f['tmp_name']) ?: $f['type']);
         $type = null; $ext = null;
-        if (isset(CHAT_IMAGE_MIMES[$mime])) { $type = 'image'; $ext = CHAT_IMAGE_MIMES[$mime]; }
-        if (isset(CHAT_VIDEO_MIMES[$mime])) { $type = 'video'; $ext = CHAT_VIDEO_MIMES[$mime]; }
+        if (($_POST['kind'] ?? '') === 'audio') {
+            // glasovna poruka — iOS je snima u mp4 kontejner pa mime zna biti video/*
+            if (isset(CHAT_AUDIO_MIMES[$mime])) { $type = 'audio'; $ext = CHAT_AUDIO_MIMES[$mime]; }
+        } else {
+            if (isset(CHAT_IMAGE_MIMES[$mime])) { $type = 'image'; $ext = CHAT_IMAGE_MIMES[$mime]; }
+            if (isset(CHAT_VIDEO_MIMES[$mime])) { $type = 'video'; $ext = CHAT_VIDEO_MIMES[$mime]; }
+        }
         if ($type === null) json_out(['error' => 'type', 'mime' => $mime], 415);
 
         if (!is_dir(CHAT_UPLOAD_DIR)) mkdir(CHAT_UPLOAD_DIR, 0755, true);
@@ -88,10 +163,168 @@ switch ($action) {
         }
 
         $caption = trim((string)($_POST['body'] ?? ''));
-        $st = $pdo->prepare('INSERT INTO messages (sender, type, body, file, mime, size, created_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?)');
-        $st->execute([$user, $type, $caption, $name, $mime, (int)$f['size'], time()]);
+        $st = $pdo->prepare('INSERT INTO messages (conversation_id, sender, type, body, file, mime, size, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+        $st->execute([(int)$conv['id'], $user, $type, $caption, $name, $mime, (int)$f['size'], time()]);
+        $id = (int)$pdo->lastInsertId();
+        if ($type === 'audio') transcribe_async($id);
+        push_notify_async($id);
+        json_out(['ok' => true, 'id' => $id]);
+    }
+
+    case 'create_dm': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $other = strtolower(trim((string)($_POST['user'] ?? '')));
+        $row = user_row($other);
+        if ($other === $user || $row === null || !(int)$row['active']) json_out(['error' => 'no_user'], 400);
+        $id = dm_conversation($pdo, $user, $other);
+        json_out(['ok' => true, 'id' => $id]);
+    }
+
+    case 'create_group': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $name = trim((string)($_POST['name'] ?? ''));
+        if ($name === '' || mb_strlen($name) > 50) json_out(['error' => 'name'], 400);
+        $members = json_decode((string)($_POST['members'] ?? '[]'), true);
+        if (!is_array($members)) $members = [];
+        $members = array_unique(array_merge([$user], array_map('strval', $members)));
+
+        $pdo->prepare('INSERT INTO conversations (type, name, created_by, created_at) VALUES ("group", ?, ?, ?)')
+            ->execute([$name, $user, time()]);
+        $id = (int)$pdo->lastInsertId();
+        $st = $pdo->prepare('INSERT OR IGNORE INTO members (conversation_id, username, joined_at) VALUES (?, ?, ?)');
+        foreach ($members as $m) {
+            $row = user_row($m);
+            if ($row !== null && (int)$row['active']) $st->execute([$id, $m, time()]);
+        }
+        json_out(['ok' => true, 'id' => $id]);
+    }
+
+    case 'create_channel': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        if (!is_admin($user)) json_out(['error' => 'forbidden'], 403);
+        $name = trim((string)($_POST['name'] ?? ''));
+        if ($name === '' || mb_strlen($name) > 50) json_out(['error' => 'name'], 400);
+        $pdo->prepare('INSERT INTO conversations (type, name, created_by, created_at) VALUES ("channel", ?, ?, ?)')
+            ->execute([$name, $user, time()]);
         json_out(['ok' => true, 'id' => (int)$pdo->lastInsertId()]);
+    }
+
+    case 'conv_info': {
+        $conv = require_conv($user);
+        $members = [];
+        foreach (conv_members($conv) as $m) {
+            $members[] = ['username' => $m, 'name' => display_name($m)];
+        }
+        json_out([
+            'id'         => (int)$conv['id'],
+            'type'       => $conv['type'],
+            'name'       => conv_display_name($conv, $user),
+            'created_by' => $conv['created_by'],
+            'members'    => $members,
+            'can_manage' => can_manage_conv($conv, $user),
+        ]);
+    }
+
+    case 'add_member':
+    case 'remove_member': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $conv = require_conv($user);
+        if (!can_manage_conv($conv, $user)) json_out(['error' => 'forbidden'], 403);
+        $target = strtolower(trim((string)($_POST['user'] ?? '')));
+        if ($action === 'add_member') {
+            $row = user_row($target);
+            if ($row === null || !(int)$row['active']) json_out(['error' => 'no_user'], 400);
+            $pdo->prepare('INSERT OR IGNORE INTO members (conversation_id, username, joined_at) VALUES (?, ?, ?)')
+                ->execute([(int)$conv['id'], $target, time()]);
+        } else {
+            if ($target === $conv['created_by']) json_out(['error' => 'owner'], 400);
+            $pdo->prepare('DELETE FROM members WHERE conversation_id = ? AND username = ?')
+                ->execute([(int)$conv['id'], $target]);
+        }
+        json_out(['ok' => true]);
+    }
+
+    case 'leave': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $conv = require_conv($user);
+        if ($conv['type'] !== 'group') json_out(['error' => 'type'], 400);
+        if ($conv['created_by'] === $user) json_out(['error' => 'owner', 'hint' => 'The owner cannot leave the group.'], 400);
+        $pdo->prepare('DELETE FROM members WHERE conversation_id = ? AND username = ?')
+            ->execute([(int)$conv['id'], $user]);
+        json_out(['ok' => true]);
+    }
+
+    case 'search': {
+        $q = trim((string)($_GET['q'] ?? ''));
+        if (mb_strlen($q) < 2) json_out(['results' => []]);
+        // LIKE bez specijalnih znakova (\ je escape)
+        $like = '%' . str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $q) . '%';
+
+        // samo razgovori u kojima korisnik smije čitati
+        $ids = [];
+        foreach (conv_list($pdo, $user) as $c) $ids[$c['id']] = $c;
+        if (!$ids) json_out(['results' => []]);
+        $in = implode(',', array_map('intval', array_keys($ids)));
+
+        $st = $pdo->prepare("SELECT id, conversation_id, sender, type, body, transcript, created_at
+            FROM messages
+            WHERE conversation_id IN ($in)
+              AND (body LIKE ? ESCAPE '\\' OR transcript LIKE ? ESCAPE '\\')
+            ORDER BY id DESC LIMIT 50");
+        $st->execute([$like, $like]);
+
+        $results = [];
+        foreach ($st->fetchAll() as $m) {
+            $text = (string)($m['type'] === 'audio' && $m['body'] === '' ? $m['transcript'] : $m['body']);
+            if ($text === '') $text = (string)$m['transcript'];
+            $results[] = [
+                'id'          => (int)$m['id'],
+                'conv'        => (int)$m['conversation_id'],
+                'conv_name'   => $ids[(int)$m['conversation_id']]['name'],
+                'conv_type'   => $ids[(int)$m['conversation_id']]['type'],
+                'sender_name' => display_name($m['sender']),
+                'type'        => $m['type'],
+                'snippet'     => mb_substr($text, 0, 120),
+                'created_at'  => (int)$m['created_at'],
+            ];
+        }
+        json_out(['results' => $results, 'q' => $q]);
+    }
+
+    case 'push_subscribe': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $endpoint = (string)($_POST['endpoint'] ?? '');
+        $p256dh = (string)($_POST['p256dh'] ?? '');
+        $auth = (string)($_POST['auth'] ?? '');
+        if (!str_starts_with($endpoint, 'https://') || $p256dh === '' || $auth === '') {
+            json_out(['error' => 'bad_sub'], 400);
+        }
+        $pdo->prepare('INSERT INTO push_subs (username, endpoint, p256dh, auth, created_at) VALUES (?, ?, ?, ?, ?)
+            ON CONFLICT(endpoint) DO UPDATE SET username = excluded.username,
+                p256dh = excluded.p256dh, auth = excluded.auth')
+            ->execute([$user, $endpoint, $p256dh, $auth, time()]);
+        json_out(['ok' => true]);
+    }
+
+    case 'push_unsubscribe': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $endpoint = (string)($_POST['endpoint'] ?? '');
+        $pdo->prepare('DELETE FROM push_subs WHERE endpoint = ? AND username = ?')
+            ->execute([$endpoint, $user]);
+        json_out(['ok' => true]);
+    }
+
+    case 'change_password': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $old = (string)($_POST['old'] ?? '');
+        $new = (string)($_POST['new'] ?? '');
+        $row = user_row($user);
+        if (strlen($new) < 8) json_out(['error' => 'short'], 400);
+        if (!password_verify($old, $row['hash'])) json_out(['error' => 'wrong'], 403);
+        $pdo->prepare('UPDATE users SET hash = ?, must_change = 0 WHERE username = ?')
+            ->execute([password_hash($new, PASSWORD_DEFAULT), $user]);
+        json_out(['ok' => true]);
     }
 
     default:
