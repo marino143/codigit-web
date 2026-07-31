@@ -853,6 +853,27 @@
 
     pushSetup();
 
+    // ---------- iOS: tipkovnica ne smije odgurati zaglavlje ----------
+    (function keepLayoutStable() {
+        const vv = window.visualViewport;
+        if (!vv) return;
+        const apply = () => {
+            document.documentElement.style.setProperty('--app-h', vv.height + 'px');
+            // iOS zna ostaviti stranicu odscrollanu nakon zatvaranja tipkovnice
+            if (window.scrollY !== 0) window.scrollTo(0, 0);
+        };
+        vv.addEventListener('resize', apply);
+        vv.addEventListener('scroll', apply);
+        window.addEventListener('orientationchange', () => setTimeout(apply, 300));
+        apply();
+
+        // kad se tipkovnica otvori, zadrži pogled na zadnjoj poruci
+        $input.addEventListener('focus', () => setTimeout(() => {
+            apply();
+            if (isAtBottom()) scrollToBottom();
+        }, 350));
+    })();
+
     // start
     poll();
 })();

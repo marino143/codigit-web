@@ -62,10 +62,19 @@ body {
 .auth-ok { color: #2e7d32; font-size: 14px; margin: 8px 0; }
 
 /* ---------- Raspored: bočna traka + razgovor ---------- */
+/* Na iPhoneu tipkovnica gura stranicu prema gore i zaglavlje nestane pod
+   statusnu traku. Zato je aplikacija fiksirana, a visinu joj postavlja
+   visualViewport (--app-h) da uvijek stane točno iznad tipkovnice. */
+.chat-page.app-page {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+}
 .app {
     display: flex;
     height: 100vh;
     height: 100dvh;
+    height: var(--app-h, 100dvh);
 }
 .sidebar {
     width: 320px;
