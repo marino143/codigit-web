@@ -472,6 +472,13 @@ function push_notify_async(int $messageId): void {
         escapeshellarg($php), escapeshellarg($script), $messageId));
 }
 
+/** Pošalji testnu notifikaciju korisniku (provjera iz postavki). */
+function push_test_async(string $username): void {
+    exec(sprintf('%s %s --test %s > /dev/null 2>&1 &',
+        escapeshellarg(PHP_BINARY), escapeshellarg(__DIR__ . '/send-push.php'),
+        escapeshellarg($username)));
+}
+
 /** Pokreni transkripciju glasovne poruke u pozadinskom procesu. */
 function transcribe_async(int $messageId): void {
     $php = PHP_BINARY;

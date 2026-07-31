@@ -21,3 +21,6 @@ chat-data-backup*/
 # Cloudflare tunnel credentials i preuzete binarke
 bin/
 cloudflared-chat.yml
+
+# Push log (dijagnostika)
+chat/data/push.log

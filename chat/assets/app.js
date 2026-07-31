@@ -18,7 +18,6 @@
     const $peerStatus = document.getElementById('peerStatus');
     const $convName = document.getElementById('convName');
     const $peerClock = document.getElementById('peerClock');
-    const $convAvatar = document.getElementById('convAvatar');
     const $infoBtn = document.getElementById('infoBtn');
     const $backBtn = document.getElementById('backBtn');
     const $newBtn = document.getElementById('newBtn');
@@ -124,7 +123,6 @@
                 ? (c.last_sender && c.type !== 'dm' ? c.last_sender + ': ' : '') + c.last_body
                 : 'No messages yet';
             el.innerHTML =
-                '<div class="conv-avatar">' + convIcon(c.type) + '</div>' +
                 '<div class="conv-mid">' +
                     '<div class="conv-name">' + escapeHtml(c.name || '') + '</div>' +
                     '<div class="conv-preview">' + escapeHtml(preview) + '</div>' +
@@ -162,8 +160,7 @@
 
         const c = convs.find(x => x.id === id);
         if (c) {
-            $convName.textContent = c.name || '';
-            $convAvatar.textContent = convIcon(c.type);
+            $convName.textContent = (c.type === 'dm' ? '' : convIcon(c.type) + ' ') + (c.name || '');
             activeType = c.type;
         }
         renderConvList();
@@ -769,7 +766,6 @@
             const icon = r.type === 'audio' ? '🎤 ' : (r.type === 'image' ? '📷 ' : (r.type === 'video' ? '🎬 ' : ''));
             const d = new Date(r.created_at * 1000);
             el.innerHTML =
-                '<div class="conv-avatar">' + convIcon(r.conv_type) + '</div>' +
                 '<div class="conv-mid">' +
                     '<div class="conv-name">' + escapeHtml(r.conv_name) + ' <span class="modal-tag">' + escapeHtml(r.sender_name) + '</span></div>' +
                     '<div class="conv-preview">' + icon + highlight(r.snippet, q) + '</div>' +
@@ -842,6 +838,17 @@
         // Dozvola je već dana (npr. s drugog uređaja ili ranije) — uključi bez pitanja.
         if (!sub && Notification.permission === 'granted') {
             try { await pushSubscribe(reg); sub = await reg.pushManager.getSubscription(); } catch (e) {}
+        }
+
+        // Pretplata zna tiho propasti (preglednik je zamijeni, server je pročisti).
+        // Zato je pri svakom otvaranju ponovno prijavimo — server je samo osvježi.
+        if (sub) {
+            const j = sub.toJSON();
+            api('push_subscribe', {
+                endpoint: sub.endpoint,
+                p256dh: j.keys.p256dh,
+                auth: j.keys.auth,
+            }).catch(() => {});
         }
 
         // Nikad pitano: preglednik dopušta pitanje samo iz korisnikove geste,

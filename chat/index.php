@@ -69,7 +69,6 @@ $admin = $row['role'] === 'admin';
     <section class="chatpane" id="chatpane">
         <header class="chat-header">
             <button class="back-btn" id="backBtn" title="Chats">‹</button>
-            <div class="chat-avatar" id="convAvatar">💬</div>
             <div class="chat-peer">
                 <div class="chat-peer-name" id="convName">Our Chat</div>
                 <div class="chat-peer-status" id="peerStatus"></div>

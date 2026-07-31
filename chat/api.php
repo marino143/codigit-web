@@ -9,7 +9,12 @@ require __DIR__ . '/lib.php';
 $user = require_auth_api();
 $action = $_GET['action'] ?? '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !csrf_check()) {
+// Service worker nema pristup CSRF tokenu stranice; taj poziv brani SameSite=Lax
+// kolačić (cross-site POST ne nosi sesiju) i to što upisuje samo vlastitu pretplatu.
+$csrfExempt = ['push_resubscribe'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST'
+    && !in_array($action, $csrfExempt, true)
+    && !csrf_check()) {
     json_out(['error' => 'csrf'], 403);
 }
 
@@ -340,6 +345,40 @@ switch ($action) {
             ON CONFLICT(endpoint) DO UPDATE SET username = excluded.username,
                 p256dh = excluded.p256dh, auth = excluded.auth')
             ->execute([$user, $endpoint, $p256dh, $auth, time()]);
+        json_out(['ok' => true]);
+    }
+
+    /**
+     * Service worker javlja da je preglednik zamijenio pretplatu.
+     * Bez CSRF-a jer poziv dolazi iz service workera (sesija ga i dalje veže
+     * uz korisnika, a upisuje se samo vlastita pretplata).
+     */
+    case 'push_resubscribe': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $endpoint = (string)($_POST['endpoint'] ?? '');
+        $p256dh = (string)($_POST['p256dh'] ?? '');
+        $auth = (string)($_POST['auth'] ?? '');
+        $old = (string)($_POST['old_endpoint'] ?? '');
+        if (!str_starts_with($endpoint, 'https://') || $p256dh === '' || $auth === '') {
+            json_out(['error' => 'bad_sub'], 400);
+        }
+        if ($old !== '') {
+            $pdo->prepare('DELETE FROM push_subs WHERE endpoint = ? AND username = ?')->execute([$old, $user]);
+        }
+        $pdo->prepare('INSERT INTO push_subs (username, endpoint, p256dh, auth, created_at) VALUES (?, ?, ?, ?, ?)
+            ON CONFLICT(endpoint) DO UPDATE SET username = excluded.username,
+                p256dh = excluded.p256dh, auth = excluded.auth')
+            ->execute([$user, $endpoint, $p256dh, $auth, time()]);
+        json_out(['ok' => true]);
+    }
+
+    /** Pošalji testnu notifikaciju samom sebi (gumb u postavkama). */
+    case 'push_test': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $st = $pdo->prepare('SELECT COUNT(*) FROM push_subs WHERE username = ?');
+        $st->execute([$user]);
+        if ((int)$st->fetchColumn() === 0) json_out(['error' => 'no_subs'], 400);
+        push_test_async($user);
         json_out(['ok' => true]);
     }
 

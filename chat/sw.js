@@ -17,6 +17,35 @@ self.addEventListener('push', event => {
     }));
 });
 
+/**
+ * Preglednik povremeno sam poništi i zamijeni pretplatu (istek ključeva,
+ * čišćenje). Bez ovoga korisnik tiho prestane primati notifikacije.
+ */
+self.addEventListener('pushsubscriptionchange', event => {
+    event.waitUntil((async () => {
+        try {
+            const old = event.oldSubscription || await self.registration.pushManager.getSubscription();
+            const key = (event.newSubscription && event.newSubscription.options.applicationServerKey)
+                || (old && old.options && old.options.applicationServerKey);
+            const fresh = event.newSubscription
+                || await self.registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: key });
+            const j = fresh.toJSON();
+            const body = new URLSearchParams({
+                endpoint: fresh.endpoint,
+                p256dh: j.keys.p256dh,
+                auth: j.keys.auth,
+                old_endpoint: old ? old.endpoint : '',
+            });
+            await fetch('api.php?action=push_resubscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: body.toString(),
+                credentials: 'include',
+            });
+        } catch (e) { /* pokušat ćemo opet kad se aplikacija otvori */ }
+    })());
+});
+
 self.addEventListener('notificationclick', event => {
     event.notification.close();
     event.waitUntil((async () => {
