@@ -114,6 +114,13 @@ switch ($action) {
                 $rd->execute([$cid, $partner]);
                 $response['partner_read'] = (int)$rd->fetchColumn();
                 $response['partner'] = $partner;
+
+                // Koliko je sati kod sugovornika (null ako nema zonu ili je ista kao naša)
+                $pRow = user_row((string)$partner);
+                $meRow = user_row($user);
+                $response['partner_time'] = $pRow
+                    ? user_local_time((string)$pRow['timezone'], (string)$meRow['timezone'])
+                    : null;
             }
         }
         json_out($response);
@@ -220,9 +227,15 @@ switch ($action) {
 
     case 'conv_info': {
         $conv = require_conv($user);
+        $meTz = (string)user_row($user)['timezone'];
         $members = [];
         foreach (conv_members($conv) as $m) {
-            $members[] = ['username' => $m, 'name' => display_name($m)];
+            $mRow = user_row($m);
+            $members[] = [
+                'username'   => $m,
+                'name'       => display_name($m),
+                'local_time' => $mRow ? user_local_time((string)$mRow['timezone'], $meTz) : null,
+            ];
         }
         json_out([
             'id'         => (int)$conv['id'],

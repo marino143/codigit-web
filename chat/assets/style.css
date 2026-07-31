@@ -315,6 +315,15 @@ body {
     cursor: pointer;
 }
 .admin-card button.danger { background: #fdecea; color: #c62828; }
+.settings-select {
+    width: 100%;
+    padding: 11px 13px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    font-size: 15px;
+    background: #fff;
+}
 .admin-check { display: block; font-size: 14px; color: #445; margin: 8px 0; }
 .admin-check input { width: auto; margin-right: 6px; }
 .admin-hint { font-size: 12px; color: #889; margin-top: 10px; }
@@ -371,7 +380,20 @@ body {
     flex: 0 0 auto;
 }
 .chat-peer { flex: 1; min-width: 0; }
-.chat-peer-name { font-weight: 600; font-size: 16px; }
+.chat-peer-line { display: flex; align-items: baseline; gap: 8px; }
+.chat-peer-name {
+    font-weight: 600; font-size: 16px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.chat-peer-clock {
+    flex: 0 0 auto;
+    font-size: 12px;
+    opacity: .85;
+    background: rgba(255,255,255,.15);
+    border-radius: 10px;
+    padding: 1px 7px;
+}
+.chat-peer-clock[hidden] { display: none; }
 .chat-peer-status { font-size: 12px; opacity: .85; min-height: 15px; }
 .chat-peer-status.online { color: #a5f3c0; }
 .chat-logout {

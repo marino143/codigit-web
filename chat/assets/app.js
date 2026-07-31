@@ -17,6 +17,7 @@
     const $composer = document.getElementById('composer');
     const $peerStatus = document.getElementById('peerStatus');
     const $convName = document.getElementById('convName');
+    const $peerClock = document.getElementById('peerClock');
     const $convAvatar = document.getElementById('convAvatar');
     const $infoBtn = document.getElementById('infoBtn');
     const $backBtn = document.getElementById('backBtn');
@@ -37,6 +38,7 @@
     let maxSeenId = 0;       // do koje smo poruke "pročitali"
     let partnerReadId = 0;   // dm: do koje je poruke partner pročitao
     let partnerUser = null;  // dm: korisničko ime sugovornika
+    let partnerTime = null;  // dm: {time, offset} kod sugovornika, ako ima drugu zonu
     let lastDayKey = '';
     let pollTimer = null;
     let firstLoad = true;
@@ -148,6 +150,7 @@
         maxSeenId = 0;
         partnerReadId = 0;
         partnerUser = null;
+        partnerTime = null;
         lastDayKey = '';
         firstLoad = true;
         myMessageEls.length = 0;
@@ -243,7 +246,17 @@
 
     // ---------- status (online / članovi) ----------
     function updateStatus() {
-        if (!activeConv) { $peerStatus.textContent = ''; return; }
+        if (!activeConv) { $peerStatus.textContent = ''; $peerClock.hidden = true; return; }
+
+        // sat sugovornika (samo dm, i samo ako je u drugoj zoni)
+        if (activeType === 'dm' && partnerTime) {
+            $peerClock.textContent = '🕐 ' + partnerTime.time;
+            $peerClock.title = 'Local time for them (' + partnerTime.offset + ')';
+            $peerClock.hidden = false;
+        } else {
+            $peerClock.hidden = true;
+        }
+
         if (activeType === 'dm') {
             const partner = users.find(u => u.username === partnerUser);
             if (partner && serverNow - partner.last_active < 15) {
@@ -362,6 +375,7 @@
         for (const m of info.members) {
             html += '<div class="modal-row">' + escapeHtml(m.name)
                 + ' <span class="modal-tag">@' + escapeHtml(m.username) + '</span>'
+                + (m.local_time ? ' <span class="modal-tag">🕐 ' + escapeHtml(m.local_time.time) + '</span>' : '')
                 + (m.username === info.created_by ? ' <span class="modal-tag">owner</span>' : '')
                 + (info.can_manage && m.username !== info.created_by
                     ? ' <button class="modal-mini danger" data-remove="' + escapeHtml(m.username) + '">remove</button>'
@@ -450,6 +464,7 @@
                     refreshTicks();
                 }
                 if (data.partner) partnerUser = data.partner;
+                partnerTime = data.partner_time || null;
                 applyTranscripts(data.transcripts);
             }
 

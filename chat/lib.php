@@ -210,6 +210,12 @@ function chat_migrate(PDO $pdo): void {
         }
     }
 
+    // v5: vremenska zona korisnika (prazno = nije postavljena)
+    $userCols = array_column($pdo->query('PRAGMA table_info(users)')->fetchAll(), 'name');
+    if (!in_array('timezone', $userCols, true)) {
+        $pdo->exec('ALTER TABLE users ADD COLUMN timezone TEXT NOT NULL DEFAULT ""');
+    }
+
     // v4: kanali više nisu automatski vidljivi svima — imaju birane članove.
     // Postojeći kanali (bez ijednog retka u members) dobivaju sve tadašnje
     // aktivne korisnike, da se nikome ništa ne promijeni migracijom.
@@ -266,7 +272,34 @@ function user_row(string $username): ?array {
 
 /** Svi aktivni korisnici. */
 function active_users(): array {
-    return db()->query('SELECT username, name, role, last_active FROM users WHERE active = 1 ORDER BY name')->fetchAll();
+    return db()->query('SELECT username, name, role, last_active, timezone FROM users WHERE active = 1 ORDER BY name')->fetchAll();
+}
+
+/** Je li string valjana IANA vremenska zona (npr. "Europe/Zagreb")? */
+function valid_timezone(string $tz): bool {
+    return $tz !== '' && in_array($tz, DateTimeZone::listIdentifiers(), true);
+}
+
+/**
+ * Trenutno vrijeme u zoni korisnika: ['time' => '14:32', 'offset' => '+2h'] ili
+ * null ako korisnik nije postavio zonu ili je ista kao gledateljeva.
+ */
+function user_local_time(string $tz, string $viewerTz = ''): ?array {
+    if (!valid_timezone($tz)) return null;
+    if ($viewerTz !== '' && $viewerTz === $tz) return null; // ista zona — nema što prikazati
+
+    $now = new DateTimeImmutable('now', new DateTimeZone($tz));
+    $base = new DateTimeImmutable('now', new DateTimeZone(valid_timezone($viewerTz) ? $viewerTz : date_default_timezone_get()));
+    $diffMin = (int)round(($now->getOffset() - $base->getOffset()) / 60);
+    if ($diffMin === 0) return null; // efektivno isto vrijeme
+
+    $sign = $diffMin > 0 ? '+' : '−';
+    $h = intdiv(abs($diffMin), 60);
+    $m = abs($diffMin) % 60;
+    return [
+        'time'   => $now->format('H:i'),
+        'offset' => $sign . $h . ($m ? ':' . str_pad((string)$m, 2, '0', STR_PAD_LEFT) : '') . 'h',
+    ];
 }
 
 function is_admin(string $username): bool {
