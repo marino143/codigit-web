@@ -90,6 +90,8 @@ ksort($zones);
         <button type="button" id="notifEnableBtn" hidden>Turn on notifications</button>
         <button type="button" id="notifTestBtn" hidden>Send me a test notification</button>
         <p class="admin-hint" id="notifResult" hidden></p>
+        <p class="admin-hint" id="notifDevices" hidden></p>
+        <button type="button" id="notifForgetBtn" hidden class="danger">Getting each message twice? Remove my other devices</button>
         <p class="admin-hint">On iPhone notifications only work when the chat is opened from the
             Home Screen icon (Share → Add to Home Screen), on iOS 16.4 or newer.</p>
     </section>
@@ -145,6 +147,38 @@ ksort($zones);
                 state.textContent = '🔔 Notifications are off for this device.';
                 enableBtn.hidden = false;
             }
+
+            // Popis pretplaćenih uređaja — više njih znači duple notifikacije
+            var devicesEl = document.getElementById('notifDevices');
+            var forgetBtn = document.getElementById('notifForgetBtn');
+            function refreshDevices() {
+                var q = sub ? '&endpoint=' + encodeURIComponent(sub.endpoint) : '';
+                fetch('api.php?action=push_devices' + q)
+                    .then(function (r) { return r.json(); })
+                    .then(function (d) {
+                        var n = (d.devices || []).length;
+                        if (!n) { devicesEl.hidden = true; forgetBtn.hidden = true; return; }
+                        devicesEl.textContent = n === 1
+                            ? 'One device is subscribed for notifications.'
+                            : n + ' devices are subscribed — you will get every message ' + n + ' times.';
+                        devicesEl.hidden = false;
+                        forgetBtn.hidden = !(n > 1 && sub);
+                    }).catch(function () {});
+            }
+            if (sub) refreshDevices();
+
+            forgetBtn.addEventListener('click', function () {
+                if (!sub) return;
+                var body = new URLSearchParams({ endpoint: sub.endpoint });
+                fetch('api.php?action=push_forget_others', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRF': <?= json_encode(csrf_token()) ?> },
+                    body: body.toString(),
+                }).then(function (r) { return r.json(); }).then(function (d) {
+                    say('Removed ' + (d.removed || 0) + ' other device(s). Only this one will get notifications now.');
+                    refreshDevices();
+                }).catch(function () { say('Could not remove the other devices.'); });
+            });
 
             enableBtn.addEventListener('click', function () {
                 Notification.requestPermission().then(function (p) {

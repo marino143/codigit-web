@@ -74,6 +74,11 @@ if (($argv[1] ?? '') === '--test') {
 
 if (!$recipients) exit(0);
 
+// Pretplate koje se nisu javile 60 dana su iz preglednika/instalacija koje se
+// više ne koriste — one bi samo slale duplikate, pa ih čistimo.
+$pdo->prepare('DELETE FROM push_subs WHERE last_seen > 0 AND last_seen < ?')
+    ->execute([time() - 60 * 86400]);
+
 $in = implode(',', array_fill(0, count($recipients), '?'));
 $st = $pdo->prepare("SELECT * FROM push_subs WHERE username IN ($in)");
 $st->execute($recipients);

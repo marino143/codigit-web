@@ -431,7 +431,7 @@
     async function poll() {
         try {
             const visible = document.visibilityState === 'visible';
-            let url = 'api.php?action=poll';
+            let url = 'api.php?action=poll' + (visible ? '&visible=1' : '');
             if (activeConv) {
                 url += '&conv=' + activeConv + '&since=' + lastId;
                 if (visible && maxSeenId > 0) url += '&read=' + maxSeenId;

@@ -19,7 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
 }
 
 $pdo = db();
-touch_activity($user);
+
+// "Aktivan" znači da korisnik STVARNO gleda chat — aplikacija u pozadini se ne
+// broji, inače bi izgledao prisutan i nikad ne bi dobio push notifikaciju.
+if ($action !== 'poll' || ($_GET['visible'] ?? '') === '1') {
+    touch_activity($user);
+}
 
 /** Razgovor iz parametra `conv` — 404/403 ako ne postoji ili korisnik nije član. */
 function require_conv(string $user, ?string $param = null): array {
@@ -341,10 +346,11 @@ switch ($action) {
         if (!str_starts_with($endpoint, 'https://') || $p256dh === '' || $auth === '') {
             json_out(['error' => 'bad_sub'], 400);
         }
-        $pdo->prepare('INSERT INTO push_subs (username, endpoint, p256dh, auth, created_at) VALUES (?, ?, ?, ?, ?)
+        $pdo->prepare('INSERT INTO push_subs (username, endpoint, p256dh, auth, created_at, last_seen)
+            VALUES (?, ?, ?, ?, ?, ?)
             ON CONFLICT(endpoint) DO UPDATE SET username = excluded.username,
-                p256dh = excluded.p256dh, auth = excluded.auth')
-            ->execute([$user, $endpoint, $p256dh, $auth, time()]);
+                p256dh = excluded.p256dh, auth = excluded.auth, last_seen = excluded.last_seen')
+            ->execute([$user, $endpoint, $p256dh, $auth, time(), time()]);
         json_out(['ok' => true]);
     }
 
@@ -365,11 +371,38 @@ switch ($action) {
         if ($old !== '') {
             $pdo->prepare('DELETE FROM push_subs WHERE endpoint = ? AND username = ?')->execute([$old, $user]);
         }
-        $pdo->prepare('INSERT INTO push_subs (username, endpoint, p256dh, auth, created_at) VALUES (?, ?, ?, ?, ?)
+        $pdo->prepare('INSERT INTO push_subs (username, endpoint, p256dh, auth, created_at, last_seen)
+            VALUES (?, ?, ?, ?, ?, ?)
             ON CONFLICT(endpoint) DO UPDATE SET username = excluded.username,
-                p256dh = excluded.p256dh, auth = excluded.auth')
-            ->execute([$user, $endpoint, $p256dh, $auth, time()]);
+                p256dh = excluded.p256dh, auth = excluded.auth, last_seen = excluded.last_seen')
+            ->execute([$user, $endpoint, $p256dh, $auth, time(), time()]);
         json_out(['ok' => true]);
+    }
+
+    /** Popis uređaja s notifikacijama + uklanjanje ostalih (rješava duple poruke). */
+    case 'push_devices': {
+        $mine = (string)($_GET['endpoint'] ?? '');
+        $st = $pdo->prepare('SELECT id, endpoint, last_seen FROM push_subs WHERE username = ? ORDER BY last_seen DESC');
+        $st->execute([$user]);
+        $rows = [];
+        foreach ($st->fetchAll() as $r) {
+            $rows[] = [
+                'id'      => (int)$r['id'],
+                'current' => $mine !== '' && $r['endpoint'] === $mine,
+                'service' => str_contains($r['endpoint'], 'apple') ? 'Apple (iPhone/Safari)' : 'Google (Chrome/Android)',
+                'days'    => (int)floor((time() - (int)$r['last_seen']) / 86400),
+            ];
+        }
+        json_out(['devices' => $rows]);
+    }
+
+    case 'push_forget_others': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $keep = (string)($_POST['endpoint'] ?? '');
+        if ($keep === '') json_out(['error' => 'no_endpoint'], 400);
+        $st = $pdo->prepare('DELETE FROM push_subs WHERE username = ? AND endpoint != ?');
+        $st->execute([$user, $keep]);
+        json_out(['ok' => true, 'removed' => $st->rowCount()]);
     }
 
     /** Pošalji testnu notifikaciju samom sebi (gumb u postavkama). */

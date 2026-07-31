@@ -240,6 +240,14 @@ function chat_migrate(PDO $pdo): void {
         }
     }
 
+    // v6: kad je pretplata zadnji put potvrđena — stare (mrtvi preglednici,
+    // stare instalacije) inače ostanu zauvijek i šalju duple notifikacije
+    $subCols = array_column($pdo->query('PRAGMA table_info(push_subs)')->fetchAll(), 'name');
+    if (!in_array('last_seen', $subCols, true)) {
+        $pdo->exec('ALTER TABLE push_subs ADD COLUMN last_seen INTEGER NOT NULL DEFAULT 0');
+        $pdo->exec('UPDATE push_subs SET last_seen = created_at WHERE last_seen = 0');
+    }
+
     // v5: vremenska zona korisnika (prazno = nije postavljena)
     $userCols = array_column($pdo->query('PRAGMA table_info(users)')->fetchAll(), 'name');
     if (!in_array('timezone', $userCols, true)) {
