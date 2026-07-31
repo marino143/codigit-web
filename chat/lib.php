@@ -104,10 +104,21 @@ function theme_boot_script(): string {
         . 'if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>';
 }
 
-/** Radi li ovaj zahtjev preko HTTPS-a (izravno ili iza lokalnog proxyja)? */
+/**
+ * Radi li ovaj zahtjev preko HTTPS-a? Tunel prosljeđuje promet na lokalni HTTP,
+ * pa se oslanjamo i na proxy zaglavlja te na to da je pristup preko javnog
+ * imena domene uvijek HTTPS (lokalna mreža ide na IP ili localhost).
+ */
 function chat_is_https(): bool {
-    return !empty($_SERVER['HTTPS'])
-        || ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https';
+    if (!empty($_SERVER['HTTPS'])) return true;
+    if (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https') return true;
+    if (str_contains((string)($_SERVER['HTTP_CF_VISITOR'] ?? ''), '"https"')) return true;
+
+    $host = strtolower((string)($_SERVER['HTTP_HOST'] ?? ''));
+    $host = explode(':', $host)[0];
+    $isLocal = $host === 'localhost' || $host === ''
+        || filter_var($host, FILTER_VALIDATE_IP) !== false;
+    return !$isLocal; // pristup imenom domene znači da je došao izvana, preko HTTPS-a
 }
 
 function chat_session_start(): void {
