@@ -805,14 +805,40 @@
         return Uint8Array.from(raw, c => c.charCodeAt(0));
     }
 
+    /** Pretplati uređaj i javi serveru. Baca ako ne uspije. */
+    async function pushSubscribe(reg) {
+        const s = await reg.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: b64ToU8(VAPID),
+        });
+        const j = s.toJSON();
+        await api('push_subscribe', {
+            endpoint: s.endpoint,
+            p256dh: j.keys.p256dh,
+            auth: j.keys.auth,
+        });
+        setBell(true);
+    }
+
     async function pushSetup() {
         if (!VAPID || !('serviceWorker' in navigator) || !window.isSecureContext) return;
         const reg = await navigator.serviceWorker.register('sw.js').catch(() => null);
-        if (!reg || !('pushManager' in reg)) return;
+        if (!reg || !('pushManager' in reg) || !('Notification' in window)) return;
 
         $notifBtn.hidden = false;
-        const sub = await reg.pushManager.getSubscription();
+        let sub = await reg.pushManager.getSubscription();
         setBell(!!sub);
+
+        // Dozvola je već dana (npr. s drugog uređaja ili ranije) — uključi bez pitanja.
+        if (!sub && Notification.permission === 'granted') {
+            try { await pushSubscribe(reg); sub = await reg.pushManager.getSubscription(); } catch (e) {}
+        }
+
+        // Nikad pitano: preglednik dopušta pitanje samo iz korisnikove geste,
+        // pa umjesto tihog zvonca pokažemo jasan poziv s jednim klikom.
+        if (!sub && Notification.permission === 'default' && !localStorage.getItem('notifDismissed')) {
+            showNotifBanner(reg);
+        }
 
         $notifBtn.addEventListener('click', async () => {
             try {
@@ -828,20 +854,27 @@
                     alert('Notifications were declined. If you change your mind, allow them in the settings for this app.');
                     return;
                 }
-                const s = await reg.pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: b64ToU8(VAPID),
-                });
-                const j = s.toJSON();
-                await api('push_subscribe', {
-                    endpoint: s.endpoint,
-                    p256dh: j.keys.p256dh,
-                    auth: j.keys.auth,
-                });
-                setBell(true);
+                await pushSubscribe(reg);
             } catch (e) {
                 alert('Could not enable notifications. On iPhone: add the chat to your Home Screen (Share → Add to Home Screen), open it from there, then try again.');
             }
+        });
+    }
+
+    function showNotifBanner(reg) {
+        const bar = document.getElementById('notifBanner');
+        if (!bar) return;
+        bar.hidden = false;
+        document.getElementById('notifEnable').addEventListener('click', async () => {
+            try {
+                const perm = await Notification.requestPermission();
+                if (perm === 'granted') await pushSubscribe(reg);
+            } catch (e) {}
+            bar.hidden = true;
+        });
+        document.getElementById('notifLater').addEventListener('click', () => {
+            localStorage.setItem('notifDismissed', '1');
+            bar.hidden = true;
         });
     }
 

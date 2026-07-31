@@ -54,6 +54,13 @@ $admin = $row['role'] === 'admin';
             <input id="searchInput" placeholder="Search messages…" autocomplete="off">
             <button id="searchClose" title="Close search">✕</button>
         </div>
+        <div class="notif-banner" id="notifBanner" hidden>
+            <div class="notif-text">🔔 Turn on notifications so new messages reach you right away.</div>
+            <div class="notif-actions">
+                <button id="notifEnable" class="notif-yes">Turn on</button>
+                <button id="notifLater" class="notif-no">Not now</button>
+            </div>
+        </div>
         <div class="conv-list" id="convList">
             <div class="chat-loading">Loading…</div>
         </div>
