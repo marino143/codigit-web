@@ -291,6 +291,31 @@ switch ($action) {
         json_out(['ok' => true]);
     }
 
+    /** Sve slike, videi i glasovne poruke iz razgovora, grupirano po tipu. */
+    case 'files': {
+        $conv = require_conv($user);
+        $st = $pdo->prepare('SELECT id, sender, type, body, mime, size, created_at, transcript
+            FROM messages WHERE conversation_id = ? AND file IS NOT NULL
+            ORDER BY id DESC LIMIT 500');
+        $st->execute([(int)$conv['id']]);
+
+        $groups = ['image' => [], 'video' => [], 'audio' => []];
+        foreach ($st->fetchAll() as $m) {
+            $type = (string)$m['type'];
+            if (!isset($groups[$type])) continue;
+            $groups[$type][] = [
+                'id'          => (int)$m['id'],
+                'sender_name' => display_name($m['sender']),
+                'mine'        => $m['sender'] === $user,
+                'size'        => (int)$m['size'],
+                'created_at'  => (int)$m['created_at'],
+                'caption'     => mb_substr((string)$m['body'], 0, 80),
+                'transcript'  => $type === 'audio' ? mb_substr((string)$m['transcript'], 0, 100) : null,
+            ];
+        }
+        json_out(['groups' => $groups, 'conv_name' => conv_display_name($conv, $user)]);
+    }
+
     case 'search': {
         $q = trim((string)($_GET['q'] ?? ''));
         if (mb_strlen($q) < 2) json_out(['results' => []]);

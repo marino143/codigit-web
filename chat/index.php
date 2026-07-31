@@ -74,6 +74,7 @@ $admin = $row['role'] === 'admin';
                 <div class="chat-peer-status" id="peerStatus"></div>
                 <div class="chat-peer-clock" id="peerClock" hidden></div>
             </div>
+            <button class="info-btn" id="filesBtn" title="Photos, videos and voice messages" hidden>🗂</button>
             <button class="info-btn" id="infoBtn" title="Members" hidden>ⓘ</button>
         </header>
 

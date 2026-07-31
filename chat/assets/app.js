@@ -40,6 +40,8 @@
     let partnerTime = null;  // dm: {time, offset} kod sugovornika, ako ima drugu zonu
     let lastDayKey = '';
     let pollTimer = null;
+    let polling = false;      // teče li osvježavanje (spriječi preklapanje)
+    let pollAgain = false;    // stigao zahtjev dok je jedno već teklo
     let firstLoad = true;
     let serverNow = 0;
     let tzReported = false;   // zonu uređaja javljamo serveru samo jednom
@@ -163,6 +165,7 @@
         $messages.innerHTML = '<div class="chat-loading">Loading messages…</div>';
         $composer.hidden = false;
         $infoBtn.hidden = false;
+        document.getElementById('filesBtn').hidden = false;
         body.classList.add('in-chat');
 
         const c = convs.find(x => x.id === id);
@@ -179,6 +182,9 @@
 
     // ---------- prikaz poruka ----------
     function renderMessage(m) {
+        // Ista poruka može stići kroz dva preklopljena osvježavanja — ne crtaj je dvaput.
+        if ($messages.querySelector('[data-id="' + m.id + '"]')) return;
+
         const k = dayKey(m.created_at);
         if (k !== lastDayKey) {
             lastDayKey = k;
@@ -366,6 +372,83 @@
         });
     });
 
+    // ---------- galerija: sve datoteke iz razgovora ----------
+    document.getElementById('filesBtn').addEventListener('click', async () => {
+        if (!activeConv) return;
+        openModal('<h2>🗂 Files</h2><p class="modal-hint">Loading…</p>');
+        let data;
+        try {
+            const res = await fetch('api.php?action=files&conv=' + activeConv, { cache: 'no-store' });
+            data = await res.json();
+        } catch (e) {
+            openModal('<h2>🗂 Files</h2><p class="modal-hint">Could not load files.</p>'
+                + '<button class="modal-close" id="modalCloseBtn">Close</button>');
+            document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+            return;
+        }
+
+        const g = data.groups || {};
+        const sections = [
+            ['image', '📷 Photos', g.image || []],
+            ['video', '🎬 Videos', g.video || []],
+            ['audio', '🎤 Voice messages', g.audio || []],
+        ];
+        const total = sections.reduce((s, [, , list]) => s + list.length, 0);
+
+        let html = '<h2>🗂 Files</h2>';
+        if (!total) {
+            html += '<p class="modal-hint">Nothing shared in this conversation yet.</p>';
+        }
+        for (const [kind, label, list] of sections) {
+            if (!list.length) continue;
+            html += '<div class="modal-section"><h3>' + label + ' <span class="modal-tag">'
+                + list.length + '</span></h3>';
+
+            if (kind === 'image') {
+                html += '<div class="file-grid">';
+                for (const f of list) {
+                    html += '<button class="file-tile" data-open="' + f.id + '" title="'
+                        + escapeHtml(f.sender_name + ' · ' + fmtDate(f.created_at)) + '">'
+                        + '<img loading="lazy" src="media.php?id=' + f.id + '" alt=""></button>';
+                }
+                html += '</div>';
+            } else {
+                for (const f of list) {
+                    const sub = kind === 'audio' && f.transcript
+                        ? escapeHtml(f.transcript)
+                        : escapeHtml(f.sender_name + ' · ' + fmtDate(f.created_at) + ' · ' + humanSize(f.size));
+                    html += '<button class="modal-row btn" data-open="' + f.id + '" data-kind="' + kind + '">'
+                        + '<span class="file-line">' + (kind === 'video' ? '🎬' : '🎤')
+                        + ' <strong>' + escapeHtml(f.sender_name) + '</strong>'
+                        + ' <span class="modal-tag">' + fmtDate(f.created_at) + '</span>'
+                        + '<span class="file-sub">' + sub + '</span></span></button>';
+                }
+            }
+            html += '</div>';
+        }
+        html += '<button class="modal-close" id="modalCloseBtn">Close</button>';
+        openModal(html);
+
+        document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+        $modalCard.querySelectorAll('[data-open]').forEach(el => el.addEventListener('click', () => {
+            const id = el.dataset.open;
+            const kind = el.dataset.kind || 'image';
+            if (kind === 'audio') {
+                // glasovnu poruku pusti odmah, bez zatvaranja popisa
+                const a = new Audio('media.php?id=' + id);
+                a.play().catch(() => {});
+                return;
+            }
+            closeModal();
+            openLightbox(kind === 'video' ? 'video' : 'image', 'media.php?id=' + id);
+        }));
+    });
+
+    function fmtDate(ts) {
+        const d = new Date(ts * 1000);
+        return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) + ' ' + fmtTime(ts);
+    }
+
     $infoBtn.addEventListener('click', async () => {
         if (!activeConv) return;
         let info;
@@ -420,6 +503,7 @@
                 activeConv = null;
                 $composer.hidden = true;
                 $infoBtn.hidden = true;
+                document.getElementById("filesBtn").hidden = true;
                 $messages.innerHTML = '';
                 body.classList.remove('in-chat');
                 await refresh();
@@ -429,6 +513,11 @@
 
     // ---------- polling ----------
     async function poll() {
+        // Dva paralelna osvježavanja dohvate isti raspon poruka (isti `since`) i
+        // prikažu ih dvaput. Zato uvijek teče najviše jedno; ako u međuvremenu
+        // stigne zahtjev za novim, pokrene se čim ovo završi.
+        if (polling) { pollAgain = true; return; }
+        polling = true;
         try {
             const visible = document.visibilityState === 'visible';
             let url = 'api.php?action=poll' + (visible ? '&visible=1' : '');
@@ -443,6 +532,7 @@
                 activeConv = null;
                 $composer.hidden = true;
                 $infoBtn.hidden = true;
+                document.getElementById("filesBtn").hidden = true;
                 $messages.innerHTML = '';
                 body.classList.remove('in-chat');
             }
@@ -490,7 +580,14 @@
             $peerStatus.textContent = 'connecting…';
             $peerStatus.classList.remove('online');
         } finally {
-            pollTimer = setTimeout(poll, document.visibilityState === 'visible' ? 2500 : 15000);
+            polling = false;
+            clearTimeout(pollTimer);
+            if (pollAgain) {
+                pollAgain = false;
+                pollTimer = setTimeout(poll, 50);
+            } else {
+                pollTimer = setTimeout(poll, document.visibilityState === 'visible' ? 2500 : 15000);
+            }
         }
     }
 

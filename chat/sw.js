@@ -11,7 +11,10 @@ self.addEventListener('push', event => {
     event.waitUntil(Promise.all([
         self.registration.showNotification(title, {
             body: data.body || 'New message',
+            // Poruke iz istog razgovora dijele oznaku pa se ne gomilaju u niz
+            // obavijesti, ali renotify javi zvukom/bannerom svaku novu.
             tag: data.tag || 'chat',
+            renotify: true,
             icon: 'assets/icon.png',
             badge: 'assets/icon.png',
             data: { conv: data.conv || 0 },
