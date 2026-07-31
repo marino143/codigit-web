@@ -589,6 +589,90 @@
         });
     }
 
+    // ---------- lijepljenje (Ctrl/Cmd+V) i povlačenje datoteka ----------
+    const $pasteBar = document.getElementById('pasteBar');
+    const $pasteThumb = document.getElementById('pasteThumb');
+    const $pasteInfo = document.getElementById('pasteInfo');
+    let pendingFiles = [];
+
+    function humanSize(b) {
+        return b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
+    }
+
+    /** Pokaži pregled prije slanja — da slučajno zalijepljeno ne ode odmah. */
+    function stageFiles(files) {
+        pendingFiles = files;
+        if (!files.length) return;
+        const first = files[0];
+        if ($pasteThumb.dataset.url) URL.revokeObjectURL($pasteThumb.dataset.url);
+        if (first.type.startsWith('image/')) {
+            const url = URL.createObjectURL(first);
+            $pasteThumb.src = url;
+            $pasteThumb.dataset.url = url;
+            $pasteThumb.hidden = false;
+        } else {
+            $pasteThumb.hidden = true;
+        }
+        $pasteInfo.textContent = files.length === 1
+            ? (first.type.startsWith('video/') ? '🎬 ' : first.type.startsWith('image/') ? '📷 ' : '📎 ')
+              + (first.name || 'pasted file') + ' · ' + humanSize(first.size)
+            : files.length + ' files · ' + humanSize(files.reduce((s, f) => s + f.size, 0));
+        $pasteBar.hidden = false;
+    }
+
+    function clearStaged() {
+        pendingFiles = [];
+        $pasteBar.hidden = true;
+        if ($pasteThumb.dataset.url) {
+            URL.revokeObjectURL($pasteThumb.dataset.url);
+            delete $pasteThumb.dataset.url;
+        }
+        $pasteThumb.removeAttribute('src');
+    }
+
+    async function sendStaged() {
+        const files = pendingFiles;
+        clearStaged();
+        for (const f of files) await uploadFile(f);
+    }
+
+    document.getElementById('pasteSend').addEventListener('click', sendStaged);
+    document.getElementById('pasteCancel').addEventListener('click', clearStaged);
+
+    document.addEventListener('paste', e => {
+        if (!activeConv) return;
+        const items = (e.clipboardData && e.clipboardData.items) || [];
+        const files = [];
+        for (const it of items) {
+            if (it.kind !== 'file') continue;
+            const f = it.getAsFile();
+            if (!f) continue;
+            // zalijepljene slike često nemaju ime — dodijeli ga da upload prođe
+            files.push(f.name ? f : new File([f], 'pasted.' + (f.type.split('/')[1] || 'png'), { type: f.type }));
+        }
+        if (!files.length) return;   // običan tekst — pusti normalno lijepljenje
+        e.preventDefault();
+        stageFiles(files);
+    });
+
+    // povlačenje datoteke u prozor razgovora
+    ['dragover', 'drop'].forEach(ev => document.addEventListener(ev, e => {
+        if (!activeConv) return;
+        e.preventDefault();
+        if (ev === 'drop') {
+            const files = Array.from(e.dataTransfer && e.dataTransfer.files || []);
+            if (files.length) stageFiles(files);
+        }
+    }));
+
+    // Enter u polju za pisanje šalje pripremljenu datoteku ako je ima
+    $input.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && !e.shiftKey && pendingFiles.length && !$input.value.trim()) {
+            e.preventDefault();
+            sendStaged();
+        }
+    });
+
     // ---------- glasovne poruke ----------
     const $micBtn = document.getElementById('micBtn');
     let recorder = null;

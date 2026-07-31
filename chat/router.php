@@ -16,7 +16,7 @@ header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
 // Sve je s vlastite domene; 'unsafe-inline' treba jer stranice imaju male ugrađene skripte.
 header("Content-Security-Policy: default-src 'self'; "
     . "script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; "
-    . "img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; "
+    . "img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; "
     . "font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; "
     . "frame-ancestors 'none'");
 

@@ -81,6 +81,13 @@ $admin = $row['role'] === 'admin';
             <div class="chat-empty" id="emptyHint">Select a conversation or start a new one (✏️)</div>
         </main>
 
+        <div class="paste-bar" id="pasteBar" hidden>
+            <img class="paste-thumb" id="pasteThumb" alt="">
+            <div class="paste-info" id="pasteInfo"></div>
+            <button class="paste-send" id="pasteSend">Send</button>
+            <button class="paste-cancel" id="pasteCancel" title="Discard">✕</button>
+        </div>
+
         <footer class="chat-composer" id="composer" hidden>
             <label class="attach-btn" title="Send a photo or video">
                 📎<input type="file" id="fileInput" accept="image/*,video/*" multiple hidden>
