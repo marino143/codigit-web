@@ -6,8 +6,25 @@
  */
 declare(strict_types=1);
 
+// ---- sigurnosna zaglavlja (chat je javno dostupan preko interneta) ----
+header_remove('X-Powered-By');
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');                      // nitko ne smije ugraditi chat u iframe
+header('Referrer-Policy: no-referrer');               // adresa chata ne curi na vanjske stranice
+header('Permissions-Policy: geolocation=(), camera=(), payment=(), usb=()');
+header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
+// Sve je s vlastite domene; 'unsafe-inline' treba jer stranice imaju male ugrađene skripte.
+header("Content-Security-Policy: default-src 'self'; "
+    . "script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; "
+    . "img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; "
+    . "font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; "
+    . "frame-ancestors 'none'");
+
 $uri = urldecode((string)parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-if (preg_match('#(^|/)(data|vendor)(/|$)#', $uri) || preg_match('#composer\.(json|lock)$#', $uri)) {
+if (preg_match('#(^|/)(data|vendor)(/|$)#', $uri)
+    || preg_match('#composer\.(json|lock)$#', $uri)
+    || preg_match('#\.(md|sh|plist|yml|log|sqlite|command)$#i', $uri)
+    || preg_match('#(^|/)\.#', $uri)) {          // sve skriveno (.git, .htaccess, .env…)
     http_response_code(403);
     exit('Forbidden');
 }
