@@ -43,6 +43,7 @@
     let pollTimer = null;
     let firstLoad = true;
     let serverNow = 0;
+    let tzReported = false;   // zonu uređaja javljamo serveru samo jednom
     const myMessageEls = []; // za osvježavanje kvačica
 
     // ---------- pomoćne ----------
@@ -248,10 +249,9 @@
     function updateStatus() {
         if (!activeConv) { $peerStatus.textContent = ''; $peerClock.hidden = true; return; }
 
-        // sat sugovornika (samo dm, i samo ako je u drugoj zoni)
+        // sat sugovornika ispod statusa (samo dm, i samo ako je u drugoj zoni)
         if (activeType === 'dm' && partnerTime) {
-            $peerClock.textContent = '🕐 ' + partnerTime.time;
-            $peerClock.title = 'Local time for them (' + partnerTime.offset + ')';
+            $peerClock.textContent = '🕐 ' + partnerTime.time + ' their time (' + partnerTime.offset + ')';
             $peerClock.hidden = false;
         } else {
             $peerClock.hidden = true;
@@ -447,6 +447,16 @@
             convs = data.convs || convs;
             users = data.users || users;
             serverNow = data.now || Math.floor(Date.now() / 1000);
+
+            // Prvi put: javi serveru zonu ovog uređaja da sugovornici odmah
+            // vide koliko je kod nas sati (u postavkama se može promijeniti).
+            if (data.me && !data.me.timezone && !tzReported) {
+                tzReported = true;
+                try {
+                    const guess = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                    if (guess) api('set_timezone', { timezone: guess }).catch(() => {});
+                } catch (e) {}
+            }
 
             if (data.messages) {
                 const loading = $messages.querySelector('.chat-loading');

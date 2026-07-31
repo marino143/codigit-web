@@ -68,7 +68,12 @@ switch ($action) {
         $response = [
             'convs' => conv_list($pdo, $user),
             'users' => active_users(),
-            'me'    => ['username' => $user, 'name' => display_name($user), 'admin' => is_admin($user)],
+            'me'    => [
+                'username' => $user,
+                'name'     => display_name($user),
+                'admin'    => is_admin($user),
+                'timezone' => (string)user_row($user)['timezone'],
+            ],
             'now'   => time(),
         ];
 
@@ -311,6 +316,16 @@ switch ($action) {
             ];
         }
         json_out(['results' => $results, 'q' => $q]);
+    }
+
+    case 'set_timezone': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $tz = trim((string)($_POST['timezone'] ?? ''));
+        if (!valid_timezone($tz)) json_out(['error' => 'bad_tz'], 400);
+        // ne pregazi ono što je korisnik sam odabrao u postavkama
+        $pdo->prepare('UPDATE users SET timezone = ? WHERE username = ? AND timezone = ""')
+            ->execute([$tz, $user]);
+        json_out(['ok' => true]);
     }
 
     case 'push_subscribe': {

@@ -46,6 +46,7 @@ ksort($zones);
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Our Chat — Settings</title>
+<?= theme_boot_script() ?>
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body class="admin-page">
@@ -84,12 +85,47 @@ ksort($zones);
     </section>
 
     <section class="admin-card">
+        <h2>Appearance</h2>
+        <p class="admin-hint" style="margin-top:0">Choose how the chat looks on this device.</p>
+        <div class="theme-choice">
+            <button type="button" class="theme-btn" data-theme-set="auto">🌗 Auto</button>
+            <button type="button" class="theme-btn" data-theme-set="light">☀️ Light</button>
+            <button type="button" class="theme-btn" data-theme-set="dark">🌙 Dark</button>
+        </div>
+        <p class="admin-hint">“Auto” follows your phone or computer setting.</p>
+    </section>
+
+    <section class="admin-card">
         <h2>Password</h2>
         <p class="admin-hint" style="margin-top:0">Change the password you use to sign in.</p>
         <p><a class="admin-back" href="password.php">🔑 Change password ›</a></p>
     </section>
 </div>
 <script>
+// Izbor teme (po uređaju)
+(function () {
+    var btns = document.querySelectorAll('[data-theme-set]');
+    function current() {
+        try { return localStorage.getItem('theme') || 'auto'; } catch (e) { return 'auto'; }
+    }
+    function apply(mode) {
+        if (mode === 'auto') document.documentElement.removeAttribute('data-theme');
+        else document.documentElement.setAttribute('data-theme', mode);
+        try { localStorage.setItem('theme', mode); } catch (e) {}
+        mark();
+    }
+    function mark() {
+        var c = current();
+        btns.forEach(function (b) {
+            b.classList.toggle('active', b.dataset.themeSet === c);
+        });
+    }
+    btns.forEach(function (b) {
+        b.addEventListener('click', function () { apply(b.dataset.themeSet); });
+    });
+    mark();
+})();
+
 // Ponudi zonu koju javlja preglednik ako korisnik još nema postavljenu
 (function () {
     var sel = document.querySelector('select[name="timezone"]');

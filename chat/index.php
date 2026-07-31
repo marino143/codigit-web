@@ -24,6 +24,7 @@ $admin = $row['role'] === 'admin';
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#075e54">
 <title>Our Chat</title>
+<?= theme_boot_script() ?>
 <link rel="stylesheet" href="assets/style.css">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="assets/icon.png">
@@ -71,11 +72,9 @@ $admin = $row['role'] === 'admin';
             <button class="back-btn" id="backBtn" title="Chats">‹</button>
             <div class="chat-avatar" id="convAvatar">💬</div>
             <div class="chat-peer">
-                <div class="chat-peer-line">
-                    <span class="chat-peer-name" id="convName">Our Chat</span>
-                    <span class="chat-peer-clock" id="peerClock" hidden></span>
-                </div>
+                <div class="chat-peer-name" id="convName">Our Chat</div>
                 <div class="chat-peer-status" id="peerStatus"></div>
+                <div class="chat-peer-clock" id="peerClock" hidden></div>
             </div>
             <button class="info-btn" id="infoBtn" title="Members" hidden>ⓘ</button>
         </header>

@@ -85,6 +85,15 @@ function login_clear(string ...$keys): void {
     foreach ($keys as $k) $st->execute([$k]);
 }
 
+/**
+ * Postavi temu prije crtanja stranice (inače bljesne svijetla pa se prebaci).
+ * Izbor je po uređaju (localStorage): auto | light | dark.
+ */
+function theme_boot_script(): string {
+    return '<script>(function(){try{var t=localStorage.getItem("theme");'
+        . 'if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>';
+}
+
 /** Radi li ovaj zahtjev preko HTTPS-a (izravno ili iza lokalnog proxyja)? */
 function chat_is_https(): bool {
     return !empty($_SERVER['HTTPS'])

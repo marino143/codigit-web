@@ -76,6 +76,7 @@ $csrf = csrf_token();
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Our Chat — Users</title>
+<?= theme_boot_script() ?>
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body class="admin-page">
