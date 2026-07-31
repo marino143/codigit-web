@@ -80,12 +80,15 @@ $st->execute($recipients);
 $subs = $st->fetchAll();
 if (!$subs) exit(0);
 
-$payload = json_encode([
-    'title' => $title,
-    'body'  => $bodyText,
-    'conv'  => $convId,
-    'tag'   => $tag,
-], JSON_UNESCAPED_UNICODE);
+/** Ukupno nepročitanih poruka korisnika — za broj na ikoni aplikacije. */
+$unreadFor = function (string $u) use ($pdo): int {
+    $st = $pdo->prepare('SELECT COUNT(*) FROM messages m
+        JOIN members mem ON mem.conversation_id = m.conversation_id AND mem.username = ?
+        LEFT JOIN reads r ON r.conversation_id = m.conversation_id AND r.username = ?
+        WHERE m.sender != ? AND m.id > COALESCE(r.last_read_id, 0)');
+    $st->execute([$u, $u, $u]);
+    return (int)$st->fetchColumn();
+};
 
 $webPush = new WebPush([
     'VAPID' => [
@@ -94,6 +97,17 @@ $webPush = new WebPush([
         'privateKey' => $vapid['privateKey'],
     ],
 ]);
+
+// payload se razlikuje po primatelju (broj nepročitanih je osobni podatak)
+$payloadFor = function (string $u) use ($title, $bodyText, $convId, $tag, $unreadFor): string {
+    return json_encode([
+        'title' => $title,
+        'body'  => $bodyText,
+        'conv'  => $convId,
+        'tag'   => $tag,
+        'badge' => $unreadFor($u),
+    ], JSON_UNESCAPED_UNICODE);
+};
 
 // Svaka pretplata ide zasebno: neispravni ključevi bacaju iznimku pri
 // enkripciji, a ne smiju spriječiti isporuku ostalima.
@@ -104,7 +118,7 @@ foreach ($subs as $s) {
         $report = $webPush->sendOneNotification(Subscription::create([
             'endpoint' => $s['endpoint'],
             'keys' => ['p256dh' => $s['p256dh'], 'auth' => $s['auth']],
-        ]), $payload);
+        ]), $payloadFor((string)$s['username']));
 
         if ($report->isSuccess()) { $ok++; continue; }
         $failed++;

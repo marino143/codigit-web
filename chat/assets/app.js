@@ -139,6 +139,13 @@
     function updateTitle() {
         const total = convs.reduce((s, c) => s + (c.id === activeConv && document.visibilityState === 'visible' ? 0 : c.unread), 0);
         document.title = (total > 0 ? '(' + total + ') ' : '') + 'Our Chat';
+
+        // broj na ikoni aplikacije (radi u instaliranoj aplikaciji: dock / home screen)
+        if ('setAppBadge' in navigator) {
+            try {
+                total > 0 ? navigator.setAppBadge(total) : navigator.clearAppBadge();
+            } catch (e) {}
+        }
     }
 
     // ---------- otvaranje razgovora ----------

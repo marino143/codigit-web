@@ -8,13 +8,21 @@ self.addEventListener('push', event => {
     let data = {};
     try { data = event.data ? event.data.json() : {}; } catch (e) {}
     const title = data.title || 'Our Chat';
-    event.waitUntil(self.registration.showNotification(title, {
-        body: data.body || 'New message',
-        tag: data.tag || 'chat',
-        icon: 'assets/icon.png',
-        badge: 'assets/icon.png',
-        data: { conv: data.conv || 0 },
-    }));
+    event.waitUntil(Promise.all([
+        self.registration.showNotification(title, {
+            body: data.body || 'New message',
+            tag: data.tag || 'chat',
+            icon: 'assets/icon.png',
+            badge: 'assets/icon.png',
+            data: { conv: data.conv || 0 },
+        }),
+        // broj na ikoni aplikacije (macOS dock / iOS home screen)
+        (async () => {
+            if (!('setAppBadge' in self.navigator)) return;
+            const n = typeof data.badge === 'number' ? data.badge : 0;
+            try { n > 0 ? await self.navigator.setAppBadge(n) : await self.navigator.clearAppBadge(); } catch (e) {}
+        })(),
+    ]));
 });
 
 /**
