@@ -41,7 +41,6 @@ $admin = $row['role'] === 'admin';
 
     <aside class="sidebar" id="sidebar">
         <header class="sb-header">
-            <div class="sb-title">💬 Our Chat</div>
             <div class="sb-actions">
                 <button id="searchBtn" title="Search messages">🔍</button>
                 <button id="notifBtn" title="Notifications" hidden>🔔</button>

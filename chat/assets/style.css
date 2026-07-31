@@ -205,8 +205,8 @@ body {
     padding: 12px 14px;
     padding-top: calc(12px + env(safe-area-inset-top));
 }
-.sb-title { font-weight: 700; font-size: 17px; }
-.sb-actions { display: flex; align-items: center; gap: 4px; }
+/* bez naslova su gumbi jedini sadržaj — raširi ih preko cijele trake */
+.sb-actions { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: space-around; }
 .sb-actions a, .sb-actions button {
     background: none; border: 0;
     color: var(--on-accent); font-size: 18px;
