@@ -11,4 +11,16 @@ if (preg_match('#(^|/)(data|vendor)(/|$)#', $uri) || preg_match('#composer\.(jso
     http_response_code(403);
     exit('Forbidden');
 }
+
+// sw.js i manifest.json ne smiju ostati u CDN cacheu — inače uređaji tjednima
+// vrte staru verziju aplikacije (assets/ imaju ?v= pa se smiju keširati)
+if (preg_match('#/(sw\.js|manifest\.json)$#', $uri)) {
+    $file = __DIR__ . $uri;
+    if (is_file($file)) {
+        header('Content-Type: ' . (str_ends_with($uri, '.js') ? 'application/javascript' : 'application/manifest+json'));
+        header('Cache-Control: no-cache, must-revalidate');
+        readfile($file);
+        return true;
+    }
+}
 return false; // sve ostalo poslužuje server normalno

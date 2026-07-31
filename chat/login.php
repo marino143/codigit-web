@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <meta name="robots" content="noindex, nofollow">
 <title>Our Chat — Sign in</title>
 <?= theme_boot_script() ?>
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="<?= asset("assets/style.css") ?>">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="assets/icon.png">
 </head>

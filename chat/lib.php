@@ -86,6 +86,16 @@ function login_clear(string ...$keys): void {
 }
 
 /**
+ * Putanja do datoteke s verzijom (?v=vrijeme izmjene), da nova verzija
+ * probije Cloudflareov i preglednikov cache čim je objavimo.
+ */
+function asset(string $path): string {
+    $file = __DIR__ . '/' . ltrim($path, '/');
+    $v = is_file($file) ? (string)filemtime($file) : '0';
+    return htmlspecialchars($path . '?v=' . $v);
+}
+
+/**
  * Postavi temu prije crtanja stranice (inače bljesne svijetla pa se prebaci).
  * Izbor je po uređaju (localStorage): auto | light | dark.
  */
