@@ -48,11 +48,23 @@ exec(sprintf('/usr/bin/afconvert -f WAVE -d LEI16@16000 -c 1 %s %s 2>/dev/null',
     escapeshellarg($src), escapeshellarg($wav)), $o, $rc);
 if ($rc !== 0 || !is_file($wav)) $fail();
 
-// 2) whisper.cpp — jezik prepoznaje sam (hrvatski, engleski...)
-// greedy dekodiranje (--beam-size 1): ~20 % brže od defaulta uz zanemariv gubitak
-exec(sprintf('%s -m %s -f %s --language auto --no-timestamps -np --beam-size 1 --best-of 1 -otxt -of %s 2>/dev/null',
+// 2) Odredi jezik. Whisper na kratkim porukama zna hrvatski proglasiti ruskim
+// ili srpskim, pa svaku takvu detekciju tumačimo kao hrvatski; ostali jezici
+// (engleski, njemački…) razlikuju se pouzdano i ostaju kako su detektirani.
+$lang = 'hr';
+exec(sprintf('%s -m %s -f %s --detect-language 2>&1',
     escapeshellarg(WHISPER_BIN), escapeshellarg(WHISPER_MODEL),
-    escapeshellarg($wav), escapeshellarg($tmpBase)), $o, $rc);
+    escapeshellarg($wav)), $detOut);
+if (preg_match('/auto-detected language:\s*([a-z]{2})/i', implode("\n", $detOut), $m)) {
+    $detected = strtolower($m[1]);
+    $slavicMixups = ['ru', 'sr', 'bs', 'sl', 'mk', 'uk', 'be', 'bg'];
+    $lang = in_array($detected, $slavicMixups, true) ? 'hr' : $detected;
+}
+
+// 3) whisper.cpp — greedy dekodiranje (--beam-size 1): brže uz zanemariv gubitak
+exec(sprintf('%s -m %s -f %s --language %s --no-timestamps -np --beam-size 1 --best-of 1 -otxt -of %s 2>/dev/null',
+    escapeshellarg(WHISPER_BIN), escapeshellarg(WHISPER_MODEL),
+    escapeshellarg($wav), escapeshellarg($lang), escapeshellarg($tmpBase)), $o, $rc);
 
 $txtFile = $tmpBase . '.txt';
 $text = is_file($txtFile) ? trim((string)file_get_contents($txtFile)) : '';

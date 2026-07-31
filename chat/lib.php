@@ -38,7 +38,9 @@ const CHAT_AUDIO_MIMES = [
 // binarka iz Homebrewa (Apple Silicon ili Intel), model u <repo>/whisper/
 define('WHISPER_BIN', is_file('/opt/homebrew/bin/whisper-cli')
     ? '/opt/homebrew/bin/whisper-cli' : '/usr/local/bin/whisper-cli');
-define('WHISPER_MODEL', dirname(__DIR__) . '/whisper/ggml-small.bin');
+// medium: osjetno točniji za hrvatski od small ("I kaj sad, da ne kužim?" vs
+// "i kaj sad, najkožem"), po cijenu ~1,5× duljeg vremena obrade
+define('WHISPER_MODEL', dirname(__DIR__) . '/whisper/ggml-medium.bin');
 
 const CHAT_USERNAME_RE = '/^[a-z0-9_.-]{2,30}$/';
 
