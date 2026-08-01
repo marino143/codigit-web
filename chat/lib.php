@@ -121,11 +121,26 @@ function chat_is_https(): bool {
     return !$isLocal; // pristup imenom domene znači da je došao izvana, preko HTTPS-a
 }
 
+const CHAT_SESSION_DAYS = 90;
+
 function chat_session_start(): void {
     if (session_status() === PHP_SESSION_ACTIVE) return;
+
+    // PHP po defaultu briše sesije nakon 24 min neaktivnosti i drži ih u
+    // privremenoj mapi koju OS sam čisti — zato su korisnici stalno bili
+    // odjavljivani. Sesije idu u vlastitu mapu i traju koliko i kolačić.
+    $dir = CHAT_DATA_DIR . '/sessions';
+    if (!is_dir($dir)) @mkdir($dir, 0700, true);
+    if (is_dir($dir) && is_writable($dir)) {
+        ini_set('session.save_path', $dir);
+    }
+    ini_set('session.gc_maxlifetime', (string)(CHAT_SESSION_DAYS * 86400));
+    ini_set('session.gc_probability', '1');
+    ini_set('session.gc_divisor', '500');
+
     session_name('PRIVCHAT');
     session_set_cookie_params([
-        'lifetime' => 60 * 60 * 24 * 90, // 90 dana — da se ne morate stalno logirati
+        'lifetime' => CHAT_SESSION_DAYS * 86400, // da se ne morate stalno logirati
         'path'     => '/',
         'secure'   => chat_is_https(),
         'httponly' => true,
