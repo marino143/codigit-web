@@ -206,6 +206,12 @@ function chat_migrate(PDO $pdo): void {
         last_read_id INTEGER NOT NULL DEFAULT 0,
         PRIMARY KEY (conversation_id, username)
     )');
+    // obrisane poruke — da nestanu i kod onih koji ih već imaju na ekranu
+    $pdo->exec('CREATE TABLE IF NOT EXISTS deleted_messages (
+        message_id INTEGER PRIMARY KEY,
+        conversation_id INTEGER NOT NULL,
+        deleted_at INTEGER NOT NULL
+    )');
     $pdo->exec('CREATE TABLE IF NOT EXISTS login_fails (
         key TEXT PRIMARY KEY,
         fails INTEGER NOT NULL DEFAULT 0,

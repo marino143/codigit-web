@@ -43,10 +43,22 @@ if (!is_file($src)) $fail();
 $tmpBase = sys_get_temp_dir() . '/chat-transcribe-' . $messageId;
 $wav = $tmpBase . '.wav';
 
-// 1) u 16 kHz mono WAV (format koji whisper.cpp očekuje)
+// 1) u 16 kHz mono WAV (format koji whisper.cpp očekuje).
+// afconvert (macOS) zna AAC/MP3/WAV, ali ne Opus — za njega treba ffmpeg.
 exec(sprintf('/usr/bin/afconvert -f WAVE -d LEI16@16000 -c 1 %s %s 2>/dev/null',
     escapeshellarg($src), escapeshellarg($wav)), $o, $rc);
-if ($rc !== 0 || !is_file($wav)) $fail();
+
+if ($rc !== 0 || !is_file($wav) || filesize($wav) < 1000) {
+    @unlink($wav);
+    foreach (['/opt/homebrew/bin/ffmpeg', '/usr/local/bin/ffmpeg'] as $ff) {
+        if (!is_file($ff)) continue;
+        exec(sprintf('%s -y -i %s -ar 16000 -ac 1 -c:a pcm_s16le %s 2>/dev/null',
+            escapeshellarg($ff), escapeshellarg($src), escapeshellarg($wav)), $o2, $rc);
+        if ($rc === 0 && is_file($wav) && filesize($wav) > 1000) break;
+        @unlink($wav);
+    }
+}
+if (!is_file($wav)) $fail();
 
 // 2) Odredi jezik. Whisper na kratkim porukama zna hrvatski proglasiti ruskim
 // ili srpskim, pa svaku takvu detekciju tumačimo kao hrvatski; ostali jezici

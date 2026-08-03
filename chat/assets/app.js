@@ -45,6 +45,8 @@
     let firstLoad = true;
     let serverNow = 0;
     let tzReported = false;   // zonu uređaja javljamo serveru samo jednom
+    let canDeleteAny = false; // smijem li brisati tuđe (osnivač grupe/kanala ili admin)
+    const deletedIds = new Set();
     const myMessageEls = []; // za osvježavanje kvačica
 
     // ---------- pomoćne ----------
@@ -228,7 +230,50 @@
         if (img) img.addEventListener('click', () => openLightbox('image', 'media.php?id=' + m.id));
 
         if (mine) myMessageEls.push({ id: m.id, el });
+        attachDeleteGesture(el, m, mine);
         $messages.appendChild(el);
+    }
+
+    /** Dugi pritisak (mobitel) ili desni klik (računalo) nudi brisanje. */
+    function attachDeleteGesture(el, m, mine) {
+        let timer = null;
+        const offer = e => {
+            if (!mine && !canDeleteAny) return;
+            if (e) e.preventDefault();
+            askDelete(m, el);
+        };
+
+        el.addEventListener('contextmenu', offer);
+        el.addEventListener('touchstart', () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => offer(null), 550);
+        }, { passive: true });
+        ['touchend', 'touchmove', 'touchcancel'].forEach(ev =>
+            el.addEventListener(ev, () => clearTimeout(timer), { passive: true }));
+    }
+
+    function askDelete(m, el) {
+        const what = m.type === 'text' ? 'this message'
+            : (m.type === 'image' ? 'this photo' : m.type === 'video' ? 'this video' : 'this voice message');
+        const who = m.sender === ME ? '' : ' from ' + (m.sender_name || m.sender);
+        if (!confirm('Delete ' + what + who + '? This removes it for everyone.')) return;
+
+        api('delete_message', { id: m.id })
+            .then(() => {
+                el.remove();
+                deletedIds.add(m.id);
+                refresh();
+            })
+            .catch(() => alert('Could not delete the message.'));
+    }
+
+    function applyDeletions(ids) {
+        for (const id of ids || []) {
+            if (deletedIds.has(id)) continue;
+            deletedIds.add(id);
+            const el = $messages.querySelector('[data-id="' + id + '"]');
+            if (el) el.remove();
+        }
     }
 
     function refreshTicks() {
@@ -555,8 +600,11 @@
             if (data.messages) {
                 const loading = $messages.querySelector('.chat-loading');
                 if (loading) loading.remove();
+                canDeleteAny = !!data.can_delete_any;
+                applyDeletions(data.deleted);
                 const stick = isAtBottom() || firstLoad;
                 for (const m of data.messages) {
+                    if (deletedIds.has(m.id)) { lastId = Math.max(lastId, m.id); continue; }
                     renderMessage(m);
                     lastId = Math.max(lastId, m.id);
                     maxSeenId = Math.max(maxSeenId, m.id);
@@ -783,11 +831,16 @@
             && (window.MediaRecorder || window.AudioContext || window.webkitAudioContext));
     }
 
-    // MediaRecorder koristimo samo za mp4/AAC (Safari/iOS) — taj format server zna
-    // transkribirati. Ostali preglednici (Chrome/Firefox → webm/opus) snimaju preko
-    // Web Audio API-ja u WAV, koji whisper čita izravno.
+    // MediaRecorder koristimo samo za AAC u mp4 kontejneru (Safari/iOS) — jedini
+    // komprimirani format koji server sigurno zna dekodirati. Kodek se traži
+    // izričito jer Chrome pod "audio/mp4" snima Opus, koji macOS ne otvara.
+    // Svi ostali snimaju preko Web Audio API-ja u WAV, koji whisper čita izravno.
     function pickAudioMime() {
-        return window.MediaRecorder && MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4' : '';
+        if (!window.MediaRecorder) return '';
+        for (const t of ['audio/mp4;codecs=mp4a.40.2', 'audio/aac']) {
+            if (MediaRecorder.isTypeSupported(t)) return t;
+        }
+        return '';
     }
 
     let pcmRec = null; // {stream, ctx, source, proc, chunks, rate}

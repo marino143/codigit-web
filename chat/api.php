@@ -110,6 +110,12 @@ switch ($action) {
             }
             unset($m);
             $response['messages'] = $messages;
+            $response['can_delete_any'] = can_manage_conv($conv, $user);
+
+            // Klijent mora znati što je obrisano da makne poruku s ekrana
+            $del = $pdo->prepare('SELECT message_id FROM deleted_messages WHERE conversation_id = ?');
+            $del->execute([$cid]);
+            $response['deleted'] = array_map('intval', $del->fetchAll(PDO::FETCH_COLUMN));
 
             // Transkripti stižu naknadno (pozadinski posao) — šaljemo ih za već
             // isporučene audio poruke da ih klijent može naknadno upisati
@@ -289,6 +295,36 @@ switch ($action) {
         $pdo->prepare('DELETE FROM members WHERE conversation_id = ? AND username = ?')
             ->execute([(int)$conv['id'], $user]);
         json_out(['ok' => true]);
+    }
+
+    /**
+     * Brisanje poruke: vlastite uvijek, tuđe samo ako si osnivač grupe/kanala
+     * ili administrator. Briše se i pripadajuća datoteka s diska.
+     */
+    case 'delete_message': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $id = (int)($_POST['id'] ?? 0);
+
+        $st = $pdo->prepare('SELECT * FROM messages WHERE id = ?');
+        $st->execute([$id]);
+        $msg = $st->fetch();
+        if (!$msg) json_out(['error' => 'not_found'], 404);
+
+        $conv = conv_get((int)$msg['conversation_id']);
+        if ($conv === null || !is_conv_member($conv, $user)) json_out(['error' => 'forbidden'], 403);
+
+        $mine = $msg['sender'] === $user;
+        if (!$mine && !can_manage_conv($conv, $user)) json_out(['error' => 'forbidden'], 403);
+
+        if (!empty($msg['file'])) {
+            @unlink(CHAT_UPLOAD_DIR . '/' . basename((string)$msg['file']));
+        }
+        $pdo->prepare('DELETE FROM messages WHERE id = ?')->execute([$id]);
+        $pdo->prepare('INSERT OR REPLACE INTO deleted_messages (message_id, conversation_id, deleted_at)
+            VALUES (?, ?, ?)')->execute([$id, (int)$conv['id'], time()]);
+        // stara evidencija više nikome ne treba
+        $pdo->prepare('DELETE FROM deleted_messages WHERE deleted_at < ?')->execute([time() - 30 * 86400]);
+        json_out(['ok' => true, 'id' => $id]);
     }
 
     /** Sve slike, videi i glasovne poruke iz razgovora, grupirano po tipu. */
