@@ -7,6 +7,7 @@
     const MY_NAME = body.dataset.name;
     const IS_ADMIN = body.dataset.admin === '1';
     const CSRF = body.dataset.csrf;
+    const ANY_CODEC = body.dataset.anycodec === '1';  // server ima ffmpeg
 
     const $convList = document.getElementById('convList');
     const $messages = document.getElementById('messages');
@@ -837,7 +838,12 @@
     // Svi ostali snimaju preko Web Audio API-ja u WAV, koji whisper čita izravno.
     function pickAudioMime() {
         if (!window.MediaRecorder) return '';
-        for (const t of ['audio/mp4;codecs=mp4a.40.2', 'audio/aac']) {
+        // AAC je siguran izbor svugdje; ostale (Opus) uzimamo samo ako server ima
+        // ffmpeg koji ih zna dekodirati — inače bi glasovna ostala bez transkripta.
+        const candidates = ANY_CODEC
+            ? ['audio/mp4;codecs=mp4a.40.2', 'audio/aac', 'audio/webm;codecs=opus', 'audio/mp4']
+            : ['audio/mp4;codecs=mp4a.40.2', 'audio/aac'];
+        for (const t of candidates) {
             if (MediaRecorder.isTypeSupported(t)) return t;
         }
         return '';
@@ -921,7 +927,7 @@
             recorder.addEventListener('stop', () => {
                 stream.getTracks().forEach(t => t.stop());
                 const blob = new Blob(recChunks, { type: recMime });
-                if (blob.size > 1000) sendVoice(blob, 'm4a');
+                if (blob.size > 1000) sendVoice(blob, 'auto');
                 resetRecUi();
             });
             recorder.start();
@@ -955,6 +961,10 @@
     }
 
     function sendVoice(blob, ext) {
+        if (ext === 'auto') {
+            const t = blob.type || '';
+            ext = t.includes('webm') ? 'webm' : t.includes('mp4') || t.includes('aac') ? 'm4a' : 'wav';
+        }
         const file = new File([blob], 'voice.' + ext, { type: blob.type });
         uploadFile(file, 'audio');
     }

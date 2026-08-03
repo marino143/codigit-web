@@ -34,6 +34,14 @@ const CHAT_AUDIO_MIMES = [
     'audio/ogg' => 'ogg',
 ];
 
+/** Postoji li ffmpeg (tada server zna dekodirati i Opus, pa smiju i manji formati). */
+function has_ffmpeg(): bool {
+    foreach (['/opt/homebrew/bin/ffmpeg', '/usr/local/bin/ffmpeg'] as $f) {
+        if (is_file($f)) return true;
+    }
+    return false;
+}
+
 // Lokalna transkripcija glasovnih poruka (whisper.cpp) — putanje neovisne o stroju:
 // binarka iz Homebrewa (Apple Silicon ili Intel), model u <repo>/whisper/
 define('WHISPER_BIN', is_file('/opt/homebrew/bin/whisper-cli')

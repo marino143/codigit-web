@@ -35,7 +35,8 @@ $admin = $row['role'] === 'admin';
       data-name="<?= htmlspecialchars($row['name']) ?>"
       data-admin="<?= $admin ? '1' : '0' ?>"
       data-csrf="<?= htmlspecialchars(csrf_token()) ?>"
-      data-vapid="<?= htmlspecialchars(push_vapid_public_key()) ?>">
+      data-vapid="<?= htmlspecialchars(push_vapid_public_key()) ?>"
+      data-anycodec="<?= has_ffmpeg() ? '1' : '0' ?>">
 
 <div class="app">
 
