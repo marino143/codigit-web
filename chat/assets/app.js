@@ -129,7 +129,9 @@
                 : 'No messages yet';
             el.innerHTML =
                 '<div class="conv-mid">' +
-                    '<div class="conv-name">' + escapeHtml(c.name || '') + '</div>' +
+                    '<div class="conv-name">'
+                        + (c.type !== 'dm' ? '<span class="conv-kind">' + convIcon(c.type) + '</span> ' : '')
+                        + escapeHtml(c.name || '') + '</div>' +
                     '<div class="conv-preview">' + escapeHtml(preview) + '</div>' +
                 '</div>' +
                 '<div class="conv-side">' +
@@ -1018,7 +1020,9 @@
             const d = new Date(r.created_at * 1000);
             el.innerHTML =
                 '<div class="conv-mid">' +
-                    '<div class="conv-name">' + escapeHtml(r.conv_name) + ' <span class="modal-tag">' + escapeHtml(r.sender_name) + '</span></div>' +
+                    '<div class="conv-name">'
+                        + (r.conv_type !== 'dm' ? '<span class="conv-kind">' + convIcon(r.conv_type) + '</span> ' : '')
+                        + escapeHtml(r.conv_name) + ' <span class="modal-tag">' + escapeHtml(r.sender_name) + '</span></div>' +
                     '<div class="conv-preview">' + icon + highlight(r.snippet, q) + '</div>' +
                 '</div>' +
                 '<div class="conv-side"><div class="conv-time">' +

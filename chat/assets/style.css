@@ -290,6 +290,8 @@ body {
 }
 .conv-mid { flex: 1; min-width: 0; }
 .conv-name { font-weight: 600; font-size: 15px; color: var(--text); }
+/* oznaka vrste razgovora: # kanal, 👥 grupa (privatni je bez oznake) */
+.conv-kind { color: var(--accent); font-weight: 700; }
 .conv-preview {
     font-size: 13px; color: var(--text-dim);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
