@@ -263,6 +263,7 @@
         el.dataset.id = m.id;
 
         let html = '';
+        if (m.reply) html += replyBlockHtml(m.reply);
         if (!mine && activeType !== 'dm') {
             html += '<div class="msg-sender" style="color:' + senderColor(m.sender) + '">'
                 + escapeHtml(m.sender_name || m.sender) + '</div>';
@@ -289,6 +290,17 @@
 
         const img = el.querySelector('img');
         if (img) img.addEventListener('click', () => openLightbox('image', 'media.php?id=' + m.id));
+
+        const quote = el.querySelector('[data-jump]');
+        if (quote) quote.addEventListener('click', e => {
+            e.stopPropagation();
+            const target = $messages.querySelector('[data-id="' + quote.dataset.jump + '"]');
+            if (target) {
+                target.scrollIntoView({ block: 'center' });
+                target.classList.add('jumped');
+                setTimeout(() => target.classList.remove('jumped'), 1600);
+            }
+        });
 
         if (mine) myMessageEls.push({ id: m.id, el });
         attachDeleteGesture(el, m, mine);
@@ -320,6 +332,7 @@
         let html = '<h2>Message</h2>'
             + '<div class="modal-section"><p class="modal-hint">'
             + escapeHtml((m.sender_name || '') + ' · ' + fmtDate(m.created_at)) + '</p></div>'
+            + '<button class="modal-row btn" id="msgReply">↩︎ Reply</button>'
             + '<button class="modal-row btn" id="msgFlag">'
             + (isFlagged ? '☆ Remove highlight' : '⭐ Highlight this message') + '</button>';
         if (canDelete) {
@@ -329,6 +342,10 @@
         openModal(html);
 
         document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+        document.getElementById('msgReply').addEventListener('click', () => {
+            closeModal();
+            startReply(m);
+        });
         document.getElementById('msgFlag').addEventListener('click', () => {
             closeModal();
             api('flag', { id: m.id })
@@ -761,7 +778,10 @@
         autosize();
         $sendBtn.disabled = true;
         try {
-            await api('send', { conv: activeConv, body: text });
+            const params = { conv: activeConv, body: text };
+            if (replyTarget) params.reply_to = replyTarget.id;
+            cancelReply();
+            await api('send', params);
             await refresh();
         } catch (e) {
             $input.value = text; // vrati tekst da se ne izgubi
@@ -837,6 +857,35 @@
             });
             xhr.send(fd);
         });
+    }
+
+    // ---------- odgovor na poruku ----------
+    const $replyBar = document.getElementById('replyBar');
+    let replyTarget = null;
+
+    function startReply(m) {
+        replyTarget = m;
+        const preview = m.type === 'text' ? (m.body || '')
+            : m.type === 'image' ? '📷 Photo'
+            : m.type === 'video' ? '🎬 Video'
+            : '🎤 ' + (m.transcript || 'Voice message');
+        document.getElementById('replyTo').textContent = 'Replying to ' + (m.sender_name || m.sender);
+        document.getElementById('replyText').textContent = preview.slice(0, 120);
+        $replyBar.hidden = false;
+        $input.focus();
+    }
+
+    function cancelReply() {
+        replyTarget = null;
+        $replyBar.hidden = true;
+    }
+    document.getElementById('replyCancel').addEventListener('click', cancelReply);
+
+    /** Citat iznad poruke — klik skače na original. */
+    function replyBlockHtml(reply) {
+        return '<button class="msg-reply" data-jump="' + reply.id + '">'
+            + '<span class="msg-reply-who">' + escapeHtml(reply.sender) + '</span>'
+            + '<span class="msg-reply-text">' + escapeHtml(reply.text || '') + '</span></button>';
     }
 
     // ---------- lijepljenje (Ctrl/Cmd+V) i povlačenje datoteka ----------

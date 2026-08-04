@@ -117,12 +117,32 @@ switch ($action) {
                 $st->execute([$cid, $user, $readUpTo]);
             }
 
-            $st = $pdo->prepare('SELECT id, sender, type, body, file, mime, size, created_at, transcript
-                FROM messages WHERE conversation_id = ? AND id > ? ORDER BY id ASC LIMIT 500');
+            $st = $pdo->prepare('SELECT m.id, m.sender, m.type, m.body, m.file, m.mime, m.size,
+                    m.created_at, m.transcript, m.reply_to,
+                    r.sender AS reply_sender, r.type AS reply_type, r.body AS reply_body,
+                    r.transcript AS reply_transcript
+                FROM messages m
+                LEFT JOIN messages r ON r.id = m.reply_to
+                WHERE m.conversation_id = ? AND m.id > ? ORDER BY m.id ASC LIMIT 500');
             $st->execute([$cid, $since]);
             $messages = $st->fetchAll();
             foreach ($messages as &$m) {
                 $m['sender_name'] = display_name($m['sender']);
+                if ($m['reply_to'] !== null && $m['reply_sender'] !== null) {
+                    $txt = (string)$m['reply_body'];
+                    if ($txt === '') {
+                        $txt = $m['reply_type'] === 'image' ? '📷 Photo'
+                            : ($m['reply_type'] === 'video' ? '🎬 Video'
+                            : ($m['reply_type'] === 'audio'
+                                ? ('🎤 ' . mb_substr((string)$m['reply_transcript'], 0, 60)) : ''));
+                    }
+                    $m['reply'] = [
+                        'id'     => (int)$m['reply_to'],
+                        'sender' => display_name((string)$m['reply_sender']),
+                        'text'   => mb_substr($txt, 0, 90),
+                    ];
+                }
+                unset($m['reply_sender'], $m['reply_type'], $m['reply_body'], $m['reply_transcript']);
             }
             unset($m);
             $response['messages'] = $messages;
@@ -175,9 +195,18 @@ switch ($action) {
         $conv = require_conv($user);
         $body = trim((string)($_POST['body'] ?? ''));
         if ($body === '' || mb_strlen($body) > 10000) json_out(['error' => 'empty'], 400);
-        $st = $pdo->prepare('INSERT INTO messages (conversation_id, sender, type, body, created_at)
-            VALUES (?, ?, "text", ?, ?)');
-        $st->execute([(int)$conv['id'], $user, $body, time()]);
+
+        // citirana poruka mora biti iz istog razgovora
+        $replyTo = (int)($_POST['reply_to'] ?? 0) ?: null;
+        if ($replyTo !== null) {
+            $chk = $pdo->prepare('SELECT 1 FROM messages WHERE id = ? AND conversation_id = ?');
+            $chk->execute([$replyTo, (int)$conv['id']]);
+            if (!$chk->fetchColumn()) $replyTo = null;
+        }
+
+        $st = $pdo->prepare('INSERT INTO messages (conversation_id, sender, type, body, created_at, reply_to)
+            VALUES (?, ?, "text", ?, ?, ?)');
+        $st->execute([(int)$conv['id'], $user, $body, time(), $replyTo]);
         $id = (int)$pdo->lastInsertId();
         push_notify_async($id);
         json_out(['ok' => true, 'id' => $id]);

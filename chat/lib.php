@@ -214,6 +214,12 @@ function chat_migrate(PDO $pdo): void {
         last_read_id INTEGER NOT NULL DEFAULT 0,
         PRIMARY KEY (conversation_id, username)
     )');
+    // v7: odgovor na poruku (citat)
+    $msgCols = array_column($pdo->query('PRAGMA table_info(messages)')->fetchAll(), 'name');
+    if (!in_array('reply_to', $msgCols, true)) {
+        $pdo->exec('ALTER TABLE messages ADD COLUMN reply_to INTEGER');
+    }
+
     // prikvačeni razgovori — osobno, sa svojim redoslijedom
     $pdo->exec('CREATE TABLE IF NOT EXISTS pins (
         username TEXT NOT NULL,

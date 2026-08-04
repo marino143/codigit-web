@@ -48,6 +48,7 @@ $admin = $row['role'] === 'admin';
                 <button id="notifBtn" title="Notifications" hidden>🔔</button>
                 <button id="newBtn" title="New conversation / group">✏️</button>
                 <?php if ($admin): ?><a href="admin.php" title="Users">⚙️</a><?php endif; ?>
+                <a href="whatsnew.php" title="What's new">🆕</a>
                 <a href="settings.php" title="Settings (time zone, password)">👤</a>
                 <a href="logout.php" title="Log out">⎋</a>
             </div>
@@ -83,6 +84,14 @@ $admin = $row['role'] === 'admin';
         <main class="chat-messages" id="messages">
             <div class="chat-empty" id="emptyHint">Select a conversation or start a new one (✏️)</div>
         </main>
+
+        <div class="reply-bar" id="replyBar" hidden>
+            <div class="reply-info">
+                <div class="reply-to" id="replyTo"></div>
+                <div class="reply-text" id="replyText"></div>
+            </div>
+            <button class="paste-cancel" id="replyCancel" title="Cancel reply">✕</button>
+        </div>
 
         <div class="paste-bar" id="pasteBar" hidden>
             <img class="paste-thumb" id="pasteThumb" alt="">
