@@ -36,7 +36,8 @@ $admin = $row['role'] === 'admin';
       data-admin="<?= $admin ? '1' : '0' ?>"
       data-csrf="<?= htmlspecialchars(csrf_token()) ?>"
       data-vapid="<?= htmlspecialchars(push_vapid_public_key()) ?>"
-      data-anycodec="<?= has_ffmpeg() ? '1' : '0' ?>">
+      data-anycodec="<?= has_ffmpeg() ? '1' : '0' ?>"
+      data-reactions="<?= htmlspecialchars(implode(' ', CHAT_REACTIONS)) ?>">
 
 <div class="app">
 

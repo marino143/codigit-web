@@ -4,6 +4,7 @@ Every update to the chat is listed here, newest first.
 
 ## 4 August 2026
 
+- **Emoji reactions** — long-press (or right-click) a message and pick 👍 ❤️ 😂 🎉 👀 ✅ 🔥 🙏. Reactions appear under the message with a count; tap one to add or remove yours, and hover to see who reacted.
 - **Reply to a message** — long-press (or right-click) a message and choose Reply. The quote appears above your message, and tapping it jumps to the original.
 - **What's new page** — this list, so everyone can see what changed.
 - **Pinned conversations** — pin any chat to the top and arrange the pinned ones in your own order. Your arrangement is yours alone.

@@ -52,6 +52,9 @@ define('WHISPER_MODEL', dirname(__DIR__) . '/whisper/ggml-medium.bin');
 
 const CHAT_USERNAME_RE = '/^[a-z0-9_.-]{2,30}$/';
 
+// Reakcije koje nudimo (i jedine koje server prihvaća)
+const CHAT_REACTIONS = ['👍', '❤️', '😂', '🎉', '👀', '✅', '🔥', '🙏'];
+
 // Zaštita prijave od pogađanja lozinki (bitno otkad je chat javno dostupan preko Funnela)
 const CHAT_LOGIN_MAX_FAILS = 8;
 const CHAT_LOGIN_LOCK_SECS = 900; // 15 min
@@ -219,6 +222,15 @@ function chat_migrate(PDO $pdo): void {
     if (!in_array('reply_to', $msgCols, true)) {
         $pdo->exec('ALTER TABLE messages ADD COLUMN reply_to INTEGER');
     }
+
+    // reakcije na poruke (emoji) — jedan korisnik može staviti više različitih
+    $pdo->exec('CREATE TABLE IF NOT EXISTS reactions (
+        message_id INTEGER NOT NULL,
+        username TEXT NOT NULL,
+        emoji TEXT NOT NULL,
+        created_at INTEGER NOT NULL,
+        PRIMARY KEY (message_id, username, emoji)
+    )');
 
     // prikvačeni razgovori — osobno, sa svojim redoslijedom
     $pdo->exec('CREATE TABLE IF NOT EXISTS pins (

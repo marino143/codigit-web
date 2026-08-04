@@ -8,6 +8,9 @@
     const IS_ADMIN = body.dataset.admin === '1';
     const CSRF = body.dataset.csrf;
     const ANY_CODEC = body.dataset.anycodec === '1';  // server ima ffmpeg
+    const REACTIONS = (body.dataset.reactions || '').split(' ').filter(Boolean);
+    let reactionsByMsg = {};   // {messageId: [{emoji, n, mine, who}]}
+    let pendingReactions = null;
 
     const $convList = document.getElementById('convList');
     const $messages = document.getElementById('messages');
@@ -329,9 +332,14 @@
         const isFlagged = flaggedIds.has(m.id);
         const canDelete = mine || canDeleteAny;
 
+        const mineRx = (reactionsByMsg[m.id] || []).filter(r => r.mine).map(r => r.emoji);
         let html = '<h2>Message</h2>'
             + '<div class="modal-section"><p class="modal-hint">'
-            + escapeHtml((m.sender_name || '') + ' · ' + fmtDate(m.created_at)) + '</p></div>'
+            + escapeHtml((m.sender_name || '') + ' · ' + fmtDate(m.created_at)) + '</p>'
+            + '<div class="rx-picker">'
+            + REACTIONS.map(e => '<button class="rx-pick' + (mineRx.includes(e) ? ' on' : '')
+                + '" data-emoji="' + escapeHtml(e) + '">' + e + '</button>').join('')
+            + '</div></div>'
             + '<button class="modal-row btn" id="msgReply">↩︎ Reply</button>'
             + '<button class="modal-row btn" id="msgFlag">'
             + (isFlagged ? '☆ Remove highlight' : '⭐ Highlight this message') + '</button>';
@@ -340,6 +348,13 @@
         }
         html += '<button class="modal-close" id="modalCloseBtn">Cancel</button>';
         openModal(html);
+
+        $modalCard.querySelectorAll('[data-emoji]').forEach(b => b.addEventListener('click', () => {
+            closeModal();
+            api('react', { id: m.id, emoji: b.dataset.emoji })
+                .then(refresh)
+                .catch(() => alert('Could not add the reaction.'));
+        }));
 
         document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
         document.getElementById('msgReply').addEventListener('click', () => {
@@ -372,6 +387,32 @@
                 refresh();
             })
             .catch(() => alert('Could not delete the message.'));
+    }
+
+    /** Reakcije se crtaju kao traka ispod poruke; klik na svoju je miče. */
+    function applyReactions(map) {
+        if (!map) return;
+        reactionsByMsg = map;
+        $messages.querySelectorAll('.msg').forEach(el => {
+            const list = map[el.dataset.id] || [];
+            let bar = el.querySelector('.rx-bar');
+            if (!list.length) { if (bar) bar.remove(); return; }
+            if (!bar) {
+                bar = document.createElement('div');
+                bar.className = 'rx-bar';
+                const meta = el.querySelector('.msg-meta');
+                meta ? el.insertBefore(bar, meta) : el.appendChild(bar);
+            }
+            bar.innerHTML = list.map(r =>
+                '<button class="rx' + (r.mine ? ' mine' : '') + '" data-rx="' + escapeHtml(r.emoji)
+                + '" title="' + escapeHtml(r.who) + '">' + r.emoji
+                + '<span class="rx-n">' + r.n + '</span></button>').join('');
+            bar.querySelectorAll('[data-rx]').forEach(b => b.addEventListener('click', e => {
+                e.stopPropagation();
+                api('react', { id: parseInt(el.dataset.id, 10), emoji: b.dataset.rx })
+                    .then(refresh).catch(() => {});
+            }));
+        });
     }
 
     function applyFlags(ids) {
@@ -721,6 +762,7 @@
                 canDeleteAny = !!data.can_delete_any;
                 applyDeletions(data.deleted);
                 applyFlags(data.flagged);
+                pendingReactions = data.reactions;
                 const stick = isAtBottom() || firstLoad;
                 for (const m of data.messages) {
                     if (deletedIds.has(m.id)) { lastId = Math.max(lastId, m.id); continue; }
@@ -728,6 +770,7 @@
                     lastId = Math.max(lastId, m.id);
                     maxSeenId = Math.max(maxSeenId, m.id);
                 }
+                applyReactions(pendingReactions);   // tek kad su nove poruke iscrtane
                 if (data.messages.length && stick) scrollToBottom();
                 if (firstLoad) { scrollToBottom(); firstLoad = false; }
                 if (typeof data.partner_read === 'number') {

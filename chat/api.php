@@ -148,6 +148,26 @@ switch ($action) {
             $response['messages'] = $messages;
             $response['can_delete_any'] = can_manage_conv($conv, $user);
 
+            // reakcije na porukama ovog razgovora (grupirano po poruci i emojiju)
+            $rx = $pdo->prepare('SELECT r.message_id, r.emoji, COUNT(*) n,
+                    SUM(CASE WHEN r.username = ? THEN 1 ELSE 0 END) mine,
+                    GROUP_CONCAT(r.username) who
+                FROM reactions r JOIN messages m ON m.id = r.message_id
+                WHERE m.conversation_id = ?
+                GROUP BY r.message_id, r.emoji');
+            $rx->execute([$user, $cid]);
+            $reactions = [];
+            foreach ($rx->fetchAll() as $r) {
+                $names = array_map('display_name', explode(',', (string)$r['who']));
+                $reactions[(string)$r['message_id']][] = [
+                    'emoji' => $r['emoji'],
+                    'n'     => (int)$r['n'],
+                    'mine'  => (int)$r['mine'] > 0,
+                    'who'   => implode(', ', $names),
+                ];
+            }
+            $response['reactions'] = $reactions;
+
             // moje oznake u ovom razgovoru
             $fl = $pdo->prepare('SELECT f.message_id FROM flags f
                 JOIN messages m ON m.id = f.message_id
@@ -388,6 +408,33 @@ switch ($action) {
         $upd = $pdo->prepare('UPDATE pins SET sort_order = ? WHERE username = ? AND conversation_id = ?');
         foreach ($order as $pos => $id) $upd->execute([$pos, $user, $id]);
         json_out(['ok' => true, 'moved' => true]);
+    }
+
+    /** Dodaj/ukloni emoji reakciju na poruku (vide je svi u razgovoru). */
+    case 'react': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $id = (int)($_POST['id'] ?? 0);
+        $emoji = (string)($_POST['emoji'] ?? '');
+        if (!in_array($emoji, CHAT_REACTIONS, true)) json_out(['error' => 'bad_emoji'], 400);
+
+        $st = $pdo->prepare('SELECT conversation_id FROM messages WHERE id = ?');
+        $st->execute([$id]);
+        $convId = $st->fetchColumn();
+        if ($convId === false) json_out(['error' => 'not_found'], 404);
+
+        $conv = conv_get((int)$convId);
+        if ($conv === null || !is_conv_member($conv, $user)) json_out(['error' => 'forbidden'], 403);
+
+        $has = $pdo->prepare('SELECT 1 FROM reactions WHERE message_id = ? AND username = ? AND emoji = ?');
+        $has->execute([$id, $user, $emoji]);
+        if ($has->fetchColumn()) {
+            $pdo->prepare('DELETE FROM reactions WHERE message_id = ? AND username = ? AND emoji = ?')
+                ->execute([$id, $user, $emoji]);
+            json_out(['ok' => true, 'added' => false]);
+        }
+        $pdo->prepare('INSERT INTO reactions (message_id, username, emoji, created_at) VALUES (?, ?, ?, ?)')
+            ->execute([$id, $user, $emoji, time()]);
+        json_out(['ok' => true, 'added' => true]);
     }
 
     /** Označi/odznači poruku (oznaka je osobna — vide je samo vlastite oči). */

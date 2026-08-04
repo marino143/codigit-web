@@ -691,6 +691,35 @@ body {
 .msg-transcript:empty { display: none; }
 .msg-transcript .transcribing { opacity: .6; }
 
+/* ---------- reakcije ---------- */
+.rx-bar { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.rx {
+    display: inline-flex; align-items: center; gap: 3px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    border-radius: 11px;
+    padding: 1px 7px 2px;
+    font-size: 13px;
+    line-height: 1.4;
+    cursor: pointer;
+    font-family: inherit;
+}
+.rx.mine { border-color: var(--accent); background: var(--active-conv); }
+.rx-n { font-size: 11px; color: var(--text-dim); font-weight: 600; }
+.rx.mine .rx-n { color: var(--accent); }
+
+.rx-picker { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.rx-pick {
+    border: 1px solid var(--border);
+    background: var(--panel);
+    border-radius: 10px;
+    padding: 7px 10px;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+}
+.rx-pick.on { border-color: var(--accent); background: var(--active-conv); }
+
 .msg-meta {
     display: flex;
     align-items: center;
