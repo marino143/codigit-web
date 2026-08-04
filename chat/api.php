@@ -68,7 +68,23 @@ function conv_list(PDO $pdo, string $user): array {
             'last_ts'     => $lm ? (int)$lm['created_at'] : (int)$conv['created_at'],
         ];
     }
-    usort($out, fn($a, $b) => $b['last_ts'] <=> $a['last_ts']);
+    // Prikvačeni idu na vrh, redoslijedom koji je korisnik sam posložio;
+    // ostali ispod, po vremenu zadnje poruke.
+    $pin = $pdo->prepare('SELECT conversation_id, sort_order FROM pins WHERE username = ?');
+    $pin->execute([$user]);
+    $pins = $pin->fetchAll(PDO::FETCH_KEY_PAIR);
+
+    foreach ($out as &$c) {
+        $c['pinned'] = isset($pins[$c['id']]);
+        $c['pin_order'] = (int)($pins[$c['id']] ?? 0);
+    }
+    unset($c);
+
+    usort($out, function ($a, $b) {
+        if ($a['pinned'] !== $b['pinned']) return $b['pinned'] <=> $a['pinned'];
+        if ($a['pinned']) return $a['pin_order'] <=> $b['pin_order'];
+        return $b['last_ts'] <=> $a['last_ts'];
+    });
     return $out;
 }
 
@@ -302,6 +318,47 @@ switch ($action) {
         $pdo->prepare('DELETE FROM members WHERE conversation_id = ? AND username = ?')
             ->execute([(int)$conv['id'], $user]);
         json_out(['ok' => true]);
+    }
+
+    /** Prikvači/otkvači razgovor (osobno). Novi prikvačeni ide na vrh. */
+    case 'pin': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $conv = require_conv($user);
+        $cid = (int)$conv['id'];
+
+        $has = $pdo->prepare('SELECT 1 FROM pins WHERE username = ? AND conversation_id = ?');
+        $has->execute([$user, $cid]);
+        if ($has->fetchColumn()) {
+            $pdo->prepare('DELETE FROM pins WHERE username = ? AND conversation_id = ?')->execute([$user, $cid]);
+            json_out(['ok' => true, 'pinned' => false]);
+        }
+        $min = $pdo->prepare('SELECT COALESCE(MIN(sort_order), 0) - 1 FROM pins WHERE username = ?');
+        $min->execute([$user]);
+        $pdo->prepare('INSERT INTO pins (username, conversation_id, sort_order) VALUES (?, ?, ?)')
+            ->execute([$user, $cid, (int)$min->fetchColumn()]);
+        json_out(['ok' => true, 'pinned' => true]);
+    }
+
+    /** Pomakni prikvačeni razgovor gore/dolje u vlastitom redoslijedu. */
+    case 'pin_move': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $conv = require_conv($user);
+        $cid = (int)$conv['id'];
+        $dir = ($_POST['dir'] ?? '') === 'down' ? 'down' : 'up';
+
+        $st = $pdo->prepare('SELECT conversation_id FROM pins WHERE username = ? ORDER BY sort_order');
+        $st->execute([$user]);
+        $order = array_map('intval', $st->fetchAll(PDO::FETCH_COLUMN));
+
+        $i = array_search($cid, $order, true);
+        if ($i === false) json_out(['error' => 'not_pinned'], 400);
+        $j = $dir === 'up' ? $i - 1 : $i + 1;
+        if ($j < 0 || $j >= count($order)) json_out(['ok' => true, 'moved' => false]);
+
+        [$order[$i], $order[$j]] = [$order[$j], $order[$i]];
+        $upd = $pdo->prepare('UPDATE pins SET sort_order = ? WHERE username = ? AND conversation_id = ?');
+        foreach ($order as $pos => $id) $upd->execute([$pos, $user, $id]);
+        json_out(['ok' => true, 'moved' => true]);
     }
 
     /** Označi/odznači poruku (oznaka je osobna — vide je samo vlastite oči). */

@@ -214,6 +214,14 @@ function chat_migrate(PDO $pdo): void {
         last_read_id INTEGER NOT NULL DEFAULT 0,
         PRIMARY KEY (conversation_id, username)
     )');
+    // prikvačeni razgovori — osobno, sa svojim redoslijedom
+    $pdo->exec('CREATE TABLE IF NOT EXISTS pins (
+        username TEXT NOT NULL,
+        conversation_id INTEGER NOT NULL,
+        sort_order INTEGER NOT NULL DEFAULT 0,
+        PRIMARY KEY (username, conversation_id)
+    )');
+
     // označene (flagane) poruke — oznaka je osobna, svatko ima svoje
     $pdo->exec('CREATE TABLE IF NOT EXISTS flags (
         message_id INTEGER NOT NULL,

@@ -124,13 +124,14 @@
         }
         for (const c of convs) {
             const el = document.createElement('button');
-            el.className = 'conv-item' + (c.id === activeConv ? ' active' : '');
+            el.className = 'conv-item' + (c.id === activeConv ? ' active' : '') + (c.pinned ? ' pinned' : '');
             const preview = c.last_body
                 ? (c.last_sender && c.type !== 'dm' ? c.last_sender + ': ' : '') + c.last_body
                 : 'No messages yet';
             el.innerHTML =
                 '<div class="conv-mid">' +
                     '<div class="conv-name">'
+                        + (c.pinned ? '<span class="conv-pin">📌</span> ' : '')
                         + (c.type !== 'dm' ? '<span class="conv-kind">' + convIcon(c.type) + '</span> ' : '')
                         + escapeHtml(c.name || '') + '</div>' +
                     '<div class="conv-preview">' + escapeHtml(preview) + '</div>' +
@@ -140,7 +141,54 @@
                     (c.unread > 0 ? '<div class="conv-badge">' + c.unread + '</div>' : '') +
                 '</div>';
             el.addEventListener('click', () => openConv(c.id));
+            attachConvMenu(el, c);
             $convList.appendChild(el);
+        }
+    }
+
+    /** Dugi pritisak / desni klik na razgovor: prikvači i posloži redoslijed. */
+    function attachConvMenu(el, c) {
+        let timer = null;
+        const offer = e => {
+            if (e) e.preventDefault();
+            openConvMenu(c);
+        };
+        el.addEventListener('contextmenu', offer);
+        el.addEventListener('touchstart', () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => offer(null), 550);
+        }, { passive: true });
+        ['touchend', 'touchmove', 'touchcancel'].forEach(ev =>
+            el.addEventListener(ev, () => clearTimeout(timer), { passive: true }));
+    }
+
+    function openConvMenu(c) {
+        const pinnedList = convs.filter(x => x.pinned);
+        const idx = pinnedList.findIndex(x => x.id === c.id);
+
+        let html = '<h2>' + (c.type !== 'dm' ? escapeHtml(convIcon(c.type)) + ' ' : '')
+            + escapeHtml(c.name || '') + '</h2>'
+            + '<button class="modal-row btn" id="convPin">'
+            + (c.pinned ? '📌 Unpin' : '📌 Pin to top') + '</button>';
+
+        if (c.pinned) {
+            if (idx > 0) html += '<button class="modal-row btn" id="convUp">↑ Move up</button>';
+            if (idx > -1 && idx < pinnedList.length - 1) html += '<button class="modal-row btn" id="convDown">↓ Move down</button>';
+        }
+        html += '<button class="modal-close" id="modalCloseBtn">Cancel</button>';
+        openModal(html);
+
+        document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+        document.getElementById('convPin').addEventListener('click', () => {
+            closeModal();
+            api('pin', { conv: c.id }).then(refresh).catch(() => alert('Could not pin the conversation.'));
+        });
+        for (const [id, dir] of [['convUp', 'up'], ['convDown', 'down']]) {
+            const b = document.getElementById(id);
+            if (b) b.addEventListener('click', () => {
+                closeModal();
+                api('pin_move', { conv: c.id, dir }).then(refresh).catch(() => {});
+            });
         }
     }
 
