@@ -94,19 +94,6 @@ h3{font-size:1.35rem;font-weight:600}
 /* Hero */
 .hero{position:relative;min-height:100svh;display:flex;align-items:center;color:#fff;isolation:isolate;overflow:hidden}
 .hero-bg{position:absolute;inset:0;z-index:-2;background:url("img/hero.jpg") center/cover no-repeat}
-.hero-slide{position:absolute;inset:-4%;background-position:center;background-size:cover;opacity:0;will-change:opacity,transform;animation:heroSlide 32s linear infinite}
-.hero-slide:nth-child(1){background-image:url("img/hero.jpg");animation-delay:0s}
-.hero-slide:nth-child(2){background-image:url("img/rijeka.jpg");animation-delay:8s}
-.hero-slide:nth-child(3){background-image:url("img/sator2.jpg");animation-delay:16s}
-.hero-slide:nth-child(4){background-image:url("img/kanu.jpg");animation-delay:24s}
-@keyframes heroSlide{
-  0%{opacity:0;transform:scale(1) translateX(0)}
-  4%{opacity:1}
-  25%{opacity:1}
-  31%{opacity:0;transform:scale(1.14) translateX(-1.5%)}
-  100%{opacity:0;transform:scale(1) translateX(0)}
-}
-@media (prefers-reduced-motion: reduce){.hero-slide{animation:none;opacity:0}.hero-slide:nth-child(1){opacity:1}}
 .hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(18,43,33,.55) 0%,rgba(18,43,33,.25) 45%,rgba(18,43,33,.72) 100%)}
 .hero-content{padding:8rem 0 6rem;max-width:44rem}
 .hero .eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(6px);padding:.45rem 1.1rem;border-radius:999px;font-size:.85rem;font-weight:600;margin-bottom:1.4rem}
@@ -250,12 +237,7 @@ tbody td:first-child{font-weight:600;color:var(--green-900)}
 </header>
 
 <section class="hero">
-  <div class="hero-bg" aria-hidden="true">
-    <div class="hero-slide"></div>
-    <div class="hero-slide"></div>
-    <div class="hero-slide"></div>
-    <div class="hero-slide"></div>
-  </div>
+  <div class="hero-bg"></div>
   <div class="container">
     <div class="hero-content">
       <span class="eyebrow">★★★★ &nbsp;Obiteljski kamp na rijeci Mrežnici</span>
