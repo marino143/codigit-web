@@ -193,7 +193,8 @@
     }
 
     function updateTitle() {
-        const total = convs.reduce((s, c) => s + (c.id === activeConv && document.visibilityState === 'visible' ? 0 : c.unread), 0);
+        const openAndVisible = id => id === activeConv && document.visibilityState === 'visible';
+        const total = convs.reduce((s, c) => s + (openAndVisible(c.id) ? 0 : c.unread), 0);
         document.title = (total > 0 ? '(' + total + ') ' : '') + 'Our Chat';
 
         // broj na ikoni aplikacije (radi u instaliranoj aplikaciji: dock / home screen)
@@ -202,6 +203,12 @@
                 total > 0 ? navigator.setAppBadge(total) : navigator.clearAppBadge();
             } catch (e) {}
         }
+
+        // Na mobitelu popis razgovora nije vidljiv dok si u razgovoru — zato
+        // gumb za povratak nosi broj nepročitanih iz OSTALIH razgovora.
+        const others = convs.reduce((s, c) => s + (c.id === activeConv ? 0 : c.unread), 0);
+        $backBtn.dataset.unread = others > 0 ? (others > 99 ? '99+' : String(others)) : '';
+        $backBtn.classList.toggle('has-unread', others > 0);
     }
 
     // ---------- otvaranje razgovora ----------
