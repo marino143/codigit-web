@@ -617,6 +617,20 @@ body {
     animation: msgIn .15s ease-out;
 }
 @keyframes msgIn { from { opacity: 0; transform: translateY(6px); } }
+/* označena (flagana) poruka — oznaka je osobna */
+.msg.flagged { box-shadow: 0 1px 1px var(--shadow), inset 3px 0 0 #f0b429; }
+.msg.flagged::after {
+    content: '⭐';
+    position: absolute;
+    top: -6px; right: -4px;
+    font-size: 12px;
+}
+.msg.jumped { animation: jumpGlow 1.6s ease-out; }
+@keyframes jumpGlow {
+    0%, 40% { background: #fff3a0; }
+}
+.modal-row.danger-row { color: var(--danger); }
+
 .msg.mine  { align-self: flex-end; background: var(--mine); border-top-right-radius: 2px; }
 .msg.theirs { align-self: flex-start; background: var(--panel); border-top-left-radius: 2px; }
 

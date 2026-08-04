@@ -48,6 +48,7 @@
     let tzReported = false;   // zonu uređaja javljamo serveru samo jednom
     let canDeleteAny = false; // smijem li brisati tuđe (osnivač grupe/kanala ili admin)
     const deletedIds = new Set();
+    const flaggedIds = new Set();   // moje označene poruke u otvorenom razgovoru
     const myMessageEls = []; // za osvježavanje kvačica
 
     // ---------- pomoćne ----------
@@ -201,7 +202,8 @@
 
         const mine = m.sender === ME;
         const el = document.createElement('div');
-        el.className = 'msg ' + (mine ? 'mine' : 'theirs');
+        el.className = 'msg ' + (mine ? 'mine' : 'theirs')
+            + (flaggedIds.has(m.id) ? ' flagged' : '');
         el.dataset.id = m.id;
 
         let html = '';
@@ -237,13 +239,12 @@
         $messages.appendChild(el);
     }
 
-    /** Dugi pritisak (mobitel) ili desni klik (računalo) nudi brisanje. */
+    /** Dugi pritisak (mobitel) ili desni klik (računalo) otvara izbornik poruke. */
     function attachDeleteGesture(el, m, mine) {
         let timer = null;
         const offer = e => {
-            if (!mine && !canDeleteAny) return;
             if (e) e.preventDefault();
-            askDelete(m, el);
+            openMessageMenu(m, el, mine);
         };
 
         el.addEventListener('contextmenu', offer);
@@ -253,6 +254,36 @@
         }, { passive: true });
         ['touchend', 'touchmove', 'touchcancel'].forEach(ev =>
             el.addEventListener(ev, () => clearTimeout(timer), { passive: true }));
+    }
+
+    /** Izbornik nad porukom: označavanje i (ako smije) brisanje. */
+    function openMessageMenu(m, el, mine) {
+        const isFlagged = flaggedIds.has(m.id);
+        const canDelete = mine || canDeleteAny;
+
+        let html = '<h2>Message</h2>'
+            + '<div class="modal-section"><p class="modal-hint">'
+            + escapeHtml((m.sender_name || '') + ' · ' + fmtDate(m.created_at)) + '</p></div>'
+            + '<button class="modal-row btn" id="msgFlag">'
+            + (isFlagged ? '☆ Remove highlight' : '⭐ Highlight this message') + '</button>';
+        if (canDelete) {
+            html += '<button class="modal-row btn danger-row" id="msgDelete">🗑 Delete for everyone</button>';
+        }
+        html += '<button class="modal-close" id="modalCloseBtn">Cancel</button>';
+        openModal(html);
+
+        document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+        document.getElementById('msgFlag').addEventListener('click', () => {
+            closeModal();
+            api('flag', { id: m.id })
+                .then(r => {
+                    if (r.flagged) { flaggedIds.add(m.id); el.classList.add('flagged'); }
+                    else { flaggedIds.delete(m.id); el.classList.remove('flagged'); }
+                })
+                .catch(() => alert('Could not update the highlight.'));
+        });
+        const del = document.getElementById('msgDelete');
+        if (del) del.addEventListener('click', () => { closeModal(); askDelete(m, el); });
     }
 
     function askDelete(m, el) {
@@ -268,6 +299,15 @@
                 refresh();
             })
             .catch(() => alert('Could not delete the message.'));
+    }
+
+    function applyFlags(ids) {
+        if (!Array.isArray(ids)) return;
+        flaggedIds.clear();
+        ids.forEach(id => flaggedIds.add(id));
+        $messages.querySelectorAll('.msg').forEach(el => {
+            el.classList.toggle('flagged', flaggedIds.has(parseInt(el.dataset.id, 10)));
+        });
     }
 
     function applyDeletions(ids) {
@@ -605,6 +645,7 @@
                 if (loading) loading.remove();
                 canDeleteAny = !!data.can_delete_any;
                 applyDeletions(data.deleted);
+                applyFlags(data.flagged);
                 const stick = isAtBottom() || firstLoad;
                 for (const m of data.messages) {
                     if (deletedIds.has(m.id)) { lastId = Math.max(lastId, m.id); continue; }
@@ -1055,6 +1096,53 @@
         searchTimer = setTimeout(runSearch, 300);
     });
     $searchInput.addEventListener('keydown', e => { if (e.key === 'Escape') closeSearch(); });
+
+    // ---------- pregled označenih poruka ----------
+    document.getElementById('flagBtn').addEventListener('click', async () => {
+        openModal('<h2>⭐ Highlighted</h2><p class="modal-hint">Loading…</p>');
+        let data;
+        try {
+            const res = await fetch('api.php?action=flagged', { cache: 'no-store' });
+            data = await res.json();
+        } catch (e) { data = { results: [] }; }
+
+        const list = data.results || [];
+        let html = '<h2>⭐ Highlighted</h2>';
+        if (!list.length) {
+            html += '<p class="modal-hint">Nothing highlighted yet. Long-press a message '
+                + '(or right-click on a computer) and choose “Highlight”.</p>';
+        }
+        for (const r of list) {
+            const icon = r.type === 'audio' ? '🎤 ' : r.type === 'image' ? '📷 ' : r.type === 'video' ? '🎬 ' : '';
+            html += '<button class="modal-row btn" data-goto="' + r.conv + '" data-msg="' + r.id + '">'
+                + '<span class="file-line"><strong>'
+                + (r.conv_type !== 'dm' ? escapeHtml(convIcon(r.conv_type)) + ' ' : '')
+                + escapeHtml(r.conv_name) + '</strong> '
+                + '<span class="modal-tag">' + escapeHtml(r.sender_name) + ' · ' + fmtDate(r.created_at) + '</span>'
+                + '<span class="file-sub">' + icon + escapeHtml(r.snippet || '(no text)') + '</span></span></button>';
+        }
+        html += '<button class="modal-close" id="modalCloseBtn">Close</button>';
+        openModal(html);
+
+        document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+        $modalCard.querySelectorAll('[data-goto]').forEach(el => el.addEventListener('click', () => {
+            const conv = parseInt(el.dataset.goto, 10);
+            const msgId = el.dataset.msg;
+            closeModal();
+            openConv(conv);
+            // pričekaj da se poruke učitaju pa skoči na označenu
+            let tries = 0;
+            const jump = setInterval(() => {
+                const target = $messages.querySelector('[data-id="' + msgId + '"]');
+                if (target) {
+                    clearInterval(jump);
+                    target.scrollIntoView({ block: 'center' });
+                    target.classList.add('jumped');
+                    setTimeout(() => target.classList.remove('jumped'), 1600);
+                } else if (++tries > 20) clearInterval(jump);
+            }, 250);
+        }));
+    });
 
     // ---------- push notifikacije ----------
     const VAPID = body.dataset.vapid;

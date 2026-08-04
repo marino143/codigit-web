@@ -112,6 +112,13 @@ switch ($action) {
             $response['messages'] = $messages;
             $response['can_delete_any'] = can_manage_conv($conv, $user);
 
+            // moje oznake u ovom razgovoru
+            $fl = $pdo->prepare('SELECT f.message_id FROM flags f
+                JOIN messages m ON m.id = f.message_id
+                WHERE f.username = ? AND m.conversation_id = ?');
+            $fl->execute([$user, $cid]);
+            $response['flagged'] = array_map('intval', $fl->fetchAll(PDO::FETCH_COLUMN));
+
             // Klijent mora znati što je obrisano da makne poruku s ekrana
             $del = $pdo->prepare('SELECT message_id FROM deleted_messages WHERE conversation_id = ?');
             $del->execute([$cid]);
@@ -295,6 +302,61 @@ switch ($action) {
         $pdo->prepare('DELETE FROM members WHERE conversation_id = ? AND username = ?')
             ->execute([(int)$conv['id'], $user]);
         json_out(['ok' => true]);
+    }
+
+    /** Označi/odznači poruku (oznaka je osobna — vide je samo vlastite oči). */
+    case 'flag': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $id = (int)($_POST['id'] ?? 0);
+
+        $st = $pdo->prepare('SELECT conversation_id FROM messages WHERE id = ?');
+        $st->execute([$id]);
+        $convId = $st->fetchColumn();
+        if ($convId === false) json_out(['error' => 'not_found'], 404);
+
+        $conv = conv_get((int)$convId);
+        if ($conv === null || !is_conv_member($conv, $user)) json_out(['error' => 'forbidden'], 403);
+
+        $has = $pdo->prepare('SELECT 1 FROM flags WHERE message_id = ? AND username = ?');
+        $has->execute([$id, $user]);
+        if ($has->fetchColumn()) {
+            $pdo->prepare('DELETE FROM flags WHERE message_id = ? AND username = ?')->execute([$id, $user]);
+            json_out(['ok' => true, 'flagged' => false]);
+        }
+        $pdo->prepare('INSERT INTO flags (message_id, username, created_at) VALUES (?, ?, ?)')
+            ->execute([$id, $user, time()]);
+        json_out(['ok' => true, 'flagged' => true]);
+    }
+
+    /** Sve moje označene poruke (kroz sve razgovore u kojima jesam). */
+    case 'flagged': {
+        $ids = [];
+        foreach (conv_list($pdo, $user) as $c) $ids[(int)$c['id']] = $c;
+        if (!$ids) json_out(['results' => []]);
+        $in = implode(',', array_map('intval', array_keys($ids)));
+
+        $st = $pdo->prepare("SELECT m.id, m.conversation_id, m.sender, m.type, m.body, m.transcript, m.created_at
+            FROM flags f JOIN messages m ON m.id = f.message_id
+            WHERE f.username = ? AND m.conversation_id IN ($in)
+            ORDER BY f.created_at DESC LIMIT 100");
+        $st->execute([$user]);
+
+        $out = [];
+        foreach ($st->fetchAll() as $m) {
+            $text = (string)$m['body'];
+            if ($text === '' && $m['type'] === 'audio') $text = (string)$m['transcript'];
+            $out[] = [
+                'id'          => (int)$m['id'],
+                'conv'        => (int)$m['conversation_id'],
+                'conv_name'   => $ids[(int)$m['conversation_id']]['name'],
+                'conv_type'   => $ids[(int)$m['conversation_id']]['type'],
+                'sender_name' => display_name($m['sender']),
+                'type'        => $m['type'],
+                'snippet'     => mb_substr($text, 0, 120),
+                'created_at'  => (int)$m['created_at'],
+            ];
+        }
+        json_out(['results' => $out]);
     }
 
     /**

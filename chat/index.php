@@ -44,6 +44,7 @@ $admin = $row['role'] === 'admin';
         <header class="sb-header">
             <div class="sb-actions">
                 <button id="searchBtn" title="Search messages">🔍</button>
+                <button id="flagBtn" title="Highlighted messages">⭐</button>
                 <button id="notifBtn" title="Notifications" hidden>🔔</button>
                 <button id="newBtn" title="New conversation / group">✏️</button>
                 <?php if ($admin): ?><a href="admin.php" title="Users">⚙️</a><?php endif; ?>

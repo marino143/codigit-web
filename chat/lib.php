@@ -214,6 +214,14 @@ function chat_migrate(PDO $pdo): void {
         last_read_id INTEGER NOT NULL DEFAULT 0,
         PRIMARY KEY (conversation_id, username)
     )');
+    // označene (flagane) poruke — oznaka je osobna, svatko ima svoje
+    $pdo->exec('CREATE TABLE IF NOT EXISTS flags (
+        message_id INTEGER NOT NULL,
+        username TEXT NOT NULL,
+        created_at INTEGER NOT NULL,
+        PRIMARY KEY (message_id, username)
+    )');
+
     // obrisane poruke — da nestanu i kod onih koji ih već imaju na ekranu
     $pdo->exec('CREATE TABLE IF NOT EXISTS deleted_messages (
         message_id INTEGER PRIMARY KEY,
