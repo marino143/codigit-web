@@ -193,7 +193,8 @@
     }
 
     function updateTitle() {
-        const openAndVisible = id => id === activeConv && document.visibilityState === 'visible';
+        const openAndVisible = id => id === activeConv
+            && document.visibilityState === 'visible' && document.hasFocus();
         const total = convs.reduce((s, c) => s + (openAndVisible(c.id) ? 0 : c.unread), 0);
         document.title = (total > 0 ? '(' + total + ') ' : '') + 'Our Chat';
 
@@ -662,11 +663,13 @@
         if (polling) { pollAgain = true; return; }
         polling = true;
         try {
-            const visible = document.visibilityState === 'visible';
-            let url = 'api.php?action=poll' + (visible ? '&visible=1' : '');
+            // "Gledam chat" znači da je prozor i vidljiv i u fokusu — inače bi
+            // prozor otvoren iza drugih odmah označio sve pročitanim (i gutao push).
+            const watching = document.visibilityState === 'visible' && document.hasFocus();
+            let url = 'api.php?action=poll' + (watching ? '&visible=1' : '');
             if (activeConv) {
                 url += '&conv=' + activeConv + '&since=' + lastId;
-                if (visible && maxSeenId > 0) url += '&read=' + maxSeenId;
+                if (watching && maxSeenId > 0) url += '&read=' + maxSeenId;
             }
             const res = await fetch(url, { cache: 'no-store' });
             if (res.status === 401) { location.href = 'login.php'; return; }
@@ -746,6 +749,9 @@
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible') refresh();
     });
+    // povratak u prozor: odmah označi pročitano i osvježi brojeve
+    window.addEventListener('focus', () => refresh());
+    window.addEventListener('blur', () => updateTitle());
 
     // ---------- slanje teksta ----------
     async function sendText() {
