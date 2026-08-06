@@ -1608,7 +1608,9 @@
 
     async function pushSetup() {
         if (!VAPID || !('serviceWorker' in navigator) || !window.isSecureContext) return;
-        const reg = await navigator.serviceWorker.register('sw.js').catch(() => null);
+        // verzija u adresi: CDN kešira sw.js, a ovako nova verzija stiže odmah
+        const swUrl = 'sw.js' + (body.dataset.swv ? '?v=' + body.dataset.swv : '');
+        const reg = await navigator.serviceWorker.register(swUrl).catch(() => null);
         if (!reg || !('pushManager' in reg) || !('Notification' in window)) return;
 
         $notifBtn.hidden = false;

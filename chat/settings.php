@@ -181,7 +181,7 @@ ksort($zones);
         return;
     }
 
-    navigator.serviceWorker.register('sw.js').then(function (reg) {
+    navigator.serviceWorker.register(<?= json_encode('sw.js?v=' . (string)@filemtime(__DIR__ . '/sw.js')) ?>).then(function (reg) {
         return reg.pushManager.getSubscription().then(function (sub) {
             if (sub && Notification.permission === 'granted') {
                 state.textContent = '✅ Notifications are on for this device.';
