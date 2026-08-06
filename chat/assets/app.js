@@ -803,6 +803,9 @@
             }
             const data = await res.json();
 
+            if (data.offline) { showOfflineState(); return; }   // odgovor iz lokalne kopije
+            showOfflineState();
+
             convs = data.convs || convs;
             users = data.users || users;
             serverNow = data.now || Math.floor(Date.now() / 1000);
@@ -852,6 +855,7 @@
             updateTitle();
         } catch (e) {
             // mreža je pukla — probat ćemo opet u idućem krugu
+            showOfflineState();
             $peerStatus.textContent = 'connecting…';
             $peerStatus.classList.remove('online');
         } finally {
@@ -900,22 +904,35 @@
             return;
         }
 
+        const params = { conv: activeConv, body: text };
+        if (replyTarget) params.reply_to = replyTarget.id;
+        if (activeTopic) {
+            params.topic = activeTopic.id;
+            if ($alsoConv.checked) params.also_conv = '1';
+        }
+
         $input.value = '';
         autosize();
+        cancelReply();
+
+        // bez mreže poruka čeka u redu umjesto da se izgubi
+        if (!navigator.onLine) {
+            setOutbox(outbox().concat([{ params, text }]));
+            $input.focus();
+            return;
+        }
+
         $sendBtn.disabled = true;
         try {
-            const params = { conv: activeConv, body: text };
-            if (replyTarget) params.reply_to = replyTarget.id;
-            if (activeTopic) {
-                params.topic = activeTopic.id;
-                if ($alsoConv.checked) params.also_conv = '1';
-            }
-            cancelReply();
             await api('send', params);
             activeTopic ? await loadTopic() : await refresh();
         } catch (e) {
-            $input.value = text; // vrati tekst da se ne izgubi
-            alert('Message not sent — check your connection and try again.');
+            if (!navigator.onLine) {
+                setOutbox(outbox().concat([{ params, text }]));
+            } else {
+                $input.value = text; // vrati tekst da se ne izgubi
+                alert('Message not sent — check your connection and try again.');
+            }
         } finally {
             $sendBtn.disabled = false;
             $input.focus();
@@ -1093,6 +1110,56 @@
             enterTopic({ id: t.id, title: t.title, conv: activeConv });
         }));
     });
+
+    // ---------- rad bez mreže ----------
+    const $offlineBar = document.getElementById('offlineBar');
+    const $offlineText = document.getElementById('offlineText');
+    const QUEUE_KEY = 'chat.outbox';
+
+    function outbox() {
+        try { return JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]'); } catch (e) { return []; }
+    }
+    function setOutbox(list) {
+        try { localStorage.setItem(QUEUE_KEY, JSON.stringify(list)); } catch (e) {}
+        showOfflineState();
+    }
+
+    function showOfflineState() {
+        const pending = outbox().length;
+        if (!navigator.onLine) {
+            $offlineText.textContent = pending
+                ? "You're offline — " + pending + (pending === 1 ? ' message' : ' messages')
+                  + ' will send when you\'re back.'
+                : "You're offline — showing the last messages loaded.";
+            $offlineBar.hidden = false;
+        } else if (pending) {
+            $offlineText.textContent = 'Sending ' + pending
+                + (pending === 1 ? ' queued message…' : ' queued messages…');
+            $offlineBar.hidden = false;
+        } else {
+            $offlineBar.hidden = true;
+        }
+    }
+
+    /** Poruke napisane bez mreže čekaju u redu i šalju se čim se veza vrati. */
+    async function flushOutbox() {
+        if (!navigator.onLine) return;
+        let list = outbox();
+        while (list.length) {
+            const item = list[0];
+            try {
+                await api('send', item.params);
+            } catch (e) {
+                if (!navigator.onLine) return;   // i dalje bez mreže — probaj kasnije
+            }
+            list = outbox().slice(1);
+            setOutbox(list);
+        }
+        if (activeConv) activeTopic ? loadTopic() : refresh();
+    }
+
+    window.addEventListener('online', () => { showOfflineState(); flushOutbox(); });
+    window.addEventListener('offline', showOfflineState);
 
     // ---------- uređivanje poruke ----------
     const $editBar = document.getElementById('editBar');
@@ -1637,6 +1704,19 @@
         }, 350));
     })();
 
+    // prečac s ikone aplikacije (?go=search / ?go=flagged)
+    (function handleShortcut() {
+        const go = new URLSearchParams(location.search).get('go');
+        if (!go) return;
+        history.replaceState(null, '', location.pathname);
+        setTimeout(() => {
+            if (go === 'search') $searchBtn.click();
+            else if (go === 'flagged') document.getElementById('flagBtn').click();
+        }, 400);
+    })();
+
     // start
+    showOfflineState();
+    flushOutbox();
     poll();
 })();

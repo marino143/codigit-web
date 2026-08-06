@@ -346,6 +346,15 @@ body {
     cursor: pointer;
     opacity: .85;
 }
+.offline-bar {
+    background: #8a6d1f;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    padding: 6px 10px;
+}
+.offline-bar[hidden] { display: none; }
+
 .chat-empty {
     margin: auto;
     color: var(--text-dim);

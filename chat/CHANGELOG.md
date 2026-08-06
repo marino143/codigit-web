@@ -2,6 +2,13 @@
 
 Every update to the chat is listed here, newest first.
 
+## 7 August 2026
+
+- **Opens instantly** — the app is now stored on your device instead of being downloaded every time you open it. Noticeably faster on slow connections.
+- **Works without a signal** — you can read your recent conversations offline. A bar at the top tells you when you're offline.
+- **Messages wait for you** — write while you have no signal and the message is queued; it sends by itself the moment you're back online, so nothing is lost.
+- **Icon shortcuts** — long-press the app icon (or right-click it in the dock) to jump straight to Search, Highlights or What's new.
+
 ## 6 August 2026
 
 - **Edit messages** — long-press (or right-click) your own message and choose Edit. The text loads into the box; send to save. Edited messages are marked so nobody is misled about what was originally written.

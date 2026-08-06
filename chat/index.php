@@ -83,6 +83,10 @@ $admin = $row['role'] === 'admin';
             <button class="info-btn" id="infoBtn" title="Members" hidden>ⓘ</button>
         </header>
 
+        <div class="offline-bar" id="offlineBar" hidden>
+            <span id="offlineText">You're offline — showing the last messages loaded.</span>
+        </div>
+
         <main class="chat-messages" id="messages">
             <div class="chat-empty" id="emptyHint">Select a conversation or start a new one (✏️)</div>
         </main>

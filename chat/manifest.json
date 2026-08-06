@@ -1,20 +1,48 @@
 {
     "name": "Our Chat",
     "short_name": "Our Chat",
+    "description": "Private chat for our team and family.",
     "display": "standalone",
     "start_url": "index.php",
+    "scope": "./",
     "background_color": "#075e54",
     "theme_color": "#075e54",
+    "orientation": "any",
     "icons": [
         {
             "src": "assets/icon.png",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
         },
         {
             "src": "assets/icon-512.png",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "assets/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Search messages",
+            "short_name": "Search",
+            "url": "index.php?go=search"
+        },
+        {
+            "name": "Highlighted messages",
+            "short_name": "Highlights",
+            "url": "index.php?go=flagged"
+        },
+        {
+            "name": "What's new",
+            "short_name": "What's new",
+            "url": "whatsnew.php"
         }
     ]
 }
