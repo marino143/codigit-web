@@ -4,6 +4,8 @@ Every update to the chat is listed here, newest first.
 
 ## 6 August 2026
 
+- **Edit messages** — long-press (or right-click) your own message and choose Edit. The text loads into the box; send to save. Edited messages are marked so nobody is misled about what was originally written.
+- **Also send to the conversation** — while writing inside a topic, tick the box above the message box and your reply also appears in the main chat, quoting the topic it came from. Useful when a decision made in a topic should reach everyone.
 - **Topics** — long-press (or right-click) a message and choose "Open topic" to start a side conversation about it, like a thread. Replies live inside the topic instead of cluttering the main chat, the original message shows how many replies it has, and the 🧵 button lists every topic in that conversation so you can pick one up later.
 - **Sign-in alerts** — if your account is used on a device that has never signed in before, every device you own gets a notification saying which browser and system it was. If that wasn't you, change your password straight away.
 - **Where you're signed in** — Settings now lists the devices your account has been used on, when each was first and last seen, and lets you clear the list.

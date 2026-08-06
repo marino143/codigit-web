@@ -87,6 +87,19 @@ $admin = $row['role'] === 'admin';
             <div class="chat-empty" id="emptyHint">Select a conversation or start a new one (✏️)</div>
         </main>
 
+        <label class="also-bar" id="alsoBar" hidden>
+            <input type="checkbox" id="alsoConv">
+            <span>Also send to the conversation</span>
+        </label>
+
+        <div class="edit-bar" id="editBar" hidden>
+            <div class="reply-info">
+                <div class="reply-to">Editing message</div>
+                <div class="reply-text" id="editOriginal"></div>
+            </div>
+            <button class="paste-cancel" id="editCancel" title="Cancel editing">✕</button>
+        </div>
+
         <div class="reply-bar" id="replyBar" hidden>
             <div class="reply-info">
                 <div class="reply-to" id="replyTo"></div>

@@ -219,6 +219,7 @@
     function openConv(id) {
         if (activeConv === id) { body.classList.add('in-chat'); return; }
         activeTopic = null;
+        if ($alsoBar) $alsoBar.hidden = true;
         body.classList.remove('in-topic');
         activeConv = id;
         lastId = 0;
@@ -295,7 +296,9 @@
                 + (t.replies ? t.replies + (t.replies === 1 ? ' reply' : ' replies') : 'Topic')
                 + '</button>';
         }
-        html += '<div class="msg-meta">' + fmtTime(m.created_at);
+        html += '<div class="msg-meta">'
+            + (m.edited_at ? '<span class="msg-edited">edited</span>' : '')
+            + fmtTime(m.created_at);
         if (mine && activeType === 'dm') {
             const read = m.id <= partnerReadId;
             html += '<span class="ticks' + (read ? ' read' : '') + '">✓✓</span>';
@@ -362,6 +365,8 @@
             + (activeTopic ? '' : '<button class="modal-row btn" id="msgTopic">🧵 '
                 + (topicsByRoot[m.id] ? 'Open topic (' + topicsByRoot[m.id].replies + ')' : 'Open topic')
                 + '</button>')
+            + (mine && m.type === 'text'
+                ? '<button class="modal-row btn" id="msgEdit">✏️ Edit</button>' : '')
             + '<button class="modal-row btn" id="msgReply">↩︎ Reply</button>'
             + '<button class="modal-row btn" id="msgFlag">'
             + (isFlagged ? '☆ Remove highlight' : '⭐ Highlight this message') + '</button>';
@@ -384,6 +389,9 @@
             closeModal();
             openTopicForMessage(m);
         });
+        const editBtn = document.getElementById('msgEdit');
+        if (editBtn) editBtn.addEventListener('click', () => { closeModal(); startEdit(m); });
+
         document.getElementById('msgReply').addEventListener('click', () => {
             closeModal();
             startReply(m);
@@ -874,13 +882,34 @@
     async function sendText() {
         const text = $input.value.trim();
         if (!text || !activeConv) return;
+
+        // uređivanje postojeće poruke umjesto slanja nove
+        if (editTarget) {
+            const target = editTarget;
+            $sendBtn.disabled = true;
+            try {
+                await api('edit_message', { id: target.id, body: text });
+                cancelEdit();
+                activeTopic ? await loadTopic() : await refresh();
+            } catch (e) {
+                alert('Could not save the change.');
+            } finally {
+                $sendBtn.disabled = false;
+                $input.focus();
+            }
+            return;
+        }
+
         $input.value = '';
         autosize();
         $sendBtn.disabled = true;
         try {
             const params = { conv: activeConv, body: text };
             if (replyTarget) params.reply_to = replyTarget.id;
-            if (activeTopic) params.topic = activeTopic.id;
+            if (activeTopic) {
+                params.topic = activeTopic.id;
+                if ($alsoConv.checked) params.also_conv = '1';
+            }
             cancelReply();
             await api('send', params);
             activeTopic ? await loadTopic() : await refresh();
@@ -978,7 +1007,10 @@
     function enterTopic(topic) {
         activeTopic = topic;
         cancelReply();
+        cancelEdit();
         clearStaged();
+        $alsoConv.checked = false;
+        $alsoBar.hidden = false;   // ponuda "pošalji i u razgovor"
         $messages.innerHTML = '<div class="chat-loading">Loading topic…</div>';
         $convName.textContent = '🧵 ' + topic.title;
         $peerStatus.textContent = 'Topic';
@@ -989,6 +1021,7 @@
 
     function leaveTopic() {
         activeTopic = null;
+        $alsoBar.hidden = true;
         body.classList.remove('in-topic');
         const id = activeConv;
         activeConv = null;          // natjeraj openConv da ponovno učita razgovor
@@ -1061,8 +1094,33 @@
         }));
     });
 
+    // ---------- uređivanje poruke ----------
+    const $editBar = document.getElementById('editBar');
+    let editTarget = null;
+
+    function startEdit(m) {
+        cancelReply();
+        editTarget = m;
+        document.getElementById('editOriginal').textContent = (m.body || '').slice(0, 120);
+        $editBar.hidden = false;
+        $input.value = m.body || '';
+        autosize();
+        $input.focus();
+    }
+
+    function cancelEdit() {
+        if (!editTarget) return;
+        editTarget = null;
+        $editBar.hidden = true;
+        $input.value = '';
+        autosize();
+    }
+    document.getElementById('editCancel').addEventListener('click', cancelEdit);
+
     // ---------- odgovor na poruku ----------
     const $replyBar = document.getElementById('replyBar');
+    const $alsoBar = document.getElementById('alsoBar');
+    const $alsoConv = document.getElementById('alsoConv');
     let replyTarget = null;
 
     function startReply(m) {

@@ -118,7 +118,7 @@ switch ($action) {
             }
 
             $st = $pdo->prepare('SELECT m.id, m.sender, m.type, m.body, m.file, m.mime, m.size,
-                    m.created_at, m.transcript, m.reply_to,
+                    m.created_at, m.transcript, m.reply_to, m.edited_at,
                     r.sender AS reply_sender, r.type AS reply_type, r.body AS reply_body,
                     r.transcript AS reply_transcript
                 FROM messages m
@@ -246,6 +246,18 @@ switch ($action) {
             $tc = $pdo->prepare('SELECT 1 FROM topics WHERE id = ? AND conversation_id = ?');
             $tc->execute([$topicId, (int)$conv['id']]);
             if (!$tc->fetchColumn()) $topicId = null;
+        }
+
+        // "pošalji i u razgovor": poruka iz teme se pojavi i u glavnom toku,
+        // s citatom korijenske poruke da se zna iz koje je teme došla
+        $alsoToConv = $topicId !== null && ($_POST['also_conv'] ?? '') === '1';
+        if ($alsoToConv) {
+            $rt = $pdo->prepare('SELECT root_message_id FROM topics WHERE id = ?');
+            $rt->execute([$topicId]);
+            $rootId = (int)$rt->fetchColumn() ?: null;
+            $pdo->prepare('INSERT INTO messages (conversation_id, sender, type, body, created_at, reply_to)
+                VALUES (?, ?, "text", ?, ?, ?)')
+                ->execute([(int)$conv['id'], $user, $body, time(), $rootId]);
         }
 
         $st = $pdo->prepare('INSERT INTO messages (conversation_id, sender, type, body, created_at, reply_to, topic_id)
@@ -523,6 +535,31 @@ switch ($action) {
         json_out(['results' => $out]);
     }
 
+    /** Izmjena vlastite poruke (tekst ili opis uz privitak). */
+    case 'edit_message': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $id = (int)($_POST['id'] ?? 0);
+        $body = trim((string)($_POST['body'] ?? ''));
+
+        $st = $pdo->prepare('SELECT * FROM messages WHERE id = ?');
+        $st->execute([$id]);
+        $msg = $st->fetch();
+        if (!$msg) json_out(['error' => 'not_found'], 404);
+        if ($msg['sender'] !== $user) json_out(['error' => 'forbidden'], 403);
+
+        $conv = conv_get((int)$msg['conversation_id']);
+        if ($conv === null || !is_conv_member($conv, $user)) json_out(['error' => 'forbidden'], 403);
+
+        // tekstualna poruka ne smije ostati prazna; uz privitak smije (briše se opis)
+        if ($body === '' && $msg['type'] === 'text') json_out(['error' => 'empty'], 400);
+        if (mb_strlen($body) > 10000) json_out(['error' => 'too_long'], 400);
+        if ($body === (string)$msg['body']) json_out(['ok' => true, 'unchanged' => true]);
+
+        $pdo->prepare('UPDATE messages SET body = ?, edited_at = ? WHERE id = ?')
+            ->execute([$body, time(), $id]);
+        json_out(['ok' => true, 'id' => $id]);
+    }
+
     /**
      * Brisanje poruke: vlastite uvijek, tuđe samo ako si osnivač grupe/kanala
      * ili administrator. Briše se i pripadajuća datoteka s diska.
@@ -712,13 +749,13 @@ switch ($action) {
         $conv = conv_get((int)$topic['conversation_id']);
         if ($conv === null || !is_conv_member($conv, $user)) json_out(['error' => 'forbidden'], 403);
 
-        $root = $pdo->prepare('SELECT id, sender, type, body, file, mime, size, created_at, transcript
+        $root = $pdo->prepare('SELECT id, sender, type, body, file, mime, size, created_at, transcript, edited_at
             FROM messages WHERE id = ?');
         $root->execute([(int)$topic['root_message_id']]);
         $rootMsg = $root->fetch() ?: null;
         if ($rootMsg) $rootMsg['sender_name'] = display_name($rootMsg['sender']);
 
-        $st = $pdo->prepare('SELECT id, sender, type, body, file, mime, size, created_at, transcript
+        $st = $pdo->prepare('SELECT id, sender, type, body, file, mime, size, created_at, transcript, edited_at
             FROM messages WHERE topic_id = ? ORDER BY id ASC LIMIT 500');
         $st->execute([$tid]);
         $messages = $st->fetchAll();

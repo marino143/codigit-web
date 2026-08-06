@@ -224,6 +224,12 @@ function chat_migrate(PDO $pdo): void {
         $msgCols[] = 'reply_to';
     }
 
+    // v8: vrijeme zadnje izmjene poruke (prazno = nikad mijenjana)
+    if (!in_array('edited_at', $msgCols, true)) {
+        $pdo->exec('ALTER TABLE messages ADD COLUMN edited_at INTEGER');
+        $msgCols[] = 'edited_at';
+    }
+
     // teme (niti) — razgovor unutar razgovora, vezan uz jednu poruku
     $pdo->exec('CREATE TABLE IF NOT EXISTS topics (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
