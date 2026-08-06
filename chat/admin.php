@@ -54,6 +54,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ->execute([password_hash($pass, PASSWORD_DEFAULT), $target]);
             $ok = "Password for \"$target\" has been reset — they must set a new one on next sign-in.";
         }
+    } elseif ($do === 'role') {
+        $row = user_row($target);
+        if ($row === null) {
+            $error = 'Unknown user.';
+        } elseif ($target === $me && $row['role'] === 'admin') {
+            // ne smijemo ostati bez ijednog administratora
+            $others = (int)$pdo->query('SELECT COUNT(*) FROM users WHERE role = "admin" AND active = 1')->fetchColumn();
+            $error = $others <= 1
+                ? 'You are the only administrator — make someone else an administrator first.'
+                : '';
+            if (!$error) {
+                $pdo->prepare('UPDATE users SET role = "member" WHERE username = ?')->execute([$target]);
+                $ok = 'You are no longer an administrator.';
+            }
+        } else {
+            $newRole = $row['role'] === 'admin' ? 'member' : 'admin';
+            $pdo->prepare('UPDATE users SET role = ? WHERE username = ?')->execute([$newRole, $target]);
+            $ok = $newRole === 'admin'
+                ? "\"$target\" is now an administrator."
+                : "\"$target\" is no longer an administrator.";
+        }
     } elseif ($do === 'toggle') {
         if ($target === $me) {
             $error = 'You cannot deactivate your own account.';
@@ -121,6 +142,13 @@ $csrf = csrf_token();
                     <input type="hidden" name="user" value="<?= htmlspecialchars($u['username']) ?>">
                     <input name="pass" type="text" placeholder="New temporary password">
                     <button type="submit">Reset password</button>
+                </form>
+                <form method="post" class="inline"
+                      onsubmit="return confirm('<?= $u['role'] === 'admin' ? 'Remove administrator rights from' : 'Make administrator:' ?> @<?= htmlspecialchars($u['username']) ?>?');">
+                    <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf) ?>">
+                    <input type="hidden" name="do" value="role">
+                    <input type="hidden" name="user" value="<?= htmlspecialchars($u['username']) ?>">
+                    <button type="submit"><?= $u['role'] === 'admin' ? 'Remove admin' : 'Make admin' ?></button>
                 </form>
                 <?php if ($u['username'] !== $me): ?>
                 <form method="post" class="inline"
