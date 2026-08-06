@@ -506,6 +506,20 @@ body {
     cursor: pointer;
 }
 .admin-card button.danger { background: var(--danger-bg); color: var(--danger); }
+/* ---------- instalater ---------- */
+.setup-checks { margin: 4px 0 12px; }
+.setup-check {
+    display: flex;
+    gap: 9px;
+    align-items: flex-start;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border-soft);
+}
+.setup-check:last-child { border-bottom: 0; }
+.setup-mark { flex: 0 0 auto; font-size: 15px; line-height: 1.4; }
+.setup-body { min-width: 0; font-size: 14px; color: var(--text); }
+.setup-note { display: block; font-size: 12px; color: var(--text-dim); margin-top: 1px; }
+
 .signin-list { font-size: 14px; }
 .signin-row {
     padding: 8px 0;

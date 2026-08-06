@@ -42,13 +42,44 @@ function has_ffmpeg(): bool {
     return false;
 }
 
-// Lokalna transkripcija glasovnih poruka (whisper.cpp) — putanje neovisne o stroju:
-// binarka iz Homebrewa (Apple Silicon ili Intel), model u <repo>/whisper/
-define('WHISPER_BIN', is_file('/opt/homebrew/bin/whisper-cli')
-    ? '/opt/homebrew/bin/whisper-cli' : '/usr/local/bin/whisper-cli');
-// medium: osjetno točniji za hrvatski od small ("I kaj sad, da ne kužim?" vs
-// "i kaj sad, najkožem"), po cijenu ~1,5× duljeg vremena obrade
-define('WHISPER_MODEL', dirname(__DIR__) . '/whisper/ggml-medium.bin');
+/**
+ * Lokalna transkripcija glasovnih poruka (whisper.cpp). Neobavezna je —
+ * bez nje glasovne poruke rade, samo nemaju tekst ispod. Putanje se traže na
+ * uobičajenim mjestima da instalacija radi i na tuđem serveru; može se
+ * nadjačati varijablama okoline WHISPER_BIN / WHISPER_MODEL.
+ */
+function first_existing_file(array $paths): string {
+    foreach ($paths as $p) {
+        if ($p !== '' && is_file($p)) return $p;
+    }
+    return '';
+}
+
+define('WHISPER_BIN', first_existing_file([
+    (string)(getenv('WHISPER_BIN') ?: ''),
+    '/opt/homebrew/bin/whisper-cli', '/usr/local/bin/whisper-cli',
+    '/usr/bin/whisper-cli', '/opt/homebrew/bin/whisper', '/usr/local/bin/whisper',
+]));
+
+/** Modeli poredani od najtočnijeg prema najbržem (uzima se prvi pronađeni). */
+function whisper_model_candidates(): array {
+    $dirs = [dirname(__DIR__) . '/whisper', __DIR__ . '/whisper'];
+    $order = ['large-v3', 'large', 'medium', 'small', 'base', 'tiny'];
+    $out = [(string)(getenv('WHISPER_MODEL') ?: '')];
+    foreach ($dirs as $d) {
+        foreach ($order as $size) {
+            foreach (glob($d . '/ggml-' . $size . '*.bin') ?: [] as $f) $out[] = $f;
+        }
+    }
+    return $out;
+}
+
+define('WHISPER_MODEL', first_existing_file(whisper_model_candidates()));
+
+/** Može li ovaj server uopće transkribirati glasovne poruke? */
+function transcription_available(): bool {
+    return WHISPER_BIN !== '' && WHISPER_MODEL !== '';
+}
 
 const CHAT_USERNAME_RE = '/^[a-z0-9_.-]{2,30}$/';
 

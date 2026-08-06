@@ -1,89 +1,106 @@
 # Our Chat — Installation Guide
 
-A private, self-hosted chat for a small team or family. Everything — messages,
-photos, videos, voice messages and their transcripts — stays on **your own Mac**.
-Nothing is sent to any cloud service.
+A private, self-hosted chat for a family or a small team. Messages, photos,
+videos, voice messages and their transcripts stay on **your own server**.
+Nothing is sent to any third-party service.
 
-**Features:** direct messages, groups, channels, an admin panel for managing
-users, photo/video/voice messages, automatic **on-device** voice transcription
-(Whisper), full-text search (including inside voice messages), push
-notifications on phones, and remote access via Tailscale — without opening any
-router ports.
+**What you get:** direct messages, groups and channels, an admin page for
+accounts, photo/video/voice messages with automatic on-device transcription,
+topics (threads), replies, emoji reactions, message editing, highlights,
+full-text search, push notifications, dark mode, and offline reading.
 
 ---
 
 ## What you need
 
-- A Mac that stays on (a Mac mini is ideal). Apple Silicon or Intel.
-- Admin access to that Mac.
-- ~1 GB of free disk space (PHP + Whisper model), plus room for your media.
-- iPhones with iOS 16.4+ (or Android phones) for the mobile experience.
-- A free [Tailscale](https://tailscale.com) account for access from outside
-  your home/office network and for push notifications (they require HTTPS).
+Only two things are strictly required:
 
-Everything below is typed into **Terminal** on the server Mac.
+- **PHP 8.1 or newer** with the `pdo_sqlite`, `mbstring`, `openssl` and `curl`
+  extensions — that is the default on virtually every host.
+- **HTTPS** — required by browsers for notifications.
+
+No database server to set up: the chat keeps everything in a single file.
+
+It runs on ordinary shared hosting (cPanel and similar), on a VPS, or on a
+computer you leave switched on. Voice transcription is optional and needs a
+machine you control (see step 5).
 
 ---
 
-## 1. Install the tools
+## 1. Upload the files
 
-Install [Homebrew](https://brew.sh) if you don't have it, then:
+Copy the `chat` folder to your server, so that it is reachable at a domain or
+subdomain of yours (for example `chat.yourdomain.com`).
 
-```bash
-brew install php composer whisper-cpp node
-```
+**Point the domain at the `chat` folder itself**, not at its parent. Everything
+private (`data/`, `vendor/`) is blocked from the web either way, but this keeps
+the addresses tidy.
 
-Raise PHP's upload limit so large videos can be sent (find your `php.ini` with
-`php --ini`, usually `/opt/homebrew/etc/php/<version>/php.ini`):
+## 2. Install the dependencies
 
-```
-upload_max_filesize = 200M
-post_max_size = 210M
-```
-
-## 2. Get the code
-
-Place the project folder (containing `chat/`, provided by your developer or
-cloned from the repository) somewhere permanent, e.g. `~/ourchat`. Then:
+In the `chat` folder run:
 
 ```bash
-cd ~/ourchat/chat
 composer install
 ```
 
-## 3. Download the transcription model (one-time, ~470 MB)
+No Composer on the server? Run it on your own computer and upload the `vendor`
+folder along with the rest.
+
+## 3. Open the address in a browser
+
+Go to your chat address. The setup page appears and **checks the server for
+you** — PHP version, extensions, whether the data folder is writable, HTTPS,
+and the optional pieces. Anything marked ❌ has to be fixed; ⚠️ is optional.
+
+Fill in your name, a username and a password, and press **Create account and
+finish**. That is the whole installation: the database is created, the keys for
+notifications are generated automatically, and the setup page locks itself.
+
+## 4. Add the other people
+
+Sign in and open **⚙️ Users**. For each person choose a username and a
+*temporary* password, and send it to them — they set their own password the
+first time they sign in. Deactivating an account blocks sign-in while keeping
+that person's old messages in the conversations.
+
+On phones, everyone should open the chat and use **Share → Add to Home Screen**
+(iPhone) or **Install app** (Android/Chrome), then tap the **🔔 bell** to allow
+notifications. On iPhone, notifications require iOS 16.4 or newer and only work
+when the chat is opened from the home-screen icon.
+
+## 5. Voice transcription (optional)
+
+Voice messages work everywhere. To also get the spoken text written underneath
+them, the server needs two things:
 
 ```bash
-mkdir -p ~/ourchat/whisper
-curl -L -o ~/ourchat/whisper/ggml-small.bin \
+brew install whisper-cpp ffmpeg      # macOS
+# Debian/Ubuntu: install whisper.cpp and ffmpeg from your package manager
+```
+
+Then download a model into a `whisper` folder next to `chat`:
+
+```bash
+mkdir -p whisper && curl -L -o whisper/ggml-small.bin \
   https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.bin
 ```
 
-The `small` model handles most languages well. On a slow Mac you can use the
-3× faster (but less accurate) `ggml-base.bin` instead — download it the same
-way and change `WHISPER_MODEL` in `chat/lib.php`.
+The app finds the binary and the model on its own and picks the most accurate
+model available. `small` is a good balance; `medium` is noticeably better for
+non-English languages but roughly twice as slow. Custom locations can be set
+with the `WHISPER_BIN` and `WHISPER_MODEL` environment variables.
 
-## 4. Generate push-notification keys (one-time)
+Transcription runs entirely on your server — no audio leaves it.
 
-```bash
-cd ~/ourchat/chat
-php -r 'require "vendor/autoload.php";
-$k = Minishlink\WebPush\VAPID::createVapidKeys();
-file_put_contents("data/push-keys.json", json_encode([
-  "subject" => "mailto:YOUR-EMAIL@example.com",
-  "publicKey" => $k["publicKey"], "privateKey" => $k["privateKey"]]));
-chmod("data/push-keys.json", 0600);
-echo "Push keys created\n";'
-```
+## 6. Keeping it running
 
-(Replace the e-mail with your own — it is only used as a technical contact
-field in the push protocol.)
+**Shared hosting:** nothing to do. The chat is a normal PHP application.
 
-## 5. Start the chat server automatically (launchd)
-
-Create `~/Library/LaunchAgents/com.ourchat.server.plist` — replace
-`PHP_PATH` with the output of `which php`, and `CHAT_PATH` with your absolute
-chat folder path (e.g. `/Users/john/ourchat/chat`):
+**Your own computer or VPS:** run PHP's built-in server and have the system
+keep it alive. On macOS, create
+`~/Library/LaunchAgents/com.ourchat.server.plist` — replace `PHP_PATH` with the
+output of `which php` and `CHAT_PATH` with the absolute path of the chat folder:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -108,138 +125,43 @@ chat folder path (e.g. `/Users/john/ourchat/chat`):
 </plist>
 ```
 
-Load it:
-
 ```bash
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.ourchat.server.plist
 ```
 
-Check: `http://localhost:8080` in a browser should show the setup page.
-The server now starts on every boot and restarts itself if it ever crashes.
+On a machine that should never sleep: `sudo pmset -a sleep 0`.
 
-On a Mac mini, also prevent sleep: `sudo pmset -a sleep 0`.
+For HTTPS in front of a home server, a Cloudflare Tunnel works well and needs no
+open ports on your router:
 
-## 6. First account
+```bash
+brew install cloudflared
+cloudflared tunnel login
+cloudflared tunnel create chat
+cloudflared tunnel route dns chat chat.yourdomain.com
+```
 
-Open `http://localhost:8080` and create **your administrator account**. The
-setup page locks itself afterwards. You then add every other user from the
-**⚙️ Users** page inside the app: you choose their username and a *temporary*
-password; they must set their own password the first time they sign in.
+Point the tunnel at `http://127.0.0.1:8080` and run it as a background service.
 
-## 7. HTTPS + remote access (Tailscale)
+## Looking after it
 
-Push notifications require HTTPS, and Tailscale gives you that plus secure
-access from anywhere — with no router configuration.
-
-1. `brew install --cask tailscale-app` (or install Tailscale from the App
-   Store), open it and sign in.
-2. Get a certificate for this Mac (find your machine name with
-   `tailscale status`; HTTPS certificates must be enabled in the Tailscale
-   admin console → DNS, they are by default on new accounts):
-
-   ```bash
-   mkdir -p ~/ourchat/tls && cd ~/ourchat/tls
-   tailscale cert your-machine.your-tailnet.ts.net
-   ```
-
-3. The project includes a small HTTPS proxy (`chat-https-proxy.js`, one level
-   above `chat/`). It finds the certificate automatically. Create
-   `~/Library/LaunchAgents/com.ourchat.https.plist` — replace `NODE_PATH`
-   (output of `which node`) and `PROJECT_PATH` (e.g. `/Users/john/ourchat`):
-
-   ```xml
-   <?xml version="1.0" encoding="UTF-8"?>
-   <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-     "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-   <plist version="1.0">
-   <dict>
-       <key>Label</key><string>com.ourchat.https</string>
-       <key>ProgramArguments</key>
-       <array>
-           <string>NODE_PATH</string>
-           <string>PROJECT_PATH/chat-https-proxy.js</string>
-       </array>
-       <key>RunAtLoad</key><true/>
-       <key>KeepAlive</key><true/>
-       <key>StandardOutPath</key><string>/tmp/chat-https-proxy.log</string>
-       <key>StandardErrorPath</key><string>/tmp/chat-https-proxy.log</string>
-   </dict>
-   </plist>
-   ```
-
-   ```bash
-   launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.ourchat.https.plist
-   ```
-
-   Your chat is now at **`https://your-machine.your-tailnet.ts.net:8443`**.
-
-   > Alternative: on recent macOS versions `tailscale serve --bg
-   > http://127.0.0.1:8080` does the same job on port 443 without the Node
-   > proxy. If `tailscale serve status` shows your config after running it,
-   > you can skip the proxy entirely and use the URL it prints.
-
-4. Certificates last 90 days. Auto-renew them weekly with
-   `~/Library/LaunchAgents/com.ourchat.cert.plist` (replace `PROJECT_PATH`);
-   the proxy picks up renewed certificates automatically, no restart needed:
-
-   ```xml
-   <?xml version="1.0" encoding="UTF-8"?>
-   <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-     "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-   <plist version="1.0">
-   <dict>
-       <key>Label</key><string>com.ourchat.cert</string>
-       <key>ProgramArguments</key>
-       <array>
-           <string>/bin/bash</string>
-           <string>PROJECT_PATH/renew-cert.sh</string>
-       </array>
-       <key>StartCalendarInterval</key>
-       <dict>
-           <key>Weekday</key><integer>1</integer>
-           <key>Hour</key><integer>4</integer>
-           <key>Minute</key><integer>30</integer>
-       </dict>
-   </dict>
-   </plist>
-   ```
-
-   ```bash
-   launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.ourchat.cert.plist
-   ```
-
-## 8. Phones
-
-On every phone:
-
-1. Install **Tailscale** from the App Store / Play Store and sign in with the
-   **same Tailscale account** (or invite family/team members to your tailnet).
-2. Open `https://your-machine.your-tailnet.ts.net:8443` in Safari (iPhone) or
-   Chrome (Android) and sign in.
-3. iPhone: **Share → Add to Home Screen**. Android: **Install app** from the
-   browser menu. Open the chat from that icon.
-4. Tap the **🔔 bell** at the top of the chat list and allow notifications.
-
-That's it — messages now arrive as real push notifications anywhere, as long
-as Tailscale is enabled on the phone.
-
-## Maintenance
-
-- **Backup:** everything that matters is in `chat/data/` (database, media,
-  accounts) — include it in Time Machine or copy it elsewhere regularly.
-- **Voice transcription** runs in the background; the text appears under the
-  voice message typically within a minute. If a transcript never appears,
-  check that `whisper-cli` and the model file exist (paths in `chat/lib.php`).
-- **Moving to another Mac:** stop the server, copy the whole project folder,
-  repeat steps 1, 5 and 7 on the new machine.
-- **Never expose the server directly to the internet** (no router port
-  forwarding). Tailscale is the safe way to get remote access.
+- **Backup:** everything that matters is the `chat/data` folder — database,
+  uploads, accounts and keys. Copy it regularly.
+- **Upload size** is capped by PHP (`upload_max_filesize`, `post_max_size`).
+  Raise both if you want to send long videos; find your `php.ini` with
+  `php --ini`.
+- **Moving to another server:** copy the whole folder, including `data`, and
+  repeat step 2. Everyone stays signed in and no messages are lost.
+- **Never expose the server directly** with router port forwarding. Use a
+  tunnel or ordinary hosting.
 
 ## Troubleshooting
 
-- Server log: `/tmp/chat-server.log` · HTTPS proxy log: `/tmp/chat-https-proxy.log`
-- Restart the server: `launchctl kickstart -k gui/$(id -u)/com.ourchat.server`
-- "Database is locked" or odd behaviour after a crash: just restart the
-  server; SQLite recovers on the next start.
-- Phones can't connect from outside: check that Tailscale is connected on
-  both the Mac and the phone (`tailscale status`).
+- The setup page tells you what is missing — start there.
+- Notification problems: **👤 Settings → Notifications** shows the status per
+  device and can send a test notification. Failures are logged in
+  `chat/data/push.log`.
+- Voice messages with no text: transcription is either not installed (check the
+  setup page) or still running — it takes about a minute per message.
+- After an update, reload once (Ctrl/Cmd+Shift+R, or close and reopen the app
+  on a phone).
