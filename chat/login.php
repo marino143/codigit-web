@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             session_regenerate_id(true);
             $_SESSION['chat_user'] = $user;
             touch_activity($user);
+            note_signin($user);   // javi ako je ovo novi uređaj
             header('Location: ' . ((int)$row['must_change'] ? 'password.php' : 'index.php'));
             exit;
         }

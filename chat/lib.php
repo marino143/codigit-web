@@ -223,6 +223,16 @@ function chat_migrate(PDO $pdo): void {
         $pdo->exec('ALTER TABLE messages ADD COLUMN reply_to INTEGER');
     }
 
+    // uređaji s kojih se korisnik prijavljivao (za obavijest o novoj prijavi)
+    $pdo->exec('CREATE TABLE IF NOT EXISTS known_devices (
+        username TEXT NOT NULL,
+        device_id TEXT NOT NULL,
+        label TEXT NOT NULL DEFAULT "",
+        first_seen INTEGER NOT NULL,
+        last_seen INTEGER NOT NULL,
+        PRIMARY KEY (username, device_id)
+    )');
+
     // reakcije na poruke (emoji) — jedan korisnik može staviti više različitih
     $pdo->exec('CREATE TABLE IF NOT EXISTS reactions (
         message_id INTEGER NOT NULL,
@@ -552,6 +562,84 @@ function push_notify_async(int $messageId): void {
     $script = __DIR__ . '/send-push.php';
     exec(sprintf('%s %s %d > /dev/null 2>&1 &',
         escapeshellarg($php), escapeshellarg($script), $messageId));
+}
+
+// ---------- prepoznavanje uređaja (obavijest o novoj prijavi) ----------
+
+const CHAT_DEVICE_COOKIE = 'PRIVCHAT_DEV';
+
+/**
+ * Trajni ID ovog uređaja. Nije sigurnosni mehanizam nego samo način da
+ * prepoznamo "ovo je isti preglednik kao prošli put".
+ */
+function device_id(): string {
+    $id = (string)($_COOKIE[CHAT_DEVICE_COOKIE] ?? '');
+    if (!preg_match('/^[a-f0-9]{32}$/', $id)) {
+        $id = bin2hex(random_bytes(16));
+        setcookie(CHAT_DEVICE_COOKIE, $id, [
+            'expires'  => time() + 3 * 365 * 86400,
+            'path'     => '/',
+            'secure'   => chat_is_https(),
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
+        $_COOKIE[CHAT_DEVICE_COOKIE] = $id;
+    }
+    return $id;
+}
+
+/** Čitljiv opis uređaja iz User-Agenta, npr. "Safari on iPhone". */
+function device_label(): string {
+    $ua = (string)($_SERVER['HTTP_USER_AGENT'] ?? '');
+
+    $browser = 'Browser';
+    foreach ([
+        'Edg/' => 'Edge', 'OPR/' => 'Opera', 'Brave' => 'Brave',
+        'Firefox/' => 'Firefox', 'Chrome/' => 'Chrome', 'Safari/' => 'Safari',
+    ] as $needle => $name) {
+        if (str_contains($ua, $needle)) { $browser = $name; break; }
+    }
+
+    $os = 'unknown device';
+    foreach ([
+        'iPhone' => 'iPhone', 'iPad' => 'iPad', 'Android' => 'Android',
+        'Mac OS X' => 'Mac', 'Macintosh' => 'Mac', 'Windows' => 'Windows', 'Linux' => 'Linux',
+    ] as $needle => $name) {
+        if (str_contains($ua, $needle)) { $os = $name; break; }
+    }
+    return $browser . ' on ' . $os;
+}
+
+/**
+ * Zabilježi prijavu i javi ako dolazi s uređaja koji dosad nismo vidjeli.
+ * Vraća true ako je uređaj nov (i obavijest poslana).
+ */
+function note_signin(string $user): bool {
+    $pdo = db();
+    $dev = device_id();
+    $label = device_label();
+
+    $st = $pdo->prepare('SELECT 1 FROM known_devices WHERE username = ? AND device_id = ?');
+    $st->execute([$user, $dev]);
+    $known = (bool)$st->fetchColumn();
+
+    $pdo->prepare('INSERT INTO known_devices (username, device_id, label, first_seen, last_seen)
+        VALUES (?, ?, ?, ?, ?)
+        ON CONFLICT(username, device_id) DO UPDATE SET last_seen = excluded.last_seen,
+            label = excluded.label')
+        ->execute([$user, $dev, $label, time(), time()]);
+
+    if ($known) return false;
+
+    // prva prijava ikad (kod postavljanja računa) ne treba uzbunu
+    $cnt = $pdo->prepare('SELECT COUNT(*) FROM known_devices WHERE username = ?');
+    $cnt->execute([$user]);
+    if ((int)$cnt->fetchColumn() <= 1) return false;
+
+    exec(sprintf('%s %s --signin %s %s > /dev/null 2>&1 &',
+        escapeshellarg(PHP_BINARY), escapeshellarg(__DIR__ . '/send-push.php'),
+        escapeshellarg($user), escapeshellarg($label)));
+    return true;
 }
 
 /** Pošalji testnu notifikaciju korisniku (provjera iz postavki). */

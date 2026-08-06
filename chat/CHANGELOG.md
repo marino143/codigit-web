@@ -2,6 +2,11 @@
 
 Every update to the chat is listed here, newest first.
 
+## 6 August 2026
+
+- **Sign-in alerts** — if your account is used on a device that has never signed in before, every device you own gets a notification saying which browser and system it was. If that wasn't you, change your password straight away.
+- **Where you're signed in** — Settings now lists the devices your account has been used on, when each was first and last seen, and lets you clear the list.
+
 ## 4 August 2026
 
 - **Emoji reactions** — long-press (or right-click) a message and pick 👍 ❤️ 😂 🎉 👀 ✅ 🔥 🙏. Reactions appear under the message with a count; tap one to add or remove yours, and hover to see who reacted.

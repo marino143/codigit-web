@@ -108,12 +108,58 @@ ksort($zones);
     </section>
 
     <section class="admin-card">
+        <h2>Where you're signed in</h2>
+        <p class="admin-hint" style="margin-top:0">
+            You get a notification whenever your account is used on a device that has
+            not signed in before. If one of these is not you, change your password.
+        </p>
+        <div id="signinDevices" class="signin-list">Loading…</div>
+        <button type="button" id="signinForget" hidden>Forget all except this device</button>
+    </section>
+
+    <section class="admin-card">
         <h2>Password</h2>
         <p class="admin-hint" style="margin-top:0">Change the password you use to sign in.</p>
         <p><a class="admin-back" href="password.php">🔑 Change password ›</a></p>
     </section>
 </div>
 <script>
+// Uređaji s kojih je račun korišten
+(function () {
+    var box = document.getElementById('signinDevices');
+    var forget = document.getElementById('signinForget');
+    function fmt(ts) {
+        var d = new Date(ts * 1000);
+        return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+            + ' ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+    }
+    function esc(s) {
+        return String(s).replace(/[&<>"']/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+    }
+    function load() {
+        fetch('api.php?action=signin_devices').then(function (r) { return r.json(); }).then(function (d) {
+            var list = d.devices || [];
+            if (!list.length) { box.textContent = 'No sign-ins recorded yet.'; return; }
+            box.innerHTML = list.map(function (x) {
+                return '<div class="signin-row"><strong>' + esc(x.label) + '</strong>'
+                    + (x.current ? ' <span class="signin-now">this device</span>' : '')
+                    + '<span class="signin-when">last used ' + fmt(x.last)
+                    + ' · first seen ' + fmt(x.first) + '</span></div>';
+            }).join('');
+            forget.hidden = list.length < 2;
+        }).catch(function () { box.textContent = 'Could not load the list.'; });
+    }
+    forget.addEventListener('click', function () {
+        fetch('api.php?action=signin_forget_others', {
+            method: 'POST',
+            headers: { 'X-CSRF': <?= json_encode(csrf_token()) ?> },
+        }).then(function () { load(); }).catch(function () {});
+    });
+    load();
+})();
+
 // Stanje notifikacija + testna notifikacija
 (function () {
     var state = document.getElementById('notifState');

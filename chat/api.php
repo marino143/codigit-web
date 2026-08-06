@@ -635,6 +635,32 @@ switch ($action) {
         json_out(['ok' => true]);
     }
 
+    /** Uređaji s kojih sam se prijavljivao (obavijest o novoj prijavi). */
+    case 'signin_devices': {
+        $st = $pdo->prepare('SELECT device_id, label, first_seen, last_seen
+            FROM known_devices WHERE username = ? ORDER BY last_seen DESC');
+        $st->execute([$user]);
+        $me = device_id();
+        $rows = [];
+        foreach ($st->fetchAll() as $r) {
+            $rows[] = [
+                'label'   => $r['label'] ?: 'Unknown device',
+                'current' => $r['device_id'] === $me,
+                'first'   => (int)$r['first_seen'],
+                'last'    => (int)$r['last_seen'],
+            ];
+        }
+        json_out(['devices' => $rows]);
+    }
+
+    /** Zaboravi sve uređaje osim ovog — iduća prijava s njih javlja upozorenje. */
+    case 'signin_forget_others': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $st = $pdo->prepare('DELETE FROM known_devices WHERE username = ? AND device_id != ?');
+        $st->execute([$user, device_id()]);
+        json_out(['ok' => true, 'removed' => $st->rowCount()]);
+    }
+
     /** Popis uređaja s notifikacijama + uklanjanje ostalih (rješava duple poruke). */
     case 'push_devices': {
         $mine = (string)($_GET['endpoint'] ?? '');

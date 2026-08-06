@@ -40,6 +40,14 @@ if (($argv[1] ?? '') === '--test') {
     $bodyText = 'Test notification ✅ — notifications are working.';
     $tag = 'selftest';
     $convId = 0;
+} elseif (($argv[1] ?? '') === '--signin') {
+    // upozorenje o prijavi s novog uređaja
+    $recipients = [(string)($argv[2] ?? '')];
+    $title = '🔐 New sign-in';
+    $bodyText = (string)($argv[3] ?? 'Unknown device') . ' just signed in. '
+        . 'If this was not you, change your password.';
+    $tag = 'signin-' . time();
+    $convId = 0;
 } else {
     $messageId = (int)($argv[1] ?? 0);
     if ($messageId <= 0) exit(1);
