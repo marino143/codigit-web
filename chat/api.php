@@ -793,6 +793,58 @@ switch ($action) {
         json_out(['topics' => $out]);
     }
 
+    /**
+     * Dugo držani zahtjev za native aplikaciju: vraća čim stigne nova poruka
+     * (ili nakon ~25 s praznim odgovorom). Aplikacija na uređajima bez Google
+     * servisa ovime dobiva obavijesti bez ijednog vanjskog posrednika.
+     */
+    case 'wait': {
+        $since = max(0, (int)($_GET['since'] ?? 0));
+        $deadline = time() + 25;
+
+        // razgovori u kojima korisnik jest
+        $cv = $pdo->prepare('SELECT conversation_id FROM members WHERE username = ?');
+        $cv->execute([$user]);
+        $ids = array_map('intval', $cv->fetchAll(PDO::FETCH_COLUMN));
+        if (!$ids) json_out(['messages' => [], 'last_id' => $since]);
+        $in = implode(',', $ids);
+
+        $q = $pdo->prepare("SELECT m.id, m.conversation_id, m.sender, m.type, m.body, m.transcript, m.created_at
+            FROM messages m
+            WHERE m.conversation_id IN ($in) AND m.id > ? AND m.sender != ?
+            ORDER BY m.id ASC LIMIT 20");
+
+        while (true) {
+            $q->execute([$since, $user]);
+            $rows = $q->fetchAll();
+            $q->closeCursor();
+
+            if ($rows) {
+                $out = [];
+                $last = $since;
+                foreach ($rows as $m) {
+                    $conv = conv_get((int)$m['conversation_id']);
+                    $text = $m['type'] === 'text' ? (string)$m['body']
+                        : ($m['type'] === 'image' ? '📷 Photo'
+                        : ($m['type'] === 'video' ? '🎬 Video' : '🎤 Voice message'));
+                    $out[] = [
+                        'id'     => (int)$m['id'],
+                        'conv'   => (int)$m['conversation_id'],
+                        'title'  => $conv && $conv['type'] === 'dm'
+                            ? display_name((string)$m['sender'])
+                            : display_name((string)$m['sender']) . ' · ' . conv_display_name($conv ?? [], ''),
+                        'body'   => mb_substr($text, 0, 140),
+                    ];
+                    $last = max($last, (int)$m['id']);
+                }
+                json_out(['messages' => $out, 'last_id' => $last]);
+            }
+
+            if (time() >= $deadline) json_out(['messages' => [], 'last_id' => $since]);
+            usleep(2000000);   // 2 s između provjera
+        }
+    }
+
     /** Uređaji s kojih sam se prijavljivao (obavijest o novoj prijavi). */
     case 'signin_devices': {
         $st = $pdo->prepare('SELECT device_id, label, first_seen, last_seen

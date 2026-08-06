@@ -24,3 +24,10 @@ cloudflared-chat.yml
 
 # Push log (dijagnostika)
 chat/data/push.log
+
+# Android build alati i međurezultati
+tools/
+android/local.properties
+android/.gradle/
+android/app/build/
+android/build/

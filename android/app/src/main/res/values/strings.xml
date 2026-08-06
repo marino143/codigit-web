@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Our Chat</string>
+    <!-- Adresa chat servera. Promijeni ovdje ako se domena promijeni. -->
+    <string name="chat_url">https://chat.codigit.io/</string>
+    <string name="notif_channel_messages">Messages</string>
+    <string name="notif_channel_service">Connection</string>
+    <string name="service_running">Watching for new messages</string>
+</resources>

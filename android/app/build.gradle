@@ -1,0 +1,38 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'io.codigit.chat'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "io.codigit.chat"
+        minSdk 24                 // Android 7 i noviji
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+        // adresa chata — mijenja se u res/values/strings.xml
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.debug   // potpisano debug ključem: dovoljno za izravnu instalaciju
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.core:core:1.12.0'
+
+    // androidx biblioteke vuku različite verzije Kotlina; poravnaj ih da se
+    // iste klase ne pojave dvaput
+    constraints {
+        implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22')
+        implementation('org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22')
+    }
+}
