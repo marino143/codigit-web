@@ -506,6 +506,18 @@ body {
     cursor: pointer;
 }
 .admin-card button.danger { background: var(--danger-bg); color: var(--danger); }
+.app-download {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--on-accent);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 13px 20px;
+    border-radius: 10px;
+}
+.app-steps { margin: 0 0 4px 18px; }
+.app-steps li { font-size: 14px; line-height: 1.5; margin-bottom: 9px; color: var(--text); }
+
 /* ---------- instalater ---------- */
 .setup-checks { margin: 4px 0 12px; }
 .setup-check {

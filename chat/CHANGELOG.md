@@ -4,6 +4,8 @@ Every update to the chat is listed here, newest first.
 
 ## 7 August 2026
 
+- **Android app** — phones without Google services never received browser notifications reliably. The 📱 page now offers an app that talks to the server directly, so messages arrive as proper notifications. iPhone and computers do not need it.
+
 - **Promote to administrator** — the Users page can now grant or remove administrator rights for existing accounts. The last administrator cannot demote themselves, so an account always stays in charge.
 
 - **Opens instantly** — the app is now stored on your device instead of being downloaded every time you open it. Noticeably faster on slow connections.

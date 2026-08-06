@@ -50,6 +50,7 @@ $admin = $row['role'] === 'admin';
                 <button id="notifBtn" title="Notifications" hidden>🔔</button>
                 <button id="newBtn" title="New conversation / group">✏️</button>
                 <?php if ($admin): ?><a href="admin.php" title="Users">⚙️</a><?php endif; ?>
+                <a href="app.php" title="Android app">📱</a>
                 <a href="whatsnew.php" title="What's new">🆕</a>
                 <a href="settings.php" title="Settings (time zone, password)">👤</a>
                 <a href="logout.php" title="Log out">⎋</a>
