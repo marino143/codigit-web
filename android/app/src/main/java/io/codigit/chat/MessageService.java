@@ -56,17 +56,23 @@ public class MessageService extends Service {
         return START_STICKY;   // sustav neka je ponovno pokrene ako je ugasi
     }
 
-    /** Petlja: čeka odgovor servera, javlja poruke, pa opet — s pauzom kad nema mreže. */
+    /**
+     * Petlja: pita server ima li novih poruka, javlja ih, pa čeka nekoliko
+     * sekundi. Kratki upiti umjesto dugo otvorene veze — server ih obrađuje
+     * jedan po jedan, pa bi viseća veza usporila chat svim korisnicima.
+     */
+    private static final long POLL_INTERVAL_MS = 8000;
+
     private void loop() {
         String base = getString(R.string.chat_url);
         while (running) {
-            if (!isOnline()) { sleep(15000); continue; }
+            if (!isOnline()) { sleep(20000); continue; }
             try {
                 String url = base + "api.php?action=wait&since=" + lastId;
                 HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
                 c.setRequestProperty("Cookie", cookiesFor(base));
                 c.setConnectTimeout(15000);
-                c.setReadTimeout(40000);   // server drži vezu do ~25 s
+                c.setReadTimeout(20000);
 
                 int code = c.getResponseCode();
                 if (code == 401 || code == 403) { sleep(60000); c.disconnect(); continue; }
@@ -92,8 +98,9 @@ public class MessageService extends Service {
                     lastId = newLast;
                     getSharedPreferences("chat", MODE_PRIVATE).edit().putLong("lastId", lastId).apply();
                 }
+                sleep(POLL_INTERVAL_MS);
             } catch (Exception e) {
-                sleep(10000);   // mreža/server — pokušaj ponovno
+                sleep(15000);   // mreža/server — pokušaj ponovno kasnije
             }
         }
     }

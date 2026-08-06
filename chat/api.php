@@ -799,8 +799,10 @@ switch ($action) {
      * servisa ovime dobiva obavijesti bez ijednog vanjskog posrednika.
      */
     case 'wait': {
+        // Sesija se otpušta odmah da ne drži zaključavanje dok traje upit.
+        session_write_close();
+
         $since = max(0, (int)($_GET['since'] ?? 0));
-        $deadline = time() + 25;
 
         // razgovori u kojima korisnik jest
         $cv = $pdo->prepare('SELECT conversation_id FROM members WHERE username = ?');
@@ -814,7 +816,10 @@ switch ($action) {
             WHERE m.conversation_id IN ($in) AND m.id > ? AND m.sender != ?
             ORDER BY m.id ASC LIMIT 20");
 
-        while (true) {
+        // Namjerno bez dugog čekanja: PHP-ov ugrađeni server obrađuje veze
+        // jednu po jednu, pa bi viseći zahtjev usporio chat svima. Aplikacija
+        // umjesto toga pita svakih nekoliko sekundi.
+        {
             $q->execute([$since, $user]);
             $rows = $q->fetchAll();
             $q->closeCursor();
@@ -839,9 +844,7 @@ switch ($action) {
                 }
                 json_out(['messages' => $out, 'last_id' => $last]);
             }
-
-            if (time() >= $deadline) json_out(['messages' => [], 'last_id' => $since]);
-            usleep(2000000);   // 2 s između provjera
+            json_out(['messages' => [], 'last_id' => $since]);
         }
     }
 
