@@ -221,6 +221,21 @@ function chat_migrate(PDO $pdo): void {
     $msgCols = array_column($pdo->query('PRAGMA table_info(messages)')->fetchAll(), 'name');
     if (!in_array('reply_to', $msgCols, true)) {
         $pdo->exec('ALTER TABLE messages ADD COLUMN reply_to INTEGER');
+        $msgCols[] = 'reply_to';
+    }
+
+    // teme (niti) — razgovor unutar razgovora, vezan uz jednu poruku
+    $pdo->exec('CREATE TABLE IF NOT EXISTS topics (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        conversation_id INTEGER NOT NULL,
+        root_message_id INTEGER NOT NULL UNIQUE,
+        title TEXT NOT NULL DEFAULT "",
+        created_by TEXT NOT NULL,
+        created_at INTEGER NOT NULL
+    )');
+    if (!in_array('topic_id', $msgCols, true)) {
+        $pdo->exec('ALTER TABLE messages ADD COLUMN topic_id INTEGER');
+        $pdo->exec('CREATE INDEX IF NOT EXISTS idx_messages_topic ON messages (topic_id, id)');
     }
 
     // uređaji s kojih se korisnik prijavljivao (za obavijest o novoj prijavi)

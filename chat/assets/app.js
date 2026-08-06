@@ -218,6 +218,8 @@
     // ---------- otvaranje razgovora ----------
     function openConv(id) {
         if (activeConv === id) { body.classList.add('in-chat'); return; }
+        activeTopic = null;
+        body.classList.remove('in-topic');
         activeConv = id;
         lastId = 0;
         maxSeenId = 0;
@@ -231,6 +233,7 @@
         $composer.hidden = false;
         $infoBtn.hidden = false;
         document.getElementById('filesBtn').hidden = false;
+        document.getElementById('topicsBtn').hidden = false;
         body.classList.add('in-chat');
 
         const c = convs.find(x => x.id === id);
@@ -243,7 +246,10 @@
         poll();
     }
 
-    $backBtn.addEventListener('click', () => body.classList.remove('in-chat'));
+    $backBtn.addEventListener('click', () => {
+        if (activeTopic) { leaveTopic(); return; }   // iz teme natrag u razgovor
+        body.classList.remove('in-chat');
+    });
 
     // ---------- prikaz poruka ----------
     function renderMessage(m) {
@@ -283,6 +289,12 @@
         if (m.body) {
             html += '<div class="msg-body">' + linkify(escapeHtml(m.body)) + '</div>';
         }
+        const t = !activeTopic && topicsByRoot[m.id];
+        if (t) {
+            html += '<button class="msg-topic" data-topic="' + t.id + '">🧵 '
+                + (t.replies ? t.replies + (t.replies === 1 ? ' reply' : ' replies') : 'Topic')
+                + '</button>';
+        }
         html += '<div class="msg-meta">' + fmtTime(m.created_at);
         if (mine && activeType === 'dm') {
             const read = m.id <= partnerReadId;
@@ -293,6 +305,13 @@
 
         const img = el.querySelector('img');
         if (img) img.addEventListener('click', () => openLightbox('image', 'media.php?id=' + m.id));
+
+        const topicBtn = el.querySelector('[data-topic]');
+        if (topicBtn) topicBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            const info = topicsByRoot[m.id];
+            enterTopic({ id: parseInt(topicBtn.dataset.topic, 10), title: info ? info.title : 'Topic', conv: activeConv });
+        });
 
         const quote = el.querySelector('[data-jump]');
         if (quote) quote.addEventListener('click', e => {
@@ -340,6 +359,9 @@
             + REACTIONS.map(e => '<button class="rx-pick' + (mineRx.includes(e) ? ' on' : '')
                 + '" data-emoji="' + escapeHtml(e) + '">' + e + '</button>').join('')
             + '</div></div>'
+            + (activeTopic ? '' : '<button class="modal-row btn" id="msgTopic">🧵 '
+                + (topicsByRoot[m.id] ? 'Open topic (' + topicsByRoot[m.id].replies + ')' : 'Open topic')
+                + '</button>')
             + '<button class="modal-row btn" id="msgReply">↩︎ Reply</button>'
             + '<button class="modal-row btn" id="msgFlag">'
             + (isFlagged ? '☆ Remove highlight' : '⭐ Highlight this message') + '</button>';
@@ -357,6 +379,11 @@
         }));
 
         document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+        const topicBtn = document.getElementById('msgTopic');
+        if (topicBtn) topicBtn.addEventListener('click', () => {
+            closeModal();
+            openTopicForMessage(m);
+        });
         document.getElementById('msgReply').addEventListener('click', () => {
             closeModal();
             startReply(m);
@@ -387,6 +414,31 @@
                 refresh();
             })
             .catch(() => alert('Could not delete the message.'));
+    }
+
+    /** Oznaka "🧵 N replies" na porukama koje imaju otvorenu temu. */
+    function applyTopics() {
+        if (activeTopic) return;
+        $messages.querySelectorAll('.msg').forEach(el => {
+            const t = topicsByRoot[el.dataset.id];
+            let btn = el.querySelector('.msg-topic');
+            if (!t) { if (btn) btn.remove(); return; }
+
+            const label = '🧵 ' + (t.replies
+                ? t.replies + (t.replies === 1 ? ' reply' : ' replies') : 'Topic');
+            if (!btn) {
+                btn = document.createElement('button');
+                btn.className = 'msg-topic';
+                btn.dataset.topic = t.id;
+                const meta = el.querySelector('.msg-meta');
+                meta ? el.insertBefore(btn, meta) : el.appendChild(btn);
+                btn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    enterTopic({ id: t.id, title: t.title, conv: activeConv });
+                });
+            }
+            btn.textContent = label;
+        });
     }
 
     /** Reakcije se crtaju kao traka ispod poruke; klik na svoju je miče. */
@@ -459,6 +511,7 @@
 
     // ---------- status (online / članovi) ----------
     function updateStatus() {
+        if (activeTopic) return;   // u temi zaglavlje pokazuje naslov teme
         if (!activeConv) { $peerStatus.textContent = ''; $peerClock.hidden = true; return; }
 
         // sat sugovornika ispod statusa (samo dm, i samo ako je u drugoj zoni)
@@ -756,7 +809,10 @@
                 } catch (e) {}
             }
 
-            if (data.messages) {
+            if (data.topics) topicsByRoot = data.topics;
+
+            // dok smo u temi, glavni razgovor se ne crta preko nje
+            if (data.messages && !activeTopic) {
                 const loading = $messages.querySelector('.chat-loading');
                 if (loading) loading.remove();
                 canDeleteAny = !!data.can_delete_any;
@@ -770,6 +826,7 @@
                     lastId = Math.max(lastId, m.id);
                     maxSeenId = Math.max(maxSeenId, m.id);
                 }
+                applyTopics();
                 applyReactions(pendingReactions);   // tek kad su nove poruke iscrtane
                 if (data.messages.length && stick) scrollToBottom();
                 if (firstLoad) { scrollToBottom(); firstLoad = false; }
@@ -823,9 +880,10 @@
         try {
             const params = { conv: activeConv, body: text };
             if (replyTarget) params.reply_to = replyTarget.id;
+            if (activeTopic) params.topic = activeTopic.id;
             cancelReply();
             await api('send', params);
-            await refresh();
+            activeTopic ? await loadTopic() : await refresh();
         } catch (e) {
             $input.value = text; // vrati tekst da se ne izgubi
             alert('Message not sent — check your connection and try again.');
@@ -868,6 +926,7 @@
             const fd = new FormData();
             fd.append('file', file);
             fd.append('conv', activeConv);
+            if (activeTopic) fd.append('topic', activeTopic.id);
             if (kind) fd.append('kind', kind);
 
             const xhr = new XMLHttpRequest();
@@ -881,7 +940,7 @@
             xhr.addEventListener('load', () => {
                 $uploadBar.hidden = true;
                 if (xhr.status === 200) {
-                    refresh();
+                    activeTopic ? loadTopic() : refresh();
                 } else {
                     let msg = 'Upload failed.';
                     try {
@@ -901,6 +960,106 @@
             xhr.send(fd);
         });
     }
+
+    // ---------- teme (niti) ----------
+    let activeTopic = null;     // {id, title, conv} kad smo unutar teme
+    let topicsByRoot = {};      // {rootMessageId: {id, title, replies}}
+
+    /** Otvori temu vezanu uz poruku (kreira je ako ne postoji). */
+    async function openTopicForMessage(m) {
+        try {
+            const t = await api('topic_open', { message_id: m.id });
+            enterTopic({ id: t.id, title: t.title, conv: activeConv });
+        } catch (e) {
+            alert('Could not open the topic.');
+        }
+    }
+
+    function enterTopic(topic) {
+        activeTopic = topic;
+        cancelReply();
+        clearStaged();
+        $messages.innerHTML = '<div class="chat-loading">Loading topic…</div>';
+        $convName.textContent = '🧵 ' + topic.title;
+        $peerStatus.textContent = 'Topic';
+        $peerClock.hidden = true;
+        body.classList.add('in-topic');
+        loadTopic();
+    }
+
+    function leaveTopic() {
+        activeTopic = null;
+        body.classList.remove('in-topic');
+        const id = activeConv;
+        activeConv = null;          // natjeraj openConv da ponovno učita razgovor
+        openConv(id);
+    }
+
+    async function loadTopic() {
+        if (!activeTopic) return;
+        let data;
+        try {
+            const res = await fetch('api.php?action=topic_messages&topic=' + activeTopic.id, { cache: 'no-store' });
+            if (!res.ok) throw new Error('load');
+            data = await res.json();
+        } catch (e) {
+            $messages.innerHTML = '<div class="chat-empty">Could not load this topic.</div>';
+            return;
+        }
+
+        $messages.innerHTML = '';
+        lastDayKey = '';
+        myMessageEls.length = 0;
+
+        if (data.root) {
+            const wrap = document.createElement('div');
+            wrap.className = 'topic-root';
+            wrap.innerHTML = '<div class="topic-root-label">Topic started from</div>';
+            $messages.appendChild(wrap);
+            renderMessage({ ...data.root, reply: null });
+            const sep = document.createElement('div');
+            sep.className = 'day-sep';
+            sep.textContent = data.messages.length
+                ? data.messages.length + (data.messages.length === 1 ? ' reply' : ' replies')
+                : 'No replies yet';
+            $messages.appendChild(sep);
+        }
+        // odgovori se nastavljaju na isti dan — bez ponovnog datuma odmah ispod
+        for (const m of data.messages) renderMessage(m);
+        scrollToBottom();
+    }
+
+    document.getElementById('topicsBtn').addEventListener('click', async () => {
+        if (!activeConv) return;
+        openModal('<h2>🧵 Topics</h2><p class="modal-hint">Loading…</p>');
+        let data;
+        try {
+            const res = await fetch('api.php?action=topics&conv=' + activeConv, { cache: 'no-store' });
+            data = await res.json();
+        } catch (e) { data = { topics: [] }; }
+
+        const list = data.topics || [];
+        let html = '<h2>🧵 Topics</h2>';
+        if (!list.length) {
+            html += '<p class="modal-hint">No topics yet. Long-press a message (or right-click) '
+                + 'and choose “Open topic” to start one.</p>';
+        }
+        for (const t of list) {
+            html += '<button class="modal-row btn" data-topic="' + t.id + '">'
+                + '<span class="file-line"><strong>' + escapeHtml(t.title) + '</strong>'
+                + '<span class="file-sub">' + t.replies
+                + (t.replies === 1 ? ' reply' : ' replies') + ' · ' + fmtDate(t.last_at) + '</span></span></button>';
+        }
+        html += '<button class="modal-close" id="modalCloseBtn">Close</button>';
+        openModal(html);
+
+        document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+        $modalCard.querySelectorAll('[data-topic]').forEach(el => el.addEventListener('click', () => {
+            const t = list.find(x => x.id === parseInt(el.dataset.topic, 10));
+            closeModal();
+            enterTopic({ id: t.id, title: t.title, conv: activeConv });
+        }));
+    });
 
     // ---------- odgovor na poruku ----------
     const $replyBar = document.getElementById('replyBar');

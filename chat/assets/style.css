@@ -705,6 +705,29 @@ body {
 .msg-transcript:empty { display: none; }
 .msg-transcript .transcribing { opacity: .6; }
 
+/* ---------- teme (niti) ---------- */
+.msg-topic {
+    display: block;
+    margin-top: 5px;
+    border: 0;
+    background: none;
+    color: var(--accent);
+    font-size: 12px; font-weight: 600;
+    font-family: inherit;
+    padding: 2px 0;
+    cursor: pointer;
+}
+.topic-root { padding: 4px 0 2px; }
+.topic-root-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--text-faint);
+    text-align: center;
+}
+/* u temi gumb za povratak treba i na širokom ekranu */
+.in-topic .back-btn { display: block; }
+
 /* ---------- reakcije ---------- */
 .rx-bar { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
 .rx {

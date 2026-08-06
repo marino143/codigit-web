@@ -123,7 +123,8 @@ switch ($action) {
                     r.transcript AS reply_transcript
                 FROM messages m
                 LEFT JOIN messages r ON r.id = m.reply_to
-                WHERE m.conversation_id = ? AND m.id > ? ORDER BY m.id ASC LIMIT 500');
+                WHERE m.conversation_id = ? AND m.id > ? AND m.topic_id IS NULL
+                ORDER BY m.id ASC LIMIT 500');
             $st->execute([$cid, $since]);
             $messages = $st->fetchAll();
             foreach ($messages as &$m) {
@@ -147,6 +148,21 @@ switch ($action) {
             unset($m);
             $response['messages'] = $messages;
             $response['can_delete_any'] = can_manage_conv($conv, $user);
+
+            // teme otvorene u ovom razgovoru (za oznaku "N replies" na poruci)
+            $tp = $pdo->prepare('SELECT t.id, t.root_message_id, t.title, COUNT(m.id) replies
+                FROM topics t LEFT JOIN messages m ON m.topic_id = t.id
+                WHERE t.conversation_id = ? GROUP BY t.id');
+            $tp->execute([$cid]);
+            $topics = [];
+            foreach ($tp->fetchAll() as $t) {
+                $topics[(string)$t['root_message_id']] = [
+                    'id'      => (int)$t['id'],
+                    'title'   => $t['title'],
+                    'replies' => (int)$t['replies'],
+                ];
+            }
+            $response['topics'] = $topics;
 
             // reakcije na porukama ovog razgovora (grupirano po poruci i emojiju)
             $rx = $pdo->prepare('SELECT r.message_id, r.emoji, COUNT(*) n,
@@ -224,9 +240,17 @@ switch ($action) {
             if (!$chk->fetchColumn()) $replyTo = null;
         }
 
-        $st = $pdo->prepare('INSERT INTO messages (conversation_id, sender, type, body, created_at, reply_to)
-            VALUES (?, ?, "text", ?, ?, ?)');
-        $st->execute([(int)$conv['id'], $user, $body, time(), $replyTo]);
+        // poruka može ići u temu (nit) unutar istog razgovora
+        $topicId = (int)($_POST['topic'] ?? 0) ?: null;
+        if ($topicId !== null) {
+            $tc = $pdo->prepare('SELECT 1 FROM topics WHERE id = ? AND conversation_id = ?');
+            $tc->execute([$topicId, (int)$conv['id']]);
+            if (!$tc->fetchColumn()) $topicId = null;
+        }
+
+        $st = $pdo->prepare('INSERT INTO messages (conversation_id, sender, type, body, created_at, reply_to, topic_id)
+            VALUES (?, ?, "text", ?, ?, ?, ?)');
+        $st->execute([(int)$conv['id'], $user, $body, time(), $replyTo, $topicId]);
         $id = (int)$pdo->lastInsertId();
         push_notify_async($id);
         json_out(['ok' => true, 'id' => $id]);
@@ -261,9 +285,16 @@ switch ($action) {
         }
 
         $caption = trim((string)($_POST['body'] ?? ''));
-        $st = $pdo->prepare('INSERT INTO messages (conversation_id, sender, type, body, file, mime, size, created_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-        $st->execute([(int)$conv['id'], $user, $type, $caption, $name, $mime, (int)$f['size'], time()]);
+        $topicId = (int)($_POST['topic'] ?? 0) ?: null;
+        if ($topicId !== null) {
+            $tc = $pdo->prepare('SELECT 1 FROM topics WHERE id = ? AND conversation_id = ?');
+            $tc->execute([$topicId, (int)$conv['id']]);
+            if (!$tc->fetchColumn()) $topicId = null;
+        }
+
+        $st = $pdo->prepare('INSERT INTO messages (conversation_id, sender, type, body, file, mime, size, created_at, topic_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $st->execute([(int)$conv['id'], $user, $type, $caption, $name, $mime, (int)$f['size'], time(), $topicId]);
         $id = (int)$pdo->lastInsertId();
         if ($type === 'audio') transcribe_async($id);
         push_notify_async($id);
@@ -633,6 +664,96 @@ switch ($action) {
                 p256dh = excluded.p256dh, auth = excluded.auth, last_seen = excluded.last_seen')
             ->execute([$user, $endpoint, $p256dh, $auth, time(), time()]);
         json_out(['ok' => true]);
+    }
+
+    /** Otvori (ili kreiraj) temu vezanu uz poruku. */
+    case 'topic_open': {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        $msgId = (int)($_POST['message_id'] ?? 0);
+
+        $st = $pdo->prepare('SELECT * FROM messages WHERE id = ?');
+        $st->execute([$msgId]);
+        $msg = $st->fetch();
+        if (!$msg) json_out(['error' => 'not_found'], 404);
+        if ($msg['topic_id'] !== null) json_out(['error' => 'already_in_topic'], 400);
+
+        $conv = conv_get((int)$msg['conversation_id']);
+        if ($conv === null || !is_conv_member($conv, $user)) json_out(['error' => 'forbidden'], 403);
+
+        $ex = $pdo->prepare('SELECT * FROM topics WHERE root_message_id = ?');
+        $ex->execute([$msgId]);
+        if ($topic = $ex->fetch()) {
+            json_out(['ok' => true, 'id' => (int)$topic['id'], 'title' => $topic['title'], 'created' => false]);
+        }
+
+        // naslov teme: iz same poruke (ili tip privitka)
+        $title = trim((string)$msg['body']);
+        if ($title === '') {
+            $title = $msg['type'] === 'image' ? '📷 Photo'
+                : ($msg['type'] === 'video' ? '🎬 Video'
+                : ($msg['type'] === 'audio' ? '🎤 Voice message' : 'Topic'));
+        }
+        $title = mb_substr($title, 0, 80);
+
+        $pdo->prepare('INSERT INTO topics (conversation_id, root_message_id, title, created_by, created_at)
+            VALUES (?, ?, ?, ?, ?)')
+            ->execute([(int)$msg['conversation_id'], $msgId, $title, $user, time()]);
+        json_out(['ok' => true, 'id' => (int)$pdo->lastInsertId(), 'title' => $title, 'created' => true]);
+    }
+
+    /** Poruke unutar teme (+ podaci o korijenskoj poruci). */
+    case 'topic_messages': {
+        $tid = (int)($_GET['topic'] ?? 0);
+        $tp = $pdo->prepare('SELECT * FROM topics WHERE id = ?');
+        $tp->execute([$tid]);
+        $topic = $tp->fetch();
+        if (!$topic) json_out(['error' => 'not_found'], 404);
+
+        $conv = conv_get((int)$topic['conversation_id']);
+        if ($conv === null || !is_conv_member($conv, $user)) json_out(['error' => 'forbidden'], 403);
+
+        $root = $pdo->prepare('SELECT id, sender, type, body, file, mime, size, created_at, transcript
+            FROM messages WHERE id = ?');
+        $root->execute([(int)$topic['root_message_id']]);
+        $rootMsg = $root->fetch() ?: null;
+        if ($rootMsg) $rootMsg['sender_name'] = display_name($rootMsg['sender']);
+
+        $st = $pdo->prepare('SELECT id, sender, type, body, file, mime, size, created_at, transcript
+            FROM messages WHERE topic_id = ? ORDER BY id ASC LIMIT 500');
+        $st->execute([$tid]);
+        $messages = $st->fetchAll();
+        foreach ($messages as &$m) $m['sender_name'] = display_name($m['sender']);
+        unset($m);
+
+        json_out([
+            'id'       => $tid,
+            'title'    => $topic['title'],
+            'conv'     => (int)$topic['conversation_id'],
+            'root'     => $rootMsg,
+            'messages' => $messages,
+        ]);
+    }
+
+    /** Popis tema u razgovoru (s brojem odgovora i zadnjom aktivnošću). */
+    case 'topics': {
+        $conv = require_conv($user);
+        $st = $pdo->prepare('SELECT t.id, t.title, t.created_at, t.root_message_id,
+                COUNT(m.id) AS replies, COALESCE(MAX(m.created_at), t.created_at) AS last_at
+            FROM topics t LEFT JOIN messages m ON m.topic_id = t.id
+            WHERE t.conversation_id = ?
+            GROUP BY t.id ORDER BY last_at DESC LIMIT 100');
+        $st->execute([(int)$conv['id']]);
+        $out = [];
+        foreach ($st->fetchAll() as $t) {
+            $out[] = [
+                'id'      => (int)$t['id'],
+                'title'   => $t['title'],
+                'replies' => (int)$t['replies'],
+                'last_at' => (int)$t['last_at'],
+                'root'    => (int)$t['root_message_id'],
+            ];
+        }
+        json_out(['topics' => $out]);
     }
 
     /** Uređaji s kojih sam se prijavljivao (obavijest o novoj prijavi). */
