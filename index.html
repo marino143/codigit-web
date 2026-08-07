@@ -276,7 +276,8 @@
 
     .hero-stats {
       display: flex;
-      gap: 48px;
+      flex-wrap: wrap;
+      gap: 40px;
       margin-top: 72px;
       padding-top: 48px;
       border-top: 1px solid var(--border);
@@ -1097,8 +1098,8 @@
       .hero-content { max-width: 100%; }
       .hero-visual { flex: 1 1 auto; width: 100%; max-width: 420px; }
       .hero h1 { font-size: 42px; }
-      .hero-stats { gap: 0; flex-wrap: nowrap; }
-      .hero-stats > div { flex: 1; padding: 0 8px; }
+      .hero-stats { gap: 24px 0; }
+      .hero-stats > div { flex: 0 0 33.333%; padding-right: 12px; }
       .stat-number { font-size: 24px; }
       .stat-label { font-size: 11px; }
       .ai-inner { grid-template-columns: 1fr; }
@@ -1187,20 +1188,24 @@
     </div>
     <div class="hero-stats">
       <div>
-        <div class="stat-number">25+</div>
-        <div class="stat-label" data-i18n="hero.stat1">Happy clients</div>
+        <div class="stat-number">15+</div>
+        <div class="stat-label" data-i18n="hero.stat1">Years of experience</div>
       </div>
       <div>
-        <div class="stat-number">60+</div>
+        <div class="stat-number">100+</div>
         <div class="stat-label" data-i18n="hero.stat2">Projects delivered</div>
       </div>
       <div>
+        <div class="stat-number">25+</div>
+        <div class="stat-label" data-i18n="hero.stat3">Happy clients</div>
+      </div>
+      <div>
         <div class="stat-number">12+</div>
-        <div class="stat-label" data-i18n="hero.stat3">Certifications</div>
+        <div class="stat-label" data-i18n="hero.stat4">Certifications</div>
       </div>
       <div>
         <div class="stat-number">5×</div>
-        <div class="stat-label" data-i18n="hero.stat4">Faster with AI</div>
+        <div class="stat-label" data-i18n="hero.stat5">Faster with AI</div>
       </div>
     </div>
   </div>
@@ -1554,7 +1559,7 @@
       'hero.sub':'Senior web, mobile, and desktop app development plus AI integration for US, UK, and EU companies — the technical depth of a top agency, at European rates.',
       'clock.label':'Online in your hours','clock.note':'Full-time overlap with your workday — real-time collaboration, every business day.',
       'hero.cta1':'Start a project →','hero.cta2':'Our services',
-      'hero.stat1':'Happy clients','hero.stat2':'Projects delivered','hero.stat3':'Certifications','hero.stat4':'Faster with AI',
+      'hero.stat1':'Years of experience','hero.stat2':'Projects delivered','hero.stat3':'Happy clients','hero.stat4':'Certifications','hero.stat5':'Faster with AI',
       'clients.label':'Trusted by companies across the US, UK and EU',
       'trust.1t':'We work your hours','trust.1s':'Full-time inside your business hours — US, UK, or EU. Real-time collaboration through your workday, not next-day email.',
       'trust.2t':'Billed in USD','trust.2s':'Pay by card or US bank transfer (ACH). Senior EU talent at a fraction of US agency rates.',
@@ -1596,7 +1601,7 @@
       'hero.sub':'Premošćujemo jaz između strategije i izvršenja — spajamo duboku tehničku stručnost s prilagođenim razvojem i AI-jem kako bismo isporučili digitalnu transformaciju koja donosi stvarne rezultate.',
       'clock.label':'Online u vašim satima','clock.note':'Puno radno vrijeme preklopljeno s vašim danom — suradnja u stvarnom vremenu, svaki radni dan.',
       'hero.cta1':'Pokrenimo projekt →','hero.cta2':'Naše usluge',
-      'hero.stat1':'Zadovoljnih klijenata','hero.stat2':'Isporučenih projekata','hero.stat3':'Certifikata','hero.stat4':'Brže uz AI',
+      'hero.stat1':'Godina iskustva','hero.stat2':'Isporučenih projekata','hero.stat3':'Zadovoljnih klijenata','hero.stat4':'Certifikata','hero.stat5':'Brže uz AI',
       'clients.label':'Klijenti koji nam vjeruju u SAD-u, UK-u i EU',
       'trust.1t':'Radimo u vašem radnom vremenu','trust.1s':'Puno radno vrijeme unutar vaših radnih sati — SAD, UK ili EU. Suradnja u stvarnom vremenu kroz vaš radni dan, ne sutradan.',
       'trust.2t':'Naplata u USD','trust.2s':'Plaćanje karticom ili bankovnom doznakom. Senior EU stručnost po dijelu cijene američkih agencija.',
