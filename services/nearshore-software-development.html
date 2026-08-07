@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    // Consent Mode v2: default deny analytics + ads until user opts in.
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied',
+      'wait_for_update': 500
+    });
+    try {
+      if (localStorage.getItem('cookieConsent') === 'accepted') {
+        gtag('consent', 'update', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      }
+    } catch(e) {}
+    gtag('js', new Date());
+    gtag('config', 'G-T97BQ3VRV1');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nearshore Software Development — Senior EU Team on Your Hours | Co Digit</title>
+  <meta name="description" content="Nearshore software development from Croatia: one hour from the UK, full-time overlap with US working hours. Senior engineers, EU data protection, your IP from day one. Billed in USD or GBP." />
+  <link rel="canonical" href="https://codigit.io/services/nearshore-software-development" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://codigit.io/services/nearshore-software-development" />
+  <meta property="og:title" content="Nearshore Software Development — Senior EU Team on Your Hours | Co Digit" />
+  <meta property="og:description" content="One hour from London, full working-day overlap with New York. Senior EU engineers, GDPR-grade data handling, your IP from the first commit — at European rates." />
+  <meta property="og:image" content="https://codigit.io/og-image.png" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Co Digit" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Nearshore Software Development — Senior EU Team on Your Hours | Co Digit" />
+  <meta name="twitter:description" content="One hour from London, full overlap with US hours. Senior EU engineers, GDPR-grade handling, your IP from day one." />
+  <meta name="twitter:image" content="https://codigit.io/og-image.png" />
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Co Digit — Nearshore Software Development",
+    "url": "https://codigit.io/services/nearshore-software-development",
+    "image": "https://codigit.io/og-image.png",
+    "description": "Nearshore software development from Croatia for UK and European companies, and time-zone-aligned development for US companies: web, mobile, macOS and AI engineering with senior EU engineers.",
+    "address": { "@type": "PostalAddress", "streetAddress": "Obrež 20", "addressLocality": "Zagreb", "addressCountry": "HR" },
+    "email": "marino@codigit.io",
+    "areaServed": ["United Kingdom", "United States", "European Union"],
+    "parentOrganization": { "@type": "Organization", "name": "Co Digit d.o.o.", "url": "https://codigit.io/" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does nearshore software development actually mean?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Nearshore means outsourcing development to a nearby country in a similar time zone, rather than onshore (your own country, highest cost) or offshore (a distant country, cheapest but with a large time gap). The point of nearshore is working hours that overlap with yours, so you get same-day answers instead of next-day email." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Croatia nearshore for a UK company?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Zagreb is one hour ahead of London, a two-hour direct flight away, and inside the EU and GDPR. In practice it is the same working day with no meaningful time gap." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Croatia nearshore for a US company?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Geographically, no — Croatia is offshore from the US. Operationally we behave like a nearshore team because we work a schedule with full-time overlap with the US East Coast working day, 8:00 to 16:00 ET. You get the time-zone benefit of nearshore with European engineering rates. We would rather tell you this plainly than sell you a label." }
+      },
+      {
+        "@type": "Question",
+        "name": "How is this different from offshore outsourcing?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Three things: your working day is covered in real time rather than by overnight handover, you talk directly to the engineer writing the code instead of an account manager, and your data stays under EU law with GDPR-grade handling." }
+      },
+      {
+        "@type": "Question",
+        "name": "What does it cost compared to hiring locally?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Senior European engineering typically costs a fraction of an equivalent US agency and well under a comparable London day rate. You get a fixed quote in USD or GBP within 48 hours of a scoping call — no hourly meter." }
+      },
+      {
+        "@type": "Question",
+        "name": "Who owns the code and the IP?",
+        "acceptedAnswer": { "@type": "Answer", "text": "You do, from the first commit. We sign your NDA before the first call, and all IP transfers to you as part of the standard contract. As an EU company we are bound by GDPR for anything touching personal data." }
+      }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
+      --border: #222222; --text: #f0f0f0; --muted: #888;
+      --accent: #e63946; --white: #ffffff;
+      --nav-bg: rgba(10,10,10,0.9);
+    }
+    [data-theme="light"] {
+      --bg: #ffffff; --bg2: #f4f4f5; --bg3: #e8e8ea;
+      --border: #e0e0e0; --text: #111111; --muted: #666666;
+      --white: #0a0a0a; --nav-bg: rgba(255,255,255,0.95);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .logo-dot { display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
+    @keyframes codigit-blink { 0%, 100% { color: var(--white); } 50% { color: var(--accent); } }
+    @media (prefers-reduced-motion: reduce) { .logo-dot { animation: none; } }
+    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; letter-spacing: 0.3px; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 18px; border-radius: 6px; font-weight: 600 !important; transition: opacity 0.2s !important; font-size: 13px !important; }
+    .nav-cta:hover { opacity: 0.85; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .theme-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--muted); font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .theme-btn:hover { color: var(--text); border-color: var(--muted); }
+
+    /* LAYOUT */
+    section { padding: 90px max(24px, calc((100% - 1100px) / 2)); }
+    .section-kicker {
+      font-size: 12px; font-weight: 700; letter-spacing: 2px;
+      color: var(--accent); text-transform: uppercase; margin-bottom: 14px;
+    }
+    h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 800; letter-spacing: -1px; color: var(--white); line-height: 1.15; margin-bottom: 14px; }
+    .section-sub { font-size: 16px; color: var(--muted); max-width: 680px; }
+
+    /* HERO */
+    .hero { padding: 110px max(24px, calc((100% - 1100px) / 2)) 70px; border-bottom: 1px solid var(--border); }
+    .hero h1 { font-size: clamp(34px, 6vw, 60px); font-weight: 900; letter-spacing: -2px; line-height: 1.05; color: var(--white); margin-bottom: 22px; max-width: 800px; }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero-sub { font-size: 18px; color: var(--muted); max-width: 640px; margin-bottom: 34px; line-height: 1.7; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 38px; }
+    .btn { display: inline-block; padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-outline { border: 1px solid var(--border); color: var(--text); }
+    .btn-outline:hover { border-color: var(--muted); }
+    .hero-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      font-size: 12.5px; font-weight: 600; color: var(--muted);
+      border: 1px solid var(--border); border-radius: 100px; padding: 7px 14px;
+    }
+    .chip strong { color: var(--white); font-weight: 700; }
+
+    /* COMPARISON TABLE */
+    .compare { background: var(--bg2); border-bottom: 1px solid var(--border); border-top: 1px solid var(--border); }
+    .table-wrap { margin-top: 40px; overflow-x: auto; border: 1px solid var(--border); border-radius: 14px; background: var(--bg); }
+    table { width: 100%; border-collapse: collapse; min-width: 640px; }
+    th, td { padding: 18px 20px; text-align: left; font-size: 14.5px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    thead th { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); font-weight: 700; background: var(--bg2); }
+    tbody th { font-weight: 700; color: var(--white); width: 190px; }
+    td { color: var(--muted); }
+    tr:last-child th, tr:last-child td { border-bottom: none; }
+    .col-us { color: var(--text); }
+    .highlight-col { background: rgba(230,57,70,0.06); }
+    .table-note { margin-top: 20px; font-size: 13.5px; color: var(--muted); font-style: italic; }
+
+    /* WHERE WE SIT */
+    .sit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
+    .sit-card { border: 1px solid var(--border); border-radius: 16px; padding: 30px; background: var(--bg2); }
+    .sit-card h3 { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+    .sit-card p { font-size: 14.5px; color: var(--muted); line-height: 1.7; }
+    .sit-card .flag { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 12px; }
+
+    /* BUILD GRID */
+    .build-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+    .build-card { border: 1px solid var(--border); border-radius: 14px; padding: 26px; background: var(--bg2); }
+    .build-card h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+    .build-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .build-card a { color: var(--text); }
+
+    /* PROCESS */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
+    .step { border: 1px solid var(--border); border-radius: 14px; padding: 24px; background: var(--bg2); }
+    .step .num { font-family: 'Courier New', monospace; font-size: 13px; color: var(--accent); font-weight: 700; margin-bottom: 10px; }
+    .step h3 { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .step p { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+
+    /* TRUST */
+    .trust-band { display: flex; flex-wrap: wrap; align-items: stretch; margin-top: 40px; border: 1px solid var(--border); border-radius: 14px; background: var(--bg2); }
+    .trust-item { flex: 1; min-width: 220px; padding: 26px 28px; border-left: 1px solid var(--border); }
+    .trust-item:first-child { border-left: none; }
+    .trust-item-title { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .trust-item-sub { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+    /* FAQ */
+    .faq-list { margin-top: 40px; max-width: 800px; }
+    details { border-bottom: 1px solid var(--border); padding: 22px 0; }
+    details:first-of-type { border-top: 1px solid var(--border); }
+    summary { font-size: 16px; font-weight: 600; color: var(--white); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '+'; color: var(--muted); font-size: 20px; font-weight: 400; flex-shrink: 0; }
+    details[open] summary::after { content: '–'; }
+    details p { margin-top: 14px; font-size: 14.5px; color: var(--muted); line-height: 1.7; max-width: 720px; }
+    details p a { color: var(--text); }
+
+    /* FINAL CTA */
+    .final { text-align: center; }
+    .final h2 { margin-bottom: 12px; }
+    .final .section-sub { margin: 0 auto 30px; }
+
+    /* FOOTER */
+    footer {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      padding: 32px max(24px, calc((100% - 1100px) / 2));
+      border-top: 1px solid var(--border); background: var(--bg2);
+    }
+    .footer-logo { font-size: 14px; font-weight: 800; color: var(--white); }
+    .footer-logo span { color: var(--accent); }
+    footer p { font-size: 12px; color: #555; }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a { font-size: 12px; color: #555; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--muted); }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .build-grid { grid-template-columns: 1fr; }
+      .sit-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .trust-item { flex-basis: 100%; border-left: none; border-top: 1px solid var(--border); }
+      .trust-item:first-child { border-top: none; }
+    }
+    @media (max-width: 540px) { .steps { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
+  <ul class="nav-links">
+    <li><a href="/#services">Capabilities</a></li>
+    <li><a href="/#ai">AI-Powered</a></li>
+    <li><a href="/services.html">Services</a></li>
+    <li><a href="/blog/">Notes</a></li>
+    <li><a href="/apps/">Apps</a></li>
+    <li><a href="/contact.html" class="nav-cta">Get in touch</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="section-kicker">Nearshore · UK &amp; US hours</div>
+  <h1>A senior team in your time zone, <em>not your time zone problem.</em></h1>
+  <p class="hero-sub">
+    We're a Croatian engineering studio: one hour from London, and working a full day
+    that overlaps with New York. You get same-day answers, direct access to the engineer
+    writing your code, and EU data protection — at European rates.
+  </p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="/contact.html?package=Nearshore%20Team">Book a scoping call →</a>
+    <a class="btn btn-outline" href="#compare">See how nearshore compares</a>
+  </div>
+  <div class="hero-chips">
+    <span class="chip"><strong>London +1h</strong> — same working day</span>
+    <span class="chip"><strong>8:00–16:00 ET</strong> — full US overlap</span>
+    <span class="chip"><strong>EU &amp; GDPR</strong> — your data stays in Europe</span>
+    <span class="chip"><strong>USD or GBP</strong> — card, ACH, or transfer</span>
+  </div>
+</section>
+
+<!-- WHAT NEARSHORE MEANS -->
+<section class="compare" id="compare">
+  <div class="section-kicker">Plain english</div>
+  <h2>What "nearshore" actually means.</h2>
+  <p class="section-sub">
+    Three words get thrown around in outsourcing, and most agencies use whichever one sounds best.
+    Here is the honest version — including where we genuinely sit.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Onshore</th>
+          <th scope="col" class="highlight-col">Nearshore</th>
+          <th scope="col">Offshore</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Where</th>
+          <td>Your own country</td>
+          <td class="highlight-col">A nearby country, similar time zone</td>
+          <td>A distant country, large time gap</td>
+        </tr>
+        <tr>
+          <th scope="row">Working hours</th>
+          <td>Identical</td>
+          <td class="highlight-col">Mostly or fully overlapping</td>
+          <td>Little to no overlap — overnight handover</td>
+        </tr>
+        <tr>
+          <th scope="row">Typical cost</th>
+          <td>Highest</td>
+          <td class="highlight-col">Middle</td>
+          <td>Lowest</td>
+        </tr>
+        <tr>
+          <th scope="row">Real cost of delay</th>
+          <td>None</td>
+          <td class="highlight-col">A question answered the same hour</td>
+          <td>A question costs you a day, every time</td>
+        </tr>
+        <tr>
+          <th scope="row">Where we sit</th>
+          <td>—</td>
+          <td class="highlight-col col-us">For the UK &amp; EU: yes, genuinely. Zagreb is London +1, a two-hour flight, inside the EU.</td>
+          <td class="col-us">For the US: geographically, this is us — but we work 8:00–16:00 ET, so you get nearshore behaviour without the offshore time gap.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="table-note">
+    We could call ourselves "nearshore for America" and most people wouldn't check a map. We'd rather
+    be straight with you: we're offshore from the US by geography and nearshore by how we actually work.
+  </p>
+</section>
+
+<!-- WHERE WE SIT -->
+<section>
+  <div class="section-kicker">Two markets, one team</div>
+  <h2>Close to the UK. Awake for the US.</h2>
+  <div class="sit-grid">
+    <div class="sit-card">
+      <div class="flag">United Kingdom &amp; EU</div>
+      <h3>Genuine nearshore, one hour away</h3>
+      <p>
+        Zagreb is one hour ahead of London and a two-hour direct flight from most UK airports.
+        Same working day, same quarter of the world, same regulatory space — EU company, GDPR by default,
+        invoices in GBP or EUR. We've supported UK clients for years, including one relationship
+        running past four years of continuous work.
+      </p>
+    </div>
+    <div class="sit-card">
+      <div class="flag">United States</div>
+      <h3>Your working day, covered live</h3>
+      <p>
+        We run a schedule with full-time overlap with the US East Coast day, 8:00–16:00 ET.
+        Standups, Slack, and code review happen while you're at your desk — not in an overnight
+        batch you read the next morning. Billed in USD by card or ACH, and your NDA is signed
+        before the first call.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section style="padding-top: 0;">
+  <div class="section-kicker">What we take on</div>
+  <h2>A team you extend, not a ticket queue.</h2>
+  <div class="build-grid">
+    <div class="build-card">
+      <h3>Product teams, extended</h3>
+      <p>Senior engineers embedded in your existing team, your tools, your sprint cadence — not a black box that returns a build.</p>
+    </div>
+    <div class="build-card">
+      <h3>Whole products, delivered</h3>
+      <p>Scoped, fixed-quote projects taken from blank page to launch, with weekly builds you can actually run.</p>
+    </div>
+    <div class="build-card">
+      <h3>Web &amp; backend</h3>
+      <p>React, Next.js, APIs, integrations, cloud migrations, plus the WordPress and Shopify work that keeps revenue moving.</p>
+    </div>
+    <div class="build-card">
+      <h3>Mobile &amp; desktop</h3>
+      <p><a href="/services/react-native-development">React Native</a> for iOS and Android, and native <a href="/services/macos-app-development">macOS apps</a> in Swift.</p>
+    </div>
+    <div class="build-card">
+      <h3>AI integration</h3>
+      <p>LLM features, document intelligence, and agents built with evals and cost control — see <a href="/services/ai-integration">AI integration</a>.</p>
+    </div>
+    <div class="build-card">
+      <h3>Long-term maintenance</h3>
+      <p>The unglamorous part: hosting, SSL, backups, upgrades, and being there when something breaks on a Friday.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section style="padding-top: 0;">
+  <div class="section-kicker">Proof, not promises</div>
+  <h2>Judge the engineering before you commit.</h2>
+  <p class="section-sub">
+    Most outsourcing pitches end at a case study you can't verify. Ours ends with software you can
+    download and run: we ship our own Mac apps, signed and notarized by Apple, several of them open source.
+  </p>
+  <div class="trust-band">
+    <div class="trust-item">
+      <div class="trust-item-title">15+ years</div>
+      <div class="trust-item-sub">Shipping production software for clients across the US, UK and EU.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-item-title">100+ projects</div>
+      <div class="trust-item-sub">Delivered end to end — from focused tools to multi-year platforms.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-item-title">7 apps of our own</div>
+      <div class="trust-item-sub"><a href="/apps/" style="color: var(--text);">Download them</a> and read our Swift before you hire us.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-item-title">4–5 year clients</div>
+      <div class="trust-item-sub">Several relationships have run continuously for four and five years.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section style="padding-top: 0;">
+  <div class="section-kicker">How it works</div>
+  <h2>Scoped in days, not procurement cycles.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="num">01</div>
+      <h3>Scoping call</h3>
+      <p>30 minutes in your working hours. We map the work, flag the risks, and say honestly if we're the wrong fit.</p>
+    </div>
+    <div class="step">
+      <div class="num">02</div>
+      <h3>Fixed quote in 48h</h3>
+      <p>A written scope with a fixed price in USD, GBP or EUR. No hourly meter, no surprise overruns.</p>
+    </div>
+    <div class="step">
+      <div class="num">03</div>
+      <h3>Weekly builds</h3>
+      <p>Something you can run every week. Feedback in your standup goes into the next build, not a change request.</p>
+    </div>
+    <div class="step">
+      <div class="num">04</div>
+      <h3>Handover or stay on</h3>
+      <p>Full handover with documentation, or we keep maintaining it. Your code and IP are yours either way.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section style="padding-top: 0;">
+  <div class="section-kicker">Why Co Digit</div>
+  <h2>What you're actually buying.</h2>
+  <div class="trust-band">
+    <div class="trust-item">
+      <div class="trust-item-title">Direct line to the engineer</div>
+      <div class="trust-item-sub">You talk to the person writing the code. No account manager relaying your requirements badly.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-item-title">European rates</div>
+      <div class="trust-item-sub">The technical depth of a top agency at a fraction of US pricing, and below a comparable London day rate.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-item-title">EU data protection</div>
+      <div class="trust-item-sub">Your data stays under EU law with GDPR-grade handling — not a jurisdiction you'd rather not explain to your customers.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-item-title">NDA standard</div>
+      <div class="trust-item-sub">Signed before the first call. Your code and IP are yours from the first commit.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="padding-top: 30px;">
+  <div class="section-kicker">FAQ</div>
+  <h2>The questions buyers actually ask.</h2>
+  <div class="faq-list">
+    <details>
+      <summary>What does nearshore software development actually mean?</summary>
+      <p>Nearshore means outsourcing development to a nearby country in a similar time zone — as opposed to onshore (your own country, highest cost) or offshore (a distant country, cheapest but with a large time gap). The whole point is overlapping working hours: you get answers the same hour instead of the next day.</p>
+    </details>
+    <details>
+      <summary>Is Croatia nearshore for a UK company?</summary>
+      <p>Yes. Zagreb is one hour ahead of London, a two-hour direct flight, and inside the EU and GDPR. In practice it's the same working day with no meaningful time gap.</p>
+    </details>
+    <details>
+      <summary>Is Croatia nearshore for a US company?</summary>
+      <p>Geographically, no — we're offshore from the US, and we'd rather say so than sell you a label. Operationally we behave like a nearshore team: we work a schedule with full-time overlap with the US East Coast day (8:00–16:00 ET), so you get the time-zone benefit of nearshore at European rates.</p>
+    </details>
+    <details>
+      <summary>How is this different from cheaper offshore outsourcing?</summary>
+      <p>Three things. Your working day is covered in real time rather than by overnight handover. You talk directly to the engineer writing the code, not an account manager. And your data stays under EU law with GDPR-grade handling. If price is the only thing that matters to you, offshore will win — we'd tell you that on the first call.</p>
+    </details>
+    <details>
+      <summary>What does it cost compared to hiring locally?</summary>
+      <p>Senior European engineering typically costs a fraction of an equivalent US agency, and sits well below a comparable London day rate. You get a fixed quote in USD, GBP or EUR within 48 hours of the scoping call.</p>
+    </details>
+    <details>
+      <summary>Who owns the code and the IP?</summary>
+      <p>You do, from the first commit. We sign your NDA before the first call, and all IP transfers to you as part of the standard contract. As an EU company we're bound by GDPR for anything touching personal data.</p>
+    </details>
+    <details>
+      <summary>Can you work inside our existing team and tools?</summary>
+      <p>Yes — that's the most common arrangement. Your repo, your board, your Slack, your sprint cadence. We join standups in your hours and review code alongside your engineers.</p>
+    </details>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final" style="border-top: 1px solid var(--border); background: var(--bg2);">
+  <h2>Need senior engineers who are awake when you are?</h2>
+  <p class="section-sub">Tell us what you're building. You'll get a reply from the engineer who'd do the work — within one business day, in your time zone.</p>
+  <a class="btn btn-primary" href="/contact.html?package=Nearshore%20Team">Book a scoping call →</a>
+</section>
+
+<footer>
+  <div class="footer-logo">CO<span class="logo-dot">.</span>DIGIT</div>
+  <p>&copy; 2026 Co Digit d.o.o. &middot; Zagreb, Croatia</p>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="/services/macos-app-development">macOS Development</a>
+    <a href="/services/react-native-development">React Native Development</a>
+    <a href="/services/ai-integration">AI Integration</a>
+    <a href="/blog/">Notes</a>
+    <a href="/apps/">Apps</a>
+    <a href="/cookie-policy.html">Cookie Policy</a>
+    <a href="/privacy-policy.html">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle (shared convention with the rest of the site)
+  const themeBtn = document.getElementById('themeBtn');
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+  themeBtn.addEventListener('click', () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (isLight) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', 'light');
+    }
+  });
+</script>
+
+</body>
+</html>
