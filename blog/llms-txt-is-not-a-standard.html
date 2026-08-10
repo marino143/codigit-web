@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    // Consent Mode v2: default deny analytics + ads until user opts in.
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied',
+      'wait_for_update': 500
+    });
+    // Restore previous consent from localStorage (runs before any page logic).
+    try {
+      if (localStorage.getItem('cookieConsent') === 'accepted') {
+        gtag('consent', 'update', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      }
+    } catch(e) {}
+    gtag('js', new Date());
+    gtag('config', 'G-T97BQ3VRV1');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>llms.txt Is Not a Standard, and Your Site Probably Does Not Need One — Co Digit</title>
+  <meta name="description" content="We added an llms.txt to a client site and watched the logs for 90 days. No AI crawler ever asked for it. Here is what the crawlers actually request, and what genuinely controls them." />
+  <link rel="canonical" href="https://codigit.io/blog/llms-txt-is-not-a-standard.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://codigit.io/blog/llms-txt-is-not-a-standard.html" />
+  <meta property="og:title" content="llms.txt Is Not a Standard, and Your Site Probably Does Not Need One — Co Digit" />
+  <meta property="og:description" content="We added an llms.txt to a client site and watched the logs for 90 days. No AI crawler ever asked for it. Here is what the crawlers actually request, and what genuinely controls them." />
+  <meta property="og:image" content="https://codigit.io/og-image.png" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Co Digit" />
+  <meta property="article:published_time" content="2026-08-10" />
+  <meta property="article:author" content="Co Digit" />
+  <meta property="article:tag" content="AI" />
+  <meta property="article:tag" content="Technical SEO" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="llms.txt Is Not a Standard, and Your Site Probably Does Not Need One — Co Digit" />
+  <meta name="twitter:description" content="We added an llms.txt to a client site and watched the logs for 90 days. No AI crawler ever asked for it. Here is what the crawlers actually request, and what genuinely controls them." />
+  <meta name="twitter:image" content="https://codigit.io/og-image.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
+      --border: #222222; --text: #f0f0f0; --muted: #888;
+      --accent: #e63946; --white: #ffffff;
+      --nav-bg: rgba(10,10,10,0.9);
+    }
+    [data-theme="light"] {
+      --bg: #ffffff; --bg2: #f4f4f5; --bg3: #e8e8ea;
+      --border: #e0e0e0; --text: #111111; --muted: #666666;
+      --white: #0a0a0a; --nav-bg: rgba(255,255,255,0.95);
+    }
+    [data-theme="light"] footer { background: var(--bg2); }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .logo-dot { display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
+    @keyframes codigit-blink { 0%, 100% { color: var(--white); } 50% { color: var(--accent); } }
+    @media (prefers-reduced-motion: reduce) { .logo-dot { animation: none; } }
+    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; letter-spacing: 0.3px; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 18px; border-radius: 6px; font-weight: 600 !important; transition: opacity 0.2s !important; font-size: 13px !important; }
+    .nav-cta:hover { opacity: 0.85; }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+
+    .lang-switcher { display: flex; align-items: center; gap: 4px; }
+    .lang-btn {
+      background: none; border: 1px solid transparent; color: var(--muted);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 4px 8px; border-radius: 4px; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .lang-btn:hover { color: var(--white); }
+    .lang-btn.active { color: var(--white); border-color: var(--border); }
+    .lang-sep { color: #333; font-size: 11px; }
+    .theme-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--muted); font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .theme-btn:hover { color: var(--text); border-color: var(--muted); }
+
+    /* ARTICLE */
+    .article-wrapper {
+      flex: 1;
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+    .post-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .post-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+      color: var(--accent); background: rgba(230,57,70,0.1);
+      padding: 4px 10px; border-radius: 4px; text-transform: uppercase;
+    }
+    .article-wrapper h1 {
+      font-size: clamp(28px, 3.5vw, 44px); font-weight: 900;
+      letter-spacing: -1.2px; color: var(--white); line-height: 1.15; margin-bottom: 20px;
+    }
+    .post-meta {
+      font-size: 13px; color: var(--muted); margin-bottom: 8px;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    .post-meta-sep { color: var(--border); }
+    .divider { width: 48px; height: 3px; background: var(--accent); margin: 32px 0; border-radius: 2px; }
+
+    /* ARTICLE BODY */
+    .article-body { line-height: 1.8; }
+    .article-body h2 {
+      font-size: 22px; font-weight: 800; color: var(--white);
+      letter-spacing: -0.5px; margin: 48px 0 16px;
+    }
+    .article-body p { margin-bottom: 20px; color: var(--text); font-size: 16px; }
+    .article-body ul {
+      margin: 0 0 20px 20px; color: var(--text); font-size: 16px;
+    }
+    .article-body ul li { margin-bottom: 8px; line-height: 1.7; }
+    .article-body strong { color: var(--white); font-weight: 600; }
+    .article-body code {
+      font-family: 'Courier New', monospace; font-size: 14px;
+      background: var(--bg3); border: 1px solid var(--border);
+      padding: 2px 6px; border-radius: 4px; color: var(--accent);
+    }
+    .article-body pre {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 20px 24px;
+      margin: 0 0 20px; overflow-x: auto;
+      font-family: 'Courier New', monospace; font-size: 14px;
+      line-height: 1.6; color: var(--text);
+    }
+    .article-body pre code {
+      background: none; border: none; padding: 0; color: var(--text);
+    }
+
+    /* LANG TOGGLE FOR ARTICLE CONTENT */
+    .lang-content { display: none; }
+    .lang-content.active { display: block; }
+
+    /* BACK LINK */
+    .back-to-blog {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 48px; padding: 12px 24px;
+      font-size: 13px; font-weight: 600; color: var(--muted);
+      text-decoration: none; border: 1px solid var(--border);
+      border-radius: 8px; transition: all 0.2s;
+    }
+    .back-to-blog:hover { color: var(--white); border-color: var(--muted); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto;
+    }
+    .footer-logo { font-size: 14px; font-weight: 800; color: var(--white); }
+    .footer-logo span { color: var(--accent); }
+    footer p { font-size: 12px; color: #555; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: #555; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--muted); }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .article-wrapper { padding: 40px 20px 60px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
+  <ul class="nav-links">
+    <li><a href="/#services">Capabilities</a></li>
+    <li><a href="/#ai">AI-Powered</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#certs">Certifications</a></li>
+    <li><a href="/services.html">Services</a></li>
+    <li><a href="/blog/">Notes</a></li>
+    <li><a href="/contact.html" class="nav-cta">Get in touch</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="hr">HR</button>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+  </div>
+</nav>
+
+<article class="article-wrapper">
+  <header>
+    <div class="post-tags">
+      <span class="post-tag">AI</span>
+      <span class="post-tag">Technical SEO</span>
+    </div>
+    <h1 id="postTitle">llms.txt Is Not a Standard, and Your Site Probably Does Not Need One</h1>
+    <div class="post-meta">
+      <time datetime="2026-08-10" id="postDate">August 10, 2026</time>
+      <span class="post-meta-sep">|</span>
+      <span>Co Digit</span>
+    </div>
+    <div class="divider"></div>
+  </header>
+
+  <!-- ENGLISH CONTENT -->
+  <div class="article-body lang-content active" data-lang="en">
+    <p>In March we added an <code>llms.txt</code> file to a client's site. It was on every SEO checklist doing the rounds, it took twenty minutes, and it felt like the responsible thing to do in a year when a growing share of traffic arrives through an AI assistant rather than a search results page.</p>
+    <p>Ninety days later we went back to the access logs to see what had come of it. In that window the file was requested exactly zero times by any AI crawler. The only hits it ever got were from us, checking that it deployed. Over the same period the same site served roughly fourteen thousand requests to crawlers operated by AI companies — every single one of them for ordinary HTML pages.</p>
+    <p>That gap is worth understanding, because the advice to "add an llms.txt" has hardened into received wisdom without anyone stopping to check whether the thing on the other end is listening.</p>
+
+    <h2>What llms.txt Is Supposed to Be</h2>
+    <p>The idea is straightforward and, on paper, sensible. You put a Markdown file at <code>/llms.txt</code> that describes your site to a language model: what it is, which pages matter, where the canonical documentation lives. Think of it as a sitemap written for a reader rather than a parser.</p>
+    <p>The pitch is that an assistant answering a question about your product should not have to guess which of your four hundred URLs is the real pricing page. Hand it a curated index and you get better answers and fewer mangled citations.</p>
+    <p>Nothing about that reasoning is wrong. The problem is entirely in the second half of the sentence — the part where someone reads the file.</p>
+
+    <h2>A Standard Requires a Consumer</h2>
+    <p><code>robots.txt</code> is a standard because Googlebot fetches it before it crawls you, and because that behaviour is documented, tested, and enforced by the company that operates the crawler. <code>sitemap.xml</code> is a standard for the same reason. The file format is the least interesting part; the commitment on the other side is what makes it real.</p>
+    <p><code>llms.txt</code> has the file format and not the commitment. As of this writing no major AI vendor has published documentation saying their crawler fetches it, and — more to the point — none of them appear in our logs asking for it. A convention that no client implements is a proposal, not a standard.</p>
+    <p>This is easy enough to verify on your own infrastructure. If you have access to raw logs, one line tells you whether anything has ever asked:</p>
+    <pre><code>grep -c "GET /llms.txt" access.log</code></pre>
+    <p>Run the same count against <code>robots.txt</code> for comparison. On the client site above, the second number was in the hundreds. The first was zero.</p>
+
+    <h2>What the Crawlers Actually Request</h2>
+    <p>The AI crawlers hitting your site are not looking for a special file. They are doing what crawlers have always done: fetching HTML, following links, and reading <code>robots.txt</code> on the way in.</p>
+    <p>If you want to see which ones are visiting you, the user-agent strings are distinctive enough to grep for directly:</p>
+    <pre><code>grep -oE "GPTBot|ClaudeBot|Claude-User|PerplexityBot|Google-Extended|CCBot|Bytespider|meta-externalagent" access.log \
+  | sort | uniq -c | sort -rn</code></pre>
+    <p>Two useful things fall out of that command. The first is a real picture of who is reading your site, which is often quite different from what people assume — smaller crawlers frequently outnumber the ones that get written about. The second is a reminder that all of this traffic is arriving at your ordinary pages, through your ordinary server, governed by your ordinary crawl rules.</p>
+
+    <h2>The Distinction Almost Everyone Gets Wrong</h2>
+    <p>There are two categories of AI crawler and they deserve very different treatment.</p>
+    <p><strong>Training crawlers</strong> collect content in bulk to build future models. <code>GPTBot</code> and <code>CCBot</code> are the familiar examples. Whether you allow them is a business decision about your content, and there is a defensible answer in either direction.</p>
+    <p><strong>Retrieval fetchers</strong> are a different animal. They fire when a person has already asked a question and the assistant is going out to read a page in order to answer it. Blocking one of these does not protect your content from anything — it removes you from an answer a real potential customer is reading right now, and hands the citation to a competitor who left the door open.</p>
+    <p>The mistake we see most often is a blanket block written in a hurry, which catches both. If you want to opt out of training while staying visible in live answers, you have to name the agents individually:</p>
+    <pre><code>User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: *
+Allow: /</code></pre>
+    <p>Note that the same caveat from ordinary SEO applies here: <code>robots.txt</code> is a request, not a fence. Crawlers that respect it will respect it, and crawlers that do not were never going to. If you need enforcement rather than etiquette, that belongs at the server or CDN layer, not in a text file.</p>
+
+    <h2>The One Case for Keeping an llms.txt</h2>
+    <p>None of this makes the file harmful. It costs a few kilobytes and it breaks nothing, and if a major vendor does adopt the convention next year, having one already in place is a small head start.</p>
+    <p>But keep it only under one condition: generate it from the same source as your sitemap, as part of whatever build or deploy step you already run. A file that is produced automatically stays honest for free.</p>
+    <p>A hand-maintained one does not. Six months after launch it describes a product tier you retired, links to two pages that now 404, and confidently states a price that changed in April. If anything ever does start reading it, that is the version it reads. A stale <code>llms.txt</code> is meaningfully worse than no <code>llms.txt</code>, because it replaces "no information" with "wrong information", stated in your own voice.</p>
+
+    <h2>What Actually Makes a Site Readable to a Model</h2>
+    <p>Here is the slightly deflating part. Everything that helps a language model understand your site is something we have been telling clients to do for fifteen years.</p>
+    <p>Put the content in the HTML. A page that renders its text through JavaScript after load is a page that some crawlers will record as empty, exactly as it was a decade ago with search. Use one <code>&lt;h1&gt;</code> that says what the page is. Use real heading levels underneath it rather than styled <code>&lt;div&gt;</code> elements. Put a visible date on anything time-sensitive, so a model quoting you can tell whether it is quoting something current.</p>
+    <p>We can see this play out across our own properties. The static, server-delivered pages get quoted back to us with their wording intact. The JavaScript-heavy sections get summarised vaguely, when they get picked up at all. No index file changed that; the markup did.</p>
+
+    <h2>Optimise for What Actually Arrives</h2>
+    <p>The appeal of <code>llms.txt</code> is that it is a discrete task. You can add it on a Tuesday, tick it off, and feel prepared for a shift in how people find things. Auditing your markup and deciding a real position on training crawlers is slower and harder to declare finished.</p>
+    <p>But the logs are not ambiguous. Ninety days, zero requests for the curated file, fourteen thousand requests for the pages themselves. Whatever attention these crawlers have to give your site, they are spending all of it on your actual HTML.</p>
+    <p>So spend your effort there. Make the pages clean, make the important ones reachable, decide deliberately which crawlers you want and write that down in the file they demonstrably read. Keep the <code>llms.txt</code> if you like — generated, not hand-written — and treat it as a bet on next year rather than a fix for this one.</p>
+  </div>
+
+  <!-- CROATIAN CONTENT -->
+  <div class="article-body lang-content" data-lang="hr">
+    <p>U ožujku smo klijentu na sajt dodali <code>llms.txt</code>. Bio je na svakoj SEO checklisti koja je tada kružila, oduzeo je dvadeset minuta i djelovao je kao odgovorna stvar u godini u kojoj sve veći dio prometa dolazi preko AI asistenta, a ne preko stranice s rezultatima pretrage.</p>
+    <p>Devedeset dana kasnije vratili smo se u access logove da vidimo što je od toga ispalo. U tom razdoblju nijedan AI crawler nije zatražio tu datoteku nijednom. Jedini pogoci koje je ikad dobila bili su naši, dok smo provjeravali je li se deployala. U istom periodu isti je sajt poslužio otprilike četrnaest tisuća zahtjeva crawlerima AI kompanija — svaki jedan od njih za obične HTML stranice.</p>
+    <p>Tu razliku vrijedi razumjeti, jer se savjet "dodaj llms.txt" stvrdnuo u opće mjesto, a da nitko usput nije provjerio sluša li išta s druge strane.</p>
+
+    <h2>Što bi llms.txt trebao biti</h2>
+    <p>Ideja je jednostavna i, na papiru, razumna. Na <code>/llms.txt</code> stavite Markdown datoteku koja opisuje vaš sajt jezičnom modelu: što je, koje stranice su bitne, gdje je kanonska dokumentacija. Zamislite je kao sitemap pisan za čitatelja, a ne za parser.</p>
+    <p>Argument je da asistent koji odgovara na pitanje o vašem proizvodu ne bi trebao pogađati koji je od vaših četiristo URL-ova prava stranica s cijenama. Dajte mu kurirani indeks i dobit ćete bolje odgovore i manje iskrivljenih citata.</p>
+    <p>Ništa u tom razmišljanju nije pogrešno. Problem je u cijelosti u drugoj polovici rečenice — u dijelu gdje netko tu datoteku pročita.</p>
+
+    <h2>Standard traži konzumenta</h2>
+    <p><code>robots.txt</code> je standard zato što ga Googlebot dohvaća prije nego što vas crawla, i zato što je to ponašanje dokumentirano, testirano i provedeno od strane tvrtke koja taj crawler pogoni. <code>sitemap.xml</code> je standard iz istog razloga. Format datoteke najmanje je zanimljiv dio; obveza s druge strane je ono što ga čini stvarnim.</p>
+    <p>Kod <code>llms.txt</code>-a postoji format, ali ne i obveza. U trenutku pisanja nijedan veći AI proizvođač nije objavio dokumentaciju u kojoj stoji da njihov crawler dohvaća tu datoteku — i, još važnije, nijedan se u našim logovima ne pojavljuje tražeći je. Konvencija koju nijedan klijent ne implementira je prijedlog, a ne standard.</p>
+    <p>To je lako provjeriti na vlastitoj infrastrukturi. Ako imate pristup sirovim logovima, jedan redak vam kaže je li išta ikad pitalo:</p>
+    <pre><code>grep -c "GET /llms.txt" access.log</code></pre>
+    <p>Pokrenite isto brojanje nad <code>robots.txt</code>-om radi usporedbe. Na spomenutom klijentskom sajtu druga je brojka bila u stotinama. Prva je bila nula.</p>
+
+    <h2>Što crawleri zapravo traže</h2>
+    <p>AI crawleri koji dolaze na vaš sajt ne traže posebnu datoteku. Rade ono što crawleri oduvijek rade: dohvaćaju HTML, prate linkove i usput čitaju <code>robots.txt</code>.</p>
+    <p>Ako želite vidjeti tko vas posjećuje, user-agent stringovi su dovoljno prepoznatljivi da ih se grepa izravno:</p>
+    <pre><code>grep -oE "GPTBot|ClaudeBot|Claude-User|PerplexityBot|Google-Extended|CCBot|Bytespider|meta-externalagent" access.log \
+  | sort | uniq -c | sort -rn</code></pre>
+    <p>Iz te naredbe ispadaju dvije korisne stvari. Prva je stvarna slika toga tko čita vaš sajt, koja se često prilično razlikuje od pretpostavki — manji crawleri nerijetko nadmašuju one o kojima se piše. Druga je podsjetnik da sav taj promet stiže na vaše obične stranice, kroz vaš obični server, po vašim običnim pravilima crawlanja.</p>
+
+    <h2>Razlika koju gotovo svi promaše</h2>
+    <p>Postoje dvije kategorije AI crawlera i zaslužuju vrlo različit tretman.</p>
+    <p><strong>Crawleri za treniranje</strong> skupljaju sadržaj u velikim količinama kako bi gradili buduće modele. <code>GPTBot</code> i <code>CCBot</code> su poznati primjeri. Hoćete li im dopustiti pristup poslovna je odluka o vašem sadržaju i postoji obranjiv odgovor u oba smjera.</p>
+    <p><strong>Dohvatni crawleri</strong> su druga priča. Oni se pale tek kad je čovjek već postavio pitanje, a asistent odlazi pročitati stranicu kako bi na njega odgovorio. Blokiranje takvog crawlera ne štiti vaš sadržaj ni od čega — izbacuje vas iz odgovora koji upravo sada čita stvarni potencijalni klijent i predaje citat konkurentu koji je ostavio vrata otvorena.</p>
+    <p>Greška koju najčešće viđamo je blanko blokada napisana u žurbi, koja pohvata oboje. Ako se želite isključiti iz treniranja, a ostati vidljivi u živim odgovorima, agente morate imenovati pojedinačno:</p>
+    <pre><code>User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: *
+Allow: /</code></pre>
+    <p>Vrijedi ista ograda kao i u običnom SEO-u: <code>robots.txt</code> je molba, a ne ograda. Crawleri koji ga poštuju poštovat će ga, a oni koji ga ne poštuju ionako nisu namjeravali. Ako trebate provedbu, a ne bonton, to pripada na razinu servera ili CDN-a, a ne u tekstualnu datoteku.</p>
+
+    <h2>Jedan razlog da ipak zadržite llms.txt</h2>
+    <p>Ništa od ovoga ne čini tu datoteku štetnom. Košta nekoliko kilobajta i ništa ne kvari, a ako neki veliki proizvođač konvenciju usvoji dogodine, imati je već postavljenu mala je prednost.</p>
+    <p>Ali zadržite je samo pod jednim uvjetom: generirajte je iz istog izvora kao i sitemap, u sklopu build ili deploy koraka koji ionako pokrećete. Datoteka koja nastaje automatski ostaje točna besplatno.</p>
+    <p>Ona koju održavate ručno neće. Šest mjeseci nakon lansiranja opisuje paket koji ste ugasili, linka na dvije stranice koje sada vraćaju 404 i samouvjereno navodi cijenu promijenjenu u travnju. Ako je išta ikad počne čitati, to je verzija koju će pročitati. Ustajali <code>llms.txt</code> osjetno je gori od nikakvog, jer "nema informacije" zamjenjuje "krivom informacijom" — izrečenom vašim glasom.</p>
+
+    <h2>Što stvarno čini sajt čitljivim modelu</h2>
+    <p>Evo pomalo otrežnjujućeg dijela. Sve što pomaže jezičnom modelu da razumije vaš sajt nešto je što klijentima govorimo već petnaest godina.</p>
+    <p>Neka sadržaj bude u HTML-u. Stranica koja svoj tekst renderira JavaScriptom nakon učitavanja je stranica koju će neki crawleri zabilježiti kao praznu, potpuno isto kao prije deset godina s tražilicama. Koristite jedan <code>&lt;h1&gt;</code> koji kaže što je stranica. Ispod njega koristite prave razine naslova, a ne stilizirane <code>&lt;div&gt;</code> elemente. Stavite vidljiv datum na sve što je vremenski osjetljivo, kako bi model koji vas citira mogao znati citira li nešto aktualno.</p>
+    <p>To vidimo i na vlastitim stranicama. Statične, sa servera poslužene stranice vraćaju nam se citirane s netaknutim formulacijama. JavaScriptom teški dijelovi sažimaju se maglovito, kad se uopće pokupe. To nije promijenila nikakva indeksna datoteka; promijenio je markup.</p>
+
+    <h2>Optimizirajte za ono što stvarno dolazi</h2>
+    <p>Privlačnost <code>llms.txt</code>-a je u tome što je zaokružen zadatak. Dodate ga u utorak, prekrižite ga s liste i osjećate se spremno za promjenu u načinu na koji ljudi pronalaze stvari. Revizija markupa i stvarna odluka o crawlerima za treniranje sporije su i teže ih je proglasiti gotovima.</p>
+    <p>Ali logovi nisu dvosmisleni. Devedeset dana, nula zahtjeva za kuriranom datotekom, četrnaest tisuća zahtjeva za samim stranicama. Kakvu god pažnju ti crawleri imaju za vaš sajt, svu je troše na vaš stvarni HTML.</p>
+    <p>Zato uložite trud tamo. Neka stranice budu čiste, neka one važne budu dohvatljive, odlučite promišljeno koje crawlere želite i to zapišite u datoteku koju dokazano čitaju. Zadržite <code>llms.txt</code> ako želite — generiran, ne ručno pisan — i shvatite ga kao okladu na sljedeću godinu, a ne kao rješenje za ovu.</p>
+  </div>
+
+  <a href="/blog/" class="back-to-blog" id="backToBlog">&larr; Back to blog</a>
+</article>
+
+<footer>
+  <div class="footer-logo">CO<span class="logo-dot">.</span>DIGIT</div>
+  <p id="footer-copy">&copy; 2026 Co Digit d.o.o. &middot; Zagreb, Croatia</p>
+  <div class="footer-links">
+    <a href="/" id="fl-home">Home</a>
+    <a href="/blog/" id="fl-blog">Notes</a>
+    <a href="/cookie-policy.html" id="fl-cookies">Cookie Policy</a>
+    <a href="/privacy-policy.html" id="fl-privacy">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  const t = {
+    en: {
+      postTitle: 'llms.txt Is Not a Standard, and Your Site Probably Does Not Need One',
+      postDate: 'August 10, 2026',
+      backToBlog: '← Back to blog',
+      'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Croatia',
+      'fl-home': 'Home', 'fl-blog': 'Notes', 'fl-cookies': 'Cookie Policy', 'fl-privacy': 'Privacy Policy',
+    },
+    hr: {
+      postTitle: 'llms.txt nije standard i vašem sajtu vjerojatno ne treba',
+      postDate: '10. kolovoza 2026.',
+      backToBlog: '← Natrag na blog',
+      'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska',
+      'fl-home': 'Početna', 'fl-blog': 'Bilješke', 'fl-cookies': 'Politika kolačića', 'fl-privacy': 'Politika privatnosti',
+    }
+  };
+
+  let lang = 'en';
+
+  function applyLang(l) {
+    lang = l;
+    document.documentElement.lang = l;
+    localStorage.setItem('lang', l);
+    const d = t[l];
+    Object.keys(d).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = d[id];
+    });
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+    // Toggle article content
+    document.querySelectorAll('.lang-content').forEach(el => {
+      el.classList.toggle('active', el.getAttribute('data-lang') === l);
+    });
+  }
+
+  // Theme
+  const themeBtn = document.getElementById('themeBtn');
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    themeBtn.innerHTML = theme === 'light' ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+  }
+  const savedTheme = localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  applyTheme(savedTheme);
+  themeBtn.addEventListener('click', () => {
+    applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+  });
+
+  const saved = localStorage.getItem('lang');
+  const browser = navigator.language.startsWith('hr') ? 'hr' : 'en';
+  applyLang(saved || browser);
+
+  document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+</script>
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "llms.txt Is Not a Standard, and Your Site Probably Does Not Need One",
+  "description": "We added an llms.txt to a client site and watched the logs for 90 days. No AI crawler ever asked for it. Here is what the crawlers actually request, and what genuinely controls them.",
+  "datePublished": "2026-08-10",
+  "author": {
+    "@type": "Organization",
+    "name": "Co Digit",
+    "url": "https://codigit.io"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Co Digit",
+    "url": "https://codigit.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://codigit.io/favicon.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://codigit.io/blog/llms-txt-is-not-a-standard.html"
+  },
+  "keywords": ["llms.txt", "AI crawlers", "GPTBot", "ClaudeBot", "robots.txt", "technical SEO", "AI search visibility"]
+}
+</script>
+</body>
+</html>

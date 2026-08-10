@@ -1,5 +1,15 @@
 [
   {
+    "slug": "llms-txt-is-not-a-standard",
+    "title_en": "llms.txt Is Not a Standard, and Your Site Probably Does Not Need One",
+    "title_hr": "llms.txt nije standard i vašem sajtu vjerojatno ne treba",
+    "excerpt_en": "We added an llms.txt to a client site and watched the access logs for 90 days. No AI crawler ever asked for it — while the same site served 14,000 requests to those crawlers for ordinary HTML pages.",
+    "excerpt_hr": "Dodali smo llms.txt na klijentov sajt i 90 dana pratili access logove. Nijedan AI crawler nikad ga nije zatražio — dok je isti sajt tim crawlerima poslužio 14.000 zahtjeva za obične HTML stranice.",
+    "date": "2026-08-10",
+    "tags": ["AI", "Technical SEO"],
+    "author": "Co Digit"
+  },
+  {
     "slug": "two-hour-accessibility-audit",
     "title_en": "A Lighthouse Score of 100 Is Not an Accessibility Audit",
     "title_hr": "Lighthouse ocjena 100 nije revizija pristupačnosti",
