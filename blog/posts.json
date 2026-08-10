@@ -1,5 +1,15 @@
 [
   {
+    "slug": "two-hour-accessibility-audit",
+    "title_en": "A Lighthouse Score of 100 Is Not an Accessibility Audit",
+    "title_hr": "Lighthouse ocjena 100 nije revizija pristupačnosti",
+    "excerpt_en": "Automated checkers only test the rules a machine can decide on its own. Here is the two-hour manual pass we run before calling a site done — keyboard, headings, forms, contrast, zoom — and the contrast failure it found in our own footer.",
+    "excerpt_hr": "Automatski alati testiraju samo pravila o kojima stroj može sam odlučiti. Ovo je ručni prolaz od dva sata koji radimo prije nego što sajt proglasimo gotovim — tipkovnica, naslovi, obrasci, kontrast, zum — i pad kontrasta koji je našao u našem vlastitom podnožju.",
+    "date": "2026-08-10",
+    "tags": ["Accessibility", "UX/UI Design"],
+    "author": "Co Digit"
+  },
+  {
     "slug": "why-we-self-host-client-logos",
     "title_en": "The Client Logo That 404'd: Why We Self-Host Every Third-Party Image Now",
     "title_hr": "Logo klijenta koji je vratio 404: zašto sada self-hostamo svaku sliku treće strane",
