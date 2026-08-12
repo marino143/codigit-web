@@ -74,20 +74,21 @@
   {
     "slug": "activitybar",
     "name": "ActivityBar",
-    "tagline_en": "Live CPU, RAM and SSD usage in your macOS menu bar. ~45 MB RAM, zero bloat.",
-    "tagline_hr": "Praćenje CPU-a, RAM-a i SSD-a uživo u macOS menu baru. ~45 MB RAM, bez bloata.",
-    "description_en": "Activity Monitor makes you switch windows. Paid alternatives ship 200 features you don't need. ActivityBar does one thing: shows live CPU, RAM and SSD in the corner of your screen. Native Swift, single ~150-line file, ad-hoc signed .app — and the icon is generated programmatically. Open source on GitHub.",
-    "description_hr": "Activity Monitor te tjera da napustiš prozor u kojem radiš. Plaćene alternative dolaze s 200 značajki koje ti ne trebaju. ActivityBar radi jednu stvar: prikazuje CPU, RAM i SSD uživo u kutu ekrana. Nativni Swift, jedna datoteka od ~150 linija, ad-hoc potpisani .app — a ikona je generirana programski. Open source na GitHubu.",
+    "tagline_en": "Live CPU, RAM and SSD in your macOS menu bar — with the processes and folders behind the numbers.",
+    "tagline_hr": "CPU, RAM i SSD uživo u macOS menu baru — s procesima i mapama iza tih brojeva.",
+    "description_en": "Activity Monitor makes you switch windows. Paid alternatives ship 200 features you don't need. ActivityBar shows live CPU, RAM and SSD in the corner of your screen — then lets you act on them: CPU and RAM open the hungriest processes so you can kill one from the menu, and SSD opens your largest folders and keeps drilling until you find whatever filled the disk. Native Swift, a single file, ad-hoc signed .app, and the icon is generated programmatically. Around 0.2% CPU at rest. Open source on GitHub.",
+    "description_hr": "Activity Monitor te tjera da napustiš prozor u kojem radiš. Plaćene alternative dolaze s 200 značajki koje ti ne trebaju. ActivityBar prikazuje CPU, RAM i SSD uživo u kutu ekrana — i pušta te da nešto poduzmeš: CPU i RAM otvaraju najgladnije procese pa ga možeš ubiti iz menija, a SSD otvara tvoje najveće mape i kopa dalje dok ne nađeš što ti je popunilo disk. Nativni Swift, jedna datoteka, ad-hoc potpisani .app, a ikona je generirana programski. Oko 0,2% CPU-a u mirovanju. Open source na GitHubu.",
     "category": "Utility",
     "platform": "macOS (Apple Silicon)",
     "version": "1.0",
     "release_date": "2026-05-25",
     "icon": "📊",
     "download_url": "https://github.com/marino143/macos-activity-bar/releases/download/v1.0.0/ActivityBar.zip",
-    "github_url": "https://github.com/marino143/macos-activity-bar/releases/download/v1.0.0/ActivityBar.zip",
+    "github_url": "https://github.com/marino143/macos-activity-bar",
     "buymeacoffee_url": "https://buymeacoffee.com/marino143",
     "linkedin_posts": [],
-    "featured": true
+    "featured": true,
+    "screenshot": "https://codigit.io/apps/screenshots/activitybar-menu.png"
   },
   {
     "slug": "native-browser",

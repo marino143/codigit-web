@@ -253,6 +253,16 @@
       footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
       .footer-links { flex-wrap: wrap; justify-content: center; }
     }
+    /* SCREENSHOT GALLERY */
+    /* Snimke su 2x capture malih menija — ne razvlačimo ih preko prirodne
+       širine, inače se zamute. flex-basis drži svaku na njenoj veličini. */
+    .shots { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 8px; align-items: flex-start; justify-content: center; }
+    .shot { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--bg2); max-width: 100%; }
+    .shot img { display: block; width: 100%; height: auto; }
+    .shot figcaption { font-size: 12.5px; color: var(--muted); padding: 10px 14px; border-top: 1px solid var(--border); }
+    .shot-menu { flex: 0 1 390px; }
+    .shot-proc { flex: 0 1 295px; }
+    .shot-disk { flex: 0 1 248px; }
   </style>
 </head>
 <body>
@@ -306,9 +316,10 @@
         <li>Three numbers, always visible</li>
         <li>Native Swift — no Electron bloat</li>
         <li>~45 MB RAM, near-zero CPU</li>
-        <li>Refresh every 2 seconds, monospaced digits so numbers don't jump</li>
-        <li>Auto-starts at login, no daemon</li>
-        <li>Click to see exact GB values & free space</li>
+        <li>Monospaced digits, so the numbers don't jump around as they change</li>
+        <li>CPU and RAM open the list of hungriest processes — kill one straight from the menu</li>
+        <li>SSD opens your biggest folders, and keeps drilling until you find what actually filled the disk</li>
+        <li>Launch at login, toggled from the menu — still no daemon</li>
       </ul>
     </div>
     <div class="lang-content" data-lang="hr">
@@ -317,10 +328,30 @@
         <li>Tri broja, uvijek vidljiva</li>
         <li>Nativni Swift — bez Electron bloata</li>
         <li>~45 MB RAM-a, gotovo nula CPU-a</li>
-        <li>Osvježavanje svake 2 sekunde, monospace znamenke da brojevi ne poskakuju</li>
-        <li>Automatski se pokreće pri prijavi, bez daemona</li>
-        <li>Klik za točne GB vrijednosti i slobodan prostor</li>
+        <li>Monospace znamenke, da brojevi ne poskakuju dok se mijenjaju</li>
+        <li>CPU i RAM otvaraju popis najgladnijih procesa — ubij ga direktno iz menija</li>
+        <li>SSD otvara tvoje najveće mape i kopa dalje dok ne nađeš što ti je stvarno pojelo disk</li>
+        <li>Pokretanje pri prijavi, uključuje se iz menija — i dalje bez daemona</li>
       </ul>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+  <section class="app-section">
+    <h2 id="h-shots">Screenshots</h2>
+    <div class="shots">
+      <figure class="shot shot-menu">
+        <img src="/apps/screenshots/activitybar-menu.png" alt="The ActivityBar menu showing CPU, RAM and SSD readouts" loading="lazy" width="780" height="422" />
+        <figcaption id="cap-menu">Three numbers in the menu bar; the menu gives you the exact figures.</figcaption>
+      </figure>
+      <figure class="shot shot-proc">
+        <img src="/apps/screenshots/activitybar-processes.png" alt="Top processes by CPU, each one clickable to kill" loading="lazy" width="590" height="858" />
+        <figcaption id="cap-proc">The hungriest processes, worst first. Click one to kill it.</figcaption>
+      </figure>
+      <figure class="shot shot-disk">
+        <img src="/apps/screenshots/activitybar-disk.png" alt="Home folders sorted by size, each expanding into its subfolders" loading="lazy" width="496" height="570" />
+        <figcaption id="cap-disk">Your folders, biggest first — and every one of them opens further.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -328,13 +359,13 @@
   <section class="app-section">
     <h2 id="h-why">Why native?</h2>
     <div class="lang-content active" data-lang="en">
-      <p>ActivityBar is a single Swift file of about 150 lines. It reads Apple's built-in <code>host_statistics</code> and <code>vm_statistics64</code> syscalls — the same data source the macOS Activity Monitor uses — so the numbers match exactly.</p>
-      <p>There is no helper process, no background daemon, no Electron runtime, no telemetry, no analytics. The binary is around 100 KB and the app has no network code at all. It launches in milliseconds, stays out of the way, and never asks for an update.</p>
+      <p>ActivityBar is still a single Swift file — around 850 lines now. It reads Apple's built-in <code>host_statistics</code> and <code>vm_statistics64</code> syscalls — the same data source the macOS Activity Monitor uses — so the numbers match exactly. Folder sizes come from <code>du</code>, run at background CPU and I/O priority so a scan never gets in the way of what you're doing.</p>
+      <p>There is no helper process, no background daemon, no Electron runtime, no telemetry, no analytics. The binary is about 225 KB and the app has no network code at all. At rest it costs roughly 0.2% CPU — readings are cached, menu labels are only written while the menu is actually open, and the title in the menu bar is only redrawn when the text changes.</p>
       <p>Even the app icon is generated programmatically by a separate Swift script — no Photoshop, no Figma export — so the whole build pipeline is one shell script and reproducible on any Mac with the command line tools.</p>
     </div>
     <div class="lang-content" data-lang="hr">
-      <p>ActivityBar je jedna Swift datoteka od oko 150 linija. Čita Appleove ugrađene <code>host_statistics</code> i <code>vm_statistics64</code> syscallove — isti izvor podataka koji koristi macOS Activity Monitor — pa se brojevi točno poklapaju.</p>
-      <p>Nema pomoćnog procesa, nema pozadinskog daemona, nema Electron runtimea, nema telemetrije, nema analitike. Binary je oko 100 KB i aplikacija uopće nema mrežnog koda. Pokreće se u milisekundama, ne smeta i nikad ne traži ažuriranje.</p>
+      <p>ActivityBar je i dalje jedna Swift datoteka — sad oko 850 linija. Čita Appleove ugrađene <code>host_statistics</code> i <code>vm_statistics64</code> syscallove — isti izvor podataka koji koristi macOS Activity Monitor — pa se brojevi točno poklapaju. Veličine mapa dolaze iz <code>du</code>, pokrenutog na pozadinskom CPU i I/O prioritetu, da ti skeniranje nikad ne smeta u radu.</p>
+      <p>Nema pomoćnog procesa, nema pozadinskog daemona, nema Electron runtimea, nema telemetrije, nema analitike. Binary je oko 225 KB i aplikacija uopće nema mrežnog koda. U mirovanju troši otprilike 0,2% CPU-a — očitanja se keširaju, natpisi u meniju se pišu samo dok je meni stvarno otvoren, a naslov u menu baru se iscrtava samo kad se tekst promijeni.</p>
       <p>Čak je i ikona aplikacije generirana programski zasebnom Swift skriptom — bez Photoshopa, bez Figma exporta — pa je cijeli build pipeline jedna shell skripta, reproducibilna na bilo kojem Macu s command line toolsima.</p>
     </div>
   </section>
@@ -349,6 +380,38 @@
       <div class="lang-content" data-lang="hr">
         <p>ActivityBar je izgrađen za otprilike sat vremena uz Cursor + Claude kao pair partnera. Kompletan source — uključujući generator ikone i build skriptu — otvoren je na <a href="https://github.com/marino143/macos-activity-bar" target="_blank">GitHubu</a>. Ovo je tip ship-velocity rada koji radim za founderse koji grade SaaS i AI proizvode kroz <a href="/services.html">Codigit</a>.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- UPDATES -->
+  <div class="section-divider"></div>
+  <section class="app-section">
+    <h2 id="h-updates">Updates</h2>
+    <div class="lang-content active" data-lang="en">
+      <p><strong>August 2026</strong></p>
+      <ul class="benefit-list">
+        <li>The SSD row now opens your largest folders, sorted by size — and every folder opens into its own subfolders, so you can follow the trail down to whatever is actually eating the disk</li>
+        <li>CPU and RAM open the top processes by that metric, and you can end one from the menu with a normal quit or a force kill</li>
+        <li>Launch at login, toggled from the menu</li>
+        <li>Roughly four times lighter at idle, and disk scans now run at background priority so they stay out of your way</li>
+      </ul>
+      <p><strong>May 2026</strong></p>
+      <ul class="benefit-list">
+        <li>First release — live CPU, RAM and SSD in the menu bar</li>
+      </ul>
+    </div>
+    <div class="lang-content" data-lang="hr">
+      <p><strong>Kolovoz 2026.</strong></p>
+      <ul class="benefit-list">
+        <li>SSD sad otvara tvoje najveće mape, poredane po veličini — a svaka se mapa otvara u svoje podmape, pa možeš pratiti trag do onoga što ti stvarno jede disk</li>
+        <li>CPU i RAM otvaraju najgladnije procese po toj mjeri, a proces možeš ugasiti iz menija — normalno ili na silu</li>
+        <li>Pokretanje pri prijavi, uključuje se iz menija</li>
+        <li>Otprilike četiri puta lakši u mirovanju, a skeniranje diska sad radi na pozadinskom prioritetu pa ti ne smeta</li>
+      </ul>
+      <p><strong>Svibanj 2026.</strong></p>
+      <ul class="benefit-list">
+        <li>Prvo izdanje — CPU, RAM i SSD uživo u menu baru</li>
+      </ul>
     </div>
   </section>
 
@@ -395,7 +458,12 @@
       'cta-github': 'View source',
       'h-what': 'What it does',
       'h-why': 'Why native?',
+      'h-shots': 'Screenshots',
+      'cap-menu': 'Three numbers in the menu bar; the menu gives you the exact figures.',
+      'cap-proc': 'The hungriest processes, worst first. Click one to kill it.',
+      'cap-disk': 'Your folders, biggest first — and every one of them opens further.',
       'h-journey': 'Build story',
+      'h-updates': 'Updates',
       'h-share': 'Found this useful? Share it.',
       'copy-label': 'Copy link',
       copied: '✓ Copied!',
@@ -411,7 +479,12 @@
       'cta-github': 'Izvorni kod',
       'h-what': 'Što radi',
       'h-why': 'Zašto nativno?',
+      'h-shots': 'Screenshotovi',
+      'cap-menu': 'Tri broja u menu baru; meni ti daje točne brojke.',
+      'cap-proc': 'Najgladniji procesi, najgori na vrhu. Klikni da ga ubiješ.',
+      'cap-disk': 'Tvoje mape, najveće prve — i svaka se otvara dalje.',
       'h-journey': 'Priča o izradi',
+      'h-updates': 'Novosti',
       'h-share': 'Smatrate ovo korisnim? Podijelite.',
       'copy-label': 'Kopiraj link',
       copied: '✓ Kopirano!',
