@@ -58,6 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $row = user_row($target);
         if ($row === null) {
             $error = 'Unknown user.';
+        } elseif (is_demo_account($target) && $row['role'] !== 'admin') {
+            // lozinka demo računa je javna — administrator s javnom lozinkom nije administrator
+            $error = "\"$target\" is a public demo account and cannot be made an administrator.";
         } elseif ($target === $me && $row['role'] === 'admin') {
             // ne smijemo ostati bez ijednog administratora
             $others = (int)$pdo->query('SELECT COUNT(*) FROM users WHERE role = "admin" AND active = 1')->fetchColumn();

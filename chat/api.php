@@ -229,6 +229,7 @@ switch ($action) {
     case 'send': {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
         $conv = require_conv($user);
+        if (demo_rate_exceeded($user)) json_out(['error' => 'demo_rate'], 429);
         $body = trim((string)($_POST['body'] ?? ''));
         if ($body === '' || mb_strlen($body) > 10000) json_out(['error' => 'empty'], 400);
 
@@ -271,13 +272,14 @@ switch ($action) {
     case 'upload': {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
         $conv = require_conv($user);
+        if (demo_rate_exceeded($user)) json_out(['error' => 'demo_rate'], 429);
         if (empty($_FILES['file']) || !is_uploaded_file($_FILES['file']['tmp_name'])) {
             // Najčešći razlog: datoteka veća od PHP limita (upload_max_filesize)
             json_out(['error' => 'nofile', 'hint' => 'The file did not arrive — it is probably larger than the server limit.'], 400);
         }
         $f = $_FILES['file'];
         if ($f['error'] !== UPLOAD_ERR_OK) json_out(['error' => 'upload_' . $f['error']], 400);
-        if ($f['size'] > CHAT_MAX_UPLOAD) json_out(['error' => 'toobig'], 400);
+        if ($f['size'] > chat_max_upload()) json_out(['error' => 'toobig'], 400);
 
         $mime = (string)(mime_content_type($f['tmp_name']) ?: $f['type']);
         $type = null; $ext = null;
@@ -920,6 +922,9 @@ switch ($action) {
 
     case 'change_password': {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['error' => 'method'], 405);
+        // Demo račun je posuđen svima i lozinka mu je javna — kad bi je jedan
+        // posjetitelj promijenio, zaključao bi demo svima ostalima.
+        if (is_demo_account($user)) json_out(['error' => 'demo_account'], 403);
         $old = (string)($_POST['old'] ?? '');
         $new = (string)($_POST['new'] ?? '');
         $row = user_row($user);

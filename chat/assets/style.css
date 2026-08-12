@@ -173,6 +173,36 @@ body {
 .auth-error { color: var(--danger); font-size: 14px; margin: 8px 0; }
 .auth-ok { color: var(--ok); font-size: 14px; margin: 8px 0; }
 
+/* Ponuđeni demo računi na stranici za prijavu (samo kad postoji data/demo.json) */
+.demo-box {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    text-align: left;
+}
+.demo-box h2 { font-size: 14px; margin: 0 0 6px; color: var(--accent-dark); }
+.demo-lead { font-size: 13px; line-height: 1.45; color: var(--text-dim); margin: 0 0 12px; }
+.demo-account { margin: 0; }
+.auth-card .demo-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: left;
+}
+.auth-card .demo-btn:hover { border-color: var(--accent); }
+.auth-card .demo-btn:active { background: var(--border); }
+.demo-name { font-weight: 600; color: var(--accent-dark); }
+.demo-note { font-size: 12px; color: var(--text-dim); font-weight: 400; }
+.demo-creds { font-size: 12px; color: var(--text-dim); font-weight: 400; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
 /* ---------- Raspored: bočna traka + razgovor ---------- */
 /* Na iPhoneu tipkovnica gura stranicu prema gore i zaglavlje nestane pod
    statusnu traku. Zato je aplikacija fiksirana, a visinu joj postavlja
@@ -240,6 +270,16 @@ body {
     padding: 6px 8px;
     cursor: pointer;
 }
+/* Oznaka javnog demoa — tanka traka iznad popisa razgovora */
+.demo-banner {
+    background: var(--notif-bg);
+    border-bottom: 1px solid var(--notif-border);
+    padding: 8px 14px;
+    font-size: 12px;
+    line-height: 1.35;
+    color: var(--notif-text);
+}
+
 .notif-banner {
     background: var(--notif-bg);
     border-bottom: 1px solid var(--notif-border);

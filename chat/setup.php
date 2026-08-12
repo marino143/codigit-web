@@ -7,7 +7,7 @@ declare(strict_types=1);
 require __DIR__ . '/lib.php';
 chat_session_start();
 
-if (chat_is_configured()) {
+if (chat_has_admin()) {
     http_response_code(403);
     echo 'This chat is already set up. New users are added by the administrator on the ⚙️ Users page.';
     exit;

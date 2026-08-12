@@ -67,6 +67,11 @@ $admin = $row['role'] === 'admin';
                 <button id="notifLater" class="notif-no">Not now</button>
             </div>
         </div>
+        <?php if (chat_is_demo()): ?>
+        <div class="demo-banner">
+            🎬 <strong>Demo</strong> — everything here is public and is wiped every night.
+        </div>
+        <?php endif; ?>
         <div class="conv-list" id="convList">
             <div class="chat-loading">Loading…</div>
         </div>

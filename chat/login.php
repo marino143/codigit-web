@@ -62,6 +62,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input name="pass" type="password" placeholder="Password" autocomplete="current-password" required>
         <button type="submit">Sign in</button>
     </form>
+    <?php $demoAccounts = chat_is_demo() ? chat_demo_accounts() : []; ?>
+    <?php if ($demoAccounts): ?>
+    <section class="demo-box">
+        <h2>This is a public demo</h2>
+        <p class="demo-lead">No sign-up needed — pick an account below and look around.
+           Everything you post is public and is <strong>wiped every night</strong>.</p>
+        <?php foreach ($demoAccounts as $a): ?>
+        <form method="post" class="demo-account">
+            <input type="hidden" name="user" value="<?= htmlspecialchars($a['user']) ?>">
+            <input type="hidden" name="pass" value="<?= htmlspecialchars($a['pass']) ?>">
+            <button type="submit" class="demo-btn">
+                <span class="demo-name">Sign in as <?= htmlspecialchars($a['name']) ?></span>
+                <?php if ($a['note'] !== ''): ?><span class="demo-note"><?= htmlspecialchars($a['note']) ?></span><?php endif; ?>
+                <span class="demo-creds"><?= htmlspecialchars($a['user']) ?> / <?= htmlspecialchars($a['pass']) ?></span>
+            </button>
+        </form>
+        <?php endforeach; ?>
+    </section>
+    <?php endif; ?>
 </div>
 </body>
 </html>

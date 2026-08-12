@@ -61,6 +61,22 @@ Javni demo znači da će unutra pisati nepoznati ljudi, zato:
 3. Javi Marinu: gdje je backup starih poruka, demo pristupne podatke,
    i kratki sažetak što je namješteno.
 
+## Napravljeno (12.08.2026.)
+
+- Backup starih poruka: `~/chat-backup-20260812-1603.tar.gz` (provjeren).
+- `demo-seed.php` — slaže demo stanje; ponovljiv, služi i kao noćni reset.
+  Ne dira administratorske račune. `php demo-seed.php --off` gasi demo način.
+- Demo način je uključen dok postoji `data/demo.json` (piše ga skripta).
+  Tada: prijava nudi demo račune, u aplikaciji stoji demo traka, upload je
+  ograničen na 10 MB, a demo račun smije poslati 60 poruka na sat.
+- Demo računi ne mogu mijenjati lozinku ni postati administratori.
+- `setup.php` se sada zaključava kad postoji **administrator** (prije: bilo
+  koji korisnik) — inače bi ga demo računi zaključali.
+- Noćni reset u 04:00: `~/Library/LaunchAgents/hr.codigit.chat-demo-reset.plist`
+  (log: `/tmp/chat-demo-reset.log`). Nije u gitu, kao ni ostali plistovi.
+
+Preostalo: vratiti server online (korak 5).
+
 ## Pravila
 
 - Redoslijed je bitan: **backup → brisanje → demo**. Nikad obrnuto.

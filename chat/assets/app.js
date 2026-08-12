@@ -931,7 +931,10 @@
                 setOutbox(outbox().concat([{ params, text }]));
             } else {
                 $input.value = text; // vrati tekst da se ne izgubi
-                alert('Message not sent — check your connection and try again.');
+                // demo limit nije problem s mrežom — ponavljanje ne bi pomoglo
+                alert(e.data && e.data.error === 'demo_rate'
+                    ? 'Demo limit reached — this account can post again in a little while.'
+                    : 'Message not sent — check your connection and try again.');
             }
         } finally {
             $sendBtn.disabled = false;
@@ -993,6 +996,7 @@
                         const err = JSON.parse(xhr.responseText);
                         if (err.error === 'type') msg = 'That file type is not supported (send photos or videos).';
                         if (err.error === 'toobig' || err.error === 'nofile') msg = 'The file is too large for the server.';
+                        if (err.error === 'demo_rate') msg = 'Demo limit reached — this account can post again in a little while.';
                     } catch (_) {}
                     alert(msg);
                 }

@@ -13,6 +13,10 @@ const CHAT_UPLOAD_DIR = CHAT_DATA_DIR . '/uploads';
 const CHAT_DB_FILE    = CHAT_DATA_DIR . '/chat.sqlite';
 const CHAT_USERS_FILE = CHAT_DATA_DIR . '/users.json'; // v1 — koristi se samo za migraciju
 
+// Javni demo: postoji li ova datoteka, instalacija se ponaša kao demo —
+// na prijavi piše s kojim se računima može ući. Vidi demo-seed.php.
+const CHAT_DEMO_FILE  = CHAT_DATA_DIR . '/demo.json';
+
 // Maksimalna veličina jedne datoteke (server limiti i dalje vrijede — vidi README)
 const CHAT_MAX_UPLOAD = 200 * 1024 * 1024; // 200 MB
 
@@ -423,6 +427,92 @@ function chat_migrate(PDO $pdo): void {
 
 function chat_is_configured(): bool {
     return (int)db()->query('SELECT COUNT(*) FROM users')->fetchColumn() > 0;
+}
+
+/**
+ * Postoji li administrator. Stranica setup.php postoji da napravi prvog —
+ * zato se zaključava kad admin postoji, a ne čim postoji bilo kakav korisnik
+ * (demo računi se posiju skriptom i ne smiju zaključati setup).
+ */
+function chat_has_admin(): bool {
+    return (int)db()->query('SELECT COUNT(*) FROM users WHERE role = "admin"')->fetchColumn() > 0;
+}
+
+// ---------- javni demo ----------
+
+/**
+ * Postavke demo instalacije iz data/demo.json (prazno polje = nije demo).
+ * Datoteka nabraja račune koje smijemo ispisati na stranici za prijavu;
+ * lozinke su namjerno javne jer su to demo računi bez pravog sadržaja.
+ */
+function chat_demo(): array {
+    static $cfg = null;
+    if ($cfg === null) {
+        $cfg = [];
+        if (is_file(CHAT_DEMO_FILE)) {
+            $raw = json_decode((string)file_get_contents(CHAT_DEMO_FILE), true);
+            if (is_array($raw)) $cfg = $raw;
+        }
+    }
+    return $cfg;
+}
+
+function chat_is_demo(): bool {
+    return chat_demo() !== [];
+}
+
+/**
+ * Je li ovo posuđeni demo račun. S njima se svatko prijavljuje, lozinka im je
+ * javna — zato ne smiju mijenjati lozinku ni postati administratori.
+ */
+function is_demo_account(string $username): bool {
+    if (!chat_is_demo()) return false;
+    foreach ((array)(chat_demo()['accounts'] ?? []) as $a) {
+        if (strtolower(trim((string)($a['user'] ?? ''))) === strtolower($username)) return true;
+    }
+    return false;
+}
+
+/** Najveći dopušteni upload — na javnom demou manji, da nitko ne napuni disk. */
+function chat_max_upload(): int {
+    return chat_is_demo() ? 10 * 1024 * 1024 : CHAT_MAX_UPLOAD;
+}
+
+/** Koliko poruka smije poslati jedan demo račun na sat. */
+const CHAT_DEMO_MSGS_PER_HOUR = 60;
+
+/**
+ * Je li demo račun potrošio svoju satnicu. Vrijedi samo za posuđene demo
+ * račune — pravi korisnici (i administrator) nisu ograničeni.
+ */
+function demo_rate_exceeded(string $username): bool {
+    if (!is_demo_account($username)) return false;
+    $st = db()->prepare('SELECT COUNT(*) FROM messages WHERE sender = ? AND created_at > ?');
+    $st->execute([$username, time() - 3600]);
+    return (int)$st->fetchColumn() >= CHAT_DEMO_MSGS_PER_HOUR;
+}
+
+/**
+ * Računi ponuđeni na stranici za prijavu. Ispisujemo samo one koji stvarno
+ * postoje i aktivni su — da demo ne nudi prijavu koja ne radi.
+ * @return array<int, array{user:string, pass:string, name:string, note:string}>
+ */
+function chat_demo_accounts(): array {
+    $out = [];
+    foreach ((array)(chat_demo()['accounts'] ?? []) as $a) {
+        $user = strtolower(trim((string)($a['user'] ?? '')));
+        $pass = (string)($a['pass'] ?? '');
+        if ($user === '' || $pass === '') continue;
+        $row = user_row($user);
+        if ($row === null || !(int)$row['active']) continue;
+        $out[] = [
+            'user' => $user,
+            'pass' => $pass,
+            'name' => (string)($a['name'] ?? $row['name']),
+            'note' => (string)($a['note'] ?? ''),
+        ];
+    }
+    return $out;
 }
 
 /** @return array{username:string,name:string,hash:string,role:string,active:int,must_change:int,last_active:int}|null */
