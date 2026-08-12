@@ -1,6 +1,7 @@
 {
     "require": {
         "minishlink/web-push": "^11.0",
-        "guzzlehttp/guzzle": "^7"
+        "guzzlehttp/guzzle": "^7",
+        "anthropic-ai/sdk": "^0.41.0"
     }
 }

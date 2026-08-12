@@ -17,6 +17,10 @@ const CHAT_USERS_FILE = CHAT_DATA_DIR . '/users.json'; // v1 — koristi se samo
 // na prijavi piše s kojim se računima može ući. Vidi demo-seed.php.
 const CHAT_DEMO_FILE  = CHAT_DATA_DIR . '/demo.json';
 
+// Bot koji odgovara u chatu (neobavezno). Datoteka drži API ključ, pa je
+// izvan gita i čita se samo sa servera. Vidi bot.php.
+const CHAT_BOT_FILE   = CHAT_DATA_DIR . '/bot.json';
+
 // Maksimalna veličina jedne datoteke (server limiti i dalje vrijede — vidi README)
 const CHAT_MAX_UPLOAD = 200 * 1024 * 1024; // 200 MB
 
@@ -476,6 +480,50 @@ function is_demo_account(string $username): bool {
 /** Najveći dopušteni upload — na javnom demou manji, da nitko ne napuni disk. */
 function chat_max_upload(): int {
     return chat_is_demo() ? 10 * 1024 * 1024 : CHAT_MAX_UPLOAD;
+}
+
+// ---------- bot ----------
+
+/**
+ * Postavke bota iz data/bot.json (prazno polje = bota nema). Datoteka sadrži
+ * API ključ, pa je nikad ne ispisujemo prema van.
+ */
+function chat_bot(): array {
+    static $cfg = null;
+    if ($cfg === null) {
+        $cfg = [];
+        if (is_file(CHAT_BOT_FILE)) {
+            $raw = json_decode((string)file_get_contents(CHAT_BOT_FILE), true);
+            if (is_array($raw)) $cfg = $raw;
+        }
+    }
+    return $cfg;
+}
+
+/** Korisničko ime bota, ili prazno ako bot nije postavljen. */
+function bot_username(): string {
+    $cfg = chat_bot();
+    $u = strtolower(trim((string)($cfg['user'] ?? '')));
+    return ($u !== '' && trim((string)($cfg['api_key'] ?? '')) !== '') ? $u : '';
+}
+
+function is_bot(string $username): bool {
+    $b = bot_username();
+    return $b !== '' && strtolower($username) === $b;
+}
+
+/** Koliko odgovora bot smije napisati na sat — gornja granica troška. */
+function bot_hourly_limit(): int {
+    return max(1, (int)(chat_bot()['replies_per_hour'] ?? 60));
+}
+
+/** Pokreni bota u pozadini da odgovori na poruku (kao push i transkripcija). */
+function bot_reply_async(int $messageId): void {
+    if (bot_username() === '') return;
+    $php = PHP_BINARY;
+    $script = __DIR__ . '/bot.php';
+    exec(sprintf('%s %s %d > /dev/null 2>&1 &',
+        escapeshellarg($php), escapeshellarg($script), $messageId));
 }
 
 /** Koliko poruka smije poslati jedan demo račun na sat. */

@@ -163,6 +163,31 @@ $react($c1, 'sam', '👋', $t - $D + 300);
 $react($c1, 'jo',  '❤️', $t - $D + 400);
 $react($c3, 'alex', '👀', $t - 19 * $H);
 
+// ---------- bot ----------
+// Ako je bot postavljen (php bot-setup.php <kljuc>), ubaci ga u razgovore i
+// otvori mu DM sa svakim demo korisnikom, da posjetitelj odmah ima s kim pričati.
+$botConvs = [];
+$botUser  = bot_username();
+if ($botUser !== '' && user_row($botUser) !== null) {
+    $botName = display_name($botUser);
+    $m = $pdo->prepare('INSERT OR IGNORE INTO members (conversation_id, username, joined_at) VALUES (?, ?, ?)');
+    $m->execute([$grp, $botUser, $now - 12 * $D]);
+    $m->execute([$ch,  $botUser, $now - 20 * $D]);
+
+    foreach (DEMO_USERS as $i => $u) {
+        $t   = $now - (3 + $i) * $H;
+        $dmb = $mkConv('dm', null, dm_key($u['user'], $botUser), $u['user'], [$u['user'], $botUser], $now - 4 * $D);
+        $b1  = $mkMsg($dmb, $botUser, "Hi {$u['name']}! I'm {$botName}, the assistant living in this chat. Ask me anything — about this app, or whatever you're working on.", $t - 30 * 60);
+        $b2  = $mkMsg($dmb, $u['user'], "What can you actually do in here?", $t - 20 * 60);
+        $b3  = $mkMsg($dmb, $botUser, "I read the conversation I'm in and reply like anyone else. In a group or channel, mention me with @{$botUser} and I'll join in. Try me.", $t - 19 * 60, ['reply_to' => $b2]);
+        $react($b1, $u['user'], '👋', $t - 25 * 60);
+        $botConvs[] = $dmb;
+    }
+
+    $mkMsg($ch, $botUser, "I'm in this channel too — mention me with @{$botUser} if you want me to chime in.", $now - 4 * $H);
+    echo "Bot \"$botUser\" dodan u razgovore.\n";
+}
+
 // ---------- pročitanost ----------
 // Alex je sve pročitao; ostali imaju koju nepročitanu — da demo izgleda živo.
 $lastIn = function (int $conv) use ($pdo): int {
@@ -171,7 +196,7 @@ $lastIn = function (int $conv) use ($pdo): int {
     return (int)$s->fetchColumn();
 };
 $mkRead = $pdo->prepare('INSERT OR REPLACE INTO reads (conversation_id, username, last_read_id) VALUES (?, ?, ?)');
-foreach ([$dm, $grp, $ch] as $conv) {
+foreach (array_merge([$dm, $grp, $ch], $botConvs) as $conv) {
     $last = $lastIn($conv);
     $mkRead->execute([$conv, 'alex', $last]);
     $mkRead->execute([$conv, 'sam',  max(0, $last - 2)]);

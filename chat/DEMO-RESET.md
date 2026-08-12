@@ -75,7 +75,24 @@ Javni demo znači da će unutra pisati nepoznati ljudi, zato:
 - Noćni reset u 04:00: `~/Library/LaunchAgents/hr.codigit.chat-demo-reset.plist`
   (log: `/tmp/chat-demo-reset.log`). Nije u gitu, kao ni ostali plistovi.
 
-Preostalo: vratiti server online (korak 5).
+Server je online: `hr.codigit.chat` sluša na `127.0.0.1:8080` (ne više na cijeloj
+mreži), promet ide kroz cloudflared tunel.
+
+## Bot u chatu (neobavezno)
+
+Bot odgovara na poruke preko Claude API-ja — u DM-u uvijek, a u grupi i kanalu
+kad ga se spomene s `@ime`. Model je **Haiku 4.5** (`claude-haiku-4-5`), oko
+0,18 centi po odgovoru. Uključivanje:
+
+```
+php bot-setup.php sk-ant-...      # ključ s console.anthropic.com
+php demo-seed.php                 # ubaci bota u demo razgovore
+php bot-setup.php --off           # ugasi ga (ključ se briše, račun deaktivira)
+```
+
+Ključ živi u `data/bot.json` (0600, izvan gita). Bez te datoteke bota nema i
+chat radi kao prije. Limit je 60 odgovora na sat — gornja granica troška; mijenja
+se poljem `replies_per_hour`. Dnevnik poziva je u `data/bot.log`.
 
 ## Pravila
 

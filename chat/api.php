@@ -266,6 +266,7 @@ switch ($action) {
         $st->execute([(int)$conv['id'], $user, $body, time(), $replyTo, $topicId]);
         $id = (int)$pdo->lastInsertId();
         push_notify_async($id);
+        bot_reply_async($id);
         json_out(['ok' => true, 'id' => $id]);
     }
 
