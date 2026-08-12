@@ -163,13 +163,20 @@
       font-size: 20px; font-weight: 700; color: var(--white);
       line-height: 1.3; margin-bottom: 8px; letter-spacing: -0.3px;
     }
-    .app-meta {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
-      color: var(--accent); background: rgba(230,57,70,0.1);
-      padding: 4px 10px; border-radius: 4px; text-transform: uppercase;
-      align-self: flex-start;
-      margin-bottom: 16px;
+    .app-tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      align-self: flex-start; margin-bottom: 16px;
     }
+    .app-meta, .app-kind {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 4px 10px; border-radius: 4px; text-transform: uppercase;
+    }
+    .app-meta { color: var(--accent); background: rgba(230,57,70,0.1); }
+    /* demo = klikneš i probaš · preuzimanje = skineš aplikaciju */
+    .app-kind.demo     { color: #7fb0ff; background: rgba(127,176,255,0.12); }
+    .app-kind.download { color: #5fd6a0; background: rgba(95,214,160,0.12); }
+    [data-theme="light"] .app-kind.demo     { color: #1b5fbf; background: rgba(27,95,191,0.10); }
+    [data-theme="light"] .app-kind.download { color: #0a7a4f; background: rgba(10,122,79,0.10); }
     .app-tagline { font-size: 14px; color: var(--muted); line-height: 1.7; flex: 1; margin-bottom: 20px; }
     .learn-more {
       font-size: 13px; font-weight: 600; color: var(--accent);
@@ -273,6 +280,8 @@
       heading: 'Everything I build, in one place.',
       subtext: 'Native Mac utilities, web apps and working prototypes. Some are free to download, some are live demos you can click through — each one built end to end.',
       learnMore: 'Learn more →',
+      kindDemo: 'Live demo',
+      kindDownload: 'Download',
       noApps: 'No apps yet. Check back soon!',
       'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Croatia',
       'fl-home': 'Home', 'fl-blog': 'Notes', 'fl-apps': 'Apps',
@@ -283,6 +292,8 @@
       heading: 'Sve što gradim, na jednom mjestu.',
       subtext: 'Nativni Mac alati, web aplikacije i radni prototipovi. Neke možeš besplatno preuzeti, neke su demo uživo koji možeš proklikati — sve izrađeno od početka do kraja.',
       learnMore: 'Saznaj više →',
+      kindDemo: 'Demo uživo',
+      kindDownload: 'Preuzimanje',
       noApps: 'Još nema aplikacija. Vratite se uskoro!',
       'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska',
       'fl-home': 'Početna', 'fl-blog': 'Bilješke', 'fl-apps': 'Aplikacije',
@@ -321,10 +332,13 @@
       const url = '/apps/' + app.slug + '.html';
       const platform = app.platform.includes('macOS') ? 'macOS' : app.platform;
       const meta = app.category + ' · ' + platform;
+      const kind = app.kind === 'demo' ? 'demo' : 'download';
+      const kindLabel = kind === 'demo' ? t[lang].kindDemo : t[lang].kindDownload;
       const cardHTML = '<a href="' + url + '" class="app-card" data-app-name="' + app.name + '" data-app-slug="' + app.slug + '">'
         + '<div class="app-icon">' + app.icon + '</div>'
         + '<h3>' + app.name + '</h3>'
-        + '<span class="app-meta">' + meta + '</span>'
+        + '<div class="app-tags"><span class="app-meta">' + meta + '</span>'
+        + '<span class="app-kind ' + kind + '">' + kindLabel + '</span></div>'
         + '<p class="app-tagline">' + tagline + '</p>'
         + '<span class="learn-more">' + t[lang].learnMore + '</span>'
         + '</a>';
