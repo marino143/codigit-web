@@ -101,6 +101,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://codigit.io/apps/claimo.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://codigit.io/apps/activitybar.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

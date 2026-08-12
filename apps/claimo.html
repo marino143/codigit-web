@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T97BQ3VRV1');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claimo — AI asistent za štetu nakon prometne nezgode | Co Digit</title>
+  <meta name="description" content="After a crash you deal with five parties at once. Claimo gives the driver one email address — insurer, garage, police and leasing all write to it, and Claude sorts every message into the right case." />
+  <link rel="canonical" href="https://codigit.io/apps/claimo.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://codigit.io/apps/claimo.html" />
+  <meta property="og:title" content="Claimo — AI claim assistant after a car accident | Co Digit" />
+  <meta property="og:description" content="One email address for insurer, garage, police and leasing — Claude reads every message and builds the case for you. Live demo." />
+  <meta property="og:image" content="https://codigit.io/apps/screenshots/claimo-ai.png" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Co Digit" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Claimo — AI claim assistant after a car accident | Co Digit" />
+  <meta name="twitter:description" content="One email address for all parties after a crash — AI builds the case. Live demo." />
+  <meta name="twitter:image" content="https://codigit.io/apps/screenshots/claimo-ai.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
+      --border: #222222; --text: #f0f0f0; --muted: #888;
+      --accent: #e63946; --white: #ffffff;
+      --nav-bg: rgba(10,10,10,0.9);
+    }
+    [data-theme="light"] {
+      --bg: #ffffff; --bg2: #f4f4f5; --bg3: #e8e8ea;
+      --border: #e0e0e0; --text: #111111; --muted: #666666;
+      --white: #0a0a0a; --nav-bg: rgba(255,255,255,0.95);
+    }
+    [data-theme="light"] footer { background: var(--bg2); }
+    [data-theme="light"] .app-hero, [data-theme="light"] .app-section { box-shadow: 0 2px 20px rgba(0,0,0,0.04); }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+
+
+    /* SCREENSHOT GALLERY */
+    .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 8px; }
+    .shot { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--bg2); }
+    .shot img { width: 100%; height: auto; display: block; }
+    .shot figcaption { font-size: 12.5px; color: var(--muted); padding: 10px 14px; border-top: 1px solid var(--border); }
+    .shot-wide { grid-column: 1 / -1; }
+    @media (max-width: 700px) { .shots { grid-template-columns: 1fr; } }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .logo-dot { display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
+    @keyframes codigit-blink { 0%, 100% { color: var(--white); } 50% { color: var(--accent); } }
+    @media (prefers-reduced-motion: reduce) { .logo-dot { animation: none; } }
+    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; letter-spacing: 0.3px; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 18px; border-radius: 6px; font-weight: 600 !important; transition: opacity 0.2s !important; font-size: 13px !important; }
+    .nav-cta:hover { opacity: 0.85; }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+
+    .lang-switcher { display: flex; align-items: center; gap: 4px; }
+    .lang-btn {
+      background: none; border: 1px solid transparent; color: var(--muted);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 4px 8px; border-radius: 4px; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .lang-btn:hover { color: var(--white); }
+    .lang-btn.active { color: var(--white); border-color: var(--border); }
+    .lang-sep { color: #333; font-size: 11px; }
+    .theme-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--muted); font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .theme-btn:hover { color: var(--text); border-color: var(--muted); }
+
+    /* MAIN WRAPPER */
+    .app-wrapper {
+      flex: 1;
+      max-width: 880px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+
+    /* HERO */
+    .app-hero {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+    .app-hero-icon {
+      width: 120px; height: 120px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+      color: #fff;
+    }
+    .app-hero-icon svg { width: 64px; height: 64px; }
+    .app-hero-content { flex: 1; }
+    .app-platform-badge {
+      display: inline-block;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+      color: var(--accent); background: rgba(230,57,70,0.1);
+      padding: 4px 10px; border-radius: 4px; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .app-hero h1 {
+      font-size: clamp(32px, 4vw, 48px); font-weight: 900;
+      letter-spacing: -1.5px; color: var(--white); line-height: 1.1; margin-bottom: 12px;
+    }
+    .app-tagline {
+      font-size: 17px; color: var(--muted); line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .app-cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 12px 22px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; font-family: inherit;
+      text-decoration: none; border: 1px solid transparent; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--white); border-color: var(--border); }
+    .btn-outline:hover { border-color: var(--muted); }
+    .btn-bmc { background: #FFDD00; color: #000; border-color: #FFDD00; }
+    .btn-bmc:hover { background: #FFE633; transform: translateY(-1px); opacity: 1; }
+
+    /* DIVIDER */
+    .section-divider { width: 48px; height: 3px; background: var(--accent); border-radius: 2px; margin: 56px 0 24px; }
+
+    /* SECTIONS */
+    .app-section { margin-bottom: 16px; }
+    .app-section h2 {
+      font-size: 22px; font-weight: 800; color: var(--white);
+      letter-spacing: -0.5px; margin-bottom: 16px;
+    }
+    .app-section p { color: var(--text); font-size: 16px; line-height: 1.8; margin-bottom: 16px; }
+    .benefit-list {
+      list-style: none; padding: 0; margin: 16px 0;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+    }
+    .benefit-list li {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px 18px;
+      font-size: 14px; color: var(--text); line-height: 1.5;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .benefit-list li::before {
+      content: '✓'; color: var(--accent); font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .info-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+      margin-top: 8px;
+    }
+    .info-card p { font-size: 15px; line-height: 1.7; }
+    .info-card a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .info-card a:hover { opacity: 0.8; }
+
+    /* SHARE */
+    .share-section { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border); }
+    .share-section h2 { margin-bottom: 16px; }
+    .share-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+    .share-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 16px; border-radius: 8px;
+      background: var(--bg2); border: 1px solid var(--border);
+      color: var(--text); font-size: 13px; font-weight: 500;
+      text-decoration: none; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .share-btn:hover { background: var(--bg3); border-color: var(--muted); }
+    .share-btn svg { flex-shrink: 0; }
+    .share-btn.copied { color: var(--accent); border-color: var(--accent); }
+
+    /* BACK */
+    .back-to-apps {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 56px; padding: 12px 24px;
+      font-size: 13px; font-weight: 600; color: var(--muted);
+      text-decoration: none; border: 1px solid var(--border);
+      border-radius: 8px; transition: all 0.2s;
+    }
+    .back-to-apps:hover { color: var(--white); border-color: var(--muted); }
+
+    /* LANG TOGGLE */
+    .lang-content { display: none; }
+    .lang-content.active { display: block; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto;
+    }
+    .footer-logo { font-size: 14px; font-weight: 800; color: var(--white); }
+    .footer-logo span { color: var(--accent); }
+    footer p { font-size: 12px; color: #555; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: #555; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--muted); }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .app-wrapper { padding: 40px 20px 60px; }
+      .app-hero { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .app-hero-icon { width: 96px; height: 96px; border-radius: 20px; }
+      .app-hero-icon svg { width: 52px; height: 52px; }
+      .benefit-list { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
+  <ul class="nav-links">
+    <li><a href="/#services">Capabilities</a></li>
+    <li><a href="/#ai">AI-Powered</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#certs">Certifications</a></li>
+    <li><a href="/services.html">Services</a></li>
+    <li><a href="/blog/">Notes</a></li>
+    <li><a href="/apps/">Apps</a></li>
+    <li><a href="/contact.html" class="nav-cta">Get in touch</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="hr">HR</button>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+  </div>
+</nav>
+
+<main class="app-wrapper">
+
+  <!-- HERO -->
+  <section class="app-hero">
+    <div class="app-hero-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+    <div class="app-hero-content">
+      <span class="app-platform-badge" id="platform-badge">Web app · Supabase + Claude · Live demo</span>
+      <h1 id="app-name">Claimo</h1>
+      <p class="app-tagline" id="app-tagline">After a crash you suddenly deal with five parties at once. Claimo gives the driver one email address — insurer, garage, police and leasing all write to it, and Claude sorts every message into the right case.</p>
+      <div class="app-cta-row">
+        <a href="https://claimo.hr" target="_blank" rel="noopener" class="btn btn-primary" id="cta-download">Open live demo →</a>
+        <a href="/contact.html" class="btn btn-outline" id="cta-contact">Build something like this →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENSHOTS -->
+  <div class="section-divider"></div>
+  <section class="app-section">
+    <h2 id="h-shots">Screenshots</h2>
+    <div class="shots">
+      <figure class="shot shot-wide">
+        <img src="/apps/screenshots/claimo-ai.png" alt="Claimo — AI reads incoming emails and builds the case timeline" loading="lazy" width="1600" height="1111" />
+        <figcaption id="cap-ai">Four emails from four different parties — Claude classifies each one, pulls out the plate, claim number and amount, and builds a single case.</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/apps/screenshots/claimo-dashboard.png" alt="Claimo dashboard with active claims" loading="lazy" width="1600" height="1000" />
+        <figcaption id="cap-dash">Every claim, its progress and total reported damage in one view.</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/apps/screenshots/claimo-case.png" alt="Claimo case detail with per-party timeline" loading="lazy" width="1600" height="1044" />
+        <figcaption id="cap-case">Case detail — a timeline per party, documents, rights and outcome.</figcaption>
+      </figure>
+      <figure class="shot shot-wide">
+        <img src="/apps/screenshots/claimo-mobile.png" alt="Claimo on mobile" loading="lazy" width="800" height="1764" style="max-width:390px;margin:0 auto;" />
+        <figcaption id="cap-mob">Mobile — the whole flow works on a phone, where people actually are after a crash.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- WHAT IT DOES -->
+  <section class="app-section">
+    <h2 id="h-what">What it does</h2>
+    <div class="lang-content active" data-lang="en">
+      <p>A car accident turns into five conversations at once — the insurer, the garage, the police, the leasing company, sometimes a lawyer. Each one writes separately, nobody holds the whole picture, and the driver ends up as the switchboard. Claimo takes that job.</p>
+      <ul class="benefit-list">
+        <li>One dedicated Claimo email address per driver — you hand it to every party</li>
+        <li>Claude reads each incoming message and files it under the right case and the right party</li>
+        <li>Pulls out the plate, claim number, amount and dates — no manual entry</li>
+        <li>Several claims tracked in parallel, each with its own timeline</li>
+        <li>Plain-Croatian summary and a clear "what you do next" for every update</li>
+        <li>All documents in one place: accident report, photos, police record, invoices</li>
+        <li>Built-in guides — total loss, GAP, replacement vehicle, diminished value</li>
+      </ul>
+    </div>
+    <div class="lang-content" data-lang="hr">
+      <p>Prometna nezgoda se pretvori u pet paralelnih razgovora — osiguranje, servis, policija, leasing, ponekad odvjetnik. Svatko piše zasebno, nitko ne drži cjelinu, a vozač završi kao centrala. Claimo preuzima taj posao.</p>
+      <ul class="benefit-list">
+        <li>Jedna dedicirana Claimo e-mail adresa po vozaču — daš je svim stranama</li>
+        <li>Claude čita svaku pristiglu poruku i slaže je pod pravi slučaj i pravu stranu</li>
+        <li>Izvlači registraciju, broj štete, iznos i datume — bez ijednog ručnog unosa</li>
+        <li>Više slučajeva paralelno, svaki sa svojim tijekom</li>
+        <li>Sažetak na ljudskom hrvatskom i jasno "što ti je sljedeći korak"</li>
+        <li>Svi dokumenti na jednom mjestu: europsko izvješće, fotografije, zapisnik, računi</li>
+        <li>Ugrađeni vodiči — totalna šteta, GAP, zamjensko vozilo, umanjena vrijednost</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="app-section">
+    <h2 id="h-why">How it works</h2>
+    <div class="lang-content active" data-lang="en">
+      <p>The front end is a single static bundle on Netlify. Incoming mail hits a Supabase edge function, which sends the message to Claude with a strict Croatian-language prompt and gets back structured JSON: which party sent it, the plate, the claim reference, the amount, a one-sentence summary and the next step.</p>
+      <p>The function then decides whether this belongs to an existing case — matching on claim reference first, then registration plate — or opens a new one, and appends an event to that case's timeline. Two emails about the same car land in the same case; a third about a different vehicle opens its own.</p>
+      <p>The public demo on the site runs the same pipeline against a fixed set of sample emails, with results cached so a visitor gets an instant answer and the model isn't re-billed on every click. The heuristic fallback keeps classification working even if the model is unavailable.</p>
+    </div>
+    <div class="lang-content" data-lang="hr">
+      <p>Front end je jedan statički paket na Netlifyju. Dolazna pošta pogađa Supabase edge funkciju, koja poruku šalje Claudeu sa strogim promptom na hrvatskom i dobiva natrag strukturirani JSON: koja je strana poslala, registracija, broj štete, iznos, sažetak u jednoj rečenici i sljedeći korak.</p>
+      <p>Funkcija zatim odlučuje pripada li poruka postojećem slučaju — prvo po broju štete, pa po registraciji — ili otvara novi, i dodaje događaj u tijek tog slučaja. Dva maila o istom autu završe u istom slučaju; treći o drugom vozilu otvori svoj.</p>
+      <p>Javni demo na stranici vrti isti pipeline na fiksnom skupu primjera, uz keširane rezultate — posjetitelj dobije odgovor odmah, a model se ne naplaćuje na svaki klik. Heuristički fallback drži klasifikaciju živom i kad model nije dostupan.</p>
+    </div>
+  </section>
+
+  <!-- BUILD STORY -->
+  <section class="app-section">
+    <h2 id="h-journey">Build story</h2>
+    <div class="info-card">
+      <div class="lang-content active" data-lang="en">
+        <p>Claimo started as a tracker for leasing drivers, with the plan to charge insurers and leasing companies. Then a senior claims assessor at a Croatian insurer said plainly that they would never pay for it — and garages, already fully booked, have no reason to pay for referrals either. That feedback killed the original business model and made the product better: the only party with real pain and no substitute is the driver, so the driver became the customer. The dedicated inbox plus AI came out of that reframing. It ships with a live demo, eight SEO guides, and the full legal set. This is the kind of product work I do for founders at <a href="/services.html">Codigit</a>.</p>
+      </div>
+      <div class="lang-content" data-lang="hr">
+        <p>Claimo je krenuo kao alat za vozače na leasingu, s planom da plaćaju osiguranja i leasing kuće. Onda je glavni vještak jednog hrvatskog osiguratelja otvoreno rekao da oni to nikad neće platiti — a serviseri, ionako prebukirani, nemaju razloga plaćati za preporuke. Taj feedback je ubio prvotni poslovni model i učinio proizvod boljim: jedini tko ima stvarnu bol i nema zamjenu je vozač, pa je vozač postao kupac. Dedicirani inbox i AI su izašli iz tog zaokreta. Dolazi s demom uživo, osam SEO vodiča i kompletnim pravnim setom. Ovo je tip proizvodnog rada koji radim za founderse kroz <a href="/services.html">Codigit</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHARE -->
+  <section class="share-section">
+    <h2 id="h-share">Found this useful? Share it.</h2>
+    <div class="share-buttons">
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcodigit.io%2Fapps%2Fclaimo.html" target="_blank" rel="noopener" class="share-btn" id="share-linkedin">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        <span>Share on LinkedIn</span>
+      </a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fcodigit.io%2Fapps%2Fclaimo.html&text=" target="_blank" rel="noopener" class="share-btn" id="share-twitter">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <span>Share on X</span>
+      </a>
+      <button type="button" class="share-btn" id="copyLinkBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <span id="copy-label">Copy link</span>
+      </button>
+    </div>
+  </section>
+
+  <a href="/apps/" class="back-to-apps" id="backToApps">← Back to all apps</a>
+</main>
+
+<footer>
+  <div class="footer-logo">CO<span class="logo-dot">.</span>DIGIT</div>
+  <p id="footer-copy">&copy; 2026 Co Digit d.o.o. &middot; Zagreb, Croatia</p>
+  <div class="footer-links">
+    <a href="/" id="fl-home">Home</a>
+    <a href="/blog/" id="fl-blog">Notes</a>
+    <a href="/apps/" id="fl-apps">Apps</a>
+    <a href="/cookie-policy.html" id="fl-cookies">Cookie Policy</a>
+    <a href="/privacy-policy.html" id="fl-privacy">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  const t = {
+    en: {
+      'platform-badge': 'Web app · Supabase + Claude · Live demo',
+      'app-tagline': 'After a crash you suddenly deal with five parties at once. Claimo gives the driver one email address — insurer, garage, police and leasing all write to it, and Claude sorts every message into the right case.',
+      'cta-download': 'Open live demo →',
+      'cta-contact': 'Build something like this →',
+      'h-shots': 'Screenshots',
+      'cap-ai': 'Four emails from four different parties — Claude classifies each one, pulls out the plate, claim number and amount, and builds a single case.',
+      'cap-dash': 'Every claim, its progress and total reported damage in one view.',
+      'cap-case': 'Case detail — a timeline per party, documents, rights and outcome.',
+      'cap-mob': 'Mobile — the whole flow works on a phone, where people actually are after a crash.',
+      'h-what': 'What it does',
+      'h-why': 'How it works',
+      'h-journey': 'Build story',
+      'h-share': 'Found this useful? Share it.',
+      'copy-label': 'Copy link',
+      copied: '✓ Copied!',
+      'backToApps': '← Back to all apps',
+      'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Croatia',
+      'fl-home': 'Home', 'fl-blog': 'Notes', 'fl-apps': 'Apps',
+      'fl-cookies': 'Cookie Policy', 'fl-privacy': 'Privacy Policy',
+    },
+    hr: {
+      'platform-badge': 'Web aplikacija · Supabase + Claude · Demo uživo',
+      'app-tagline': 'Nakon nezgode odjednom komuniciraš s pet strana. Claimo vozaču daje jednu e-mail adresu — osiguranje, servis, policija i leasing pišu na nju, a Claude svaku poruku slaže pod pravi slučaj.',
+      'cta-download': 'Otvori demo uživo →',
+      'cta-contact': 'Želiš ovakav proizvod →',
+      'h-shots': 'Screenshotovi',
+      'cap-ai': 'Četiri maila od četiri različite strane — Claude svaki klasificira, izvuče registraciju, broj štete i iznos te složi jedan slučaj.',
+      'cap-dash': 'Svi slučajevi, njihov napredak i ukupno prijavljena šteta na jednom pregledu.',
+      'cap-case': 'Detalj slučaja — tijek po svakoj strani, dokumenti, prava i ishod.',
+      'cap-mob': 'Mobitel — cijeli tijek radi na telefonu, ondje gdje ljudi i jesu nakon nezgode.',
+      'h-what': 'Što radi',
+      'h-why': 'Kako radi',
+      'h-journey': 'Priča o izradi',
+      'h-share': 'Smatrate ovo korisnim? Podijelite.',
+      'copy-label': 'Kopiraj link',
+      copied: '✓ Kopirano!',
+      'backToApps': '← Natrag na sve aplikacije',
+      'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska',
+      'fl-home': 'Početna', 'fl-blog': 'Bilješke', 'fl-apps': 'Aplikacije',
+      'fl-cookies': 'Politika kolačića', 'fl-privacy': 'Politika privatnosti',
+    }
+  };
+
+  let lang = 'en';
+
+  function applyLang(l) {
+    lang = l;
+    document.documentElement.lang = l;
+    localStorage.setItem('lang', l);
+    const d = t[l];
+    Object.keys(d).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = d[id];
+    });
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+    document.querySelectorAll('.lang-content').forEach(el => {
+      el.classList.toggle('active', el.getAttribute('data-lang') === l);
+    });
+  }
+
+  // Theme
+  const themeBtn = document.getElementById('themeBtn');
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    themeBtn.innerHTML = theme === 'light' ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+  }
+  const savedTheme = localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  applyTheme(savedTheme);
+  themeBtn.addEventListener('click', () => {
+    applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+  });
+
+  const saved = localStorage.getItem('lang');
+  const browser = navigator.language.startsWith('hr') ? 'hr' : 'en';
+  applyLang(saved || browser);
+
+  document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+
+  // Copy link
+  const copyBtn = document.getElementById('copyLinkBtn');
+  const copyLabel = document.getElementById('copy-label');
+  copyBtn.addEventListener('click', async () => {
+    if (typeof gtag === 'function') {
+      gtag('event', 'app_share', { app_name: 'Claimo', app_slug: 'claimo', share_method: 'copy_link', event_category: 'Engagement' });
+    }
+    const url = window.location.href.split('#')[0];
+    try {
+      await navigator.clipboard.writeText(url);
+      copyBtn.classList.add('copied');
+      copyLabel.textContent = t[lang].copied;
+      setTimeout(() => {
+        copyBtn.classList.remove('copied');
+        copyLabel.textContent = t[lang]['copy-label'];
+      }, 2000);
+    } catch (err) {
+      const ta = document.createElement('textarea');
+      ta.value = url; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); copyBtn.classList.add('copied'); copyLabel.textContent = t[lang].copied; } catch (e) {}
+      document.body.removeChild(ta);
+      setTimeout(() => { copyBtn.classList.remove('copied'); copyLabel.textContent = t[lang]['copy-label']; }, 2000);
+    }
+  });
+
+  // GA4 event tracking
+  const ctaDownload = document.getElementById('cta-download');
+  if (ctaDownload) {
+    ctaDownload.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'app_demo_open', { app_name: 'Claimo', app_slug: 'claimo', app_version: '1.0', event_category: 'Engagement', event_label: 'Live Demo' });
+      }
+    });
+  }
+
+  const ctaContact = document.getElementById('cta-contact');
+  if (ctaContact) {
+    ctaContact.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'app_contact', { app_name: 'Claimo', app_slug: 'claimo', event_category: 'Engagement', event_label: 'Get your own' });
+      }
+    });
+  }
+
+  const shareLinkedin = document.getElementById('share-linkedin');
+  if (shareLinkedin) {
+    shareLinkedin.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'app_share', { app_name: 'Claimo', app_slug: 'claimo', share_method: 'linkedin', event_category: 'Engagement' });
+      }
+    });
+  }
+
+  const shareTwitter = document.getElementById('share-twitter');
+  if (shareTwitter) {
+    shareTwitter.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'app_share', { app_name: 'Claimo', app_slug: 'claimo', share_method: 'twitter', event_category: 'Engagement' });
+      }
+    });
+  }
+</script>
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Claimo",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "Claim assistant for drivers after a car accident. One dedicated email address collects messages from the insurer, garage, police and leasing company; Claude classifies each message, extracts the plate, claim number and amount, and builds the case timeline.",
+  "url": "https://codigit.io/apps/claimo.html",
+  "screenshot": "https://codigit.io/apps/screenshots/claimo-ai.png",
+  "inLanguage": "hr",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "publisher": { "@type": "Organization", "name": "Co Digit", "url": "https://codigit.io" }
+}
+</script>
+</body>
+</html>

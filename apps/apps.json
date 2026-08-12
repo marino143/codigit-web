@@ -1,5 +1,22 @@
 [
   {
+    "slug": "claimo",
+    "name": "Claimo",
+    "tagline_en": "One email address for the insurer, garage, police and leasing company — AI reads every message and builds your claim for you.",
+    "tagline_hr": "Jedna e-mail adresa za osiguranje, servis, policiju i leasing — AI čita svaku poruku i sam gradi tvoj slučaj.",
+    "description_en": "After a car accident you suddenly deal with five parties at once — the insurer, the garage, the police, the leasing company, sometimes a lawyer. Each writes separately, nobody holds the whole picture, and the driver becomes the switchboard. Claimo gives every driver one dedicated email address to hand out to all of them. Claude reads each incoming message, decides which party sent it, extracts the registration plate, claim reference, amount and dates, and files it under the right case — several claims tracked in parallel, each with its own timeline. Every update comes with a plain-language summary and a clear next step. Documents, guides on total loss, GAP and replacement vehicles, and the full legal set are built in. Live demo on claimo.hr with a working AI pipeline, no sign-up.",
+    "description_hr": "Nakon prometne nezgode odjednom komuniciraš s pet strana — osiguranje, servis, policija, leasing, ponekad odvjetnik. Svatko piše zasebno, nitko ne drži cjelinu, a vozač završi kao centrala. Claimo svakom vozaču daje jednu dediciranu e-mail adresu koju podijeli svima. Claude čita svaku pristiglu poruku, prepozna koja ju je strana poslala, izvuče registraciju, broj štete, iznos i datume te je složi pod pravi slučaj — više slučajeva paralelno, svaki sa svojim tijekom. Uz svaku promjenu ide sažetak na ljudskom jeziku i jasan sljedeći korak. Dokumenti, vodiči o totalnoj šteti, GAP-u i zamjenskom vozilu te kompletan pravni set su ugrađeni. Demo uživo na claimo.hr s pravim AI pipelineom, bez registracije.",
+    "category": "Utilities",
+    "platform": "Web app",
+    "version": "1.0",
+    "release_date": "2026-08-12",
+    "icon": "🛡️",
+    "download_url": "https://claimo.hr",
+    "demo_url": "https://claimo.hr",
+    "linkedin_posts": [],
+    "featured": true
+  },
+  {
     "slug": "bridge",
     "name": "Bridge",
     "tagline_en": "One private console to run a dev agency — clients, revenue split, a unified calendar, and a daily-standup hub for your team.",
