@@ -141,6 +141,11 @@
       margin-bottom: 24px;
     }
     .app-cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .app-langs { margin-top: 12px; font-size: 13px; color: var(--muted); }
+    .app-langs.lang-content { display: none; }
+    .app-langs.lang-content.active { display: block; }
+    .app-langs a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+    .app-langs a:hover { color: var(--white); }
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
       padding: 12px 22px; border-radius: 8px;
@@ -280,9 +285,17 @@
       <h1 id="app-name">Claimo</h1>
       <p class="app-tagline" id="app-tagline">After a crash you suddenly deal with five parties at once. Claimo gives the driver one email address — insurer, garage, police and leasing all write to it, and Claude sorts every message into the right case.</p>
       <div class="app-cta-row">
-        <a href="https://claimo.hr" target="_blank" rel="noopener" class="btn btn-primary" id="cta-download">Open live demo →</a>
+        <a href="https://claimo.hr/en/" target="_blank" rel="noopener" class="btn btn-primary" id="cta-download">Open live demo →</a>
         <a href="/contact.html" class="btn btn-outline" id="cta-contact">Build something like this →</a>
       </div>
+      <p class="app-langs lang-content active" data-lang="en">The demo runs in
+        <a href="https://claimo.hr/en/" target="_blank" rel="noopener">English</a>,
+        <a href="https://claimo.hr/de/" target="_blank" rel="noopener">German</a> and
+        <a href="https://claimo.hr/" target="_blank" rel="noopener">Croatian</a>.</p>
+      <p class="app-langs lang-content" data-lang="hr">Demo je dostupan na
+        <a href="https://claimo.hr/" target="_blank" rel="noopener">hrvatskom</a>,
+        <a href="https://claimo.hr/en/" target="_blank" rel="noopener">engleskom</a> i
+        <a href="https://claimo.hr/de/" target="_blank" rel="noopener">njemačkom</a>.</p>
     </div>
   </section>
 
@@ -443,10 +456,15 @@
 
   let lang = 'en';
 
+  // Claimo govori tri jezika — otvori onaj koji posjetitelj čita
+  const CLAIMO_URL = { en: 'https://claimo.hr/en/', hr: 'https://claimo.hr/' };
+
   function applyLang(l) {
     lang = l;
     document.documentElement.lang = l;
     localStorage.setItem('lang', l);
+    const demoLink = document.getElementById('cta-download');
+    if (demoLink) demoLink.href = CLAIMO_URL[l] || CLAIMO_URL.en;
     const d = t[l];
     Object.keys(d).forEach(id => {
       const el = document.getElementById(id);

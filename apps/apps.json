@@ -12,10 +12,12 @@
     "version": "1.0",
     "release_date": "2026-08-12",
     "icon": "🛡️",
-    "download_url": "https://claimo.hr",
-    "demo_url": "https://claimo.hr",
+    "download_url": "https://claimo.hr/en/",
+    "demo_url": "https://claimo.hr/en/",
     "linkedin_posts": [],
-    "featured": true
+    "featured": true,
+    "demo_url_hr": "https://claimo.hr/",
+    "demo_url_de": "https://claimo.hr/de/"
   },
   {
     "slug": "bridge",
