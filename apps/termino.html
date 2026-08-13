@@ -299,6 +299,8 @@
       <button class="lang-btn active" data-lang="en">EN</button>
       <span class="lang-sep">|</span>
       <button class="lang-btn" data-lang="hr">HR</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="de">DE</button>
     </div>
     <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
   </div>
@@ -370,6 +372,19 @@
         <li>Nigdje nema praćenja trećih strana; posjeti se broje first-party, bez kolačića</li>
       </ul>
     </div>
+    <div class="lang-content" data-lang="de">
+      <p>Kleine Salons nehmen die meisten Termine noch immer telefonisch an — mitten in der Arbeitszeit, mitten in der Behandlung, mit Papierkalender. Termino gibt jedem Salon ein öffentliches Profil, über das Kundinnen und Kunden rund um die Uhr buchen, und den Inhabern ein Dashboard, das das Notizbuch ersetzt.</p>
+      <ul class="benefit-list">
+        <li>Salonprofil mit Leistungen, Team, Galerie, Stories im Instagram-Stil und Google-Bewertungen</li>
+        <li>Kunden buchen 24/7 ohne Konto — E-Mail-Bestätigung und Erinnerung am Vortag</li>
+        <li>Tages- und Wochenkalender, manuelle Buchungen und Kundenkartei für den Inhaber</li>
+        <li>Tageslimits pro Leistung und geteilte Schichten — der Plan folgt dem echten Salonalltag</li>
+        <li>Warteliste: Wird ein Termin frei, wird der nächste Kunde automatisch benachrichtigt</li>
+        <li>Push-Benachrichtigungen für Inhaber — Web Push im Browser, natives APNs in der iOS-App</li>
+        <li>Self-Service-Onboarding — ein neuer Salon ist in wenigen Minuten online</li>
+        <li>Kein Tracking durch Dritte; Besuche werden first-party gezählt, ohne Cookies</li>
+      </ul>
+    </div>
   </section>
 
   <!-- HOW IT WORKS -->
@@ -383,6 +398,10 @@
       <p>Frontend je statički paket na Netlifyju — bez frameworka, bez build stepa. Supabase daje Postgres s row-level securityjem, auth i edge funkcije: transakcijski mailovi kroz MailerSend, Web Push preko VAPID-a, a APNs push ide ravno na Apple s ES256 JWT-om potpisanim u samoj funkciji. Zakazani pg_cron sweepovi šalju podsjetnike dan ranije i zamolbe za recenziju.</p>
       <p>iPhone aplikacija je isti kod zapakiran u Capacitor — kurirani allowlist build nosi samo javne stranice, binarka za App Store nema donacijskih linkova ni consent bannera, a nativni subclass fiksira scroll view da sučelje djeluje nativno, ne ugrađeno. Prolazak App Reviewa trajao je četiri runde; svako odbijanje je proizvod učinilo čišćim.</p>
     </div>
+    <div class="lang-content" data-lang="de">
+      <p>Das Frontend ist ein statisches Bundle auf Netlify — ohne Framework, ohne Build-Schritt. Supabase liefert Postgres mit Row-Level Security, Auth und Edge Functions: Transaktions-E-Mails über MailerSend, Web Push über VAPID, und der APNs-Push geht mit einem in der Function selbst signierten ES256-JWT direkt an Apple. Geplante pg_cron-Sweeps verschicken die Erinnerungen am Vortag und die Bewertungsanfragen.</p>
+      <p>Die iPhone-App ist derselbe Code, verpackt in Capacitor — ein kuratierter Allowlist-Build enthält nur die öffentlichen Seiten, die App-Store-Binary trägt weder Spendenlinks noch Consent-Banner, und eine native Subklasse fixiert die Scroll-View, damit sich die Oberfläche nativ anfühlt statt eingebettet. Der Weg durch das App Review dauerte vier Runden; jede Ablehnung hat das Produkt sauberer gemacht.</p>
+    </div>
   </section>
 
   <!-- BUILD STORY -->
@@ -394,6 +413,9 @@
       </div>
       <div class="lang-content" data-lang="hr">
         <p>Termino je krenuo kao vježba redizajna lokalnog booking proizvoda i narastao u pravu stvar: marketplace sa živom bazom, email pipelineom, push obavijestima i iOS aplikacijom — sve na besplatnoj infrastrukturi. Apple ga je četiri puta odbio (gumb za donacije, iPad layout bug, copy koji je sugerirao plaćeni paket, cookie banner protumačen kao praćenje) prije odobrenja u srpnju 2026. Unutar mjesec dana prvi se vlasnik salona sam pronašao i registrirao. Ovakav end-to-end proizvodni rad — dizajn, backend, App Store — radim za founderse kroz <a href="/services.html">Codigit</a>.</p>
+      </div>
+      <div class="lang-content" data-lang="de">
+        <p>Termino begann als Redesign-Übung eines lokalen Buchungsprodukts und wuchs zur echten Sache: ein Marktplatz mit Live-Datenbank, E-Mail-Pipeline, Push-Benachrichtigungen und iOS-App — alles auf kostenloser Infrastruktur. Apple lehnte die App viermal ab (ein Spenden-Button, ein iPad-Layout-Fehler, Texte, die einen Bezahltarif andeuteten, ein Cookie-Banner, das als Tracking gelesen wurde), bevor sie im Juli 2026 freigegeben wurde. Innerhalb eines Monats fand der erste Saloninhaber die Plattform organisch und registrierte sich selbst. Diese End-to-End-Produktarbeit — Design, Backend, App Store — mache ich für Gründer bei <a href="/services.html">Codigit</a>.</p>
       </div>
     </div>
   </section>
@@ -475,6 +497,27 @@
       'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska',
       'fl-home': 'Početna', 'fl-blog': 'Bilješke', 'fl-apps': 'Aplikacije',
       'fl-cookies': 'Politika kolačića', 'fl-privacy': 'Politika privatnosti',
+    },
+    de: {
+      'platform-badge': 'Web + iOS · Live im App Store',
+      'app-tagline': 'Online-Buchung für kroatische Friseur-, Kosmetik- und Nagelsalons. Kundinnen und Kunden buchen mit ein paar Klicks, rund um die Uhr — Inhaber führen Kalender, Kundenkartei und Warteliste im Web oder in der nativen iPhone-App. Kostenlos für Salons und Kunden.',
+      'cta-download': 'termino.hr öffnen →',
+      'cta-appstore': ' App Store →',
+      'cta-bmc': '☕ Spendier mir einen Kaffee',
+      'h-shots': 'Screenshots',
+      'cap-home': 'Der Marktplatz — Kunden suchen Salons nach Leistung und Ort und buchen ohne Konto.',
+      'cap-salon': 'Ein Salonprofil — Leistungen, Team, Galerie und Bewertungen, daneben das Buchungs-Widget in drei Schritten.',
+      'cap-iphone': 'Die native iPhone-App — dasselbe Produkt, verpackt in Capacitor, mit APNs-Push für Inhaber.',
+      'h-what': 'Was es kann',
+      'h-why': 'Wie es funktioniert',
+      'h-journey': 'Die Entstehungsgeschichte',
+      'h-share': 'Nützlich? Teilen Sie es.',
+      'copy-label': 'Link kopieren',
+      copied: '✓ Kopiert!',
+      'backToApps': '← Zurück zu allen Apps',
+      'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Kroatien',
+      'fl-home': 'Startseite', 'fl-blog': 'Notizen', 'fl-apps': 'Apps',
+      'fl-cookies': 'Cookie-Richtlinie', 'fl-privacy': 'Datenschutz',
     }
   };
 
@@ -483,7 +526,10 @@
   function applyLang(l) {
     lang = l;
     document.documentElement.lang = l;
-    localStorage.setItem('lang', l);
+    // Njemački postoji samo na ovoj stranici — u zajednički 'lang' ključ ga ne
+    // spremamo jer ostale stranice poznaju samo en/hr i pukle bi na t['de'].
+    localStorage.setItem('lang_termino', l);
+    if (l !== 'de') localStorage.setItem('lang', l);
     const d = t[l];
     Object.keys(d).forEach(id => {
       const el = document.getElementById(id);
@@ -509,9 +555,9 @@
     applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
   });
 
-  const saved = localStorage.getItem('lang');
-  const browser = navigator.language.startsWith('hr') ? 'hr' : 'en';
-  applyLang(saved || browser);
+  const saved = localStorage.getItem('lang_termino') || localStorage.getItem('lang');
+  const browser = navigator.language.startsWith('hr') ? 'hr' : (navigator.language.startsWith('de') ? 'de' : 'en');
+  applyLang(t[saved] ? saved : browser);
 
   document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
 
@@ -613,7 +659,8 @@
 
     var T = {
       en: { open: 'Open full size', close: 'Close', prev: 'Previous', next: 'Next', zin: 'Zoom in', zout: 'Fit to screen', of: 'of' },
-      hr: { open: 'Otvori u punoj veličini', close: 'Zatvori', prev: 'Prethodna', next: 'Sljedeća', zin: 'Povećaj', zout: 'Prilagodi ekranu', of: 'od' }
+      hr: { open: 'Otvori u punoj veličini', close: 'Zatvori', prev: 'Prethodna', next: 'Sljedeća', zin: 'Povećaj', zout: 'Prilagodi ekranu', of: 'od' },
+      de: { open: 'In voller Größe öffnen', close: 'Schließen', prev: 'Zurück', next: 'Weiter', zin: 'Vergrößern', zout: 'An Bildschirm anpassen', of: 'von' }
     };
     function tr() { return T[document.documentElement.lang] || T.en; }
 

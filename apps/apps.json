@@ -16,7 +16,9 @@
     "demo_url": "https://termino.hr",
     "buymeacoffee_url": "https://buymeacoffee.com/marino143",
     "linkedin_posts": [],
-    "featured": true
+    "featured": true,
+    "tagline_de": "Online-Buchung für kroatische Friseur-, Kosmetik- und Nagelsalons — Kunden buchen mit ein paar Klicks rund um die Uhr, Inhaber führen den Kalender im Web oder in der nativen iPhone-App. Live im App Store.",
+    "description_de": "Termino ist ein Buchungsmarktplatz für kroatische Salons. Jeder Salon erhält ein öffentliches Profil mit Leistungen, Team, Galerie, Stories und Google-Bewertungen; Kunden wählen Leistung und Termin und bestätigen — ohne Anruf, ohne Konto, mit E-Mail-Bestätigung und Erinnerung am Vortag. Inhaber bekommen ein vollständiges Dashboard: Tages- und Wochenkalender, manuelle Buchungen, Kundenkartei, Tageslimits pro Leistung, geteilte Schichten und eine Warteliste, die den nächsten Kunden automatisch benachrichtigt, wenn ein Termin frei wird. Push-Benachrichtigungen erreichen den Inhaber als Web Push im Browser und als nativer APNs-Push in der iOS-App. Die Plattform ist ein statisches Frontend auf Netlify mit Supabase (Postgres + RLS, Edge Functions) dahinter; die iPhone-App ist derselbe Code in Capacitor — nach vier Review-Runden im App Store freigegeben. Kostenlos für Salons und Kunden."
   },
   {
     "slug": "claimo",
