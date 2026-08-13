@@ -50,14 +50,15 @@
     "category": "Lifestyle",
     "platform": "iOS + Android + Web (PWA)",
     "kind": "demo",
-    "version": "1.4",
+    "version": "1.5",
     "release_date": "2026-07-09",
     "icon": "🍼",
     "download_url": "https://apps.apple.com/app/id6789057417",
     "demo_url": "https://app.bebadnevnik.hr",
     "buymeacoffee_url": "https://buymeacoffee.com/marino143",
     "linkedin_posts": [],
-    "featured": true
+    "featured": true,
+    "name_en": "Baby Diary"
   },
   {
     "slug": "bridge",

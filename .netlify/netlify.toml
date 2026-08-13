@@ -7,9 +7,8 @@ plugins = []
 [functions."*"]
 
 [build]
-publish = "/Users/marinoglazarair/Documents/Co Work/codigit web/.claude/worktrees/pensive-wiles-8a257e"
+publish = "/Users/marinoglazarair/Documents/Co Work/codigit-web"
 publishOrigin = "config"
-base = "/Users/marinoglazarair/Documents/Co Work/codigit web/.claude/worktrees/pensive-wiles-8a257e"
 
 [build.environment]
 NODE_VERSION = "20"

@@ -329,6 +329,7 @@
     noAppsEl.style.display = 'none';
     grid.innerHTML = apps.map(app => {
       const tagline = lang === 'hr' ? app.tagline_hr : app.tagline_en;
+      const displayName = (lang !== 'hr' && app.name_en) ? app.name_en : app.name;
       const url = '/apps/' + app.slug + '.html';
       const platform = app.platform.includes('macOS') ? 'macOS' : app.platform;
       const meta = app.category + ' · ' + platform;
@@ -336,7 +337,7 @@
       const kindLabel = kind === 'demo' ? t[lang].kindDemo : t[lang].kindDownload;
       const cardHTML = '<a href="' + url + '" class="app-card" data-app-name="' + app.name + '" data-app-slug="' + app.slug + '">'
         + '<div class="app-icon">' + app.icon + '</div>'
-        + '<h3>' + app.name + '</h3>'
+        + '<h3>' + displayName + '</h3>'
         + '<div class="app-tags"><span class="app-meta">' + meta + '</span>'
         + '<span class="app-kind ' + kind + '">' + kindLabel + '</span></div>'
         + '<p class="app-tagline">' + tagline + '</p>'
