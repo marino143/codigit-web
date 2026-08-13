@@ -41,6 +41,25 @@
     "demo_url_de": "https://claimo.hr/de/"
   },
   {
+    "slug": "beba-dnevnik",
+    "name": "Beba dnevnik",
+    "tagline_en": "Baby tracker for new parents — feedings, bottles in ml, diapers, sleep and photos, synced between both parents with a single family code. On the App Store and Google Play.",
+    "tagline_hr": "Dnevnik za novopečene roditelje — hranjenja, bočice u ml, pelene, spavanje i fotke, sinkronizirano između oba roditelja jednim obiteljskim kodom. Na App Storeu i Google Playu.",
+    "description_en": "Beba dnevnik started as a favour for a friend who had just become a dad and grew into a full multi-platform product: a native SwiftUI iPhone app on the App Store, an Android app on Google Play and an installable web app — all sharing one Supabase backend. One tap starts a feeding; ending it asks how many ml and whether it was nursing, pumped milk or formula. Diapers (with an optional photo), sleep and notes take a couple of taps, several babies can be tracked side by side, and a reminder pings when the next feeding is due. Both parents see the same diary by entering a shared family code — no accounts, no tracking, offline-first. Statistics show every day at a glance and tapping a day opens its full timeline. Free, in Croatian, English and German.",
+    "description_hr": "Beba dnevnik je krenuo kao usluga prijatelju koji je upravo postao tata i narastao u punokrvni multiplatformski proizvod: nativna SwiftUI aplikacija na App Storeu, Android aplikacija na Google Playu i instalabilna web aplikacija — sve na istom Supabase backendu. Jedan dodir pokreće hranjenje; na kraju upišeš koliko ml i je li bilo dojenje, izdojeno ili adaptirano mlijeko. Pelene (uz opcionalnu fotku), spavanje i bilješke idu u par dodira, više beba se prati paralelno, a podsjetnik javi kad je vrijeme za sljedeće hranjenje. Oba roditelja vide isti dnevnik unosom zajedničkog obiteljskog koda — bez računa, bez praćenja, offline-first. Statistika pokazuje svaki dan na dlanu, a dodir na dan otvara cijeli tijek. Besplatno, na hrvatskom, engleskom i njemačkom.",
+    "category": "Lifestyle",
+    "platform": "iOS + Android + Web (PWA)",
+    "kind": "demo",
+    "version": "1.4",
+    "release_date": "2026-07-09",
+    "icon": "🍼",
+    "download_url": "https://apps.apple.com/app/id6789057417",
+    "demo_url": "https://app.bebadnevnik.hr",
+    "buymeacoffee_url": "https://buymeacoffee.com/marino143",
+    "linkedin_posts": [],
+    "featured": true
+  },
+  {
     "slug": "bridge",
     "name": "Bridge",
     "tagline_en": "One private console to run a dev agency — clients, revenue split, a unified calendar, and a daily-standup hub for your team.",

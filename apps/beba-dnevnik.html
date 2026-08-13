@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-T97BQ3VRV1');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beba dnevnik — baby feeding, diaper &amp; sleep tracker | Co Digit</title>
+  <meta name="description" content="A baby diary for new parents — one-tap feedings, bottles in ml, diapers with photos, sleep and reminders. Both parents stay in sync with a single family code. iOS, Android and web." />
+  <link rel="canonical" href="https://codigit.io/apps/beba-dnevnik.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://codigit.io/apps/beba-dnevnik.html" />
+  <meta property="og:title" content="Beba dnevnik — baby feeding, diaper &amp; sleep tracker | Co Digit" />
+  <meta property="og:description" content="One-tap feedings, bottles in ml, diapers, sleep and photos — synced between both parents with a family code. On the App Store and Google Play." />
+  <meta property="og:image" content="https://codigit.io/apps/screenshots/beba-dnevnik-dnevnik.png" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Co Digit" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Beba dnevnik — baby feeding, diaper &amp; sleep tracker | Co Digit" />
+  <meta name="twitter:description" content="Baby tracker for new parents — synced between both parents with a family code. iOS, Android and web." />
+  <meta name="twitter:image" content="https://codigit.io/apps/screenshots/beba-dnevnik-dnevnik.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
+      --border: #222222; --text: #f0f0f0; --muted: #888;
+      --accent: #e63946; --white: #ffffff;
+      --nav-bg: rgba(10,10,10,0.9);
+    }
+    [data-theme="light"] {
+      --bg: #ffffff; --bg2: #f4f4f5; --bg3: #e8e8ea;
+      --border: #e0e0e0; --text: #111111; --muted: #666666;
+      --white: #0a0a0a; --nav-bg: rgba(255,255,255,0.95);
+    }
+    [data-theme="light"] footer { background: var(--bg2); }
+    [data-theme="light"] .app-hero, [data-theme="light"] .app-section { box-shadow: 0 2px 20px rgba(0,0,0,0.04); }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+
+
+    /* SCREENSHOT GALLERY */
+    .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 8px; }
+    .shot { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--bg2); }
+    .shot img { width: 100%; height: auto; display: block; }
+    .shot figcaption { font-size: 12.5px; color: var(--muted); padding: 10px 14px; border-top: 1px solid var(--border); }
+
+    /* --- Povećavanje screenshotova --- */
+    .shot img { cursor: zoom-in; }
+    .shot { position: relative; }
+    .shot .shot-zoom {
+      position: absolute; top: 10px; right: 10px; width: 30px; height: 30px;
+      display: grid; place-items: center; border-radius: 8px; pointer-events: none;
+      background: rgba(0,0,0,.55); color: #fff; opacity: 0; transition: opacity .15s;
+      backdrop-filter: blur(4px);
+    }
+    .shot:hover .shot-zoom, .shot img:focus-visible + .shot-zoom { opacity: 1; }
+    @media (hover: none) { .shot .shot-zoom { opacity: .9; } }
+
+    .lb { position: fixed; inset: 0; z-index: 200; display: none; background: rgba(8,8,10,.95);
+         backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .lb.open { display: grid; grid-template-rows: auto 1fr auto; }
+    .lb-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; }
+    .lb-count { font-size: 13px; color: rgba(255,255,255,.65); font-variant-numeric: tabular-nums; }
+    .lb-btn {
+      appearance: none; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.08);
+      color: #fff; border-radius: 9px; padding: 8px 12px; font: inherit; font-size: 13px;
+      font-weight: 600; cursor: pointer; line-height: 1;
+    }
+    .lb-btn:hover { background: rgba(255,255,255,.16); }
+    .lb-btn:disabled { opacity: .35; cursor: default; }
+    .lb-nav { display: flex; gap: 8px; }
+    .lb-stage { overflow: auto; display: grid; place-items: center; padding: 0 16px; min-height: 0; -webkit-overflow-scrolling: touch; }
+    /* Postotna visina se u grid retku ne razrješava pouzdano — vežemo je
+       na viewport minus traka (~54 px) i opis (~90 px). */
+    .lb-stage img { display: block; max-width: 100%; max-height: calc(100vh - 150px); border-radius: 10px; cursor: zoom-in; }
+    .lb.zoom .lb-stage { place-items: start; }
+    .lb.zoom .lb-stage img { max-width: none; max-height: none; cursor: zoom-out; }
+    .lb-cap { padding: 12px 16px 18px; color: rgba(255,255,255,.75); font-size: 13px; text-align: center; max-width: 780px; margin: 0 auto; }
+    @media (max-width: 560px) { .lb-bar { padding: 10px 12px; } .lb-btn { padding: 8px 10px; } .lb-cap { font-size: 12.5px; } }
+    .shot-wide { grid-column: 1 / -1; }
+    @media (max-width: 700px) { .shots { grid-template-columns: 1fr; } }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .logo-dot { display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
+    @keyframes codigit-blink { 0%, 100% { color: var(--white); } 50% { color: var(--accent); } }
+    @media (prefers-reduced-motion: reduce) { .logo-dot { animation: none; } }
+    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; letter-spacing: 0.3px; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 18px; border-radius: 6px; font-weight: 600 !important; transition: opacity 0.2s !important; font-size: 13px !important; }
+    .nav-cta:hover { opacity: 0.85; }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+
+    .lang-switcher { display: flex; align-items: center; gap: 4px; }
+    .lang-btn {
+      background: none; border: 1px solid transparent; color: var(--muted);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 4px 8px; border-radius: 4px; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .lang-btn:hover { color: var(--white); }
+    .lang-btn.active { color: var(--white); border-color: var(--border); }
+    .lang-sep { color: #333; font-size: 11px; }
+    .theme-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--muted); font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .theme-btn:hover { color: var(--text); border-color: var(--muted); }
+
+    /* MAIN WRAPPER */
+    .app-wrapper {
+      flex: 1;
+      max-width: 880px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+
+    /* HERO */
+    .app-hero {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+    .app-hero-icon {
+      width: 120px; height: 120px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #fb923c, #f43f5e);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+      color: #fff;
+    }
+    .app-hero-icon svg { width: 64px; height: 64px; }
+    .app-hero-content { flex: 1; }
+    .app-platform-badge {
+      display: inline-block;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+      color: var(--accent); background: rgba(230,57,70,0.1);
+      padding: 4px 10px; border-radius: 4px; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .app-hero h1 {
+      font-size: clamp(32px, 4vw, 48px); font-weight: 900;
+      letter-spacing: -1.5px; color: var(--white); line-height: 1.1; margin-bottom: 12px;
+    }
+    .app-tagline {
+      font-size: 17px; color: var(--muted); line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .app-cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .app-langs { margin-top: 12px; font-size: 13px; color: var(--muted); }
+    .app-langs.lang-content { display: none; }
+    .app-langs.lang-content.active { display: block; }
+    .app-langs a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+    .app-langs a:hover { color: var(--white); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 12px 22px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; font-family: inherit;
+      text-decoration: none; border: 1px solid transparent; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--white); border-color: var(--border); }
+    .btn-outline:hover { border-color: var(--muted); }
+    .btn-bmc { background: #FFDD00; color: #000; border-color: #FFDD00; }
+    .btn-bmc:hover { background: #FFE633; transform: translateY(-1px); opacity: 1; }
+
+    /* DIVIDER */
+    .section-divider { width: 48px; height: 3px; background: var(--accent); border-radius: 2px; margin: 56px 0 24px; }
+
+    /* SECTIONS */
+    .app-section { margin-bottom: 16px; }
+    .app-section h2 {
+      font-size: 22px; font-weight: 800; color: var(--white);
+      letter-spacing: -0.5px; margin-bottom: 16px;
+    }
+    .app-section p { color: var(--text); font-size: 16px; line-height: 1.8; margin-bottom: 16px; }
+    .benefit-list {
+      list-style: none; padding: 0; margin: 16px 0;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+    }
+    .benefit-list li {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px 18px;
+      font-size: 14px; color: var(--text); line-height: 1.5;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .benefit-list li::before {
+      content: '✓'; color: var(--accent); font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .info-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+      margin-top: 8px;
+    }
+    .info-card p { font-size: 15px; line-height: 1.7; }
+    .info-card a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .info-card a:hover { opacity: 0.8; }
+
+    /* SHARE */
+    .share-section { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border); }
+    .share-section h2 { margin-bottom: 16px; }
+    .share-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+    .share-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 16px; border-radius: 8px;
+      background: var(--bg2); border: 1px solid var(--border);
+      color: var(--text); font-size: 13px; font-weight: 500;
+      text-decoration: none; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .share-btn:hover { background: var(--bg3); border-color: var(--muted); }
+    .share-btn svg { flex-shrink: 0; }
+    .share-btn.copied { color: var(--accent); border-color: var(--accent); }
+
+    /* BACK */
+    .back-to-apps {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 56px; padding: 12px 24px;
+      font-size: 13px; font-weight: 600; color: var(--muted);
+      text-decoration: none; border: 1px solid var(--border);
+      border-radius: 8px; transition: all 0.2s;
+    }
+    .back-to-apps:hover { color: var(--white); border-color: var(--muted); }
+
+    /* LANG TOGGLE */
+    .lang-content { display: none; }
+    .lang-content.active { display: block; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto;
+    }
+    .footer-logo { font-size: 14px; font-weight: 800; color: var(--white); }
+    .footer-logo span { color: var(--accent); }
+    footer p { font-size: 12px; color: #555; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: #555; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--muted); }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .app-wrapper { padding: 40px 20px 60px; }
+      .app-hero { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .app-hero-icon { width: 96px; height: 96px; border-radius: 20px; }
+      .app-hero-icon svg { width: 52px; height: 52px; }
+      .benefit-list { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
+  <ul class="nav-links">
+    <li><a href="/#services">Capabilities</a></li>
+    <li><a href="/#ai">AI-Powered</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#certs">Certifications</a></li>
+    <li><a href="/services.html">Services</a></li>
+    <li><a href="/blog/">Notes</a></li>
+    <li><a href="/apps/">Apps</a></li>
+    <li><a href="/contact.html" class="nav-cta">Get in touch</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="hr">HR</button>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+  </div>
+</nav>
+
+<main class="app-wrapper">
+
+  <!-- HERO -->
+  <section class="app-hero">
+    <div class="app-hero-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2h8"/><path d="M9 2v2.789a4 4 0 0 1-.672 2.219l-.656.984A4 4 0 0 0 7 10.212V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.789a4 4 0 0 0-.672-2.219l-.656-.984A4 4 0 0 1 15 4.788V2"/><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/></svg></div>
+    <div class="app-hero-content">
+      <span class="app-platform-badge" id="platform-badge">iOS · Android · Web (PWA) · Free</span>
+      <h1 id="app-name">Beba dnevnik</h1>
+      <p class="app-tagline" id="app-tagline">A baby diary for new parents — one tap logs a feeding, a bottle in ml, a diaper or sleep, and both parents see the same diary through a single family code. No accounts, no tracking.</p>
+      <div class="app-cta-row">
+        <a href="https://apps.apple.com/app/id6789057417" target="_blank" rel="noopener" class="btn btn-primary" id="cta-download">Download on the App Store →</a>
+        <a href="https://play.google.com/store/apps/details?id=hr.codigit.bebadnevnik" target="_blank" rel="noopener" class="btn btn-outline" id="cta-play">Get it on Google Play →</a>
+        <a href="https://app.bebadnevnik.hr" target="_blank" rel="noopener" class="btn btn-outline" id="cta-web">Open web app →</a>
+        <a href="https://buymeacoffee.com/marino143" target="_blank" rel="noopener" class="btn btn-bmc" id="cta-bmc">☕ Buy me a coffee</a>
+      </div>
+      <p class="app-langs lang-content active" data-lang="en">The app speaks English, Croatian and German — more on
+        <a href="https://bebadnevnik.hr/en/" target="_blank" rel="noopener">bebadnevnik.hr</a>.</p>
+      <p class="app-langs lang-content" data-lang="hr">Aplikacija govori hrvatski, engleski i njemački — više na
+        <a href="https://bebadnevnik.hr" target="_blank" rel="noopener">bebadnevnik.hr</a>.</p>
+    </div>
+  </section>
+
+  <!-- SCREENSHOTS -->
+  <div class="section-divider"></div>
+  <section class="app-section">
+    <h2 id="h-shots">Screenshots</h2>
+    <div class="shots">
+      <figure class="shot">
+        <img src="/apps/screenshots/beba-dnevnik-dnevnik.png" alt="Beba dnevnik — home screen with baby switcher, status cards and diary" loading="lazy" width="1080" height="1920" />
+        <figcaption id="cap-1">The diary: one tap for feeding, diaper or sleep — with a baby switcher and a "next feeding around" reminder.</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/apps/screenshots/beba-dnevnik-bocica.png" alt="Beba dnevnik — bottle details sheet with ml and milk type" loading="lazy" width="1080" height="1920" />
+        <figcaption id="cap-2">Ending a feeding asks how many ml and whether it was nursing, pumped milk or formula.</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/apps/screenshots/beba-dnevnik-statistika.png" alt="Beba dnevnik — daily statistics with ml totals" loading="lazy" width="1080" height="1920" />
+        <figcaption id="cap-3">Statistics: feedings, ml totals, diapers and sleep for every day.</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="/apps/screenshots/beba-dnevnik-dan.png" alt="Beba dnevnik — full timeline of a single day" loading="lazy" width="1080" height="1920" />
+        <figcaption id="cap-4">Tap any day to see its full timeline.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- WHAT IT DOES -->
+  <section class="app-section">
+    <h2 id="h-what">What it does</h2>
+    <div class="lang-content active" data-lang="en">
+      <p>The first weeks with a newborn are a blur of feedings, diapers and short naps — and both parents keep asking the same question: when did she last eat? Beba dnevnik answers it with one glance and keeps both phones on the same page.</p>
+      <ul class="benefit-list">
+        <li>One tap starts a feeding, another ends it — duration is logged automatically</li>
+        <li>Bottle details: how many ml, and whether it was nursing, pumped milk or formula</li>
+        <li>Diapers with one tap — pee, poo or both, with an optional photo for the pediatrician</li>
+        <li>Sleep tracking and quick notes: pacifier, spit-up, bath, temperature</li>
+        <li>Several babies side by side — switch with one tap</li>
+        <li>Both parents share one diary via a family code — no accounts, no sign-up</li>
+        <li>A reminder pings when the next feeding is due (2:30–4:00 h, your choice)</li>
+        <li>Statistics per day, and a full timeline when you tap one</li>
+      </ul>
+    </div>
+    <div class="lang-content" data-lang="hr">
+      <p>Prvi tjedni s novorođenčetom su magla hranjenja, pelena i kratkih drijemeža — a oba roditelja stalno postavljaju isto pitanje: kad je zadnji put jela? Beba dnevnik odgovara jednim pogledom i drži oba mobitela na istoj stranici.</p>
+      <ul class="benefit-list">
+        <li>Jedan dodir pokreće hranjenje, drugi ga završava — trajanje se bilježi samo</li>
+        <li>Detalji bočice: koliko ml i je li bilo dojenje, izdojeno ili adaptirano mlijeko</li>
+        <li>Pelene u jednom dodiru — piškić, kakica ili oboje, uz opcionalnu fotku za pedijatra</li>
+        <li>Praćenje spavanja i brze bilješke: duda, bljuckanje, kupanje, temperatura</li>
+        <li>Više beba paralelno — prebaciš se jednim dodirom</li>
+        <li>Oba roditelja dijele isti dnevnik preko obiteljskog koda — bez računa i registracije</li>
+        <li>Podsjetnik javi kad je vrijeme za sljedeće hranjenje (2:30–4:00 h, po izboru)</li>
+        <li>Statistika po danima, a dodir na dan otvara cijeli tijek</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="app-section">
+    <h2 id="h-why">How it works</h2>
+    <div class="lang-content active" data-lang="en">
+      <p>Three fronts, one backend. The iPhone app is native SwiftUI with local notifications for feeding reminders. The web app is a single-file, offline-first PWA — everything lives in local storage and works with no connection at all. The Android app on Google Play is that same PWA wrapped as a Trusted Web Activity.</p>
+      <p>Sync is a Supabase Postgres with edge functions: entering the same family code on two phones merges them into one diary, with last-write-wins conflict resolution and tombstones for deletes. There are no accounts and no analytics in the app — the family code is the only identity, and the data belongs to the parents.</p>
+      <p>Feeding reminders arrive as native local notifications on iOS and as real Web Push on the web and Android — a cron job on the server checks upcoming feedings every five minutes and pings the right devices.</p>
+    </div>
+    <div class="lang-content" data-lang="hr">
+      <p>Tri fronte, jedan backend. iPhone aplikacija je nativni SwiftUI s lokalnim notifikacijama za podsjetnik na hranjenje. Web aplikacija je offline-first PWA u jednoj datoteci — sve živi u lokalnoj pohrani i radi potpuno bez mreže. Android aplikacija na Playu je ista PWA zapakirana kao Trusted Web Activity.</p>
+      <p>Sinkronizacija je Supabase Postgres s edge funkcijama: unos istog obiteljskog koda na dva mobitela spaja ih u jedan dnevnik, uz last-write-wins rješavanje sukoba i tombstone zapise za brisanja. U aplikaciji nema računa ni analitike — obiteljski kod je jedini identitet, a podaci pripadaju roditeljima.</p>
+      <p>Podsjetnici na hranjenje stižu kao nativne lokalne notifikacije na iOS-u te kao pravi Web Push na webu i Androidu — cron na serveru svakih pet minuta provjerava nadolazeća hranjenja i javi pravim uređajima.</p>
+    </div>
+  </section>
+
+  <!-- BUILD STORY -->
+  <section class="app-section">
+    <h2 id="h-journey">Build story</h2>
+    <div class="info-card">
+      <div class="lang-content active" data-lang="en">
+        <p>Beba dnevnik started as a favour — a friend had just become a dad and wanted one simple place to write down feedings. The first version was a single HTML file. Then his wife needed to see the same diary, so family-code sync arrived; then the App Store and Google Play versions; then bottles in ml, multiple babies, photos and reminders — each feature requested from the maternity ward, so to speak. It shipped to both stores within a week and keeps a strict promise: no accounts, no ads, no tracking. This is the kind of product work I do for founders at <a href="/services.html">Codigit</a>.</p>
+      </div>
+      <div class="lang-content" data-lang="hr">
+        <p>Beba dnevnik je krenuo kao usluga — prijatelj je upravo postao tata i htio je jedno jednostavno mjesto za zapisivanje hranjenja. Prva verzija bila je jedna HTML datoteka. Onda je i njegova supruga trebala vidjeti isti dnevnik, pa je stigla sinkronizacija obiteljskim kodom; zatim verzije za App Store i Google Play; pa bočice u ml, više beba, fotke i podsjetnici — svaka funkcija naručena, praktički, iz rodilišta. Objavljen je u obje trgovine unutar tjedan dana i drži strogo obećanje: bez računa, bez reklama, bez praćenja. Ovo je tip proizvodnog rada koji radim za founderse kroz <a href="/services.html">Codigit</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHARE -->
+  <section class="share-section">
+    <h2 id="h-share">Found this useful? Share it.</h2>
+    <div class="share-buttons">
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcodigit.io%2Fapps%2Fbeba-dnevnik.html" target="_blank" rel="noopener" class="share-btn" id="share-linkedin">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        <span>Share on LinkedIn</span>
+      </a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fcodigit.io%2Fapps%2Fbeba-dnevnik.html&text=" target="_blank" rel="noopener" class="share-btn" id="share-twitter">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <span>Share on X</span>
+      </a>
+      <button type="button" class="share-btn" id="copyLinkBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <span id="copy-label">Copy link</span>
+      </button>
+    </div>
+  </section>
+
+  <a href="/apps/" class="back-to-apps" id="backToApps">← Back to all apps</a>
+</main>
+
+<footer>
+  <div class="footer-logo">CO<span class="logo-dot">.</span>DIGIT</div>
+  <p id="footer-copy">&copy; 2026 Co Digit d.o.o. &middot; Zagreb, Croatia</p>
+  <div class="footer-links">
+    <a href="/" id="fl-home">Home</a>
+    <a href="/blog/" id="fl-blog">Notes</a>
+    <a href="/apps/" id="fl-apps">Apps</a>
+    <a href="/cookie-policy.html" id="fl-cookies">Cookie Policy</a>
+    <a href="/privacy-policy.html" id="fl-privacy">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  const t = {
+    en: {
+      'platform-badge': 'iOS · Android · Web (PWA) · Free',
+      'app-tagline': 'A baby diary for new parents — one tap logs a feeding, a bottle in ml, a diaper or sleep, and both parents see the same diary through a single family code. No accounts, no tracking.',
+      'cta-download': 'Download on the App Store →',
+      'cta-play': 'Get it on Google Play →',
+      'cta-web': 'Open web app →',
+      'cta-bmc': '☕ Buy me a coffee',
+      'h-shots': 'Screenshots',
+      'cap-1': 'The diary: one tap for feeding, diaper or sleep — with a baby switcher and a "next feeding around" reminder.',
+      'cap-2': 'Ending a feeding asks how many ml and whether it was nursing, pumped milk or formula.',
+      'cap-3': 'Statistics: feedings, ml totals, diapers and sleep for every day.',
+      'cap-4': 'Tap any day to see its full timeline.',
+      'h-what': 'What it does',
+      'h-why': 'How it works',
+      'h-journey': 'Build story',
+      'h-share': 'Found this useful? Share it.',
+      'copy-label': 'Copy link',
+      copied: '✓ Copied!',
+      'backToApps': '← Back to all apps',
+      'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Croatia',
+      'fl-home': 'Home', 'fl-blog': 'Notes', 'fl-apps': 'Apps',
+      'fl-cookies': 'Cookie Policy', 'fl-privacy': 'Privacy Policy',
+    },
+    hr: {
+      'platform-badge': 'iOS · Android · Web (PWA) · Besplatno',
+      'app-tagline': 'Dnevnik za novopečene roditelje — jedan dodir bilježi hranjenje, bočicu u ml, pelenu ili spavanje, a oba roditelja vide isti dnevnik preko obiteljskog koda. Bez računa, bez praćenja.',
+      'cta-download': 'Preuzmi na App Storeu →',
+      'cta-play': 'Preuzmi na Google Playu →',
+      'cta-web': 'Otvori web aplikaciju →',
+      'cta-bmc': '☕ Časti me kavom',
+      'h-shots': 'Screenshotovi',
+      'cap-1': 'Dnevnik: jedan dodir za hranjenje, pelenu ili spavanje — uz preklopnik beba i podsjetnik "sljedeće oko".',
+      'cap-2': 'Kraj hranjenja pita koliko ml i je li bilo dojenje, izdojeno ili adaptirano mlijeko.',
+      'cap-3': 'Statistika: hranjenja, ml, pelene i spavanje za svaki dan.',
+      'cap-4': 'Dodirni bilo koji dan za cijeli tijek.',
+      'h-what': 'Što radi',
+      'h-why': 'Kako radi',
+      'h-journey': 'Priča o izradi',
+      'h-share': 'Smatrate ovo korisnim? Podijelite.',
+      'copy-label': 'Kopiraj link',
+      copied: '✓ Kopirano!',
+      'backToApps': '← Natrag na sve aplikacije',
+      'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska',
+      'fl-home': 'Početna', 'fl-blog': 'Bilješke', 'fl-apps': 'Aplikacije',
+      'fl-cookies': 'Politika kolačića', 'fl-privacy': 'Politika privatnosti',
+    }
+  };
+
+  let lang = 'en';
+
+  function applyLang(l) {
+    lang = l;
+    document.documentElement.lang = l;
+    localStorage.setItem('lang', l);
+    const d = t[l];
+    Object.keys(d).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = d[id];
+    });
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+    document.querySelectorAll('.lang-content').forEach(el => {
+      el.classList.toggle('active', el.getAttribute('data-lang') === l);
+    });
+  }
+
+  // Theme
+  const themeBtn = document.getElementById('themeBtn');
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    themeBtn.innerHTML = theme === 'light' ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+  }
+  const savedTheme = localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  applyTheme(savedTheme);
+  themeBtn.addEventListener('click', () => {
+    applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+  });
+
+  const saved = localStorage.getItem('lang');
+  const browser = navigator.language.startsWith('hr') ? 'hr' : 'en';
+  applyLang(saved || browser);
+
+  document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+
+  // Copy link
+  const copyBtn = document.getElementById('copyLinkBtn');
+  const copyLabel = document.getElementById('copy-label');
+  copyBtn.addEventListener('click', async () => {
+    if (typeof gtag === 'function') {
+      gtag('event', 'app_share', { app_name: 'Beba dnevnik', app_slug: 'beba-dnevnik', share_method: 'copy_link', event_category: 'Engagement' });
+    }
+    const url = window.location.href.split('#')[0];
+    try {
+      await navigator.clipboard.writeText(url);
+      copyBtn.classList.add('copied');
+      copyLabel.textContent = t[lang].copied;
+      setTimeout(() => {
+        copyBtn.classList.remove('copied');
+        copyLabel.textContent = t[lang]['copy-label'];
+      }, 2000);
+    } catch (err) {
+      const ta = document.createElement('textarea');
+      ta.value = url; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); copyBtn.classList.add('copied'); copyLabel.textContent = t[lang].copied; } catch (e) {}
+      document.body.removeChild(ta);
+      setTimeout(() => { copyBtn.classList.remove('copied'); copyLabel.textContent = t[lang]['copy-label']; }, 2000);
+    }
+  });
+
+  // GA4 event tracking
+  const ctaDownload = document.getElementById('cta-download');
+  if (ctaDownload) {
+    ctaDownload.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'app_download', { app_name: 'Beba dnevnik', app_slug: 'beba-dnevnik', app_version: '1.4', event_category: 'Engagement', event_label: 'App Store' });
+      }
+    });
+  }
+
+  ['cta-play','cta-web'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'app_download', { app_name: 'Beba dnevnik', app_slug: 'beba-dnevnik', app_version: '1.4', event_category: 'Engagement', event_label: id === 'cta-play' ? 'Google Play' : 'Web app' });
+      }
+    });
+  });
+
+  const shareLinkedin = document.getElementById('share-linkedin');
+  if (shareLinkedin) {
+    shareLinkedin.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'app_share', { app_name: 'Beba dnevnik', app_slug: 'beba-dnevnik', share_method: 'linkedin', event_category: 'Engagement' });
+      }
+    });
+  }
+
+  const shareTwitter = document.getElementById('share-twitter');
+  if (shareTwitter) {
+    shareTwitter.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'app_share', { app_name: 'Beba dnevnik', app_slug: 'beba-dnevnik', share_method: 'twitter', event_category: 'Engagement' });
+      }
+    });
+  }
+</script>
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Beba dnevnik",
+  "applicationCategory": "LifestyleApplication",
+  "operatingSystem": "iOS, Android, Web",
+  "description": "Baby diary for new parents — one-tap feedings, bottles in ml, diapers with photos, sleep and reminders. Both parents stay in sync with a single family code. No accounts, no tracking.",
+  "url": "https://codigit.io/apps/beba-dnevnik.html",
+  "screenshot": "https://codigit.io/apps/screenshots/beba-dnevnik-dnevnik.png",
+  "inLanguage": "hr",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "publisher": { "@type": "Organization", "name": "Co Digit", "url": "https://codigit.io" }
+}
+</script>
+<script>
+/* Screenshotovi se otvaraju preko cijelog ekrana; na uskim ekranima su
+     inače premali da bi se u njima išta pročitalo. Bez izmjena u markupu —
+     nadogradnja se veže na postojeći .shots > figure.shot. */
+  (function () {
+    var figs = Array.prototype.slice.call(document.querySelectorAll('.shots figure.shot'));
+    if (!figs.length) return;
+
+    var T = {
+      en: { open: 'Open full size', close: 'Close', prev: 'Previous', next: 'Next', zin: 'Zoom in', zout: 'Fit to screen', of: 'of' },
+      hr: { open: 'Otvori u punoj veličini', close: 'Zatvori', prev: 'Prethodna', next: 'Sljedeća', zin: 'Povećaj', zout: 'Prilagodi ekranu', of: 'od' }
+    };
+    function tr() { return T[document.documentElement.lang] || T.en; }
+
+    var lb = document.createElement('div');
+    lb.className = 'lb';
+    lb.setAttribute('role', 'dialog');
+    lb.setAttribute('aria-modal', 'true');
+    lb.innerHTML =
+      '<div class="lb-bar">' +
+        '<span class="lb-count"></span>' +
+        '<div class="lb-nav">' +
+          '<button class="lb-btn" data-a="prev"></button>' +
+          '<button class="lb-btn" data-a="next"></button>' +
+          '<button class="lb-btn" data-a="zoom"></button>' +
+          '<button class="lb-btn" data-a="close"></button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="lb-stage"><img alt="" /></div>' +
+      '<p class="lb-cap"></p>';
+    document.body.appendChild(lb);
+
+    var img = lb.querySelector('.lb-stage img');
+    var cap = lb.querySelector('.lb-cap');
+    var count = lb.querySelector('.lb-count');
+    var stage = lb.querySelector('.lb-stage');
+    var btn = {};
+    Array.prototype.forEach.call(lb.querySelectorAll('[data-a]'), function (b) { btn[b.dataset.a] = b; });
+
+    var i = 0, lastFocus = null;
+
+    function paint() {
+      var f = figs[i], src = f.querySelector('img');
+      var c = f.querySelector('figcaption');
+      img.src = src.currentSrc || src.src;
+      img.alt = src.alt || '';
+      cap.textContent = c ? c.textContent : '';
+      count.textContent = (i + 1) + ' ' + tr().of + ' ' + figs.length;
+      btn.prev.disabled = i === 0;
+      btn.next.disabled = i === figs.length - 1;
+      lb.classList.remove('zoom');
+      stage.scrollTop = 0; stage.scrollLeft = 0;
+      labels();
+      autoZoom();
+    }
+
+    /* Na uskom ekranu prilagođena slika je i dalje nečitljiva — ako je original
+       bitno širi od ekrana, prikaži ga odmah u punoj veličini i pomakni na
+       sredinu (lijevi rub snimke je obično prazna margina). Layout se čeka
+       petljom jer je scrollWidth do primjene .zoom klase još onaj iz fita. */
+    function autoZoom() {
+      var nat = figs[i].querySelector('img').naturalWidth || 0;
+      if (!(window.innerWidth < 700 && nat > window.innerWidth * 1.6)) return;
+      lb.classList.add('zoom');
+      labels();
+      var run = function () {
+        var tries = 0;
+        (function centerX() {
+          if (stage.scrollWidth > stage.clientWidth + 4) {
+            stage.scrollLeft = (stage.scrollWidth - stage.clientWidth) / 2;
+          } else if (tries++ < 60) {
+            requestAnimationFrame(centerX);
+          }
+        })();
+      };
+      // Dva neovisna okidača: odmah (keširana slika) i na load (prvo otvaranje,
+      // kad element još nema izmjere). Ako oba prorade, drugi samo ponovi isto.
+      run();
+      img.addEventListener('load', function h() { img.removeEventListener('load', h); run(); });
+    }
+    function labels() {
+      var t = tr(), zoomed = lb.classList.contains('zoom');
+      btn.prev.textContent = '‹'; btn.prev.setAttribute('aria-label', t.prev);
+      btn.next.textContent = '›'; btn.next.setAttribute('aria-label', t.next);
+      btn.zoom.textContent = zoomed ? t.zout : t.zin;
+      btn.close.textContent = t.close;
+      lb.setAttribute('aria-label', t.open);
+    }
+    function open(n) {
+      lastFocus = document.activeElement;
+      i = n; paint();
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      btn.close.focus();
+    }
+    function close() {
+      lb.classList.remove('open', 'zoom');
+      document.body.style.overflow = '';
+      img.removeAttribute('src');
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    function go(d) { var n = i + d; if (n >= 0 && n < figs.length) { i = n; paint(); } }
+    function toggleZoom() { lb.classList.toggle('zoom'); labels(); }
+
+    figs.forEach(function (f, n) {
+      var im = f.querySelector('img');
+      if (!im) return;
+      var badge = document.createElement('span');
+      badge.className = 'shot-zoom';
+      badge.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6M11 8v6M8 11h6"/></svg>';
+      im.insertAdjacentElement('afterend', badge);
+      im.tabIndex = 0;
+      im.setAttribute('role', 'button');
+      im.setAttribute('aria-label', tr().open);
+      im.addEventListener('click', function () { im.focus(); open(n); });
+      im.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(n); }
+      });
+    });
+
+    btn.close.addEventListener('click', close);
+    btn.prev.addEventListener('click', function () { go(-1); });
+    btn.next.addEventListener('click', function () { go(1); });
+    btn.zoom.addEventListener('click', toggleZoom);
+    img.addEventListener('click', toggleZoom);
+    lb.addEventListener('click', function (e) { if (e.target === lb || e.target === stage) close(); });
+    document.addEventListener('keydown', function (e) {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') go(-1);
+      else if (e.key === 'ArrowRight') go(1);
+      else if (e.key === 'Tab') {
+        var f = lb.querySelectorAll('.lb-btn:not(:disabled)');
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    // jezik se mijenja bez ponovnog učitavanja — osvježi natpise
+    document.querySelectorAll('.lang-btn').forEach(function (b) {
+      b.addEventListener('click', function () { setTimeout(function () {
+        labels();
+        figs.forEach(function (f) { var im = f.querySelector('img'); if (im) im.setAttribute('aria-label', tr().open); });
+        if (lb.classList.contains('open')) paint();
+      }, 0); });
+    });
+  })();
+</script>
+</body>
+</html>
