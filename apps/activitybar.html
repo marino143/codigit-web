@@ -734,6 +734,32 @@
       lb.classList.remove('zoom');
       stage.scrollTop = 0; stage.scrollLeft = 0;
       labels();
+      autoZoom();
+    }
+
+    /* Na uskom ekranu prilagođena slika je i dalje nečitljiva — ako je original
+       bitno širi od ekrana, prikaži ga odmah u punoj veličini i pomakni na
+       sredinu (lijevi rub snimke je obično prazna margina). Layout se čeka
+       petljom jer je scrollWidth do primjene .zoom klase još onaj iz fita. */
+    function autoZoom() {
+      var nat = figs[i].querySelector('img').naturalWidth || 0;
+      if (!(window.innerWidth < 700 && nat > window.innerWidth * 1.6)) return;
+      lb.classList.add('zoom');
+      labels();
+      var run = function () {
+        var tries = 0;
+        (function centerX() {
+          if (stage.scrollWidth > stage.clientWidth + 4) {
+            stage.scrollLeft = (stage.scrollWidth - stage.clientWidth) / 2;
+          } else if (tries++ < 60) {
+            requestAnimationFrame(centerX);
+          }
+        })();
+      };
+      // Dva neovisna okidača: odmah (keširana slika) i na load (prvo otvaranje,
+      // kad element još nema izmjere). Ako oba prorade, drugi samo ponovi isto.
+      run();
+      img.addEventListener('load', function h() { img.removeEventListener('load', h); run(); });
     }
     function labels() {
       var t = tr(), zoomed = lb.classList.contains('zoom');

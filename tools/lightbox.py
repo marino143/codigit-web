@@ -15,7 +15,8 @@ CSS = """
     .shot:hover .shot-zoom, .shot img:focus-visible + .shot-zoom { opacity: 1; }
     @media (hover: none) { .shot .shot-zoom { opacity: .9; } }
 
-    .lb { position: fixed; inset: 0; z-index: 200; display: none; background: rgba(8,8,10,.93); }
+    .lb { position: fixed; inset: 0; z-index: 200; display: none; background: rgba(8,8,10,.95);
+         backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
     .lb.open { display: grid; grid-template-rows: auto 1fr auto; }
     .lb-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; }
     .lb-count { font-size: 13px; color: rgba(255,255,255,.65); font-variant-numeric: tabular-nums; }
@@ -27,8 +28,10 @@ CSS = """
     .lb-btn:hover { background: rgba(255,255,255,.16); }
     .lb-btn:disabled { opacity: .35; cursor: default; }
     .lb-nav { display: flex; gap: 8px; }
-    .lb-stage { overflow: auto; display: grid; place-items: center; padding: 0 16px; -webkit-overflow-scrolling: touch; }
-    .lb-stage img { display: block; max-width: 100%; max-height: 100%; border-radius: 10px; cursor: zoom-in; }
+    .lb-stage { overflow: auto; display: grid; place-items: center; padding: 0 16px; min-height: 0; -webkit-overflow-scrolling: touch; }
+    /* Postotna visina se u grid retku ne razrješava pouzdano — vežemo je
+       na viewport minus traka (~54 px) i opis (~90 px). */
+    .lb-stage img { display: block; max-width: 100%; max-height: calc(100vh - 150px); border-radius: 10px; cursor: zoom-in; }
     .lb.zoom .lb-stage { place-items: start; }
     .lb.zoom .lb-stage img { max-width: none; max-height: none; cursor: zoom-out; }
     .lb-cap { padding: 12px 16px 18px; color: rgba(255,255,255,.75); font-size: 13px; text-align: center; max-width: 780px; margin: 0 auto; }
@@ -36,7 +39,7 @@ CSS = """
 """
 
 JS = """
-  /* Screenshotovi se otvaraju preko cijelog ekrana; na uskim ekranima su
+/* Screenshotovi se otvaraju preko cijelog ekrana; na uskim ekranima su
      inače premali da bi se u njima išta pročitalo. Bez izmjena u markupu —
      nadogradnja se veže na postojeći .shots > figure.shot. */
   (function () {
@@ -88,6 +91,32 @@ JS = """
       lb.classList.remove('zoom');
       stage.scrollTop = 0; stage.scrollLeft = 0;
       labels();
+      autoZoom();
+    }
+
+    /* Na uskom ekranu prilagođena slika je i dalje nečitljiva — ako je original
+       bitno širi od ekrana, prikaži ga odmah u punoj veličini i pomakni na
+       sredinu (lijevi rub snimke je obično prazna margina). Layout se čeka
+       petljom jer je scrollWidth do primjene .zoom klase još onaj iz fita. */
+    function autoZoom() {
+      var nat = figs[i].querySelector('img').naturalWidth || 0;
+      if (!(window.innerWidth < 700 && nat > window.innerWidth * 1.6)) return;
+      lb.classList.add('zoom');
+      labels();
+      var run = function () {
+        var tries = 0;
+        (function centerX() {
+          if (stage.scrollWidth > stage.clientWidth + 4) {
+            stage.scrollLeft = (stage.scrollWidth - stage.clientWidth) / 2;
+          } else if (tries++ < 60) {
+            requestAnimationFrame(centerX);
+          }
+        })();
+      };
+      // Dva neovisna okidača: odmah (keširana slika) i na load (prvo otvaranje,
+      // kad element još nema izmjere). Ako oba prorade, drugi samo ponovi isto.
+      run();
+      img.addEventListener('load', function h() { img.removeEventListener('load', h); run(); });
     }
     function labels() {
       var t = tr(), zoomed = lb.classList.contains('zoom');
@@ -123,7 +152,7 @@ JS = """
       im.tabIndex = 0;
       im.setAttribute('role', 'button');
       im.setAttribute('aria-label', tr().open);
-      im.addEventListener('click', function () { open(n); });
+      im.addEventListener('click', function () { im.focus(); open(n); });
       im.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(n); }
       });
