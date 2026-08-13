@@ -1,5 +1,24 @@
 [
   {
+    "slug": "termino",
+    "name": "Termino",
+    "tagline_en": "Online booking for Croatian hair, beauty and nail salons — clients book in a couple of clicks 24/7, owners run the calendar from the web or the native iPhone app. Live on the App Store.",
+    "tagline_hr": "Online rezervacije za frizerske, kozmetičke i nail salone — klijenti rezerviraju u par klikova 24/7, vlasnici vode kalendar s weba ili nativne iPhone aplikacije. Live na App Storeu.",
+    "description_en": "Termino is a booking marketplace for Croatian salons. Each salon gets a public profile with services, staff, gallery, Instagram-style stories and Google reviews; clients pick a service, a time slot and confirm — no calls, no accounts, with email confirmation and a reminder the day before. Owners get a full dashboard: day and week calendar, manual bookings, client base, per-service daily limits, split shifts and a waitlist that automatically notifies the next client when a slot opens. Push notifications reach the owner as Web Push in the browser and as native APNs push in the iOS app. The whole platform is a static frontend on Netlify with Supabase (Postgres + RLS, edge functions) behind it, and the iPhone app is the same codebase wrapped in Capacitor — approved on the App Store after four review rounds. Free for salons and clients.",
+    "description_hr": "Termino je platforma za rezervacije za hrvatske salone. Svaki salon dobiva javni profil s uslugama, djelatnicima, galerijom, storyjima i Google recenzijama; klijent odabere uslugu i termin te potvrdi — bez poziva i bez registracije, uz email potvrdu i podsjetnik dan ranije. Vlasnici imaju puni dashboard: dnevni i tjedni kalendar, ručne rezervacije, bazu klijenata, dnevne limite po usluzi, podijeljene smjene i listu čekanja koja automatski obavijesti sljedećeg klijenta kad se termin oslobodi. Push obavijesti vlasniku stižu kao Web Push u pregledniku i kao nativni APNs push u iOS aplikaciji. Cijela platforma je statički frontend na Netlifyju sa Supabaseom (Postgres + RLS, edge funkcije) u pozadini, a iPhone aplikacija je isti kod zapakiran u Capacitor — odobrena na App Storeu nakon četiri runde reviewa. Besplatno za salone i klijente.",
+    "category": "SaaS",
+    "platform": "Web + iOS",
+    "kind": "demo",
+    "version": "1.1",
+    "release_date": "2026-07-14",
+    "icon": "💇",
+    "download_url": "https://apps.apple.com/app/id6788697705",
+    "demo_url": "https://termino.hr",
+    "buymeacoffee_url": "https://buymeacoffee.com/marino143",
+    "linkedin_posts": [],
+    "featured": true
+  },
+  {
     "slug": "claimo",
     "name": "Claimo",
     "tagline_en": "One email address for the insurer, garage, police and leasing company — AI reads every message and builds your claim for you.",
