@@ -58,7 +58,8 @@
     "buymeacoffee_url": "https://buymeacoffee.com/marino143",
     "linkedin_posts": [],
     "featured": true,
-    "name_en": "Baby Diary"
+    "name_en": "Baby Diary",
+    "icon_url": "/apps/icons/beba-dnevnik.png"
   },
   {
     "slug": "bridge",

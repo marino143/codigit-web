@@ -336,7 +336,7 @@
       const kind = app.kind === 'demo' ? 'demo' : 'download';
       const kindLabel = kind === 'demo' ? t[lang].kindDemo : t[lang].kindDownload;
       const cardHTML = '<a href="' + url + '" class="app-card" data-app-name="' + app.name + '" data-app-slug="' + app.slug + '">'
-        + '<div class="app-icon">' + app.icon + '</div>'
+        + '<div class="app-icon">' + (app.icon_url ? '<img src="' + app.icon_url + '" alt="" style="width:100%;height:100%;border-radius:inherit;object-fit:cover;">' : app.icon) + '</div>'
         + '<h3>' + displayName + '</h3>'
         + '<div class="app-tags"><span class="app-meta">' + meta + '</span>'
         + '<span class="app-kind ' + kind + '">' + kindLabel + '</span></div>'
