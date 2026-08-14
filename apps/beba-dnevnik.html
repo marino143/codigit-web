@@ -506,6 +506,11 @@
     lang = l;
     document.documentElement.lang = l;
     localStorage.setItem('lang', l);
+    // screenshotovi prate jezik: hr = original, en = -en varijante
+    document.querySelectorAll('.shots img').forEach(im => {
+      const base = im.src.replace(/-en\.png$/, '.png');
+      im.src = l === 'hr' ? base : base.replace(/\.png$/, '-en.png');
+    });
     const d = t[l];
     Object.keys(d).forEach(id => {
       const el = document.getElementById(id);
