@@ -295,7 +295,9 @@
     @media (max-width: 560px) { .lb-bar { padding: 10px 12px; } .lb-btn { padding: 8px 10px; } .lb-cap { font-size: 12.5px; } }
     /* Snimka menija je 2x capture malog menija — ne razvlačimo je preko
        prirodne širine, inače se zamuti. */
+    .shot-editor { flex: 0 1 560px; }
     .shot-menu { flex: 0 1 305px; }
+    .shot-overlay { flex: 0 1 261px; }
   </style>
 </head>
 <body>
@@ -377,9 +379,17 @@
   <section class="app-section">
     <h2 id="h-shots">Screenshots</h2>
     <div class="shots">
+      <figure class="shot shot-editor">
+        <img src="/apps/screenshots/klik-editor.png" alt="The Klik annotation editor with an arrow and a rectangle drawn over a captured screenshot" loading="lazy" width="1120" height="719" />
+        <figcaption id="cap-editor">The annotation editor opens on the capture — arrows, boxes, text, highlight, blur and crop, then Copy, Save or Pin.</figcaption>
+      </figure>
       <figure class="shot shot-menu">
         <img src="/apps/screenshots/klik-menu.png" alt="The Klik menu bar dropdown with capture, recording and settings commands" loading="lazy" width="610" height="575" />
         <figcaption id="cap-menu">Everything Klik does, one click from the menu bar — each capture mode on its own shortcut.</figcaption>
+      </figure>
+      <figure class="shot shot-overlay">
+        <img src="/apps/screenshots/klik-overlay.png" alt="The quick access overlay in the corner of the screen, showing the Edit action on hover" loading="lazy" width="522" height="305" />
+        <figcaption id="cap-overlay">Every capture slides into the corner — drag it straight into another app, or hover for Edit and Save.</figcaption>
       </figure>
     </div>
   </section>
@@ -481,7 +491,9 @@
       'cta-github': 'View on GitHub',
       'h-what': 'What it does',
       'h-shots': 'Screenshots',
+      'cap-editor': 'The annotation editor opens on the capture — arrows, boxes, text, highlight, blur and crop, then Copy, Save or Pin.',
       'cap-menu': 'Everything Klik does, one click from the menu bar — each capture mode on its own shortcut.',
+      'cap-overlay': 'Every capture slides into the corner — drag it straight into another app, or hover for Edit and Save.',
       'h-why': 'Why native?',
       'h-journey': 'Build story',
       'h-updates': 'Updates',
@@ -500,7 +512,9 @@
       'cta-github': 'Pogledaj na GitHubu',
       'h-what': 'Što radi',
       'h-shots': 'Screenshotovi',
+      'cap-editor': 'Editor za anotacije otvara se nad snimkom — strelice, okviri, tekst, marker, blur i crop, pa Copy, Save ili Pin.',
       'cap-menu': 'Sve što Klik radi, jedan klik od menu bara — svaki način snimanja na svom prečacu.',
+      'cap-overlay': 'Svaka snimka sklizne u kut — povuci je ravno u drugu aplikaciju ili prijeđi mišem za Edit i Save.',
       'h-why': 'Zašto nativno?',
       'h-journey': 'Priča o izradi',
       'h-updates': 'Novosti',
