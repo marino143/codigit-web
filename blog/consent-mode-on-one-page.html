@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    // Consent Mode v2: default deny analytics + ads until user opts in.
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied',
+      'wait_for_update': 500
+    });
+    // Restore previous consent from localStorage (runs before any page logic).
+    try {
+      if (localStorage.getItem('cookieConsent') === 'accepted') {
+        gtag('consent', 'update', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      }
+    } catch(e) {}
+    gtag('js', new Date());
+    gtag('config', 'G-T97BQ3VRV1');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consent Mode v2 on 28 Pages, a Cookie Banner on One — Co Digit</title>
+  <meta name="description" content="We audited our own site's Google Consent Mode v2 setup by counting pages instead of eyeballing the homepage. 33 pages load GA4, 28 deny consent by default, and exactly one can ask the visitor to change it." />
+  <link rel="canonical" href="https://codigit.io/blog/consent-mode-on-one-page.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://codigit.io/blog/consent-mode-on-one-page.html" />
+  <meta property="og:title" content="Consent Mode v2 on 28 Pages, a Cookie Banner on One — Co Digit" />
+  <meta property="og:description" content="We audited our own site's Google Consent Mode v2 setup by counting pages instead of eyeballing the homepage. 33 pages load GA4, 28 deny consent by default, and exactly one can ask the visitor to change it." />
+  <meta property="og:image" content="https://codigit.io/og-image.png" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Co Digit" />
+  <meta property="article:published_time" content="2026-08-17" />
+  <meta property="article:author" content="Co Digit" />
+  <meta property="article:tag" content="Analytics" />
+  <meta property="article:tag" content="Privacy" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Consent Mode v2 on 28 Pages, a Cookie Banner on One — Co Digit" />
+  <meta name="twitter:description" content="We audited our own site's Google Consent Mode v2 setup by counting pages instead of eyeballing the homepage. 33 pages load GA4, 28 deny consent by default, and exactly one can ask." />
+  <meta name="twitter:image" content="https://codigit.io/og-image.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
+      --border: #222222; --text: #f0f0f0; --muted: #888;
+      --accent: #e63946; --white: #ffffff;
+      --nav-bg: rgba(10,10,10,0.9);
+    }
+    [data-theme="light"] {
+      --bg: #ffffff; --bg2: #f4f4f5; --bg3: #e8e8ea;
+      --border: #e0e0e0; --text: #111111; --muted: #666666;
+      --white: #0a0a0a; --nav-bg: rgba(255,255,255,0.95);
+    }
+    [data-theme="light"] footer { background: var(--bg2); }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .logo-dot { display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
+    @keyframes codigit-blink { 0%, 100% { color: var(--white); } 50% { color: var(--accent); } }
+    @media (prefers-reduced-motion: reduce) { .logo-dot { animation: none; } }
+    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; letter-spacing: 0.3px; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 18px; border-radius: 6px; font-weight: 600 !important; transition: opacity 0.2s !important; font-size: 13px !important; }
+    .nav-cta:hover { opacity: 0.85; }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+
+    .lang-switcher { display: flex; align-items: center; gap: 4px; }
+    .lang-btn {
+      background: none; border: 1px solid transparent; color: var(--muted);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 4px 8px; border-radius: 4px; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .lang-btn:hover { color: var(--white); }
+    .lang-btn.active { color: var(--white); border-color: var(--border); }
+    .lang-sep { color: #333; font-size: 11px; }
+    .theme-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--muted); font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .theme-btn:hover { color: var(--text); border-color: var(--muted); }
+
+    /* ARTICLE */
+    .article-wrapper {
+      flex: 1;
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+    .post-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .post-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+      color: var(--accent); background: rgba(230,57,70,0.1);
+      padding: 4px 10px; border-radius: 4px; text-transform: uppercase;
+    }
+    .article-wrapper h1 {
+      font-size: clamp(28px, 3.5vw, 44px); font-weight: 900;
+      letter-spacing: -1.2px; color: var(--white); line-height: 1.15; margin-bottom: 20px;
+    }
+    .post-meta {
+      font-size: 13px; color: var(--muted); margin-bottom: 8px;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    .post-meta-sep { color: var(--border); }
+    .divider { width: 48px; height: 3px; background: var(--accent); margin: 32px 0; border-radius: 2px; }
+
+    /* ARTICLE BODY */
+    .article-body { line-height: 1.8; }
+    .article-body h2 {
+      font-size: 22px; font-weight: 800; color: var(--white);
+      letter-spacing: -0.5px; margin: 48px 0 16px;
+    }
+    .article-body p { margin-bottom: 20px; color: var(--text); font-size: 16px; }
+    .article-body ul {
+      margin: 0 0 20px 20px; color: var(--text); font-size: 16px;
+    }
+    .article-body ul li { margin-bottom: 8px; line-height: 1.7; }
+    .article-body strong { color: var(--white); font-weight: 600; }
+    .article-body code {
+      font-family: 'Courier New', monospace; font-size: 14px;
+      background: var(--bg3); border: 1px solid var(--border);
+      padding: 2px 6px; border-radius: 4px; color: var(--accent);
+    }
+    .article-body pre {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 20px 24px;
+      margin: 0 0 20px; overflow-x: auto;
+      font-family: 'Courier New', monospace; font-size: 14px;
+      line-height: 1.6; color: var(--text);
+    }
+    .article-body pre code {
+      background: none; border: none; padding: 0; color: var(--text);
+    }
+
+    /* LANG TOGGLE FOR ARTICLE CONTENT */
+    .lang-content { display: none; }
+    .lang-content.active { display: block; }
+
+    /* BACK LINK */
+    .back-to-blog {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 48px; padding: 12px 24px;
+      font-size: 13px; font-weight: 600; color: var(--muted);
+      text-decoration: none; border: 1px solid var(--border);
+      border-radius: 8px; transition: all 0.2s;
+    }
+    .back-to-blog:hover { color: var(--white); border-color: var(--muted); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto;
+    }
+    .footer-logo { font-size: 14px; font-weight: 800; color: var(--white); }
+    .footer-logo span { color: var(--accent); }
+    footer p { font-size: 12px; color: #555; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: #555; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--muted); }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .article-wrapper { padding: 40px 20px 60px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
+  <ul class="nav-links">
+    <li><a href="/#services">Capabilities</a></li>
+    <li><a href="/#ai">AI-Powered</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#certs">Certifications</a></li>
+    <li><a href="/services.html">Services</a></li>
+    <li><a href="/blog/">Notes</a></li>
+    <li><a href="/apps/">Apps</a></li>
+    <li><a href="/contact.html" class="nav-cta">Get in touch</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="hr">HR</button>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+  </div>
+</nav>
+
+<article class="article-wrapper">
+  <header>
+    <div class="post-tags">
+      <span class="post-tag">Analytics</span>
+      <span class="post-tag">Privacy</span>
+    </div>
+    <h1 id="postTitle">Consent Mode v2 on 28 Pages, a Cookie Banner on One</h1>
+    <div class="post-meta">
+      <time datetime="2026-08-17" id="postDate">August 17, 2026</time>
+      <span class="post-meta-sep">|</span>
+      <span>Co Digit</span>
+    </div>
+    <div class="divider"></div>
+  </header>
+
+  <!-- ENGLISH CONTENT -->
+  <div class="article-body lang-content active" data-lang="en">
+    <p>Our homepage has a cookie banner. Google Consent Mode v2 is wired into it properly: analytics and advertising storage are denied before the page does anything, granted only after the visitor clicks accept, and the choice is persisted so we do not ask again. We have opened that page and tested that banner more times than we can count. It works.</p>
+    <p>Then we stopped opening the homepage and started counting pages instead.</p>
+    <p>Thirty-three pages on this site load Google Analytics. Twenty-eight of them set consent to denied by default. Exactly one of them — the homepage — is able to ask the visitor to change that.</p>
+
+    <h2>What Consent Mode v2 Actually Does</h2>
+    <p>Consent Mode is a handshake in two parts. Before the tag does any measurement, you declare a default posture. Ours, sitting inline in the <code>&lt;head&gt;</code> of every page, denies everything:</p>
+    <pre><code>gtag('consent', 'default', {
+  'ad_storage': 'denied',
+  'ad_user_data': 'denied',
+  'ad_personalization': 'denied',
+  'analytics_storage': 'denied',
+  'wait_for_update': 500
+});</code></pre>
+    <p>The second part is the <code>update</code> call, which fires when a visitor consents. That call is the entire point of the first one. A default-deny with no path to an update is not a privacy feature — it is a measurement outage that happens to be compliant.</p>
+    <p>It is worth being precise about what "denied" means, because a lot of writing on this gets it wrong. Denied does not mean nothing is sent. GA4 still receives cookieless pings, so you keep seeing traffic in your reports and nothing looks broken. What you lose is the cookie: no reliable stitching of one visitor across pages or sessions, degraded attribution, and conversion modelling that only helps if you feed it enough consented data to model from. The dashboard stays populated. The numbers quietly stop meaning what you think they mean.</p>
+
+    <h2>Finding One: The Banner Lives on One Page</h2>
+    <p>The banner markup and its two click handlers exist only in <code>index.html</code>. Every blog post, every service page, every app page carries the deny-by-default snippet and no way to lift it.</p>
+    <p>Read that against how people actually arrive. Search traffic does not land on homepages. It lands on the article that answered the query, or the service page that matched the search. A visitor who arrives from Google onto one of our posts is denied by default and never shown a choice. They read, they leave, and their entire visit is measured cookielessly. If they navigate to the homepage mid-visit the banner finally appears — but a reader of one article has no reason to.</p>
+    <p>The sharper version of this problem is paid traffic. We run Google Ads pointed at service landing pages, not at the homepage. Those pages deny <code>ad_storage</code> and <code>ad_user_data</code> by default and cannot ask for either. That is ad spend landing on pages structurally incapable of attributing a conversion properly.</p>
+
+    <h2>Finding Two: Five Pages With No Gate at All</h2>
+    <p>The same count turned up the opposite failure. Five of the thirty-three pages — the most recently added app pages — load GA4 with no <code>consent</code> call whatsoever:</p>
+    <pre><code>gtag('js', new Date());
+gtag('config', 'G-T97BQ3VRV1');</code></pre>
+    <p>No default, no deny, no update. Those pages fall back to the tag's unrestricted behaviour and set cookies immediately, for every visitor, with no banner anywhere in sight. One site, two opposite defects: twenty-eight pages that refuse to measure and cannot ask permission, and five that measure without asking at all.</p>
+    <p>Neither of these was a decision. Both are what happens when an analytics snippet is copied by hand into each new page and the copy source drifts over time.</p>
+
+    <h2>Why This Survives Testing</h2>
+    <p>Two things conspire to hide it.</p>
+    <ul>
+      <li><strong>You test the homepage.</strong> It is the page you open when you want to look at the site. It is also the only page with the banner, so the banner always works when you check.</li>
+      <li><strong>Consent persists.</strong> Once you have clicked accept, your own browser restores that consent from storage on every page. The site behaves correctly for you, permanently, while behaving incorrectly for every first-time visitor. Clearing storage or opening a private window is the only way to see what they see.</li>
+    </ul>
+    <p>This is the same lesson as our accessibility audit and our audit of hotlinked images: the defects that survive longest are the ones invisible from the seat you normally sit in. The fix is not to look harder. It is to stop looking and start counting.</p>
+
+    <h2>Audit Yours by Counting, Not Looking</h2>
+    <p>Three commands, run at the root of your site, will tell you in seconds what an afternoon of clicking will not. Compare the numbers:</p>
+    <pre><code># How many pages load the tag?
+grep -rl "G-XXXXXXXXXX" --include='*.html' . | wc -l
+
+# How many declare a consent default?
+grep -rl "consent', 'default'" --include='*.html' . | wc -l
+
+# How many can actually ask the visitor?
+grep -rl 'id="cookieBanner"' --include='*.html' . | wc -l</code></pre>
+    <p>All three should be the same number. If the second is lower than the first, some pages are tracking ungated. If the third is lower than the second, some pages are denying consent with no way to lift it. Ours read 33, 28, and 1.</p>
+    <p>On a site with a build step or a CMS this class of bug is largely designed out — the snippet lives in one layout and every page inherits it. On a hand-built static site, which this is, nothing enforces that. The remedy is the same either way: one consent implementation, included everywhere, never copied. We are consolidating ours into a single shared include and deleting twenty-eight hand-maintained copies, which also means the next change to it is one edit rather than twenty-eight.</p>
+
+    <h2>What to Take From This</h2>
+    <p>If you have a cookie banner and a Consent Mode setup, the question is not whether it works. It is <strong>on how many pages</strong> it works, and whether that number matches the number of pages carrying your tag. Check it from a private window, on a page that is not your homepage, arriving the way a stranger would.</p>
+    <p>And be suspicious of an analytics setup that has never looked broken. Consent Mode fails quietly by design: the reports stay full, the graphs keep their shape, and the only visible symptom is numbers that are subtly, unfalsifiably wrong. We do not know how much of our own traffic was measured without cookies before we counted, and we never will. That is precisely the problem with this kind of bug — it destroys the evidence of its own existence.</p>
+  </div>
+
+  <!-- CROATIAN CONTENT -->
+  <div class="article-body lang-content" data-lang="hr">
+    <p>Naša naslovnica ima cookie banner. Google Consent Mode v2 na njoj je ispravno postavljen: analitički i reklamni storage odbijeni su prije nego stranica bilo što učini, odobreni tek nakon što posjetitelj klikne prihvaćam, a odabir se pamti da ne pitamo dvaput. Tu smo stranicu otvorili i taj banner testirali više puta nego što možemo izbrojati. Radi.</p>
+    <p>Onda smo prestali otvarati naslovnicu i počeli brojati stranice.</p>
+    <p>Trideset i tri stranice na ovom sajtu učitavaju Google Analytics. Dvadeset i osam njih postavlja privolu na odbijeno po defaultu. Točno jedna — naslovnica — može posjetitelja pitati da to promijeni.</p>
+
+    <h2>Što Consent Mode v2 zapravo radi</h2>
+    <p>Consent Mode je rukovanje u dva dijela. Prije nego tag obavi bilo kakvo mjerenje, deklarirate početno stanje. Naše, koje sjedi inline u <code>&lt;head&gt;</code> svake stranice, odbija sve:</p>
+    <pre><code>gtag('consent', 'default', {
+  'ad_storage': 'denied',
+  'ad_user_data': 'denied',
+  'ad_personalization': 'denied',
+  'analytics_storage': 'denied',
+  'wait_for_update': 500
+});</code></pre>
+    <p>Drugi dio je <code>update</code> poziv, koji se aktivira kad posjetitelj da privolu. Taj poziv je cijela svrha prvoga. Default-deny bez puta do updatea nije značajka privatnosti — to je prekid mjerenja koji je slučajno usklađen s propisima.</p>
+    <p>Vrijedi biti precizan oko toga što "odbijeno" znači, jer velik dio tekstova o ovome to pogrešno tumači. Odbijeno ne znači da se ništa ne šalje. GA4 i dalje prima pingove bez kolačića, pa u izvještajima nastavljate vidjeti promet i ništa ne izgleda pokvareno. Ono što gubite je kolačić: nema pouzdanog povezivanja jednog posjetitelja kroz stranice ili sesije, atribucija je degradirana, a modeliranje konverzija pomaže samo ako mu date dovoljno podataka s privolom iz kojih bi modeliralo. Dashboard ostaje pun. Brojevi tiho prestaju značiti ono što mislite da znače.</p>
+
+    <h2>Nalaz prvi: banner živi na jednoj stranici</h2>
+    <p>Markup bannera i njegova dva click handlera postoje samo u <code>index.html</code>. Svaki blog post, svaka stranica usluge, svaka stranica aplikacije nosi snippet koji odbija po defaultu i nikakav način da se to podigne.</p>
+    <p>Pročitajte to uz to kako ljudi zapravo dolaze. Promet s tražilica ne slijeće na naslovnice. Slijeće na članak koji je odgovorio na upit ili na stranicu usluge koja je odgovarala pretrazi. Posjetitelj koji s Googlea dođe na jedan od naših postova odbijen je po defaultu i nikad mu se ne ponudi odabir. Pročita, ode, i cijeli njegov posjet izmjeren je bez kolačića. Ako usred posjeta otvori naslovnicu, banner se konačno pojavi — ali čitatelj jednog članka nema razloga za to.</p>
+    <p>Oštrija verzija ovog problema je plaćeni promet. Vodimo Google Ads usmjeren na landing stranice usluga, ne na naslovnicu. Te stranice po defaultu odbijaju <code>ad_storage</code> i <code>ad_user_data</code> i ne mogu tražiti ni jedno ni drugo. To je oglasni budžet koji slijeće na stranice strukturno nesposobne ispravno atribuirati konverziju.</p>
+
+    <h2>Nalaz drugi: pet stranica bez ikakve zaštite</h2>
+    <p>Isto brojanje otkrilo je obrnuti propust. Pet od trideset i tri stranice — najnovije dodane stranice aplikacija — učitavaju GA4 bez ijednog <code>consent</code> poziva:</p>
+    <pre><code>gtag('js', new Date());
+gtag('config', 'G-T97BQ3VRV1');</code></pre>
+    <p>Bez defaulta, bez odbijanja, bez updatea. Te stranice padaju na neograničeno ponašanje taga i postavljaju kolačiće odmah, svakom posjetitelju, bez bannera na vidiku. Jedan sajt, dva suprotna propusta: dvadeset i osam stranica koje odbijaju mjeriti i ne mogu pitati za dopuštenje, i pet koje mjere bez pitanja.</p>
+    <p>Ni jedno ni drugo nije bila odluka. Oboje je ono što se dogodi kad se analitički snippet ručno kopira u svaku novu stranicu, a izvor kopiranja s vremenom odluta.</p>
+
+    <h2>Zašto ovo preživi testiranje</h2>
+    <p>Dvije stvari se urote da to skriju.</p>
+    <ul>
+      <li><strong>Testirate naslovnicu.</strong> To je stranica koju otvorite kad želite pogledati sajt. Ujedno je i jedina s bannerom, pa banner uvijek radi kad ga provjerite.</li>
+      <li><strong>Privola se pamti.</strong> Kad ste jednom kliknuli prihvaćam, vaš vlastiti browser tu privolu obnavlja iz storagea na svakoj stranici. Sajt se prema vama trajno ponaša ispravno, dok se prema svakom posjetitelju koji dođe prvi put ponaša neispravno. Čišćenje storagea ili privatni prozor jedini su način da vidite ono što oni vide.</li>
+    </ul>
+    <p>To je ista lekcija kao iz naše revizije pristupačnosti i revizije hotlinkanih slika: propusti koji najdulje preživljavaju oni su nevidljivi sa stolice na kojoj inače sjedite. Rješenje nije gledati pažljivije. Rješenje je prestati gledati i početi brojati.</p>
+
+    <h2>Revidirajte svoj brojanjem, ne gledanjem</h2>
+    <p>Tri komande, pokrenute u korijenu sajta, reći će vam u nekoliko sekundi ono što poslijepodne klikanja neće. Usporedite brojeve:</p>
+    <pre><code># Koliko stranica učitava tag?
+grep -rl "G-XXXXXXXXXX" --include='*.html' . | wc -l
+
+# Koliko deklarira consent default?
+grep -rl "consent', 'default'" --include='*.html' . | wc -l
+
+# Koliko ih uopće može pitati posjetitelja?
+grep -rl 'id="cookieBanner"' --include='*.html' . | wc -l</code></pre>
+    <p>Sva tri broja trebaju biti ista. Ako je drugi manji od prvog, neke stranice prate bez zaštite. Ako je treći manji od drugog, neke stranice odbijaju privolu bez načina da se to podigne. Naši su bili 33, 28 i 1.</p>
+    <p>Na sajtu s build stepom ili CMS-om ova klasa bugova uglavnom je dizajnom onemogućena — snippet živi u jednom layoutu i svaka stranica ga nasljeđuje. Na ručno građenom statičnom sajtu, a ovaj je takav, to ništa ne nameće. Lijek je u oba slučaja isti: jedna implementacija privole, uključena svugdje, nikad kopirana. Našu konsolidiramo u jedan zajednički include i brišemo dvadeset i osam ručno održavanih kopija, što ujedno znači da je sljedeća izmjena jedan edit, a ne dvadeset i osam.</p>
+
+    <h2>Što iz ovoga izvući</h2>
+    <p>Ako imate cookie banner i Consent Mode postavku, pitanje nije radi li. Pitanje je <strong>na koliko stranica</strong> radi i odgovara li taj broj broju stranica koje nose vaš tag. Provjerite iz privatnog prozora, na stranici koja nije vaša naslovnica, dolazeći onako kako bi došao stranac.</p>
+    <p>I budite sumnjičavi prema analitičkoj postavci koja nikad nije izgledala pokvareno. Consent Mode po dizajnu tiho podbacuje: izvještaji ostaju puni, grafovi zadržavaju oblik, a jedini vidljivi simptom su brojevi koji su suptilno i neprovjerljivo pogrešni. Ne znamo koliko je našeg prometa izmjereno bez kolačića prije nego smo prebrojali, i nikad nećemo znati. To je upravo problem s ovakvom vrstom buga — uništava dokaz o vlastitom postojanju.</p>
+  </div>
+
+  <a href="/blog/" class="back-to-blog" id="backToBlog">&larr; Back to blog</a>
+</article>
+
+<footer>
+  <div class="footer-logo">CO<span class="logo-dot">.</span>DIGIT</div>
+  <p id="footer-copy">&copy; 2026 Co Digit d.o.o. &middot; Zagreb, Croatia</p>
+  <div class="footer-links">
+    <a href="/" id="fl-home">Home</a>
+    <a href="/blog/" id="fl-blog">Notes</a>
+    <a href="/cookie-policy.html" id="fl-cookies">Cookie Policy</a>
+    <a href="/privacy-policy.html" id="fl-privacy">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  const t = {
+    en: {
+      postTitle: 'Consent Mode v2 on 28 Pages, a Cookie Banner on One',
+      postDate: 'August 17, 2026',
+      backToBlog: '← Back to blog',
+      'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Croatia',
+      'fl-home': 'Home', 'fl-blog': 'Notes', 'fl-cookies': 'Cookie Policy', 'fl-privacy': 'Privacy Policy',
+    },
+    hr: {
+      postTitle: 'Consent Mode v2 na 28 stranica, cookie banner na jednoj',
+      postDate: '17. kolovoza 2026.',
+      backToBlog: '← Natrag na blog',
+      'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska',
+      'fl-home': 'Početna', 'fl-blog': 'Bilješke', 'fl-cookies': 'Politika kolačića', 'fl-privacy': 'Politika privatnosti',
+    }
+  };
+
+  let lang = 'en';
+
+  function applyLang(l) {
+    lang = l;
+    document.documentElement.lang = l;
+    localStorage.setItem('lang', l);
+    const d = t[l];
+    Object.keys(d).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = d[id];
+    });
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+    // Toggle article content
+    document.querySelectorAll('.lang-content').forEach(el => {
+      el.classList.toggle('active', el.getAttribute('data-lang') === l);
+    });
+  }
+
+  // Theme
+  const themeBtn = document.getElementById('themeBtn');
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    themeBtn.innerHTML = theme === 'light' ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+  }
+  const savedTheme = localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  applyTheme(savedTheme);
+  themeBtn.addEventListener('click', () => {
+    applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+  });
+
+  const saved = localStorage.getItem('lang');
+  const browser = navigator.language.startsWith('hr') ? 'hr' : 'en';
+  applyLang(saved || browser);
+
+  document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+</script>
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Consent Mode v2 on 28 Pages, a Cookie Banner on One",
+  "description": "We audited our own site's Google Consent Mode v2 setup by counting pages instead of eyeballing the homepage. 33 pages load GA4, 28 deny consent by default, and exactly one can ask the visitor to change it.",
+  "datePublished": "2026-08-17",
+  "author": {
+    "@type": "Organization",
+    "name": "Co Digit",
+    "url": "https://codigit.io"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Co Digit",
+    "url": "https://codigit.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://codigit.io/favicon.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://codigit.io/blog/consent-mode-on-one-page.html"
+  },
+  "keywords": ["Analytics", "Privacy", "Google Consent Mode v2", "GA4", "cookie banner", "GDPR"]
+}
+</script>
+</body>
+</html>

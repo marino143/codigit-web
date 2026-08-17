@@ -1,5 +1,15 @@
 [
   {
+    "slug": "consent-mode-on-one-page",
+    "title_en": "Consent Mode v2 on 28 Pages, a Cookie Banner on One",
+    "title_hr": "Consent Mode v2 na 28 stranica, cookie banner na jednoj",
+    "excerpt_en": "We audited our own Consent Mode v2 setup by counting pages instead of eyeballing the homepage. 33 pages load GA4, 28 deny consent by default, exactly one can ask the visitor to change it — and five track with no gate at all.",
+    "excerpt_hr": "Revidirali smo vlastitu Consent Mode v2 postavku brojanjem stranica umjesto gledanja naslovnice. 33 stranice učitavaju GA4, 28 odbija privolu po defaultu, točno jedna može posjetitelja pitati da to promijeni — a pet prati bez ikakve zaštite.",
+    "date": "2026-08-17",
+    "tags": ["Analytics", "Privacy"],
+    "author": "Co Digit"
+  },
+  {
     "slug": "llms-txt-is-not-a-standard",
     "title_en": "llms.txt Is Not a Standard, and Your Site Probably Does Not Need One",
     "title_hr": "llms.txt nije standard i vašem sajtu vjerojatno ne treba",
