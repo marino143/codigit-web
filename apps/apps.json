@@ -195,5 +195,25 @@
     "buymeacoffee_url": "https://buymeacoffee.com/marino143",
     "linkedin_posts": [],
     "featured": false
+  },
+  {
+    "slug": "klik",
+    "name": "Klik",
+    "tagline_en": "Screenshots, screen recording and GIFs on your Mac — annotate, then drag straight into any app. A 700 KB native alternative to CleanShot.",
+    "tagline_hr": "Screenshotovi, snimanje ekrana i GIF-ovi na Macu — anotiraj pa povuci ravno u bilo koju aplikaciju. Nativna alternativa CleanShotu od 700 KB.",
+    "description_en": "Klik is a menu bar screen capture tool built the way CleanShot works, without the subscription. It captures a region, a window or the whole screen through ScreenCaptureKit, opens an annotation editor with rectangles, arrows, text, highlight, gaussian blur and crop, and can pin any screenshot so it floats above every other window. Video recording covers the full screen or a region in HEVC with a 1080p ceiling, capturing system audio and the microphone as separate tracks — echo cancellation and a mixdown into one sharing-friendly AAC track run automatically after every recording, so a meeting is ready to send without a re-compression pass. Any recording converts to an optimized GIF in one click. Every capture slides into the corner of the screen and drags straight out into Slack, Mail, Finder or a browser upload. Zero third-party dependencies, no telemetry, no network code — a single 700 KB native app for Apple Silicon. MIT licensed.",
+    "description_hr": "Klik je alat za snimanje ekrana iz menu bara, napravljen po uzoru na CleanShot, ali bez pretplate. Hvata regiju, prozor ili cijeli ekran kroz ScreenCaptureKit, otvara editor za anotacije s pravokutnicima, strelicama, tekstom, markerom, blurom i cropom, a svaki screenshot možeš pribosti da lebdi iznad svih prozora. Snimanje videa pokriva cijeli ekran ili regiju u HEVC-u s granicom od 1080p, uz sistemski zvuk i mikrofon kao zasebne zapise — uklanjanje jeke i spajanje u jedan AAC zapis idu automatski nakon svake snimke, pa je sastanak spreman za slanje bez dodatne kompresije. Bilo koja snimka se jednim klikom pretvara u optimizirani GIF. Svaka snimka sklizne u kut ekrana i povuče se ravno u Slack, Mail, Finder ili upload u pregledniku. Nula vanjskih ovisnosti, bez telemetrije, bez mrežnog koda — jedna nativna aplikacija od 700 KB za Apple Silicon. MIT licenca.",
+    "category": "Utility",
+    "platform": "macOS (Apple Silicon)",
+    "kind": "download",
+    "version": "0.2.0",
+    "release_date": "2026-05-22",
+    "icon": "📸",
+    "icon_url": "/apps/icons/klik.png",
+    "download_url": "https://github.com/marino143/klik/releases/download/v0.2.0/Klik.app.zip",
+    "github_url": "https://github.com/marino143/klik",
+    "buymeacoffee_url": "https://buymeacoffee.com/marino143",
+    "linkedin_posts": [],
+    "featured": true
   }
 ]
