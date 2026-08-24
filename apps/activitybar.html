@@ -32,20 +32,20 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ActivityBar — CPU, RAM & SSD in Your macOS Menu Bar | Co Digit</title>
-  <meta name="description" content="Live CPU, RAM and SSD usage in your macOS menu bar. Native Swift, ~45 MB RAM, zero bloat. Free and open source for Apple Silicon." />
+  <meta name="description" content="Live CPU, RAM and SSD usage in your macOS menu bar. Native Swift, a 1.2 MB app, zero bloat. Free and open source for Apple Silicon." />
   <link rel="canonical" href="https://codigit.io/apps/activitybar.html" />
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://codigit.io/apps/activitybar.html" />
   <meta property="og:title" content="ActivityBar — CPU, RAM & SSD in Your macOS Menu Bar | Co Digit" />
-  <meta property="og:description" content="Live CPU, RAM and SSD usage in your macOS menu bar. Native Swift, ~45 MB RAM, zero bloat. Free and open source for Apple Silicon." />
+  <meta property="og:description" content="Live CPU, RAM and SSD usage in your macOS menu bar. Native Swift, a 1.2 MB app, zero bloat. Free and open source for Apple Silicon." />
   <meta property="og:image" content="https://codigit.io/og-image.png" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:site_name" content="Co Digit" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="ActivityBar — CPU, RAM & SSD in Your macOS Menu Bar | Co Digit" />
-  <meta name="twitter:description" content="Live CPU, RAM and SSD usage in your macOS menu bar. Native Swift, ~45 MB RAM, zero bloat. Free and open source for Apple Silicon." />
+  <meta name="twitter:description" content="Live CPU, RAM and SSD usage in your macOS menu bar. Native Swift, a 1.2 MB app, zero bloat. Free and open source for Apple Silicon." />
   <meta name="twitter:image" content="https://codigit.io/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -294,9 +294,9 @@
     .lb.zoom .lb-stage img { max-width: none; max-height: none; cursor: zoom-out; }
     .lb-cap { padding: 12px 16px 18px; color: rgba(255,255,255,.75); font-size: 13px; text-align: center; max-width: 780px; margin: 0 auto; }
     @media (max-width: 560px) { .lb-bar { padding: 10px 12px; } .lb-btn { padding: 8px 10px; } .lb-cap { font-size: 12.5px; } }
-    .shot-menu { flex: 0 1 390px; }
-    .shot-proc { flex: 0 1 295px; }
-    .shot-disk { flex: 0 1 248px; }
+    .shot-menu { flex: 0 1 340px; }
+    .shot-proc { flex: 0 1 315px; }
+    .shot-disk { flex: 0 1 225px; }
   </style>
 </head>
 <body>
@@ -331,7 +331,7 @@
     <div class="app-hero-content">
       <span class="app-platform-badge" id="platform-badge">macOS · Apple Silicon · Free</span>
       <h1 id="app-name">ActivityBar</h1>
-      <p class="app-tagline" id="app-tagline">Live CPU, RAM and SSD usage in your macOS menu bar. Native Swift, ~45 MB RAM, zero bloat.</p>
+      <p class="app-tagline" id="app-tagline">Live CPU, RAM and SSD usage in your macOS menu bar. Native Swift, a 1.2 MB app, zero bloat.</p>
       <div class="app-cta-row">
         <a href="https://github.com/marino143/macos-activity-bar/releases/download/v1.0.0/ActivityBar.zip" class="btn btn-primary" id="cta-download">Download free →</a>
         <a href="https://github.com/marino143/macos-activity-bar" target="_blank" class="btn btn-outline" id="cta-github">View source</a>
@@ -349,7 +349,7 @@
       <ul class="benefit-list">
         <li>Three numbers, always visible</li>
         <li>Native Swift — no Electron bloat</li>
-        <li>~45 MB RAM, near-zero CPU</li>
+        <li>A 1.2 MB app, and about 0.2% CPU while it sits there</li>
         <li>Monospaced digits, so the numbers don't jump around as they change</li>
         <li>CPU and RAM open the list of hungriest processes — kill one straight from the menu</li>
         <li>SSD opens your biggest folders, and keeps drilling until you find what actually filled the disk</li>
@@ -361,7 +361,7 @@
       <ul class="benefit-list">
         <li>Tri broja, uvijek vidljiva</li>
         <li>Nativni Swift — bez Electron bloata</li>
-        <li>~45 MB RAM-a, gotovo nula CPU-a</li>
+        <li>Aplikacija od 1,2 MB i oko 0,2% CPU-a dok samo stoji</li>
         <li>Monospace znamenke, da brojevi ne poskakuju dok se mijenjaju</li>
         <li>CPU i RAM otvaraju popis najgladnijih procesa — ubij ga direktno iz menija</li>
         <li>SSD otvara tvoje najveće mape i kopa dalje dok ne nađeš što ti je stvarno pojelo disk</li>
@@ -375,15 +375,15 @@
     <h2 id="h-shots">Screenshots</h2>
     <div class="shots">
       <figure class="shot shot-menu">
-        <img src="/apps/screenshots/activitybar-menu.png" alt="The ActivityBar menu showing CPU, RAM and SSD readouts" loading="lazy" width="780" height="422" />
+        <img src="/apps/screenshots/activitybar-menu.png" alt="The ActivityBar menu showing CPU, RAM and SSD readouts" loading="lazy" width="680" height="422" />
         <figcaption id="cap-menu">Three numbers in the menu bar; the menu gives you the exact figures.</figcaption>
       </figure>
       <figure class="shot shot-proc">
-        <img src="/apps/screenshots/activitybar-processes.png" alt="Top processes by CPU, each one clickable to kill" loading="lazy" width="590" height="858" />
+        <img src="/apps/screenshots/activitybar-processes.png" alt="Top processes by CPU, each one clickable to kill" loading="lazy" width="630" height="858" />
         <figcaption id="cap-proc">The hungriest processes, worst first. Click one to kill it.</figcaption>
       </figure>
       <figure class="shot shot-disk">
-        <img src="/apps/screenshots/activitybar-disk.png" alt="Home folders sorted by size, each expanding into its subfolders" loading="lazy" width="496" height="570" />
+        <img src="/apps/screenshots/activitybar-disk.png" alt="Home folders sorted by size, each expanding into its subfolders" loading="lazy" width="450" height="570" />
         <figcaption id="cap-disk">Your folders, biggest first — and every one of them opens further.</figcaption>
       </figure>
     </div>
@@ -394,12 +394,12 @@
     <h2 id="h-why">Why native?</h2>
     <div class="lang-content active" data-lang="en">
       <p>ActivityBar is still a single Swift file — around 850 lines now. It reads Apple's built-in <code>host_statistics</code> and <code>vm_statistics64</code> syscalls — the same data source the macOS Activity Monitor uses — so the numbers match exactly. Folder sizes come from <code>du</code>, run at background CPU and I/O priority so a scan never gets in the way of what you're doing.</p>
-      <p>There is no helper process, no background daemon, no Electron runtime, no telemetry, no analytics. The binary is about 225 KB and the app has no network code at all. At rest it costs roughly 0.2% CPU — readings are cached, menu labels are only written while the menu is actually open, and the title in the menu bar is only redrawn when the text changes.</p>
+      <p>There is no helper process, no background daemon, no Electron runtime, no telemetry, no analytics. It ships as a 1.2 MB <code>.app</code> — a 225 KB binary, the rest is the icon — and has no network code at all. At rest it costs roughly 0.2% CPU — readings are cached, menu labels are only written while the menu is actually open, and the title in the menu bar is only redrawn when the text changes.</p>
       <p>Even the app icon is generated programmatically by a separate Swift script — no Photoshop, no Figma export — so the whole build pipeline is one shell script and reproducible on any Mac with the command line tools.</p>
     </div>
     <div class="lang-content" data-lang="hr">
       <p>ActivityBar je i dalje jedna Swift datoteka — sad oko 850 linija. Čita Appleove ugrađene <code>host_statistics</code> i <code>vm_statistics64</code> syscallove — isti izvor podataka koji koristi macOS Activity Monitor — pa se brojevi točno poklapaju. Veličine mapa dolaze iz <code>du</code>, pokrenutog na pozadinskom CPU i I/O prioritetu, da ti skeniranje nikad ne smeta u radu.</p>
-      <p>Nema pomoćnog procesa, nema pozadinskog daemona, nema Electron runtimea, nema telemetrije, nema analitike. Binary je oko 225 KB i aplikacija uopće nema mrežnog koda. U mirovanju troši otprilike 0,2% CPU-a — očitanja se keširaju, natpisi u meniju se pišu samo dok je meni stvarno otvoren, a naslov u menu baru se iscrtava samo kad se tekst promijeni.</p>
+      <p>Nema pomoćnog procesa, nema pozadinskog daemona, nema Electron runtimea, nema telemetrije, nema analitike. Isporučuje se kao <code>.app</code> od 1,2 MB — binary je 225 KB, ostalo je ikona — i uopće nema mrežnog koda. U mirovanju troši otprilike 0,2% CPU-a — očitanja se keširaju, natpisi u meniju se pišu samo dok je meni stvarno otvoren, a naslov u menu baru se iscrtava samo kad se tekst promijeni.</p>
       <p>Čak je i ikona aplikacije generirana programski zasebnom Swift skriptom — bez Photoshopa, bez Figma exporta — pa je cijeli build pipeline jedna shell skripta, reproducibilna na bilo kojem Macu s command line toolsima.</p>
     </div>
   </section>
@@ -487,7 +487,7 @@
   const t = {
     en: {
       'platform-badge': 'macOS · Apple Silicon · Free',
-      'app-tagline': 'Live CPU, RAM and SSD usage in your macOS menu bar. Native Swift, ~45 MB RAM, zero bloat.',
+      'app-tagline': 'Live CPU, RAM and SSD usage in your macOS menu bar. Native Swift, a 1.2 MB app, zero bloat.',
       'cta-download': 'Download free →',
       'cta-github': 'View source',
       'h-what': 'What it does',
@@ -508,7 +508,7 @@
     },
     hr: {
       'platform-badge': 'macOS · Apple Silicon · Besplatno',
-      'app-tagline': 'Praćenje CPU-a, RAM-a i SSD-a uživo u macOS menu baru. Nativni Swift, ~45 MB RAM, bez bloata.',
+      'app-tagline': 'Praćenje CPU-a, RAM-a i SSD-a uživo u macOS menu baru. Nativni Swift, aplikacija od 1,2 MB, bez bloata.',
       'cta-download': 'Preuzmi besplatno →',
       'cta-github': 'Izvorni kod',
       'h-what': 'Što radi',
@@ -662,7 +662,7 @@
   "name": "ActivityBar",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "macOS",
-  "description": "Live CPU, RAM and SSD usage in your macOS menu bar. Native Swift, ~45 MB RAM, zero bloat. Free and open source for Apple Silicon.",
+  "description": "Live CPU, RAM and SSD usage in your macOS menu bar. Native Swift, a 1.2 MB app, zero bloat. Free and open source for Apple Silicon.",
   "url": "https://codigit.io/apps/activitybar.html",
   "offers": {
     "@type": "Offer",
