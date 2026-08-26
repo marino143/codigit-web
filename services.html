@@ -67,8 +67,8 @@
     [data-theme="light"] .pricing-card.highlighted { box-shadow: 0 4px 30px rgba(230,57,70,0.1); }
     [data-theme="light"] footer { background: var(--bg2); }
     [data-theme="light"] .step-num { box-shadow: 0 2px 12px rgba(230,57,70,0.15); }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; width: 100%; max-width: 100vw; overflow-x: hidden; display: flex; flex-direction: column; }
 
     /* NAV */
     nav {
@@ -109,6 +109,24 @@
       transition: all 0.2s; flex-shrink: 0;
     }
     .theme-btn:hover { color: var(--text); border-color: var(--muted); }
+    .hamburger {
+      display: none; width: 40px; height: 40px; padding: 9px;
+      border: 1px solid var(--border); border-radius: 8px;
+      background: var(--bg3); cursor: pointer;
+      flex-direction: column; justify-content: center; gap: 5px;
+    }
+    .hamburger span { display: block; height: 2px; width: 100%; background: var(--text); border-radius: 2px; transition: transform 0.2s, opacity 0.2s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    #mobileMenu {
+      display: none; position: fixed; inset: 0; z-index: 99;
+      padding: 92px 24px 32px; background: var(--bg);
+      flex-direction: column; gap: 22px; overflow-y: auto;
+    }
+    #mobileMenu.open { display: flex; }
+    #mobileMenu a { color: var(--text); font-size: 24px; font-weight: 700; text-decoration: none; }
+    #mobileMenu .mobile-cta { color: #fff; background: var(--accent); padding: 12px 20px; border-radius: 8px; text-align: center; }
 
     /* HERO */
     .hero {
@@ -124,12 +142,15 @@
     .divider { width: 48px; height: 3px; background: var(--accent); margin: 0 auto 32px; border-radius: 2px; }
     h1 { font-size: clamp(32px, 3.5vw, 52px); font-weight: 900; letter-spacing: -1.5px; color: var(--white); line-height: 1.1; margin-bottom: 20px; }
     .hero-sub { color: var(--muted); font-size: 16px; line-height: 1.7; max-width: 700px; margin: 0 auto; }
+    .hero-cta { display: inline-flex; margin-top: 24px; }
 
     /* PRICING GRID */
     .pricing-section {
       max-width: 1240px;
+      width: 100%;
       margin: 0 auto;
       padding: 0 60px 80px;
+      overflow: clip;
     }
     .pricing-row-top {
       display: grid;
@@ -145,6 +166,7 @@
 
     /* CARD */
     .pricing-card {
+      min-width: 0;
       background: var(--bg2);
       border: 1px solid var(--border);
       border-radius: 16px;
@@ -370,12 +392,16 @@
     @media (max-width: 900px) {
       nav { padding: 16px 24px; }
       .nav-links { display: none; }
-      .hero { padding: 48px 24px 40px; }
+      .lang-switcher { display: none; }
+      .hamburger { display: flex; }
+      .hero { padding: 40px 24px 36px; }
       .pricing-section { padding: 0 24px 48px; }
       .pricing-row-top,
       .pricing-row-bottom {
         grid-template-columns: 1fr;
+        width: 100%;
       }
+      .pricing-card { padding: 28px 24px; }
       .how-section { padding: 48px 24px; }
       .steps { grid-template-columns: 1fr; gap: 24px; }
       .step { flex-direction: row; text-align: left; }
@@ -391,6 +417,17 @@
   </style>
 </head>
 <body>
+
+<div id="mobileMenu" aria-hidden="true">
+  <a href="/#services">Capabilities</a>
+  <a href="/#ai">AI-Powered</a>
+  <a href="/#about">About</a>
+  <a href="/#certs">Certifications</a>
+  <a href="/services">Services</a>
+  <a href="/blog/">Notes</a>
+  <a href="/apps/">Apps</a>
+  <a href="/contact" class="mobile-cta">Get in touch</a>
+</div>
 
 <nav>
   <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
@@ -411,6 +448,9 @@
       <button class="lang-btn" data-lang="hr">HR</button>
     </div>
     <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+    <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
@@ -420,6 +460,7 @@
   <div class="divider"></div>
   <h1 id="heading">Expert Consulting for Your Digital Project</h1>
   <p class="hero-sub" id="subtext">Not sure where to start? Whether you're launching a new project, scaling your business, or need technical guidance &mdash; we'll help you build a clear path forward.</p>
+  <a href="/contact?package=Discovery%20Call" class="btn btn-primary hero-cta" id="hero-cta">Book a Free Call &rarr;</a>
   <p id="priceNote" style="font-size:13px; color:var(--muted); margin-top:16px; letter-spacing:0.3px;">All prices in USD &middot; pay by card or US bank transfer (ACH) &middot; NDA signed before we start</p>
 </section>
 
@@ -607,6 +648,7 @@
       'tier1-f1': '15-minute video call', 'tier1-f2': 'Project feasibility assessment',
       'tier1-f3': 'Initial recommendations', 'tier1-f4': 'No commitment required',
       'tier1-cta': 'Book a Call \u2192',
+      'hero-cta': 'Book a Free Call \u2192',
       // Tier 2
       'popular-badge': 'Most Popular',
       'tier2-name': 'Strategy Session', 'tier2-period': 'one-time', 'tier2-duration': '40 min video call',
@@ -663,6 +705,7 @@
       'tier1-f1': '15-minutni video poziv', 'tier1-f2': 'Procjena izvedivosti projekta',
       'tier1-f3': 'Po\u010detne preporuke', 'tier1-f4': 'Bez obveza',
       'tier1-cta': 'Zakažite poziv \u2192',
+      'hero-cta': 'Zakažite besplatan poziv \u2192',
       // Tier 2
       'popular-badge': 'Najpopularnije',
       'tier2-name': 'Strategijska sesija', 'tier2-period': 'jednokratno', 'tier2-duration': '40 min video poziv',
@@ -739,6 +782,29 @@
   applyTheme(savedTheme);
   themeBtn.addEventListener('click', () => {
     applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+  });
+
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  function closeMobileMenu() {
+    menuBtn.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.setAttribute('aria-label', 'Open menu');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  menuBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    menuBtn.classList.toggle('open', isOpen);
+    menuBtn.setAttribute('aria-expanded', String(isOpen));
+    menuBtn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMobileMenu));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeMobileMenu();
   });
 
   const saved = localStorage.getItem('lang');
