@@ -292,8 +292,7 @@
   });
 
   const savedLang = localStorage.getItem('lang');
-  const browserLang = navigator.language.startsWith('hr') ? 'hr' : 'en';
-  applyLang(savedLang || browserLang);
+  applyLang(savedLang || 'en');
 
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => applyLang(btn.dataset.lang));
