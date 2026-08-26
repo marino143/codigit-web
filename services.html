@@ -31,21 +31,21 @@
   </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Consulting Packages & Pricing — Free Discovery Call | Co Digit</title>
-  <meta name="description" content="Web & AI consulting for US and EU companies: free Discovery Call, Strategy Session ($349), Project Roadmap ($2,500), Launch Package ($7,500), Growth Partner ($5,000/mo). Billed in USD." />
+  <title>Software Development & AI Integration Services | Co Digit</title>
+  <meta name="description" content="Senior software engineering from Croatia for US, UK and EU teams: AI integration, macOS apps, React Native products and nearshore development. Clear scope, GDPR-aware delivery and client-owned IP." />
   <link rel="canonical" href="https://codigit.io/services.html" />
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://codigit.io/services.html" />
-  <meta property="og:title" content="Consulting Packages & Pricing — Free Discovery Call | Co Digit" />
-  <meta property="og:description" content="Web & AI consulting for US and EU companies: free Discovery Call, Strategy Session ($349), Project Roadmap ($2,500), Launch Package ($7,500), Growth Partner ($5,000/mo). Billed in USD." />
+  <meta property="og:title" content="Software Development & AI Integration Services | Co Digit" />
+  <meta property="og:description" content="Senior AI, web, mobile and macOS engineering for US, UK and EU teams — delivered from Croatia with clear ownership and security practices." />
   <meta property="og:image" content="https://codigit.io/og-image.png" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:site_name" content="Co Digit" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Consulting Packages & Pricing — Free Discovery Call | Co Digit" />
-  <meta name="twitter:description" content="Web & AI consulting for US and EU companies. Free Discovery Call, then Strategy, Roadmap, Launch & Growth tiers. Billed in USD." />
+  <meta name="twitter:title" content="Software Development & AI Integration Services | Co Digit" />
+  <meta name="twitter:description" content="Senior AI, web, mobile and macOS engineering for US, UK and EU teams." />
   <meta name="twitter:image" content="https://codigit.io/og-image.png" />
   <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
@@ -143,6 +143,22 @@
     h1 { font-size: clamp(32px, 3.5vw, 52px); font-weight: 900; letter-spacing: -1.5px; color: var(--white); line-height: 1.1; margin-bottom: 20px; }
     .hero-sub { color: var(--muted); font-size: 16px; line-height: 1.7; max-width: 700px; margin: 0 auto; }
     .hero-cta { display: inline-flex; margin-top: 24px; }
+
+    /* SERVICE HUB */
+    .capabilities-section, .trust-section { width: 100%; padding: 0 60px 80px; }
+    .section-inner { max-width: 1120px; margin: 0 auto; }
+    .section-heading { font-size: clamp(28px, 3vw, 40px); line-height: 1.15; color: var(--white); letter-spacing: -1px; margin-bottom: 12px; }
+    .section-intro { color: var(--muted); max-width: 720px; line-height: 1.75; margin-bottom: 32px; }
+    .capability-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .capability-card { display: block; padding: 28px; border: 1px solid var(--border); border-radius: 14px; background: var(--bg2); color: inherit; text-decoration: none; transition: transform .2s, border-color .2s; }
+    .capability-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+    .capability-card h2 { font-size: 20px; color: var(--white); margin-bottom: 10px; }
+    .capability-card p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+    .capability-link { display: inline-block; margin-top: 18px; color: var(--accent); font-size: 13px; font-weight: 700; }
+    .trust-panel { display: grid; grid-template-columns: 1.15fr .85fr; gap: 36px; padding: 36px; border: 1px solid var(--border); border-radius: 16px; background: var(--bg2); }
+    .trust-points { display: grid; gap: 16px; }
+    .trust-point strong { display: block; color: var(--white); margin-bottom: 4px; }
+    .trust-point span { color: var(--muted); font-size: 13px; line-height: 1.6; }
 
     /* PRICING GRID */
     .pricing-section {
@@ -395,6 +411,9 @@
       .lang-switcher { display: none; }
       .hamburger { display: flex; }
       .hero { padding: 40px 24px 36px; }
+      .capabilities-section, .trust-section { padding: 0 24px 56px; }
+      .capability-grid, .trust-panel { grid-template-columns: 1fr; }
+      .trust-panel { padding: 28px 24px; gap: 28px; }
       .pricing-section { padding: 0 24px 48px; }
       .pricing-row-top,
       .pricing-row-bottom {
@@ -458,10 +477,58 @@
 <section class="hero">
   <div class="section-label" id="label">SERVICES</div>
   <div class="divider"></div>
-  <h1 id="heading">Expert Consulting for Your Digital Project</h1>
-  <p class="hero-sub" id="subtext">Not sure where to start? Whether you're launching a new project, scaling your business, or need technical guidance &mdash; we'll help you build a clear path forward.</p>
+  <h1 id="heading">Software and AI engineering for ambitious teams</h1>
+  <p class="hero-sub" id="subtext">Senior engineers for web, mobile, macOS and AI products &mdash; from focused discovery through production launch and long-term delivery.</p>
   <a href="/contact?package=Discovery%20Call" class="btn btn-primary hero-cta" id="hero-cta">Book a Free Call &rarr;</a>
   <p id="priceNote" style="font-size:13px; color:var(--muted); margin-top:16px; letter-spacing:0.3px;">All prices in USD &middot; pay by card or US bank transfer (ACH) &middot; NDA signed before we start</p>
+</section>
+
+<!-- CAPABILITIES -->
+<section class="capabilities-section" aria-labelledby="capabilities-title">
+  <div class="section-inner">
+    <div class="section-label">WHAT WE BUILD</div>
+    <h2 class="section-heading" id="capabilities-title">Senior engineering for products that need to ship.</h2>
+    <p class="section-intro">Work directly with experienced engineers across product strategy, implementation and launch. Choose a focused engagement below, or combine capabilities into one delivery team.</p>
+    <div class="capability-grid">
+      <a class="capability-card" href="/services/ai-integration">
+        <h2>AI integration</h2>
+        <p>LLM features, document intelligence, RAG, workflow automation and on-device AI — with evaluation, privacy and cost controls built in.</p>
+        <span class="capability-link">Explore AI integration →</span>
+      </a>
+      <a class="capability-card" href="/services/macos-app-development">
+        <h2>Native macOS apps</h2>
+        <p>Fast, lightweight Swift and SwiftUI applications that use Apple frameworks properly and feel at home on the Mac.</p>
+        <span class="capability-link">Explore macOS development →</span>
+      </a>
+      <a class="capability-card" href="/services/react-native-development">
+        <h2>React Native products</h2>
+        <p>iOS and Android products with shared TypeScript logic, native integrations and a pragmatic path from MVP to production.</p>
+        <span class="capability-link">Explore React Native →</span>
+      </a>
+      <a class="capability-card" href="/services/nearshore-software-development">
+        <h2>Nearshore development</h2>
+        <p>A senior Croatia-based team aligned with UK, EU and US working hours for web, mobile, desktop and AI delivery.</p>
+        <span class="capability-link">Explore nearshore delivery →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST & SECURITY -->
+<section class="trust-section" aria-labelledby="trust-title">
+  <div class="section-inner trust-panel">
+    <div>
+      <div class="section-label">LOW-RISK DELIVERY</div>
+      <h2 class="section-heading" id="trust-title">Your product, data and IP stay yours.</h2>
+      <p class="section-intro" style="margin-bottom:0;">We work under NDA, use least-privilege access and document every handover. As an EU company, GDPR-aware data handling is part of delivery rather than an afterthought.</p>
+    </div>
+    <div class="trust-points">
+      <div class="trust-point"><strong>Client-owned IP</strong><span>Source code, designs and project deliverables transfer to the client under the agreed contract.</span></div>
+      <div class="trust-point"><strong>GDPR-aware data handling</strong><span>Data minimisation, controlled access and EU-friendly infrastructure choices where the project requires them.</span></div>
+      <div class="trust-point"><strong>NDA before discovery</strong><span>We can sign your NDA or provide ours before sensitive technical and commercial details are shared.</span></div>
+      <div class="trust-point"><strong>Documented handover</strong><span>Repository access, deployment notes and operational knowledge are delivered without vendor lock-in.</span></div>
+    </div>
+  </div>
 </section>
 
 <!-- PRICING -->
@@ -639,8 +706,8 @@
   const t = {
     en: {
       label: 'SERVICES',
-      heading: 'Expert Consulting for Your Digital Project',
-      subtext: "Not sure where to start? Whether you're launching a new project, scaling your business, or need technical guidance \u2014 we'll help you build a clear path forward.",
+      heading: 'Software and AI engineering for ambitious teams',
+      subtext: 'Senior engineers for web, mobile, macOS and AI products \u2014 from focused discovery through production launch and long-term delivery.',
       priceNote: 'All prices in USD \u00b7 pay by card or US bank transfer (ACH) \u00b7 NDA signed before we start',
       // Tier 1
       'tier1-name': 'Discovery Call', 'tier1-period': 'no cost', 'tier1-duration': '15 min video call',
@@ -696,8 +763,8 @@
     },
     hr: {
       label: 'USLUGE',
-      heading: 'Stru\u010dne konzultacije za va\u0161 digitalni projekt',
-      subtext: 'Niste sigurni odakle po\u010deti? Bilo da pokre\u0107ete novi projekt, ska\u010dete poslovanje ili trebate tehni\u010dko vodstvo \u2014 pomo\u0107i \u0107emo vam izgraditi jasan put naprijed.',
+      heading: 'Softverski i AI inženjering za ambiciozne timove',
+      subtext: 'Senior inženjeri za web, mobilne, macOS i AI proizvode \u2014 od fokusiranog otkrivanja potreba do produkcije i dugoročne isporuke.',
       priceNote: 'Sve cijene u USD \u00b7 pla\u0107anje karticom ili bankovnom doznakom \u00b7 NDA potpisujemo prije po\u010detka',
       // Tier 1
       'tier1-name': 'Upoznavanje', 'tier1-period': 'bez naknade', 'tier1-duration': '15 min video poziv',
@@ -819,7 +886,7 @@
   "@context": "https://schema.org",
   "@type": "Service",
   "name": "Co Digit Consulting Services",
-  "url": "https://codigit.io/services.html",
+  "url": "https://codigit.io/services",
   "provider": {
     "@type": "Organization",
     "name": "Co Digit",
@@ -833,35 +900,35 @@
       {
         "@type": "Offer",
         "name": "Discovery Call",
-        "price": "99",
+        "price": "0",
         "priceCurrency": "USD",
         "description": "15-minute intro video call to assess your project"
       },
       {
         "@type": "Offer",
         "name": "Strategy Session",
-        "price": "249",
+        "price": "349",
         "priceCurrency": "USD",
         "description": "40-minute deep-dive into your project with written summary"
       },
       {
         "@type": "Offer",
         "name": "Project Roadmap",
-        "price": "1499",
+        "price": "2500",
         "priceCurrency": "USD",
         "description": "Comprehensive project blueprint document with technical architecture"
       },
       {
         "@type": "Offer",
         "name": "Launch Package",
-        "price": "3999",
+        "price": "7500",
         "priceCurrency": "USD",
         "description": "Full project kickstart with roadmap and ongoing guidance"
       },
       {
         "@type": "Offer",
         "name": "Growth Partner",
-        "price": "4999",
+        "price": "5000",
         "priceCurrency": "USD",
         "unitCode": "MON",
         "description": "Dedicated digital consultant with 8 hours monthly"
