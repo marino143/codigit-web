@@ -383,8 +383,7 @@
   });
 
   const saved = localStorage.getItem('lang');
-  const browser = navigator.language.startsWith('hr') ? 'hr' : 'en';
-  applyLang(saved || browser);
+  applyLang(saved || 'en');
 
   document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
 </script>

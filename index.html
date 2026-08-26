@@ -1563,6 +1563,8 @@
       <p class="section-desc" style="max-width: 100%; margin-top: 16px;" data-i18n="about.p2">
         We also believe in the transfer of knowledge and have actively participated in guest lecturing — from high schools to universities. That experience taught us how to approach each client clearly and cut through technical complexity.
       </p>
+      <p class="section-desc" style="max-width: 100%; margin-top: 16px;" data-i18n="about.founder">Co Digit is led by Marino Glazar, a senior software engineer with more than 15 years of experience shipping web, mobile and native applications.</p>
+      <p style="margin-top:12px;"><a href="https://github.com/marino143" target="_blank" rel="me noopener" style="color:var(--accent); font-size:14px; font-weight:600;">Marino Glazar on GitHub →</a></p>
       <div class="about-points">
         <div class="about-point" data-i18n="about.pt1">Grow your digital business</div>
         <div class="about-point" data-i18n="about.pt2">Strategy development & consulting</div>
@@ -1645,6 +1647,7 @@
       'about.label':'About Co Digit','about.h2':'No style over substance — we deliver both.',
       'about.p1':"We bring together form and function to create something that looks great and performs even better. Every single professional on our team has a deep tech background — going all the way back to hardware and microcontrollers. That puts us way above the industry baseline.",
       'about.p2':'We also believe in the transfer of knowledge and have actively participated in guest lecturing — from high schools to universities. That experience taught us how to approach each client clearly and cut through technical complexity.',
+      'about.founder':'Co Digit is led by Marino Glazar, a senior software engineer with more than 15 years of experience shipping web, mobile and native applications.',
       'about.pt1':'Grow your digital business','about.pt2':'Strategy development & consulting','about.pt3':'Connect to more online customers','about.pt4':'Continuous support, long-term partnership','about.pt5':'AI-accelerated delivery on every project',
       'contact.label':'Get in touch','contact.h2':"Let's build something great together.",'contact.p':"You know about us. Now let's talk about you. If you have a project in mind or are simply interested in finding out more, get in touch and let's get things moving.",
       'contact.address':'Address','contact.company':'Company','contact.website':'Website',
@@ -1695,6 +1698,7 @@
       'about.label':'O Co Digitu','about.h2':'Bez forme bez sadržaja — isporučujemo oboje.',
       'about.p1':'Spajamo formu i funkciju kako bismo stvorili nešto što izgleda sjajno i funkcionira još bolje. Svaki stručnjak u našem timu ima duboku tehničku pozadinu — sve do hardvera i mikrokontrolera. To nas stavlja daleko iznad industrijske baseline.',
       'about.p2':'Vjerujemo i u transfer znanja te smo aktivno sudjelovali u gostujućim predavanjima — od srednjih škola do sveučilišta. To iskustvo naučilo nas je kako pristupiti svakom klijentu jasno i probiti se kroz tehničku složenost.',
+      'about.founder':'Co Digit vodi Marino Glazar, senior softverski inženjer s više od 15 godina iskustva u isporuci web, mobilnih i nativnih aplikacija.',
       'about.pt1':'Razvijte svoje digitalno poslovanje','about.pt2':'Razvoj strategije i savjetovanje','about.pt3':'Povežite se s više online kupaca','about.pt4':'Kontinuirana podrška, dugoročno partnerstvo','about.pt5':'AI-ubrzana isporuka na svakom projektu',
       'contact.label':'Kontaktirajte nas','contact.h2':'Izgradimo nešto sjajno zajedno.','contact.p':'Znate tko smo. Sada razgovarajmo o vama. Ako imate projekt na umu ili jednostavno želite saznati više, javite nam se i krenimo.',
       'contact.address':'Adresa','contact.company':'Tvrtka','contact.website':'Web stranica',
@@ -1754,8 +1758,7 @@
 
   // Detect language
   const savedLang = localStorage.getItem('lang');
-  const browserLang = navigator.language.startsWith('hr') ? 'hr' : 'en';
-  applyLang(savedLang || browserLang);
+  applyLang(savedLang || 'en');
 
   // Lang switcher click handler
   document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -2076,7 +2079,14 @@
     "addressLocality": "Zagreb",
     "addressCountry": "HR"
   },
-  "sameAs": []
+  "founder": {
+    "@type": "Person",
+    "name": "Marino Glazar",
+    "jobTitle": "Founder and Senior Software Engineer",
+    "url": "https://codigit.io/#about",
+    "sameAs": ["https://github.com/marino143"]
+  },
+  "sameAs": ["https://github.com/marino143"]
 }
 </script>
 </body>

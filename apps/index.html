@@ -455,7 +455,6 @@
 
   // Lang init
   const saved = localStorage.getItem('lang');
-  const browser = navigator.language.startsWith('hr') ? 'hr' : 'en';
 
   // Fetch apps then apply lang. Bypass HTTP cache so newly-shipped apps
   // appear immediately after deploy without users having to hard-reload.
@@ -467,7 +466,7 @@
         if (a.featured !== b.featured) return a.featured ? -1 : 1;
         return new Date(b.release_date) - new Date(a.release_date);
       });
-      applyLang(saved || browser);
+      applyLang(saved || 'en');
     })
     .catch(() => {
       // Keep the crawlable English cards visible if apps.json is unavailable.

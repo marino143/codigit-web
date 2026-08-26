@@ -416,14 +416,13 @@
 
   // Lang init
   const saved = localStorage.getItem('lang');
-  const browser = navigator.language.startsWith('hr') ? 'hr' : 'en';
 
   // Fetch posts then apply lang
   fetch('/blog/posts.json')
     .then(r => r.json())
     .then(data => {
       posts = data.sort((a, b) => new Date(b.date) - new Date(a.date));
-      applyLang(saved || browser);
+      applyLang(saved || 'en');
     })
     .catch(() => {
       // Keep the server-rendered English cards visible if posts.json is unavailable.

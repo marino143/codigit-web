@@ -556,8 +556,7 @@
   });
 
   const saved = localStorage.getItem('lang_termino') || localStorage.getItem('lang');
-  const browser = navigator.language.startsWith('hr') ? 'hr' : (navigator.language.startsWith('de') ? 'de' : 'en');
-  applyLang(t[saved] ? saved : browser);
+  applyLang(t[saved] ? saved : 'en');
 
   document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
 
