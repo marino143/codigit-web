@@ -38,7 +38,7 @@
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(self 'https://buy.stripe.com' 'https://checkout.stripe.com')"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(self \"https://buy.stripe.com\" \"https://checkout.stripe.com\")"
     Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://api.web3forms.com; frame-src https://buy.stripe.com https://checkout.stripe.com; form-action 'self'; upgrade-insecure-requests"
     X-XSS-Protection = "1; mode=block"
 

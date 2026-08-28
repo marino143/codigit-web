@@ -262,7 +262,7 @@
       border: none;
     }
     .btn-primary {
-      background: var(--accent);
+      background: #c92f3c;
       color: var(--white);
     }
     .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
@@ -414,7 +414,7 @@
     /* text part of logo lockups (e.g. Croatia Control emblem + name) */
     .client-name {
       font-size: 14px; font-weight: 700; letter-spacing: 1.5px;
-      color: var(--muted); opacity: 0.75; white-space: nowrap;
+      color: #8a8a8a; opacity: 1; white-space: nowrap;
       margin-left: 10px; transition: color 0.2s, opacity 0.2s;
     }
     .client-link:hover .client-name { color: var(--text); opacity: 1; }
@@ -856,12 +856,12 @@
     .footer-logo span { color: var(--accent); }
     footer p {
       font-size: 13px;
-      color: #555;
+      color: #999;
     }
     .footer-links { display: flex; gap: 24px; }
     .footer-links a {
       font-size: 13px;
-      color: #555;
+      color: #999;
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -1065,7 +1065,7 @@
       flex: 1;
     }
     #cookieBanner p a {
-      color: var(--accent);
+      color: #ff6670;
       text-decoration: underline;
     }
     .cookie-btns {
@@ -1075,7 +1075,7 @@
       flex-shrink: 0;
     }
     #cookieAccept {
-      background: var(--accent);
+      background: #c92f3c;
       color: #fff;
       border: none;
       border-radius: 8px;
@@ -1087,7 +1087,7 @@
     }
     #cookieDecline {
       background: transparent;
-      color: #666;
+      color: #aaa;
       border: 1px solid #333;
       border-radius: 8px;
       padding: 8px 20px;
@@ -1138,7 +1138,7 @@
 
 <!-- COOKIE BANNER -->
 <div id="cookieBanner">
-  <p data-i18n-html="cookie.p">We use cookies to improve your experience. <a href="/cookie-policy.html">Learn more</a></p>
+  <p data-i18n-html="cookie.p">We use cookies to improve your experience. <a href="/cookie-policy.html">Read our cookie policy</a></p>
   <div class="cookie-btns">
     <button id="cookieAccept" data-i18n="cookie.accept">Accept all</button>
     <button id="cookieDecline" data-i18n="cookie.decline">Decline</button>
@@ -1188,6 +1188,7 @@
   </button>
 </nav>
 
+<main>
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-content">
@@ -1596,6 +1597,7 @@
     <a href="/contact.html" class="btn btn-primary" data-i18n="nav.cta">Get in touch</a>
   </div>
 </section>
+</main>
 
 <!-- BACK TO TOP -->
 <a href="#" id="backToTop" aria-label="Back to top">↑</a>
@@ -1668,7 +1670,7 @@
       'contact.message':'Tell us about your project *','contact.send':'Send message →','contact.sending':'Sending…','contact.success':'✓ Message sent!',
       'footer.services':'Capabilities','footer.ai':'AI','footer.about':'About','footer.contact':'Contact','footer.cookies':'Cookie Policy','footer.privacy':'Privacy Policy',
       'footer.copy':'© 2026 Co Digit d.o.o. · Zagreb, Croatia',
-      'cookie.p':'We use cookies to improve your experience. <a href="/cookie-policy.html">Learn more</a>',
+      'cookie.p':'We use cookies to improve your experience. <a href="/cookie-policy.html">Read our cookie policy</a>',
       'cookie.accept':'Accept all','cookie.decline':'Decline',
     },
     hr: {
