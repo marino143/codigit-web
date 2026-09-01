@@ -2,41 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    // Consent Mode v2: default deny analytics + ads until user opts in.
-    gtag('consent', 'default', {
-      'ad_storage': 'denied',
-      'ad_user_data': 'denied',
-      'ad_personalization': 'denied',
-      'analytics_storage': 'denied',
-      'wait_for_update': 500
-    });
-    // Restore previous consent from localStorage (runs before any page logic).
-    try {
-      if (localStorage.getItem('cookieConsent') === 'accepted') {
-        gtag('consent', 'update', {
-          'ad_storage': 'granted',
-          'ad_user_data': 'granted',
-          'ad_personalization': 'granted',
-          'analytics_storage': 'granted'
-        });
-      }
-    } catch(e) {}
-    gtag('js', new Date());
-    gtag('config', 'G-T97BQ3VRV1');
-  </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mobile-First Design in 2026: Why Your Website Must Prioritize Mobile Users — Co Digit</title>
   <meta name="description" content="Over 65% of web traffic now comes from mobile devices. Learn why mobile-first design is essential in 2026, what it means in practice, and how it directly impacts your conversions and Google rankings." />
-  <link rel="canonical" href="https://codigit.io/blog/mobile-first-design-2026.html" />
+  <link rel="canonical" href="https://codigit.io/blog/mobile-first-design-2026" />
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://codigit.io/blog/mobile-first-design-2026.html" />
+  <meta property="og:url" content="https://codigit.io/blog/mobile-first-design-2026" />
   <meta property="og:title" content="Mobile-First Design in 2026: Why Your Website Must Prioritize Mobile Users — Co Digit" />
   <meta property="og:description" content="Over 65% of web traffic now comes from mobile devices. Learn why mobile-first design is essential in 2026, what it means in practice, and how it directly impacts your conversions and Google rankings." />
   <meta property="og:image" content="https://codigit.io/og-image.png" />
@@ -52,14 +25,14 @@
   <meta name="twitter:description" content="Over 65% of web traffic now comes from mobile devices. Learn why mobile-first design is essential in 2026, what it means in practice, and how it directly impacts your conversions and Google rankings." />
   <meta name="twitter:image" content="https://codigit.io/og-image.png" />
   <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/fonts/inter.css" />
+  <link rel="stylesheet" href="/site.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
       --border: #222222; --text: #f0f0f0; --muted: #888;
-      --accent: #e63946; --white: #ffffff;
+      --accent: #c1121f; --white: #ffffff;
       --nav-bg: rgba(10,10,10,0.9);
     }
     [data-theme="light"] {
@@ -188,6 +161,14 @@
 </head>
 <body>
 
+<button class="site-mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<div class="site-mobile-menu" aria-label="Mobile navigation">
+  <button class="site-mobile-close" type="button" aria-label="Close menu">×</button>
+  <a href="/">Home</a><a href="/services">Services</a><a href="/blog/">Notes</a>
+  <a href="/apps/">Apps</a><a href="/manifesto">Manifesto</a>
+  <a class="site-mobile-cta" href="/contact">Get in touch</a>
+</div>
+
 <nav>
   <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
   <ul class="nav-links">
@@ -195,10 +176,10 @@
     <li><a href="/#ai">AI-Powered</a></li>
     <li><a href="/#about">About</a></li>
     <li><a href="/#certs">Certifications</a></li>
-    <li><a href="/services.html">Services</a></li>
+    <li><a href="/services">Services</a></li>
     <li><a href="/blog/">Notes</a></li>
     <li><a href="/apps/">Apps</a></li>
-    <li><a href="/contact.html" class="nav-cta">Get in touch</a></li>
+    <li><a href="/contact" class="nav-cta">Get in touch</a></li>
   </ul>
   <div class="nav-right">
     <div class="lang-switcher">
@@ -328,8 +309,8 @@
   <div class="footer-links">
     <a href="/" id="fl-home">Home</a>
     <a href="/blog/" id="fl-blog">Notes</a>
-    <a href="/cookie-policy.html" id="fl-cookies">Cookie Policy</a>
-    <a href="/privacy-policy.html" id="fl-privacy">Privacy Policy</a>
+    <a href="/cookie-policy" id="fl-cookies">Cookie Policy</a>
+    <a href="/privacy-policy" id="fl-privacy">Privacy Policy</a>
   </div>
 </footer>
 
@@ -412,10 +393,11 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://codigit.io/blog/mobile-first-design-2026.html"
+    "@id": "https://codigit.io/blog/mobile-first-design-2026"
   },
   "keywords": ["mobile-first design", "UX design", "mobile UX", "responsive design", "web design 2026", "mobile web performance"]
 }
 </script>
+<script src="/site.js" defer></script>
 </body>
 </html>

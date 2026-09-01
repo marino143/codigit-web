@@ -2,33 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    // Consent Mode v2: default deny analytics + ads until user opts in.
-    gtag('consent', 'default', {
-      'ad_storage': 'denied',
-      'ad_user_data': 'denied',
-      'ad_personalization': 'denied',
-      'analytics_storage': 'denied',
-      'wait_for_update': 500
-    });
-    // Restore previous consent from localStorage (runs before any page logic).
-    try {
-      if (localStorage.getItem('cookieConsent') === 'accepted') {
-        gtag('consent', 'update', {
-          'ad_storage': 'granted',
-          'ad_user_data': 'granted',
-          'ad_personalization': 'granted',
-          'analytics_storage': 'granted'
-        });
-      }
-    } catch(e) {}
-    gtag('js', new Date());
-    gtag('config', 'G-T97BQ3VRV1');
-  </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Notes — Co Digit</title>
@@ -48,14 +21,14 @@
   <meta name="twitter:description" content="Occasional writing on web engineering, AI, and strategy." />
   <meta name="twitter:image" content="https://codigit.io/og-image.png" />
   <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/fonts/inter.css" />
+  <link rel="stylesheet" href="/site.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
       --border: #222222; --text: #f0f0f0; --muted: #888;
-      --accent: #e63946; --white: #ffffff;
+      --accent: #c1121f; --white: #ffffff;
       --nav-bg: rgba(10,10,10,0.9);
     }
     [data-theme="light"] {
@@ -201,6 +174,14 @@
 </head>
 <body>
 
+<button class="site-mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<div class="site-mobile-menu" aria-label="Mobile navigation">
+  <button class="site-mobile-close" type="button" aria-label="Close menu">×</button>
+  <a href="/">Home</a><a href="/services">Services</a><a href="/blog/">Notes</a>
+  <a href="/apps/">Apps</a><a href="/manifesto">Manifesto</a>
+  <a class="site-mobile-cta" href="/contact">Get in touch</a>
+</div>
+
 <nav>
   <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
   <ul class="nav-links">
@@ -208,10 +189,10 @@
     <li><a href="/#ai">AI-Powered</a></li>
     <li><a href="/#about">About</a></li>
     <li><a href="/#certs">Certifications</a></li>
-    <li><a href="/services.html">Services</a></li>
+    <li><a href="/services">Services</a></li>
     <li><a href="/blog/">Notes</a></li>
     <li><a href="/apps/">Apps</a></li>
-    <li><a href="/contact.html" class="nav-cta">Get in touch</a></li>
+    <li><a href="/contact" class="nav-cta">Get in touch</a></li>
   </ul>
   <div class="nav-right">
     <div class="lang-switcher">
@@ -234,87 +215,87 @@
   <div class="posts-grid" id="postsGrid">
     <article class="post-card">
       <div class="post-tags"><span class="post-tag">Analytics</span><span class="post-tag">Privacy</span></div>
-      <h2><a href="/blog/consent-mode-on-one-page.html">Consent Mode v2 on 28 Pages, a Cookie Banner on One</a></h2>
+      <h2><a href="/blog/consent-mode-on-one-page">Consent Mode v2 on 28 Pages, a Cookie Banner on One</a></h2>
       <div class="post-date"><time datetime="2026-08-17">August 17, 2026</time></div>
       <p class="post-excerpt">We audited our own Consent Mode v2 setup by counting pages instead of eyeballing the homepage. 33 pages load GA4, 28 deny consent by default, exactly one can ask the visitor to change it — and five track with no gate at all.</p>
-      <a href="/blog/consent-mode-on-one-page.html" class="read-more">Read more →</a>
+      <a href="/blog/consent-mode-on-one-page" class="read-more">Read more →</a>
     </article>
     <article class="post-card">
       <div class="post-tags"><span class="post-tag">AI</span><span class="post-tag">Technical SEO</span></div>
-      <h2><a href="/blog/llms-txt-is-not-a-standard.html">llms.txt Is Not a Standard, and Your Site Probably Does Not Need One</a></h2>
+      <h2><a href="/blog/llms-txt-is-not-a-standard">llms.txt Is Not a Standard, and Your Site Probably Does Not Need One</a></h2>
       <div class="post-date"><time datetime="2026-08-10">August 10, 2026</time></div>
       <p class="post-excerpt">We added an llms.txt to a client site and watched the access logs for 90 days. No AI crawler ever asked for it — while the same site served 14,000 requests to those crawlers for ordinary HTML pages.</p>
-      <a href="/blog/llms-txt-is-not-a-standard.html" class="read-more">Read more →</a>
+      <a href="/blog/llms-txt-is-not-a-standard" class="read-more">Read more →</a>
     </article>
     <article class="post-card">
       <div class="post-tags"><span class="post-tag">Accessibility</span><span class="post-tag">UX/UI Design</span></div>
-      <h2><a href="/blog/two-hour-accessibility-audit.html">A Lighthouse Score of 100 Is Not an Accessibility Audit</a></h2>
+      <h2><a href="/blog/two-hour-accessibility-audit">A Lighthouse Score of 100 Is Not an Accessibility Audit</a></h2>
       <div class="post-date"><time datetime="2026-08-10">August 10, 2026</time></div>
       <p class="post-excerpt">Automated checkers only test the rules a machine can decide on its own. Here is the two-hour manual pass we run before calling a site done — keyboard, headings, forms, contrast, zoom — and the contrast failure it found in our own footer.</p>
-      <a href="/blog/two-hour-accessibility-audit.html" class="read-more">Read more →</a>
+      <a href="/blog/two-hour-accessibility-audit" class="read-more">Read more →</a>
     </article>
     <article class="post-card">
       <div class="post-tags"><span class="post-tag">Performance</span><span class="post-tag">Web Development</span></div>
-      <h2><a href="/blog/why-we-self-host-client-logos.html">The Client Logo That 404'd: Why We Self-Host Every Third-Party Image Now</a></h2>
+      <h2><a href="/blog/why-we-self-host-client-logos">The Client Logo That 404'd: Why We Self-Host Every Third-Party Image Now</a></h2>
       <div class="post-date"><time datetime="2026-07-20">July 20, 2026</time></div>
       <p class="post-excerpt">A hotlinked client logo broke on our homepage and we only found out by looking at the page. The audit that followed found six external images — four pointing into WordPress uploads folders, one loading over plain HTTP.</p>
-      <a href="/blog/why-we-self-host-client-logos.html" class="read-more">Read more →</a>
+      <a href="/blog/why-we-self-host-client-logos" class="read-more">Read more →</a>
     </article>
     <article class="post-card">
       <div class="post-tags"><span class="post-tag">AI</span><span class="post-tag">Automation</span></div>
-      <h2><a href="/blog/ai-chatbots-small-business-2026.html">AI Chatbots for Small Business: A Practical Guide to Automating Customer Support in 2026</a></h2>
+      <h2><a href="/blog/ai-chatbots-small-business-2026">AI Chatbots for Small Business: A Practical Guide to Automating Customer Support in 2026</a></h2>
       <div class="post-date"><time datetime="2026-07-13">July 13, 2026</time></div>
       <p class="post-excerpt">AI chatbots have gone from frustrating to genuinely useful. For a small business, the right setup answers most customer questions instantly, captures leads overnight, and frees your team from repetitive replies. Here's how to do it well.</p>
-      <a href="/blog/ai-chatbots-small-business-2026.html" class="read-more">Read more →</a>
+      <a href="/blog/ai-chatbots-small-business-2026" class="read-more">Read more →</a>
     </article>
     <article class="post-card">
       <div class="post-tags"><span class="post-tag">US Clients</span><span class="post-tag">Remote Work</span></div>
-      <h2><a href="/blog/the-six-hour-head-start.html">The Six-Hour Head Start: How US Founders Actually Work With a Croatian Dev Studio</a></h2>
+      <h2><a href="/blog/the-six-hour-head-start">The Six-Hour Head Start: How US Founders Actually Work With a Croatian Dev Studio</a></h2>
       <div class="post-date"><time datetime="2026-07-13">July 13, 2026</time></div>
       <p class="post-excerpt">US founders assume a six-hour gap with Croatia is a liability. Run right, it's a second shift — you send feedback at the end of your day and wake up to it shipped. The timezone math and the daily rhythm that make it work.</p>
-      <a href="/blog/the-six-hour-head-start.html" class="read-more">Read more →</a>
+      <a href="/blog/the-six-hour-head-start" class="read-more">Read more →</a>
     </article>
     <article class="post-card">
       <div class="post-tags"><span class="post-tag">Build in Public</span><span class="post-tag">Internal Tools</span></div>
-      <h2><a href="/blog/console-for-a-two-person-studio.html">Why We Built Our Own Console to Run a Two-Person Dev Studio</a></h2>
+      <h2><a href="/blog/console-for-a-two-person-studio">Why We Built Our Own Console to Run a Two-Person Dev Studio</a></h2>
       <div class="post-date"><time datetime="2026-06-29">June 29, 2026</time></div>
       <p class="post-excerpt">Our whole back office lived in a Google Sheet until the day it gave two partners two different numbers. What we learned building Bridge — the console that replaced it — about money, calendars, and trusting the database over the UI.</p>
-      <a href="/blog/console-for-a-two-person-studio.html" class="read-more">Read more →</a>
+      <a href="/blog/console-for-a-two-person-studio" class="read-more">Read more →</a>
     </article>
     <article class="post-card">
       <div class="post-tags"><span class="post-tag">SEO</span><span class="post-tag">Technical SEO</span></div>
-      <h2><a href="/blog/the-robots-txt-mistake.html">The robots.txt Mistake That's Hiding Your Pages From Google</a></h2>
+      <h2><a href="/blog/the-robots-txt-mistake">The robots.txt Mistake That's Hiding Your Pages From Google</a></h2>
       <div class="post-date"><time datetime="2026-05-18">May 18, 2026</time></div>
       <p class="post-excerpt">Most site owners use robots.txt to keep pages out of Google. It doesn't work — and the warning Search Console sends about it confuses everyone. Here's what actually happens and the proper fix.</p>
-      <a href="/blog/the-robots-txt-mistake.html" class="read-more">Read more →</a>
+      <a href="/blog/the-robots-txt-mistake" class="read-more">Read more →</a>
     </article>
     <article class="post-card">
       <div class="post-tags"><span class="post-tag">Digital Transformation</span><span class="post-tag">Business</span></div>
-      <h2><a href="/blog/digital-transformation-croatian-smb-2026.html">Digital Transformation for Croatian SMBs in 2026: A Practical Guide</a></h2>
+      <h2><a href="/blog/digital-transformation-croatian-smb-2026">Digital Transformation for Croatian SMBs in 2026: A Practical Guide</a></h2>
       <div class="post-date"><time datetime="2026-05-07">May 7, 2026</time></div>
       <p class="post-excerpt">Digital transformation isn't just for large enterprises. Croatian SMBs that adopt modern web, automation, and AI are outpacing competitors. Here's a realistic 90-day roadmap for owners without an IT department.</p>
-      <a href="/blog/digital-transformation-croatian-smb-2026.html" class="read-more">Read more →</a>
+      <a href="/blog/digital-transformation-croatian-smb-2026" class="read-more">Read more →</a>
     </article>
     <article class="post-card">
       <div class="post-tags"><span class="post-tag">UX/UI Design</span><span class="post-tag">Mobile</span></div>
-      <h2><a href="/blog/mobile-first-design-2026.html">Mobile-First Design in 2026: Why Your Website Must Prioritize Mobile Users</a></h2>
+      <h2><a href="/blog/mobile-first-design-2026">Mobile-First Design in 2026: Why Your Website Must Prioritize Mobile Users</a></h2>
       <div class="post-date"><time datetime="2026-04-20">April 20, 2026</time></div>
       <p class="post-excerpt">Over 65% of web traffic now comes from mobile devices. Learn why mobile-first design is essential in 2026, what it means in practice, and how it directly impacts your conversions and Google rankings.</p>
-      <a href="/blog/mobile-first-design-2026.html" class="read-more">Read more →</a>
+      <a href="/blog/mobile-first-design-2026" class="read-more">Read more →</a>
     </article>
     <article class="post-card">
       <div class="post-tags"><span class="post-tag">SEO</span><span class="post-tag">Performance</span></div>
-      <h2><a href="/blog/core-web-vitals-seo-2026.html">Core Web Vitals in 2026: The Complete Guide to Google Rankings</a></h2>
+      <h2><a href="/blog/core-web-vitals-seo-2026">Core Web Vitals in 2026: The Complete Guide to Google Rankings</a></h2>
       <div class="post-date"><time datetime="2026-04-13">April 13, 2026</time></div>
       <p class="post-excerpt">Core Web Vitals directly affect your Google search rankings in 2026. Learn what LCP, INP, and CLS mean, why they matter, and how to optimize your site for better performance and visibility.</p>
-      <a href="/blog/core-web-vitals-seo-2026.html" class="read-more">Read more →</a>
+      <a href="/blog/core-web-vitals-seo-2026" class="read-more">Read more →</a>
     </article>
     <article class="post-card">
       <div class="post-tags"><span class="post-tag">AI</span><span class="post-tag">Web Development</span></div>
-      <h2><a href="/blog/how-ai-is-changing-web-development.html">How AI Is Changing Web Development in 2026</a></h2>
+      <h2><a href="/blog/how-ai-is-changing-web-development">How AI Is Changing Web Development in 2026</a></h2>
       <div class="post-date"><time datetime="2026-04-12">April 12, 2026</time></div>
       <p class="post-excerpt">Artificial intelligence is revolutionizing the way we build websites. From AI-powered code generation to intelligent design systems, discover the key trends shaping web development this year.</p>
-      <a href="/blog/how-ai-is-changing-web-development.html" class="read-more">Read more →</a>
+      <a href="/blog/how-ai-is-changing-web-development" class="read-more">Read more →</a>
     </article>
   </div>
   <div class="no-posts" id="noPosts" style="display:none;"></div>
@@ -326,8 +307,8 @@
   <div class="footer-links">
     <a href="/" id="fl-home">Home</a>
     <a href="/blog/" id="fl-blog">Notes</a>
-    <a href="/cookie-policy.html" id="fl-cookies">Cookie Policy</a>
-    <a href="/privacy-policy.html" id="fl-privacy">Privacy Policy</a>
+    <a href="/cookie-policy" id="fl-cookies">Cookie Policy</a>
+    <a href="/privacy-policy" id="fl-privacy">Privacy Policy</a>
   </div>
 </footer>
 
@@ -432,5 +413,6 @@
 
   document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
 </script>
+<script src="/site.js" defer></script>
 </body>
 </html>

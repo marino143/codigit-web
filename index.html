@@ -2,33 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    // Consent Mode v2: default deny analytics + ads until user opts in.
-    gtag('consent', 'default', {
-      'ad_storage': 'denied',
-      'ad_user_data': 'denied',
-      'ad_personalization': 'denied',
-      'analytics_storage': 'denied',
-      'wait_for_update': 500
-    });
-    // Restore previous consent from localStorage (runs before any page logic).
-    try {
-      if (localStorage.getItem('cookieConsent') === 'accepted') {
-        gtag('consent', 'update', {
-          'ad_storage': 'granted',
-          'ad_user_data': 'granted',
-          'ad_personalization': 'granted',
-          'analytics_storage': 'granted'
-        });
-      }
-    } catch(e) {}
-    gtag('js', new Date());
-    gtag('config', 'G-T97BQ3VRV1');
-  </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Co Digit — Web Development & AI Solutions in Zagreb, Croatia</title>
@@ -48,8 +21,8 @@
   <meta name="twitter:description" content="Web development and AI consulting studio in Zagreb, Croatia. We build fast, search-optimized websites and modern apps for ambitious businesses." />
   <meta name="twitter:image" content="https://codigit.io/og-image.png" />
   <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/fonts/inter.css" />
+  <link rel="stylesheet" href="/site.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -60,7 +33,7 @@
       --border: #222222;
       --text: #f0f0f0;
       --muted: #888;
-      --accent: #e63946;
+      --accent: #c1121f;
       --accent2: #457b9d;
       --white: #ffffff;
       --nav-bg: rgba(10,10,10,0.85);
@@ -1138,7 +1111,7 @@
 
 <!-- COOKIE BANNER -->
 <div id="cookieBanner">
-  <p data-i18n-html="cookie.p">We use cookies to improve your experience. <a href="/cookie-policy.html">Read our cookie policy</a></p>
+  <p data-i18n-html="cookie.p">We use cookies to improve your experience. <a href="/cookie-policy">Read our cookie policy</a></p>
   <div class="cookie-btns">
     <button id="cookieAccept" data-i18n="cookie.accept">Accept all</button>
     <button id="cookieDecline" data-i18n="cookie.decline">Decline</button>
@@ -1154,10 +1127,10 @@
   <a href="#ai" data-i18n="nav.ai">AI-Powered</a>
   <a href="#about" data-i18n="nav.about">About</a>
   <a href="#certs" data-i18n="nav.certs">Certifications</a>
-  <a href="/services.html">Services</a>
+  <a href="/services">Services</a>
   <a href="/blog/">Notes</a>
   <a href="/apps/">Apps</a>
-  <a href="/contact.html" class="mobile-cta" data-i18n="nav.cta">Get in touch</a>
+  <a href="/contact" class="mobile-cta" data-i18n="nav.cta">Get in touch</a>
   <div class="mobile-lang">
     <button class="lang-btn active" data-lang="en">EN</button>
     <button class="lang-btn" data-lang="hr">HR</button>
@@ -1172,10 +1145,10 @@
     <li><a href="#ai" data-i18n="nav.ai">AI-Powered</a></li>
     <li><a href="#about" data-i18n="nav.about">About</a></li>
     <li><a href="#certs" data-i18n="nav.certs">Certifications</a></li>
-    <li><a href="/services.html">Services</a></li>
+    <li><a href="/services">Services</a></li>
     <li><a href="/blog/">Notes</a></li>
     <li><a href="/apps/">Apps</a></li>
-    <li><a href="/contact.html" class="nav-cta" data-i18n="nav.cta">Get in touch</a></li>
+    <li><a href="/contact" class="nav-cta" data-i18n="nav.cta">Get in touch</a></li>
   </ul>
   <div class="lang-switcher">
     <button class="lang-btn active" data-lang="en">EN</button>
@@ -1202,7 +1175,7 @@
       Senior engineers with 15+ years of shipped production software, plus AI integration done properly — at European rates. We ship our own Mac apps: download them and judge the code before you hire us.
     </p>
     <div class="hero-actions">
-      <a href="/contact.html" class="btn btn-primary" data-i18n="hero.cta1">Start a project →</a>
+      <a href="/contact" class="btn btn-primary" data-i18n="hero.cta1">Start a project →</a>
       <a href="#services" class="btn btn-outline" data-i18n="hero.cta2">Our services</a>
     </div>
     <div class="hero-stats">
@@ -1295,27 +1268,27 @@
   <h2 data-i18n="proof.h2">We ship our own software.</h2>
   <p class="section-desc" data-i18n="proof.desc">Most agencies show you mockups. We ship production Mac apps under our own name — download any of them, run them, and judge our engineering before you spend a cent.</p>
   <div class="proof-grid">
-    <a class="proof-card" href="/apps/activitybar.html">
+    <a class="proof-card" href="/apps/activitybar">
       <h3>ActivityBar</h3>
       <p data-i18n="proof.a1">Live CPU, RAM and SSD usage in the macOS menu bar. Around 45 MB of RAM, zero bloat.</p>
     </a>
-    <a class="proof-card" href="/apps/libro.html">
+    <a class="proof-card" href="/apps/libro">
       <h3>libro</h3>
       <p data-i18n="proof.a2">Local accounting that AI-parses invoices and matches payments — entirely on your machine. No SaaS.</p>
     </a>
-    <a class="proof-card" href="/apps/native-browser.html">
+    <a class="proof-card" href="/apps/native-browser">
       <h3>Native Browser</h3>
       <p data-i18n="proof.a3">A lightweight, privacy-first browser built natively for Apple Silicon.</p>
     </a>
-    <a class="proof-card" href="/apps/hideicons.html">
+    <a class="proof-card" href="/apps/hideicons">
       <h3>Hide Icons</h3>
       <p data-i18n="proof.a4">Hide your menu bar icons with one click. No private APIs, no Accessibility permission.</p>
     </a>
-    <a class="proof-card" href="/apps/dockguard.html">
+    <a class="proof-card" href="/apps/dockguard">
       <h3>DockGuard</h3>
       <p data-i18n="proof.a5">Lock your macOS Dock so it never moves, resizes, or rearranges again.</p>
     </a>
-    <a class="proof-card" href="/apps/stayawake.html">
+    <a class="proof-card" href="/apps/stayawake">
       <h3>StayAwake</h3>
       <p data-i18n="proof.a6">Keep your Mac awake when you need it. One click in the menu bar.</p>
     </a>
@@ -1594,7 +1567,7 @@
       <h2 data-i18n="contact.h2">Let's build something great together.</h2>
       <p data-i18n="contact.p">You know about us. Now let's talk about you. If you have a project in mind or are simply interested in finding out more, get in touch and let's get things moving.</p>
     </div>
-    <a href="/contact.html" class="btn btn-primary" data-i18n="nav.cta">Get in touch</a>
+    <a href="/contact" class="btn btn-primary" data-i18n="nav.cta">Get in touch</a>
   </div>
 </section>
 </main>
@@ -1613,9 +1586,9 @@
     <a href="/manifesto">Manifesto</a>
     <a href="/blog/">Notes</a>
     <a href="/apps/">Apps</a>
-    <a href="/contact.html" data-i18n="footer.contact">Contact</a>
-    <a href="/cookie-policy.html" data-i18n="footer.cookies">Cookie Policy</a>
-    <a href="/privacy-policy.html" data-i18n="footer.privacy">Privacy Policy</a>
+    <a href="/contact" data-i18n="footer.contact">Contact</a>
+    <a href="/cookie-policy" data-i18n="footer.cookies">Cookie Policy</a>
+    <a href="/privacy-policy" data-i18n="footer.privacy">Privacy Policy</a>
   </div>
 </footer>
 
@@ -1670,7 +1643,7 @@
       'contact.message':'Tell us about your project *','contact.send':'Send message →','contact.sending':'Sending…','contact.success':'✓ Message sent!',
       'footer.services':'Capabilities','footer.ai':'AI','footer.about':'About','footer.contact':'Contact','footer.cookies':'Cookie Policy','footer.privacy':'Privacy Policy',
       'footer.copy':'© 2026 Co Digit d.o.o. · Zagreb, Croatia',
-      'cookie.p':'We use cookies to improve your experience. <a href="/cookie-policy.html">Read our cookie policy</a>',
+      'cookie.p':'We use cookies to improve your experience. <a href="/cookie-policy">Read our cookie policy</a>',
       'cookie.accept':'Accept all','cookie.decline':'Decline',
     },
     hr: {
@@ -1721,7 +1694,7 @@
       'contact.message':'Opišite nam vaš projekt *','contact.send':'Pošalji poruku →','contact.sending':'Slanje…','contact.success':'✓ Poruka poslana!',
       'footer.services':'Mogućnosti','footer.ai':'AI','footer.about':'O nama','footer.contact':'Kontakt','footer.cookies':'Politika kolačića','footer.privacy':'Politika privatnosti',
       'footer.copy':'© 2026 Co Digit d.o.o. · Zagreb, Hrvatska',
-      'cookie.p':'Koristimo kolačiće kako bismo poboljšali vaše iskustvo. <a href="/cookie-policy.html">Više o kolačićima</a>',
+      'cookie.p':'Koristimo kolačiće kako bismo poboljšali vaše iskustvo. <a href="/cookie-policy">Više o kolačićima</a>',
       'cookie.accept':'Prihvati sve','cookie.decline':'Odbij',
     }
   };
@@ -1836,6 +1809,7 @@
   }
   document.getElementById('cookieAccept').addEventListener('click', () => {
     localStorage.setItem('cookieConsent', 'accepted');
+    window.loadAnalytics();
     if (typeof gtag === 'function') {
       gtag('consent', 'update', {
         'ad_storage': 'granted',
@@ -1894,7 +1868,7 @@
       btn.disabled = false;
       msg.textContent = err.message;
       msg.style.display = 'block';
-      msg.style.color = '#e63946';
+      msg.style.color = '#c1121f';
     }
   }
 </script>
@@ -1915,7 +1889,7 @@
 
   // Game state
   let ball, paddle, bricks, score, lives, dx, dy;
-  const colors = ['#e63946','#457b9d','#e9b94a','#2a9d8f','#e76f51'];
+  const colors = ['#c1121f','#457b9d','#e9b94a','#2a9d8f','#e76f51'];
 
   function init() {
     resize();
@@ -1973,7 +1947,7 @@
     ctx.fill();
 
     // Ball
-    ctx.fillStyle = '#e63946';
+    ctx.fillStyle = '#c1121f';
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
     ctx.fill();
@@ -1985,7 +1959,7 @@
 
     // Lives
     for (let i = 0; i < lives; i++) {
-      ctx.fillStyle = '#e63946';
+      ctx.fillStyle = '#c1121f';
       ctx.beginPath();
       ctx.arc(W - 12 - i * 16, H - 12, 4, 0, Math.PI * 2);
       ctx.fill();
@@ -2102,5 +2076,6 @@
   "sameAs": ["https://github.com/marino143"]
 }
 </script>
+<script src="/site.js" defer></script>
 </body>
 </html>

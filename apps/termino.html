@@ -2,22 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-T97BQ3VRV1');
-  </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Termino — online rezervacije za salone, web + iOS | Co Digit</title>
   <meta name="description" content="Booking marketplace for Croatian hair, beauty and nail salons. Clients book online 24/7, owners run the calendar, clients and waitlist from the web or the native iPhone app. Live on the App Store." />
-  <link rel="canonical" href="https://codigit.io/apps/termino.html" />
+  <link rel="canonical" href="https://codigit.io/apps/termino" />
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://codigit.io/apps/termino.html" />
+  <meta property="og:url" content="https://codigit.io/apps/termino" />
   <meta property="og:title" content="Termino — salon booking platform, web + iOS | Co Digit" />
   <meta property="og:description" content="Clients book online 24/7, owners run the calendar from the web or the iPhone app. Free for salons — live on termino.hr and the App Store." />
   <meta property="og:image" content="https://codigit.io/apps/screenshots/termino-home.png" />
@@ -29,14 +21,14 @@
   <meta name="twitter:description" content="Online booking for Croatian salons — web marketplace + native iPhone app, one codebase. Live on the App Store." />
   <meta name="twitter:image" content="https://codigit.io/apps/screenshots/termino-home.png" />
   <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/fonts/inter.css" />
+  <link rel="stylesheet" href="/site.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
       --border: #222222; --text: #f0f0f0; --muted: #888;
-      --accent: #e63946; --white: #ffffff;
+      --accent: #c1121f; --white: #ffffff;
       --nav-bg: rgba(10,10,10,0.9);
     }
     [data-theme="light"] {
@@ -282,6 +274,14 @@
 </head>
 <body>
 
+<button class="site-mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<div class="site-mobile-menu" aria-label="Mobile navigation">
+  <button class="site-mobile-close" type="button" aria-label="Close menu">×</button>
+  <a href="/">Home</a><a href="/services">Services</a><a href="/blog/">Notes</a>
+  <a href="/apps/">Apps</a><a href="/manifesto">Manifesto</a>
+  <a class="site-mobile-cta" href="/contact">Get in touch</a>
+</div>
+
 <nav>
   <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
   <ul class="nav-links">
@@ -289,10 +289,10 @@
     <li><a href="/#ai">AI-Powered</a></li>
     <li><a href="/#about">About</a></li>
     <li><a href="/#certs">Certifications</a></li>
-    <li><a href="/services.html">Services</a></li>
+    <li><a href="/services">Services</a></li>
     <li><a href="/blog/">Notes</a></li>
     <li><a href="/apps/">Apps</a></li>
-    <li><a href="/contact.html" class="nav-cta">Get in touch</a></li>
+    <li><a href="/contact" class="nav-cta">Get in touch</a></li>
   </ul>
   <div class="nav-right">
     <div class="lang-switcher">
@@ -409,13 +409,13 @@
     <h2 id="h-journey">Build story</h2>
     <div class="info-card">
       <div class="lang-content active" data-lang="en">
-        <p>Termino started as a redesign exercise of a local booking product and grew into the full thing: a real marketplace with a live database, email pipeline, push notifications and an iOS app — all on free-tier infrastructure. Apple rejected it four times (a donation button, an iPad layout bug, copy that implied a paid tier, a cookie banner read as a tracking prompt) before approving it in July 2026. Within a month the first salon owner found it organically and signed up on their own. This end-to-end product work — design, backend, App Store — is what I do for founders at <a href="/services.html">Codigit</a>.</p>
+        <p>Termino started as a redesign exercise of a local booking product and grew into the full thing: a real marketplace with a live database, email pipeline, push notifications and an iOS app — all on free-tier infrastructure. Apple rejected it four times (a donation button, an iPad layout bug, copy that implied a paid tier, a cookie banner read as a tracking prompt) before approving it in July 2026. Within a month the first salon owner found it organically and signed up on their own. This end-to-end product work — design, backend, App Store — is what I do for founders at <a href="/services">Codigit</a>.</p>
       </div>
       <div class="lang-content" data-lang="hr">
-        <p>Termino je krenuo kao vježba redizajna lokalnog booking proizvoda i narastao u pravu stvar: marketplace sa živom bazom, email pipelineom, push obavijestima i iOS aplikacijom — sve na besplatnoj infrastrukturi. Apple ga je četiri puta odbio (gumb za donacije, iPad layout bug, copy koji je sugerirao plaćeni paket, cookie banner protumačen kao praćenje) prije odobrenja u srpnju 2026. Unutar mjesec dana prvi se vlasnik salona sam pronašao i registrirao. Ovakav end-to-end proizvodni rad — dizajn, backend, App Store — radim za founderse kroz <a href="/services.html">Codigit</a>.</p>
+        <p>Termino je krenuo kao vježba redizajna lokalnog booking proizvoda i narastao u pravu stvar: marketplace sa živom bazom, email pipelineom, push obavijestima i iOS aplikacijom — sve na besplatnoj infrastrukturi. Apple ga je četiri puta odbio (gumb za donacije, iPad layout bug, copy koji je sugerirao plaćeni paket, cookie banner protumačen kao praćenje) prije odobrenja u srpnju 2026. Unutar mjesec dana prvi se vlasnik salona sam pronašao i registrirao. Ovakav end-to-end proizvodni rad — dizajn, backend, App Store — radim za founderse kroz <a href="/services">Codigit</a>.</p>
       </div>
       <div class="lang-content" data-lang="de">
-        <p>Termino begann als Redesign-Übung eines lokalen Buchungsprodukts und wuchs zur echten Sache: ein Marktplatz mit Live-Datenbank, E-Mail-Pipeline, Push-Benachrichtigungen und iOS-App — alles auf kostenloser Infrastruktur. Apple lehnte die App viermal ab (ein Spenden-Button, ein iPad-Layout-Fehler, Texte, die einen Bezahltarif andeuteten, ein Cookie-Banner, das als Tracking gelesen wurde), bevor sie im Juli 2026 freigegeben wurde. Innerhalb eines Monats fand der erste Saloninhaber die Plattform organisch und registrierte sich selbst. Diese End-to-End-Produktarbeit — Design, Backend, App Store — mache ich für Gründer bei <a href="/services.html">Codigit</a>.</p>
+        <p>Termino begann als Redesign-Übung eines lokalen Buchungsprodukts und wuchs zur echten Sache: ein Marktplatz mit Live-Datenbank, E-Mail-Pipeline, Push-Benachrichtigungen und iOS-App — alles auf kostenloser Infrastruktur. Apple lehnte die App viermal ab (ein Spenden-Button, ein iPad-Layout-Fehler, Texte, die einen Bezahltarif andeuteten, ein Cookie-Banner, das als Tracking gelesen wurde), bevor sie im Juli 2026 freigegeben wurde. Innerhalb eines Monats fand der erste Saloninhaber die Plattform organisch und registrierte sich selbst. Diese End-to-End-Produktarbeit — Design, Backend, App Store — mache ich für Gründer bei <a href="/services">Codigit</a>.</p>
       </div>
     </div>
   </section>
@@ -449,8 +449,8 @@
     <a href="/" id="fl-home">Home</a>
     <a href="/blog/" id="fl-blog">Notes</a>
     <a href="/apps/" id="fl-apps">Apps</a>
-    <a href="/cookie-policy.html" id="fl-cookies">Cookie Policy</a>
-    <a href="/privacy-policy.html" id="fl-privacy">Privacy Policy</a>
+    <a href="/cookie-policy" id="fl-cookies">Cookie Policy</a>
+    <a href="/privacy-policy" id="fl-privacy">Privacy Policy</a>
   </div>
 </footer>
 
@@ -640,7 +640,7 @@
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Web, iOS",
   "description": "Booking platform for Croatian hair, beauty and nail salons. Clients book online 24/7 without an account; owners get a calendar, client base, waitlist and push notifications on the web and in the native iPhone app.",
-  "url": "https://codigit.io/apps/termino.html",
+  "url": "https://codigit.io/apps/termino",
   "sameAs": ["https://termino.hr", "https://apps.apple.com/app/id6788697705"],
   "screenshot": "https://codigit.io/apps/screenshots/termino-home.png",
   "inLanguage": "hr",
@@ -797,5 +797,6 @@
     });
   })();
 </script>
+<script src="/site.js" defer></script>
 </body>
 </html>

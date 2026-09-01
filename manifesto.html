@@ -13,11 +13,11 @@
   <meta property="og:image" content="https://codigit.io/og-image.png" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/fonts/inter.css" />
+  <link rel="stylesheet" href="/site.css" />
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--bg:#0a0a0a;--panel:#111;--border:#242424;--text:#f5f5f5;--muted:#999;--accent:#e63946}
+    :root{--bg:#0a0a0a;--panel:#111;--border:#242424;--text:#f5f5f5;--muted:#999;--accent:#c1121f}
     html{scroll-behavior:smooth} body{background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.7}
     nav{height:72px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
     .logo{color:#fff;text-decoration:none;font-weight:900;letter-spacing:-.6px}.logo span{color:var(--accent)}
@@ -39,6 +39,14 @@
   </style>
 </head>
 <body>
+
+<button class="site-mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<div class="site-mobile-menu" aria-label="Mobile navigation">
+  <button class="site-mobile-close" type="button" aria-label="Close menu">×</button>
+  <a href="/">Home</a><a href="/services">Services</a><a href="/blog/">Notes</a>
+  <a href="/apps/">Apps</a><a href="/manifesto">Manifesto</a>
+  <a class="site-mobile-cta" href="/contact">Get in touch</a>
+</div>
   <nav><a class="logo" href="/">CO<span>.</span>DIGIT</a><a href="/#about">About Co Digit</a></nav>
   <main>
     <div class="eyebrow">The Co Digit Manifesto</div>
@@ -69,5 +77,6 @@
   </main>
   <footer><span>© 2026 Co Digit d.o.o. · Zagreb, Croatia</span><a href="/">Back to codigit.io</a></footer>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Keep Moving Forward","description":"The Co Digit manifesto on software, failure, experience and moving forward.","datePublished":"2026-08-26","dateModified":"2026-08-26","author":{"@type":"Person","name":"Marino Glazar","url":"https://codigit.io/#about"},"publisher":{"@type":"Organization","name":"Co Digit","url":"https://codigit.io","logo":{"@type":"ImageObject","url":"https://codigit.io/logo.svg"}},"mainEntityOfPage":"https://codigit.io/manifesto"}</script>
+<script src="/site.js" defer></script>
 </body>
 </html>

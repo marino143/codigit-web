@@ -2,35 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    // Consent Mode v2: default deny analytics + ads until user opts in.
-    gtag('consent', 'default', {
-      'ad_storage': 'denied',
-      'ad_user_data': 'denied',
-      'ad_personalization': 'denied',
-      'analytics_storage': 'denied',
-      'wait_for_update': 500
-    });
-    try {
-      if (localStorage.getItem('cookieConsent') === 'accepted') {
-        gtag('consent', 'update', {
-          'ad_storage': 'granted',
-          'ad_user_data': 'granted',
-          'ad_personalization': 'granted',
-          'analytics_storage': 'granted'
-        });
-      }
-    } catch(e) {}
-    gtag('js', new Date());
-    gtag('config', 'G-T97BQ3VRV1');
-  </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Integration Services — LLM Features Shipped to Production | Co Digit</title>
+  <title>AI Integration Services — LLM Features Shipped to Production</title>
   <meta name="description" content="Co Digit integrates AI into real products: LLM features, document intelligence, RAG, agents, and on-device AI. Senior European team working US hours, billed in USD. Prototype in weeks — with evals, cost control, and no AI theater." />
   <link rel="canonical" href="https://codigit.io/services/ai-integration" />
   <!-- Open Graph -->
@@ -100,14 +74,14 @@
   }
   </script>
   <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/fonts/inter.css" />
+  <link rel="stylesheet" href="/site.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
       --border: #222222; --text: #f0f0f0; --muted: #888;
-      --accent: #e63946; --white: #ffffff;
+      --accent: #c1121f; --white: #ffffff;
       --nav-bg: rgba(10,10,10,0.9);
     }
     [data-theme="light"] {
@@ -264,15 +238,23 @@
 </head>
 <body>
 
+<button class="site-mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<div class="site-mobile-menu" aria-label="Mobile navigation">
+  <button class="site-mobile-close" type="button" aria-label="Close menu">×</button>
+  <a href="/">Home</a><a href="/services">Services</a><a href="/blog/">Notes</a>
+  <a href="/apps/">Apps</a><a href="/manifesto">Manifesto</a>
+  <a class="site-mobile-cta" href="/contact">Get in touch</a>
+</div>
+
 <nav>
   <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
   <ul class="nav-links">
     <li><a href="/#services">Capabilities</a></li>
     <li><a href="/#ai">AI-Powered</a></li>
-    <li><a href="/services.html">Services</a></li>
+    <li><a href="/services">Services</a></li>
     <li><a href="/blog/">Notes</a></li>
     <li><a href="/apps/">Apps</a></li>
-    <li><a href="/contact.html" class="nav-cta">Get in touch</a></li>
+    <li><a href="/contact" class="nav-cta">Get in touch</a></li>
   </ul>
   <div class="nav-right">
     <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
@@ -289,7 +271,7 @@
     Senior European engineers, full-time overlap with your US or UK workday.
   </p>
   <div class="hero-actions">
-    <a class="btn btn-primary" href="/contact.html?package=AI%20Integration">Scope your AI feature →</a>
+    <a class="btn btn-primary" href="/contact?package=AI%20Integration">Scope your AI feature →</a>
     <a class="btn btn-outline" href="#proof">See AI we've shipped</a>
   </div>
   <div class="hero-chips">
@@ -309,11 +291,11 @@
     shipped software, not concept videos.
   </p>
   <div class="apps-grid">
-    <a class="app-card" href="/apps/libro.html">
+    <a class="app-card" href="/apps/libro">
       <h3>libro — local document AI</h3>
       <p>Personal accounting that AI-parses financial PDFs and matches payments to invoices — entirely on-device. No SaaS, no data leaving the machine.</p>
     </a>
-    <a class="app-card" href="/apps/bridge.html">
+    <a class="app-card" href="/apps/bridge">
       <h3>Bridge — agent-driven ops</h3>
       <p>The console we run our own studio on: AI agents handle research, drafting, and busywork under human review.</p>
     </a>
@@ -444,7 +426,7 @@
     </details>
     <details>
       <summary>Can AI features run without sending data to the cloud?</summary>
-      <p>Yes. We build local-first AI where it fits: on-device models on Apple Silicon and local pipelines for sensitive documents. Our own accounting app, <a href="/apps/libro.html" style="color: var(--text);">libro</a>, parses financial PDFs with AI entirely on the user's machine — no SaaS, no data leaving the laptop.</p>
+      <p>Yes. We build local-first AI where it fits: on-device models on Apple Silicon and local pipelines for sensitive documents. Our own accounting app, <a href="/apps/libro" style="color: var(--text);">libro</a>, parses financial PDFs with AI entirely on the user's machine — no SaaS, no data leaving the laptop.</p>
     </details>
     <details>
       <summary>How do you keep AI API costs under control?</summary>
@@ -469,7 +451,7 @@
 <section class="final" style="border-top: 1px solid var(--border); background: var(--bg2);">
   <h2>Have an AI feature in mind?</h2>
   <p class="section-sub">Tell us the problem — not the model. You'll get a reply from the engineer who'd build it, within one business day, in your time zone.</p>
-  <a class="btn btn-primary" href="/contact.html?package=AI%20Integration">Scope your AI feature →</a>
+  <a class="btn btn-primary" href="/contact?package=AI%20Integration">Scope your AI feature →</a>
 </section>
 
 <footer>
@@ -482,8 +464,8 @@
     <a href="/services/nearshore-software-development">Nearshore Team</a>
     <a href="/blog/">Notes</a>
     <a href="/apps/">Apps</a>
-    <a href="/cookie-policy.html">Cookie Policy</a>
-    <a href="/privacy-policy.html">Privacy Policy</a>
+    <a href="/cookie-policy">Cookie Policy</a>
+    <a href="/privacy-policy">Privacy Policy</a>
   </div>
 </footer>
 
@@ -504,5 +486,6 @@
   });
 </script>
 
+<script src="/site.js" defer></script>
 </body>
 </html>

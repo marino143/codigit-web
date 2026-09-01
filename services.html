@@ -2,41 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    // Consent Mode v2: default deny analytics + ads until user opts in.
-    gtag('consent', 'default', {
-      'ad_storage': 'denied',
-      'ad_user_data': 'denied',
-      'ad_personalization': 'denied',
-      'analytics_storage': 'denied',
-      'wait_for_update': 500
-    });
-    // Restore previous consent from localStorage (runs before any page logic).
-    try {
-      if (localStorage.getItem('cookieConsent') === 'accepted') {
-        gtag('consent', 'update', {
-          'ad_storage': 'granted',
-          'ad_user_data': 'granted',
-          'ad_personalization': 'granted',
-          'analytics_storage': 'granted'
-        });
-      }
-    } catch(e) {}
-    gtag('js', new Date());
-    gtag('config', 'G-T97BQ3VRV1');
-  </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Software Development & AI Integration Services | Co Digit</title>
   <meta name="description" content="Senior software engineering from Croatia for US, UK and EU teams: AI integration, macOS apps, React Native products and nearshore development. Clear scope, GDPR-aware delivery and client-owned IP." />
-  <link rel="canonical" href="https://codigit.io/services.html" />
+  <link rel="canonical" href="https://codigit.io/services" />
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://codigit.io/services.html" />
+  <meta property="og:url" content="https://codigit.io/services" />
   <meta property="og:title" content="Software Development & AI Integration Services | Co Digit" />
   <meta property="og:description" content="Senior AI, web, mobile and macOS engineering for US, UK and EU teams — delivered from Croatia with clear ownership and security practices." />
   <meta property="og:image" content="https://codigit.io/og-image.png" />
@@ -48,14 +21,14 @@
   <meta name="twitter:description" content="Senior AI, web, mobile and macOS engineering for US, UK and EU teams." />
   <meta name="twitter:image" content="https://codigit.io/og-image.png" />
   <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/fonts/inter.css" />
+  <link rel="stylesheet" href="/site.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
       --border: #222222; --text: #f0f0f0; --muted: #888;
-      --accent: #e63946; --white: #ffffff;
+      --accent: #c1121f; --white: #ffffff;
       --nav-bg: rgba(10,10,10,0.9);
     }
     [data-theme="light"] {
@@ -455,10 +428,10 @@
     <li><a href="/#ai">AI-Powered</a></li>
     <li><a href="/#about">About</a></li>
     <li><a href="/#certs">Certifications</a></li>
-    <li><a href="/services.html">Services</a></li>
+    <li><a href="/services">Services</a></li>
     <li><a href="/blog/">Notes</a></li>
     <li><a href="/apps/">Apps</a></li>
-    <li><a href="/contact.html" class="nav-cta">Get in touch</a></li>
+    <li><a href="/contact" class="nav-cta">Get in touch</a></li>
   </ul>
   <div class="nav-right">
     <div class="lang-switcher">
@@ -549,7 +522,7 @@
         <li id="tier1-f3">Initial recommendations</li>
         <li id="tier1-f4">No commitment required</li>
       </ul>
-      <a href="/contact.html?package=Discovery%20Call" class="btn btn-outline" id="tier1-cta">Book a Free Call &rarr;</a>
+      <a href="/contact?package=Discovery%20Call" class="btn btn-outline" id="tier1-cta">Book a Free Call &rarr;</a>
     </div>
 
     <!-- Strategy Session (Highlighted) -->
@@ -567,7 +540,7 @@
         <li id="tier2-f4">Timeline &amp; budget estimation</li>
         <li id="tier2-f5">Written summary of key takeaways</li>
       </ul>
-      <a href="/contact.html?package=Strategy%20Session" class="btn btn-primary" id="tier2-cta">Book a Session &rarr;</a>
+      <a href="/contact?package=Strategy%20Session" class="btn btn-primary" id="tier2-cta">Book a Session &rarr;</a>
     </div>
 
   </div>
@@ -589,7 +562,7 @@
         <li id="tier3-f5">Realistic timeline &amp; milestones</li>
         <li id="tier3-f6">Budget estimation &amp; resource plan</li>
       </ul>
-      <a href="/contact.html?package=Project%20Roadmap" class="btn btn-outline" id="tier3-cta">Get Your Roadmap &rarr;</a>
+      <a href="/contact?package=Project%20Roadmap" class="btn btn-outline" id="tier3-cta">Get Your Roadmap &rarr;</a>
     </div>
 
     <!-- Launch Package -->
@@ -607,7 +580,7 @@
         <li id="tier4-f6">MVP scope document</li>
         <li id="tier4-f7">Vendor shortlist with recommendations</li>
       </ul>
-      <a href="/contact.html?package=Launch%20Package" class="btn btn-outline" id="tier4-cta">Start Your Project &rarr;</a>
+      <a href="/contact?package=Launch%20Package" class="btn btn-outline" id="tier4-cta">Start Your Project &rarr;</a>
     </div>
 
     <!-- Growth Partner -->
@@ -624,7 +597,7 @@
         <li id="tier5-f5">Monthly progress reviews</li>
         <li id="tier5-f6">Direct access via Slack/email</li>
       </ul>
-      <a href="/contact.html?package=Growth%20Partner" class="btn btn-outline" id="tier5-cta">Become a Partner &rarr;</a>
+      <a href="/contact?package=Growth%20Partner" class="btn btn-outline" id="tier5-cta">Become a Partner &rarr;</a>
     </div>
 
   </div>
@@ -637,7 +610,7 @@
     </div>
     <div style="display:flex; align-items:center; gap:24px;">
       <div style="font-size:28px; font-weight:900; color:var(--white); white-space:nowrap;">from $20,000</div>
-      <a href="/contact.html?package=Custom%20Build" class="btn btn-primary" style="white-space:nowrap;">Let's talk &rarr;</a>
+      <a href="/contact?package=Custom%20Build" class="btn btn-primary" style="white-space:nowrap;">Let's talk &rarr;</a>
     </div>
   </div>
 </section>
@@ -697,8 +670,8 @@
   <div class="footer-links">
     <a href="/" id="fl-home">Home</a>
     <a href="/blog/">Notes</a>
-    <a href="/cookie-policy.html" id="fl-cookies">Cookie Policy</a>
-    <a href="/privacy-policy.html" id="fl-privacy">Privacy Policy</a>
+    <a href="/cookie-policy" id="fl-cookies">Cookie Policy</a>
+    <a href="/privacy-policy" id="fl-privacy">Privacy Policy</a>
   </div>
 </footer>
 
@@ -936,5 +909,6 @@
   }
 }
 </script>
+<script src="/site.js" defer></script>
 </body>
 </html>

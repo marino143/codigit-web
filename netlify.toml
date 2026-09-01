@@ -104,6 +104,34 @@
   status = 301
   force = true
 
+# Canonical URLs are extensionless. Keep old .html links working, but never
+# serve a duplicate 200 response for them.
+[[redirects]]
+  from = "/*.html"
+  to = "/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/work"
+  to = "/#clients"
+  status = 301
+
+[[redirects]]
+  from = "/work/"
+  to = "/#clients"
+  status = 301
+
+[[redirects]]
+  from = "/blog/the-impact-of-ai"
+  to = "/blog/how-ai-is-changing-web-development"
+  status = 301
+
+[[redirects]]
+  from = "/blog/the-impact-of-ai/"
+  to = "/blog/how-ai-is-changing-web-development"
+  status = 301
+
 # Old WordPress URL structures → home
 [[redirects]]
   from = "/category/*"

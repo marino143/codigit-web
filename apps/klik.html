@@ -2,41 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T97BQ3VRV1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    // Consent Mode v2: default deny analytics + ads until user opts in.
-    gtag('consent', 'default', {
-      'ad_storage': 'denied',
-      'ad_user_data': 'denied',
-      'ad_personalization': 'denied',
-      'analytics_storage': 'denied',
-      'wait_for_update': 500
-    });
-    // Restore previous consent from localStorage (runs before any page logic).
-    try {
-      if (localStorage.getItem('cookieConsent') === 'accepted') {
-        gtag('consent', 'update', {
-          'ad_storage': 'granted',
-          'ad_user_data': 'granted',
-          'ad_personalization': 'granted',
-          'analytics_storage': 'granted'
-        });
-      }
-    } catch(e) {}
-    gtag('js', new Date());
-    gtag('config', 'G-T97BQ3VRV1');
-  </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Klik — Native macOS Screen Capture &amp; Recording | Co Digit</title>
   <meta name="description" content="Screenshots, screen recording and GIFs on your Mac — annotate, then drag straight into any app. A 1 MB native alternative to CleanShot, free and open source for Apple Silicon." />
-  <link rel="canonical" href="https://codigit.io/apps/klik.html" />
+  <link rel="canonical" href="https://codigit.io/apps/klik" />
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://codigit.io/apps/klik.html" />
+  <meta property="og:url" content="https://codigit.io/apps/klik" />
   <meta property="og:title" content="Klik — Native macOS Screen Capture &amp; Recording | Co Digit" />
   <meta property="og:description" content="Screenshots, screen recording and GIFs on your Mac — annotate, then drag straight into any app. A 1 MB native alternative to CleanShot, free and open source for Apple Silicon." />
   <meta property="og:image" content="https://codigit.io/og-image.png" />
@@ -48,14 +21,14 @@
   <meta name="twitter:description" content="Screenshots, screen recording and GIFs on your Mac — annotate, then drag straight into any app. A 1 MB native alternative to CleanShot, free and open source for Apple Silicon." />
   <meta name="twitter:image" content="https://codigit.io/og-image.png" />
   <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/fonts/inter.css" />
+  <link rel="stylesheet" href="/site.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
       --border: #222222; --text: #f0f0f0; --muted: #888;
-      --accent: #e63946; --white: #ffffff;
+      --accent: #c1121f; --white: #ffffff;
       --nav-bg: rgba(10,10,10,0.9);
     }
     [data-theme="light"] {
@@ -302,6 +275,14 @@
 </head>
 <body>
 
+<button class="site-mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<div class="site-mobile-menu" aria-label="Mobile navigation">
+  <button class="site-mobile-close" type="button" aria-label="Close menu">×</button>
+  <a href="/">Home</a><a href="/services">Services</a><a href="/blog/">Notes</a>
+  <a href="/apps/">Apps</a><a href="/manifesto">Manifesto</a>
+  <a class="site-mobile-cta" href="/contact">Get in touch</a>
+</div>
+
 <nav>
   <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
   <ul class="nav-links">
@@ -309,10 +290,10 @@
     <li><a href="/#ai">AI-Powered</a></li>
     <li><a href="/#about">About</a></li>
     <li><a href="/#certs">Certifications</a></li>
-    <li><a href="/services.html">Services</a></li>
+    <li><a href="/services">Services</a></li>
     <li><a href="/blog/">Notes</a></li>
     <li><a href="/apps/">Apps</a></li>
-    <li><a href="/contact.html" class="nav-cta">Get in touch</a></li>
+    <li><a href="/contact" class="nav-cta">Get in touch</a></li>
   </ul>
   <div class="nav-right">
     <div class="lang-switcher">
@@ -414,10 +395,10 @@
     <h2 id="h-journey">Build story</h2>
     <div class="info-card">
       <div class="lang-content active" data-lang="en">
-        <p>Klik started as a Saturday-afternoon question: how close can a native app get to CleanShot's core experience with no Electron and no third-party dependencies? The answer turned out to be a single 766 KB binary. Built in Swift with Claude as a pairing partner, MIT licensed, source on <a href="https://github.com/marino143/klik" target="_blank">GitHub</a>. This is the kind of ship-velocity work I do for founders building SaaS and AI products at <a href="/services.html">Codigit</a>.</p>
+        <p>Klik started as a Saturday-afternoon question: how close can a native app get to CleanShot's core experience with no Electron and no third-party dependencies? The answer turned out to be a single 766 KB binary. Built in Swift with Claude as a pairing partner, MIT licensed, source on <a href="https://github.com/marino143/klik" target="_blank">GitHub</a>. This is the kind of ship-velocity work I do for founders building SaaS and AI products at <a href="/services">Codigit</a>.</p>
       </div>
       <div class="lang-content" data-lang="hr">
-        <p>Klik je krenuo kao subotnje pitanje: koliko blizu CleanShotovom iskustvu može doći nativna aplikacija bez Electrona i bez vanjskih ovisnosti? Odgovor je ispao jedan binary od 766 KB. Napisan u Swiftu uz Claude kao pair partnera, MIT licenca, source na <a href="https://github.com/marino143/klik" target="_blank">GitHubu</a>. Ovo je tip ship-velocity rada koji radim za founderse koji grade SaaS i AI proizvode kroz <a href="/services.html">Codigit</a>.</p>
+        <p>Klik je krenuo kao subotnje pitanje: koliko blizu CleanShotovom iskustvu može doći nativna aplikacija bez Electrona i bez vanjskih ovisnosti? Odgovor je ispao jedan binary od 766 KB. Napisan u Swiftu uz Claude kao pair partnera, MIT licenca, source na <a href="https://github.com/marino143/klik" target="_blank">GitHubu</a>. Ovo je tip ship-velocity rada koji radim za founderse koji grade SaaS i AI proizvode kroz <a href="/services">Codigit</a>.</p>
       </div>
     </div>
   </section>
@@ -477,8 +458,8 @@
     <a href="/" id="fl-home">Home</a>
     <a href="/blog/" id="fl-blog">Notes</a>
     <a href="/apps/" id="fl-apps">Apps</a>
-    <a href="/cookie-policy.html" id="fl-cookies">Cookie Policy</a>
-    <a href="/privacy-policy.html" id="fl-privacy">Privacy Policy</a>
+    <a href="/cookie-policy" id="fl-cookies">Cookie Policy</a>
+    <a href="/privacy-policy" id="fl-privacy">Privacy Policy</a>
   </div>
 </footer>
 
@@ -661,7 +642,7 @@
   "applicationCategory": "MultimediaApplication",
   "operatingSystem": "macOS 14+",
   "description": "Screenshots, screen recording and GIFs on your Mac — annotate, then drag straight into any app. A 1 MB native alternative to CleanShot, free and open source for Apple Silicon.",
-  "url": "https://codigit.io/apps/klik.html",
+  "url": "https://codigit.io/apps/klik",
   "softwareVersion": "0.2.0",
   "offers": {
     "@type": "Offer",
@@ -823,5 +804,6 @@
     });
   })();
 </script>
+<script src="/site.js" defer></script>
 </body>
 </html>
