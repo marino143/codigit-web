@@ -49,4 +49,13 @@
   #cookieBanner { top: auto !important; bottom: 12px !important; }
 }
 
-#cookieDecline { color: #666 !important; }
+#cookieDecline { color: #aaa !important; }
+
+/* Keep small accent labels and footer copy above WCAG AA contrast on dark surfaces. */
+html:not([data-theme="light"]) .section-kicker,
+html:not([data-theme="light"]) .step .num,
+html:not([data-theme="light"]) .hero-clock-label,
+html:not([data-theme="light"]) .post-tag {
+  color: #ff6670 !important;
+}
+html:not([data-theme="light"]) footer p { color: #999 !important; }

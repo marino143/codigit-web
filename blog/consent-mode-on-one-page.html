@@ -5,7 +5,7 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Consent Mode v2 on 28 Pages, a Cookie Banner on One — Co Digit</title>
-  <meta name="description" content="We audited our own site's Google Consent Mode v2 setup by counting pages instead of eyeballing the homepage. 33 pages load GA4, 28 deny consent by default, and exactly one can ask the visitor to change it." />
+  <meta name="description" content="A practical audit of Google Consent Mode v2 across 33 pages, including consent defaults, GA4 loading and cookie-banner coverage." />
   <link rel="canonical" href="https://codigit.io/blog/consent-mode-on-one-page" />
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
@@ -206,6 +206,8 @@
   </div>
 </nav>
 
+<main>
+
 <article class="article-wrapper">
   <header>
     <div class="post-tags">
@@ -335,6 +337,8 @@ grep -rl 'id="cookieBanner"' --include='*.html' . | wc -l</code></pre>
 
   <a href="/blog/" class="back-to-blog" id="backToBlog">&larr; Back to blog</a>
 </article>
+
+</main>
 
 <footer>
   <div class="footer-logo">CO<span class="logo-dot">.</span>DIGIT</div>
