@@ -697,8 +697,13 @@
       transition: border-color 0.2s;
       outline: none;
     }
-    input::placeholder, textarea::placeholder { color: #555; }
-    input:focus, textarea:focus, select:focus { border-color: var(--muted); }
+    input::placeholder, textarea::placeholder { color: #8a8a8a; }
+    input:focus, textarea:focus, select:focus,
+    input:focus-visible, textarea:focus-visible, select:focus-visible {
+      border-color: #ff6670;
+      box-shadow: 0 0 0 3px rgba(255,102,112,0.18);
+      outline: none;
+    }
     textarea { resize: vertical; min-height: 120px; }
     select option { background: var(--bg3); }
 
@@ -739,19 +744,19 @@
       color: var(--muted);
     }
 
-    /* ─── CONTACT CTA ─── */
+    /* ─── HOMEPAGE CONTACT ─── */
     .contact-cta-section {
       background: var(--bg2);
       border-top: 1px solid var(--border);
-      padding: 80px 60px;
+      padding: 88px 60px;
     }
     .contact-cta-inner {
-      max-width: 900px;
+      max-width: 1100px;
       margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 48px;
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      align-items: start;
+      gap: 72px;
     }
     .contact-cta-inner h2 {
       font-size: clamp(28px, 3vw, 40px);
@@ -765,16 +770,63 @@
       font-size: 16px;
       max-width: 520px;
     }
-    .contact-cta-inner .btn {
-      white-space: nowrap;
-      flex-shrink: 0;
-      font-size: 16px;
-      padding: 16px 36px;
+    .contact-reply {
+      margin-top: 24px;
+      color: #aaa !important;
+      font-size: 13px !important;
+    }
+    .contact-detail-link {
+      display: inline-block;
+      margin-top: 18px;
+      color: #ff6670;
+      font-size: 14px;
+      font-weight: 650;
+      text-decoration: none;
+    }
+    .home-contact-card {
+      padding: 28px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+    .home-contact-card .btn {
+      justify-content: center;
+      min-height: 48px;
+      font-size: 15px;
+    }
+    .form-privacy {
+      color: #aaa;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .form-privacy a { color: #ff6670; }
+    .form-msg {
+      min-height: 21px;
+      color: #aaa;
+      font-size: 13px;
+    }
+    .honeypot,
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+    .contact-form button:disabled {
+      cursor: wait;
+      opacity: 0.7;
     }
     @media (max-width: 760px) {
       .contact-cta-section { padding: 60px 24px; }
-      .contact-cta-inner { flex-direction: column; align-items: flex-start; }
-      .contact-cta-inner .btn { width: 100%; justify-content: center; }
+      .contact-cta-inner { grid-template-columns: 1fr; gap: 36px; }
+      .home-contact-card { padding: 22px; }
+      .form-row { grid-template-columns: 1fr; }
+      .home-contact-card .btn { width: 100%; }
     }
 
     /* ─── FOOTER ─── */
@@ -1506,14 +1558,49 @@
   </div>
 </section>
 
-<!-- CONTACT CTA -->
-<section class="contact-cta-section reveal">
+<!-- HOMEPAGE CONTACT -->
+<section class="contact-cta-section reveal" id="contact">
   <div class="contact-cta-inner">
-    <div>
+    <div class="contact-copy">
+      <div class="section-label" data-i18n="contact.label">Get in touch</div>
       <h2 data-i18n="contact.h2">Let's build something great together.</h2>
       <p data-i18n="contact.p">You know about us. Now let's talk about you. If you have a project in mind or are simply interested in finding out more, get in touch and let's get things moving.</p>
+      <p class="contact-reply" data-i18n="contact.reply">Expect a personal reply within one business day.</p>
+      <a class="contact-detail-link" href="/contact" data-i18n="contact.full">Need more details? Open the full contact page</a>
     </div>
-    <a href="/contact" class="btn btn-primary" data-i18n="nav.cta">Get in touch</a>
+    <div class="home-contact-card">
+      <form class="contact-form" id="homepage-contact" name="homepage-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleSubmit(event)">
+        <input type="hidden" name="form-name" value="homepage-contact" />
+        <p class="honeypot">
+          <label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+        </p>
+        <div class="form-row">
+          <div>
+            <label class="sr-only" for="home-name" data-i18n="contact.name">Name *</label>
+            <input type="text" name="name" id="home-name" autocomplete="name" maxlength="100" data-i18n-placeholder="contact.name" placeholder="Name *" required />
+          </div>
+          <div>
+            <label class="sr-only" for="home-email" data-i18n="contact.email">Email *</label>
+            <input type="email" name="email" id="home-email" autocomplete="email" maxlength="254" data-i18n-placeholder="contact.email" placeholder="Email *" required />
+          </div>
+        </div>
+        <label class="sr-only" for="home-service" data-i18n="contact.select">What are you interested in?</label>
+        <select name="service" id="home-service">
+          <option value="" selected data-i18n="contact.select">What are you interested in? (optional)</option>
+          <option value="web-development" data-i18n="contact.opt1">Web design &amp; development</option>
+          <option value="strategy-consulting" data-i18n="contact.opt2">Strategy &amp; consulting</option>
+          <option value="seo" data-i18n="contact.opt3">Search Engine Optimization</option>
+          <option value="digital-transformation" data-i18n="contact.opt4">Digital transformation</option>
+          <option value="ai-solutions" data-i18n="contact.opt5">AI-powered solutions</option>
+          <option value="other" data-i18n="contact.opt6">Other</option>
+        </select>
+        <label class="sr-only" for="home-message" data-i18n="contact.message">Tell us about your project *</label>
+        <textarea name="message" id="home-message" minlength="20" maxlength="5000" data-i18n-placeholder="contact.message" placeholder="Tell us about your project *" required></textarea>
+        <p class="form-privacy"><span data-i18n="contact.privacy">We use these details only to reply to your enquiry.</span> <a href="/privacy-policy" data-i18n="footer.privacy">Privacy Policy</a></p>
+        <button type="submit" class="btn btn-primary" data-i18n="contact.send">Send message</button>
+        <p class="form-msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
   </div>
 </section>
 </main>
@@ -1586,7 +1673,8 @@
       'contact.name':'Name *','contact.companyField':'Company','contact.email':'Email *',
       'contact.select':'— What are you interested in? —',
       'contact.opt1':'Web design & development','contact.opt2':'Strategy & consulting','contact.opt3':'Search Engine Optimization','contact.opt4':'Digital transformation','contact.opt5':'AI-powered solutions','contact.opt6':'Other',
-      'contact.message':'Tell us about your project *','contact.send':'Send message →','contact.sending':'Sending…','contact.success':'✓ Message sent!',
+      'contact.message':'Tell us about your project *','contact.send':'Send message','contact.sending':'Sending…','contact.success':'Message sent. We will reply shortly.',
+      'contact.reply':'Expect a personal reply within one business day.','contact.full':'Need more details? Open the full contact page','contact.privacy':'We use these details only to reply to your enquiry.','contact.error':'Submission failed. Please try again or email marino@codigit.io.',
       'footer.services':'Capabilities','footer.ai':'AI','footer.about':'About','footer.contact':'Contact','footer.cookies':'Cookie Policy','footer.privacy':'Privacy Policy',
       'footer.copy':'© 2026 Co Digit d.o.o. · Zagreb, Croatia',
       'cookie.p':'We use cookies to improve your experience. <a href="/cookie-policy">Read our cookie policy</a>',
@@ -1637,7 +1725,8 @@
       'contact.name':'Ime *','contact.companyField':'Tvrtka','contact.email':'Email *',
       'contact.select':'— Što vas zanima? —',
       'contact.opt1':'Web dizajn i razvoj','contact.opt2':'Strategija i savjetovanje','contact.opt3':'Optimizacija za tražilice (SEO)','contact.opt4':'Digitalna transformacija','contact.opt5':'AI rješenja','contact.opt6':'Ostalo',
-      'contact.message':'Opišite nam vaš projekt *','contact.send':'Pošalji poruku →','contact.sending':'Slanje…','contact.success':'✓ Poruka poslana!',
+      'contact.message':'Opišite nam vaš projekt *','contact.send':'Pošalji poruku','contact.sending':'Slanje…','contact.success':'Poruka je poslana. Uskoro ćemo odgovoriti.',
+      'contact.reply':'Očekujte osobni odgovor unutar jednog radnog dana.','contact.full':'Trebate više informacija? Otvorite punu kontakt stranicu','contact.privacy':'Ove podatke koristimo samo za odgovor na vaš upit.','contact.error':'Slanje nije uspjelo. Pokušajte ponovno ili pišite na marino@codigit.io.',
       'footer.services':'Mogućnosti','footer.ai':'AI','footer.about':'O nama','footer.contact':'Kontakt','footer.cookies':'Politika kolačića','footer.privacy':'Politika privatnosti',
       'footer.copy':'© 2026 Co Digit d.o.o. · Zagreb, Hrvatska',
       'cookie.p':'Koristimo kolačiće kako bismo poboljšali vaše iskustvo. <a href="/cookie-policy">Više o kolačićima</a>',
@@ -1766,38 +1855,39 @@
   async function handleSubmit(e) {
     e.preventDefault();
     const form = e.target;
-    const btn  = document.getElementById('submitBtn');
-    const msg  = document.getElementById('formMsg');
+    const btn = form.querySelector('button[type="submit"]');
+    const msg = form.querySelector('.form-msg');
 
     btn.textContent = t('contact.sending');
     btn.disabled = true;
-    msg.style.display = 'none';
+    form.setAttribute('aria-busy', 'true');
+    msg.textContent = '';
+    msg.style.color = '';
 
     try {
-      const res  = await fetch('https://api.web3forms.com/submit', {
+      const formData = new FormData(form);
+      const res = await fetch('/', {
         method: 'POST',
-        body: new FormData(form)
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
       });
-      const data = await res.json();
 
-      if (data.success) {
-        btn.textContent = t('contact.success');
-        btn.style.background = '#28a745';
+      if (res.ok) {
+        if (typeof gtag === 'function') {
+          gtag('event', 'generate_lead', { form_name: 'homepage_contact', page_location: window.location.href });
+        }
+        msg.textContent = t('contact.success');
         form.reset();
-        setTimeout(() => {
-          btn.textContent = t('contact.send');
-          btn.style.background = '';
-          btn.disabled = false;
-        }, 4000);
       } else {
-        throw new Error(data.message || 'Something went wrong.');
+        throw new Error(t('contact.error'));
       }
     } catch (err) {
+      msg.textContent = err.message;
+      msg.style.color = '#ff6670';
+    } finally {
       btn.textContent = t('contact.send');
       btn.disabled = false;
-      msg.textContent = err.message;
-      msg.style.display = 'block';
-      msg.style.color = '#c1121f';
+      form.removeAttribute('aria-busy');
     }
   }
 </script>
