@@ -1,4 +1,5 @@
 /* Shared mobile navigation and small cross-page fixes. */
+:root { color-scheme: dark; }
 .site-mobile-toggle { display: none; }
 .site-mobile-menu { display: none; }
 
@@ -52,10 +53,14 @@
 #cookieDecline { color: #aaa !important; }
 
 /* Keep small accent labels and footer copy above WCAG AA contrast on dark surfaces. */
-html:not([data-theme="light"]) .section-kicker,
-html:not([data-theme="light"]) .step .num,
-html:not([data-theme="light"]) .hero-clock-label,
-html:not([data-theme="light"]) .post-tag {
+.section-kicker,
+.section-label,
+.step .num,
+.hero-clock-label,
+.post-tag,
+.read-more,
+.app-meta,
+.learn-more {
   color: #ff6670 !important;
 }
-html:not([data-theme="light"]) footer p { color: #999 !important; }
+footer p { color: #999 !important; }

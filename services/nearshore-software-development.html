@@ -84,11 +84,6 @@
       --accent: #c1121f; --white: #ffffff;
       --nav-bg: rgba(10,10,10,0.9);
     }
-    [data-theme="light"] {
-      --bg: #ffffff; --bg2: #f4f4f5; --bg3: #e8e8ea;
-      --border: #e0e0e0; --text: #111111; --muted: #666666;
-      --white: #0a0a0a; --nav-bg: rgba(255,255,255,0.95);
-    }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
 
@@ -111,15 +106,6 @@
     .nav-links a:hover { color: var(--white); }
     .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 18px; border-radius: 6px; font-weight: 600 !important; transition: opacity 0.2s !important; font-size: 13px !important; }
     .nav-cta:hover { opacity: 0.85; }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
-    .theme-btn {
-      width: 36px; height: 36px; border-radius: 8px;
-      background: var(--bg3); border: 1px solid var(--border);
-      color: var(--muted); font-size: 16px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s; flex-shrink: 0;
-    }
-    .theme-btn:hover { color: var(--text); border-color: var(--muted); }
 
     /* LAYOUT */
     section { padding: 90px max(24px, calc((100% - 1100px) / 2)); }
@@ -250,9 +236,6 @@
     <li><a href="/apps/">Apps</a></li>
     <li><a href="/contact" class="nav-cta">Get in touch</a></li>
   </ul>
-  <div class="nav-right">
-    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
-  </div>
 </nav>
 
 <main>
@@ -536,22 +519,6 @@
   </div>
 </footer>
 
-<script>
-  // Theme toggle (shared convention with the rest of the site)
-  const themeBtn = document.getElementById('themeBtn');
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
-  themeBtn.addEventListener('click', () => {
-    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-    if (isLight) {
-      document.documentElement.removeAttribute('data-theme');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-      localStorage.setItem('theme', 'light');
-    }
-  });
-</script>
 
 <script src="/site.js" defer></script>
 </body>

@@ -31,13 +31,6 @@
       --accent: #c1121f; --white: #ffffff;
       --nav-bg: rgba(10,10,10,0.9);
     }
-    [data-theme="light"] {
-      --bg: #ffffff; --bg2: #f4f4f5; --bg3: #e8e8ea;
-      --border: #e0e0e0; --text: #111111; --muted: #666666;
-      --white: #0a0a0a; --nav-bg: rgba(255,255,255,0.95);
-    }
-    [data-theme="light"] footer { background: var(--bg2); }
-    [data-theme="light"] .app-hero, [data-theme="light"] .app-section { box-shadow: 0 2px 20px rgba(0,0,0,0.04); }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
 
@@ -72,14 +65,6 @@
     .lang-btn:hover { color: var(--white); }
     .lang-btn.active { color: var(--white); border-color: var(--border); }
     .lang-sep { color: #333; font-size: 11px; }
-    .theme-btn {
-      width: 36px; height: 36px; border-radius: 8px;
-      background: var(--bg3); border: 1px solid var(--border);
-      color: var(--muted); font-size: 16px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s; flex-shrink: 0;
-    }
-    .theme-btn:hover { color: var(--text); border-color: var(--muted); }
 
     /* MAIN WRAPPER */
     .app-wrapper {
@@ -256,7 +241,6 @@
       <span class="lang-sep">|</span>
       <button class="lang-btn" data-lang="hr">HR</button>
     </div>
-    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
   </div>
 </nav>
 
@@ -423,20 +407,6 @@
       el.classList.toggle('active', el.getAttribute('data-lang') === l);
     });
   }
-
-  // Theme
-  const themeBtn = document.getElementById('themeBtn');
-  function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    themeBtn.innerHTML = theme === 'light' ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
-  }
-  const savedTheme = localStorage.getItem('theme') ||
-    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-  applyTheme(savedTheme);
-  themeBtn.addEventListener('click', () => {
-    applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
-  });
 
   const saved = localStorage.getItem('lang');
   applyLang(saved || 'en');
