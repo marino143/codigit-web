@@ -132,6 +132,8 @@
     /* demo = klikneš i probaš · preuzimanje = skineš aplikaciju */
     .app-kind.demo     { color: #7fb0ff; background: rgba(127,176,255,0.12); }
     .app-kind.download { color: #5fd6a0; background: rgba(95,214,160,0.12); }
+    /* uskoro = još nije u trgovini, pa neutralno umjesto zelenog "Download" */
+    .app-kind.soon     { color: #bbb; background: rgba(255,255,255,0.06); }
     .app-tagline { font-size: 14px; color: var(--muted); line-height: 1.7; flex: 1; margin-bottom: 20px; }
     .learn-more {
       font-size: 13px; font-weight: 600; color: var(--accent);
@@ -215,6 +217,13 @@
 
 <section class="apps-section">
   <div class="apps-grid" id="appsGrid">
+    <a href="/apps/doma" class="app-card" data-app-name="Doma" data-app-slug="doma">
+      <div class="app-icon"><img src="/apps/icons/doma.png" alt="" width="64" height="64" style="width:100%;height:100%;border-radius:inherit;object-fit:cover;"></div>
+      <h2>Doma</h2>
+      <div class="app-tags"><span class="app-meta">Social · iOS</span><span class="app-kind soon">Coming soon</span></div>
+      <p class="app-tagline">A private messenger for the two of you. Pair two iPhones with one QR code; messages, photos, voice and live location are end-to-end encrypted and synced through your own iCloud. Coming soon to the App Store.</p>
+      <span class="learn-more">Learn more →</span>
+    </a>
     <a href="/apps/activitybar" class="app-card" data-app-name="ActivityBar" data-app-slug="activitybar">
       <div class="app-icon">📊</div>
       <h2>ActivityBar</h2>
@@ -326,6 +335,7 @@
       learnMore: 'Learn more →',
       kindDemo: 'Live demo',
       kindDownload: 'Download',
+      kindSoon: 'Coming soon',
       noApps: 'No apps yet. Check back soon!',
       'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Croatia',
       'fl-home': 'Home', 'fl-blog': 'Notes', 'fl-apps': 'Apps',
@@ -338,6 +348,7 @@
       learnMore: 'Saznaj više →',
       kindDemo: 'Demo uživo',
       kindDownload: 'Preuzimanje',
+      kindSoon: 'Uskoro',
       noApps: 'Još nema aplikacija. Vratite se uskoro!',
       'footer-copy': '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska',
       'fl-home': 'Početna', 'fl-blog': 'Bilješke', 'fl-apps': 'Aplikacije',
@@ -377,8 +388,8 @@
       const url = '/apps/' + app.slug + '.html';
       const platform = app.platform.includes('macOS') ? 'macOS' : app.platform;
       const meta = app.category + ' · ' + platform;
-      const kind = app.kind === 'demo' ? 'demo' : 'download';
-      const kindLabel = kind === 'demo' ? t[lang].kindDemo : t[lang].kindDownload;
+      const kind = app.kind === 'demo' ? 'demo' : app.kind === 'soon' ? 'soon' : 'download';
+      const kindLabel = kind === 'demo' ? t[lang].kindDemo : kind === 'soon' ? t[lang].kindSoon : t[lang].kindDownload;
       const cardHTML = '<a href="' + url + '" class="app-card" data-app-name="' + app.name + '" data-app-slug="' + app.slug + '">'
         + '<div class="app-icon">' + (app.icon_url ? '<img src="' + app.icon_url + '" alt="" style="width:100%;height:100%;border-radius:inherit;object-fit:cover;">' : app.icon) + '</div>'
         + '<h2>' + displayName + '</h2>'
@@ -455,19 +466,20 @@
       "@type": "ItemList",
       "@id": "https://codigit.io/apps/#catalog",
       "name": "Co Digit apps and prototypes",
-      "numberOfItems": 11,
+      "numberOfItems": 12,
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "item": { "@type": "SoftwareApplication", "name": "ActivityBar", "url": "https://codigit.io/apps/activitybar", "applicationCategory": "UtilitiesApplication", "operatingSystem": "macOS", "softwareVersion": "1.1.0", "datePublished": "2026-08-24", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
-        { "@type": "ListItem", "position": 2, "item": { "@type": "SoftwareApplication", "name": "StayAwake", "url": "https://codigit.io/apps/stayawake", "applicationCategory": "UtilitiesApplication", "operatingSystem": "macOS", "softwareVersion": "0.1.4", "datePublished": "2026-08-17", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
-        { "@type": "ListItem", "position": 3, "item": { "@type": "SoftwareApplication", "name": "Claimo", "url": "https://codigit.io/apps/claimo", "applicationCategory": "WebApplication", "operatingSystem": "Web", "softwareVersion": "1.0", "datePublished": "2026-08-12", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
-        { "@type": "ListItem", "position": 4, "item": { "@type": "SoftwareApplication", "name": "Termino", "url": "https://codigit.io/apps/termino", "applicationCategory": "BusinessApplication", "operatingSystem": "Web, iOS", "softwareVersion": "1.1", "datePublished": "2026-07-14", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
-        { "@type": "ListItem", "position": 5, "item": { "@type": "SoftwareApplication", "name": "Baby Diary", "url": "https://codigit.io/apps/beba-dnevnik", "applicationCategory": "LifestyleApplication", "operatingSystem": "iOS, Android, Web", "softwareVersion": "1.5", "datePublished": "2026-07-09", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
-        { "@type": "ListItem", "position": 6, "item": { "@type": "SoftwareApplication", "name": "Bridge", "url": "https://codigit.io/apps/bridge", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "softwareVersion": "1.0", "datePublished": "2026-06-18", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
-        { "@type": "ListItem", "position": 7, "item": { "@type": "SoftwareApplication", "name": "Hide Icons", "url": "https://codigit.io/apps/hideicons", "applicationCategory": "UtilitiesApplication", "operatingSystem": "macOS", "softwareVersion": "1.0", "datePublished": "2026-05-28", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
-        { "@type": "ListItem", "position": 8, "item": { "@type": "SoftwareApplication", "name": "Klik", "url": "https://codigit.io/apps/klik", "applicationCategory": "UtilitiesApplication", "operatingSystem": "macOS", "softwareVersion": "0.2.0", "datePublished": "2026-05-22", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
-        { "@type": "ListItem", "position": 9, "item": { "@type": "SoftwareApplication", "name": "libro", "url": "https://codigit.io/apps/libro", "applicationCategory": "FinanceApplication", "operatingSystem": "macOS, Linux, Windows", "softwareVersion": "1.0", "datePublished": "2026-05-15", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
-        { "@type": "ListItem", "position": 10, "item": { "@type": "SoftwareApplication", "name": "DockGuard", "url": "https://codigit.io/apps/dockguard", "applicationCategory": "UtilitiesApplication", "operatingSystem": "macOS", "softwareVersion": "0.1.0-alpha", "datePublished": "2026-05-08", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
-        { "@type": "ListItem", "position": 11, "item": { "@type": "SoftwareApplication", "name": "Native Browser", "url": "https://codigit.io/apps/native-browser", "applicationCategory": "BrowserApplication", "operatingSystem": "macOS", "softwareVersion": "0.1.0", "datePublished": "2026-05-05", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } }
+        { "@type": "ListItem", "position": 1, "item": { "@type": "SoftwareApplication", "name": "Doma", "url": "https://codigit.io/apps/doma", "applicationCategory": "CommunicationApplication", "operatingSystem": "iOS", "softwareVersion": "1.0", "datePublished": "2026-09-27", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+        { "@type": "ListItem", "position": 2, "item": { "@type": "SoftwareApplication", "name": "ActivityBar", "url": "https://codigit.io/apps/activitybar", "applicationCategory": "UtilitiesApplication", "operatingSystem": "macOS", "softwareVersion": "1.1.0", "datePublished": "2026-08-24", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+        { "@type": "ListItem", "position": 3, "item": { "@type": "SoftwareApplication", "name": "StayAwake", "url": "https://codigit.io/apps/stayawake", "applicationCategory": "UtilitiesApplication", "operatingSystem": "macOS", "softwareVersion": "0.1.4", "datePublished": "2026-08-17", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+        { "@type": "ListItem", "position": 4, "item": { "@type": "SoftwareApplication", "name": "Claimo", "url": "https://codigit.io/apps/claimo", "applicationCategory": "WebApplication", "operatingSystem": "Web", "softwareVersion": "1.0", "datePublished": "2026-08-12", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+        { "@type": "ListItem", "position": 5, "item": { "@type": "SoftwareApplication", "name": "Termino", "url": "https://codigit.io/apps/termino", "applicationCategory": "BusinessApplication", "operatingSystem": "Web, iOS", "softwareVersion": "1.1", "datePublished": "2026-07-14", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+        { "@type": "ListItem", "position": 6, "item": { "@type": "SoftwareApplication", "name": "Baby Diary", "url": "https://codigit.io/apps/beba-dnevnik", "applicationCategory": "LifestyleApplication", "operatingSystem": "iOS, Android, Web", "softwareVersion": "1.5", "datePublished": "2026-07-09", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+        { "@type": "ListItem", "position": 7, "item": { "@type": "SoftwareApplication", "name": "Bridge", "url": "https://codigit.io/apps/bridge", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "softwareVersion": "1.0", "datePublished": "2026-06-18", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+        { "@type": "ListItem", "position": 8, "item": { "@type": "SoftwareApplication", "name": "Hide Icons", "url": "https://codigit.io/apps/hideicons", "applicationCategory": "UtilitiesApplication", "operatingSystem": "macOS", "softwareVersion": "1.0", "datePublished": "2026-05-28", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+        { "@type": "ListItem", "position": 9, "item": { "@type": "SoftwareApplication", "name": "Klik", "url": "https://codigit.io/apps/klik", "applicationCategory": "UtilitiesApplication", "operatingSystem": "macOS", "softwareVersion": "0.2.0", "datePublished": "2026-05-22", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+        { "@type": "ListItem", "position": 10, "item": { "@type": "SoftwareApplication", "name": "libro", "url": "https://codigit.io/apps/libro", "applicationCategory": "FinanceApplication", "operatingSystem": "macOS, Linux, Windows", "softwareVersion": "1.0", "datePublished": "2026-05-15", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+        { "@type": "ListItem", "position": 11, "item": { "@type": "SoftwareApplication", "name": "DockGuard", "url": "https://codigit.io/apps/dockguard", "applicationCategory": "UtilitiesApplication", "operatingSystem": "macOS", "softwareVersion": "0.1.0-alpha", "datePublished": "2026-05-08", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } },
+        { "@type": "ListItem", "position": 12, "item": { "@type": "SoftwareApplication", "name": "Native Browser", "url": "https://codigit.io/apps/native-browser", "applicationCategory": "BrowserApplication", "operatingSystem": "macOS", "softwareVersion": "0.1.0", "datePublished": "2026-05-05", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } } }
       ]
     }
   ]

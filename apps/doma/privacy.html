@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doma Privacy Policy | Co Digit</title>
+  <meta name="description" content="How Doma handles your data: content is end-to-end encrypted on your iPhone and synced through your own iCloud. Codigit runs no server and collects nothing." />
+  <link rel="canonical" href="https://codigit.io/apps/doma/privacy" />
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/fonts/inter.css" />
+  <link rel="stylesheet" href="/site.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #0a0a0a; --border: #222222; --muted: #888; --accent: #c1121f; --nav-bg: rgba(10,10,10,0.9); --text: #f0f0f0; --white: #ffffff; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; color: #fff; text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .logo-dot { display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
+    @keyframes codigit-blink { 0%, 100% { color: var(--white); } 50% { color: var(--accent); } }
+    @media (prefers-reduced-motion: reduce) { .logo-dot { animation: none; } }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    nav a.back { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    nav a.back:hover { color: #fff; }
+
+    .lang-switcher { display: flex; align-items: center; gap: 4px; }
+    .lang-btn {
+      background: none; border: 1px solid transparent; color: var(--muted);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 4px 8px; border-radius: 4px; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .lang-btn:hover { color: #fff; }
+    .lang-btn.active { color: #fff; border-color: var(--border); }
+    .lang-sep { color: #333; font-size: 11px; }
+
+    .page { max-width: 760px; margin: 0 auto; padding: 72px 24px 120px; }
+    .label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; margin-bottom: 16px; }
+    h1 { font-size: 48px; font-weight: 900; letter-spacing: -1.5px; color: #fff; line-height: 1.1; margin-bottom: 16px; }
+    .meta { font-size: 13px; color: var(--muted); margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+    h2 { font-size: 20px; font-weight: 700; color: #fff; margin: 48px 0 16px; }
+    p { color: #bbb; margin-bottom: 16px; font-size: 15px; }
+    ul { color: #bbb; font-size: 15px; padding-left: 20px; margin-bottom: 16px; }
+    ul li { margin-bottom: 10px; }
+    ul li strong { color: #fff; }
+    a { color: var(--accent); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 24px; }
+    th { text-align: left; padding: 12px 16px; background: #111; color: #fff; font-weight: 600; border-bottom: 1px solid var(--border); }
+    td { padding: 12px 16px; border-bottom: 1px solid #1a1a1a; color: #bbb; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+    .lang-content { display: none; }
+    .lang-content.active { display: block; }
+
+    @media (max-width: 700px) {
+      nav { padding: 16px 20px; }
+      h1 { font-size: 32px; }
+      .page { padding: 48px 20px 80px; }
+      table { font-size: 12px; }
+      th, td { padding: 10px 10px; }
+    }
+    /* keep nav items clear of the fixed mobile menu button from site.css */
+    @media (max-width: 768px) { nav { padding-right: 76px; } }
+    /* no room for logo + language switch + back link on narrow phones; footer links back to Doma */
+    @media (max-width: 480px) { nav a.back { display: none; } .nav-logo { white-space: nowrap; } }
+  </style>
+</head>
+<body>
+
+<button class="site-mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<div class="site-mobile-menu" aria-label="Mobile navigation">
+  <button class="site-mobile-close" type="button" aria-label="Close menu">×</button>
+  <a href="/">Home</a><a href="/services">Services</a><a href="/blog/">Notes</a>
+  <a href="/apps/">Apps</a><a href="/manifesto">Manifesto</a>
+  <a class="site-mobile-cta" href="/contact">Get in touch</a>
+</div>
+
+<nav>
+  <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="hr">HR</button>
+    </div>
+    <a href="/apps/doma" class="back" id="backLink">← Back to Doma</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- ENGLISH (authoritative) -->
+  <div class="lang-content active" data-lang="en">
+    <p class="label">Doma · Legal</p>
+    <h1>Doma Privacy Policy</h1>
+    <p class="meta">Effective date: 27 September 2026 · CO DIGIT d.o.o., Zagreb, Croatia</p>
+
+    <h2>The short version</h2>
+    <ul>
+      <li><strong>We do not collect your data.</strong> Codigit runs no server for Doma and never receives your messages, photos, videos, voice recordings or location.</li>
+      <li><strong>Content is end-to-end encrypted.</strong> It is encrypted on your iPhone before it syncs, with a key that is shared only through the pairing QR code.</li>
+      <li><strong>It lives in your own iCloud.</strong> The encrypted data syncs through Apple CloudKit in the iCloud account of the two people using the app.</li>
+      <li><strong>No accounts, no ads, no tracking.</strong> Doma contains no analytics, advertising or third-party tracking code.</li>
+    </ul>
+
+    <h2>1. Who we are</h2>
+    <p>Doma is made by:</p>
+    <ul>
+      <li><strong>Company:</strong> CO DIGIT d.o.o.</li>
+      <li><strong>Address:</strong> Obrež 20, Zagreb, Croatia</li>
+      <li><strong>OIB:</strong> 34317148047</li>
+      <li><strong>Email:</strong> <a href="mailto:marino@codigit.io">marino@codigit.io</a></li>
+    </ul>
+    <p>Because Doma sends nothing to us, we do not act as a controller or processor of the content you exchange in the app. If you email us for support, we process your email address and message only to answer you (see section 7).</p>
+
+    <h2>2. What Doma handles</h2>
+    <p>Doma exists to carry a private conversation between two people. To do that, the app handles the following on your behalf:</p>
+    <table>
+      <thead>
+        <tr><th>Data</th><th>Why</th><th>Where it is stored</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Message text, including edits</td>
+          <td>Delivering your messages to your partner</td>
+          <td>Encrypted, in iCloud (CloudKit); a copy on both iPhones</td>
+        </tr>
+        <tr>
+          <td>Photos and videos you send</td>
+          <td>Delivering them to your partner</td>
+          <td>Encrypted, in iCloud until delivered (see section 5); a copy on both iPhones</td>
+        </tr>
+        <tr>
+          <td>Voice messages and their transcripts</td>
+          <td>Delivering them, and showing a written transcript under the recording</td>
+          <td>Encrypted, in iCloud until delivered; a copy on both iPhones</td>
+        </tr>
+        <tr>
+          <td>Location coordinates</td>
+          <td>Sending your location once, or sharing it live for up to one hour when you choose to</td>
+          <td>Encrypted, in iCloud; a copy on both iPhones</td>
+        </tr>
+        <tr>
+          <td>Delivered and read markers, message timestamps, record identifiers</td>
+          <td>Syncing the conversation and showing delivered/read ticks</td>
+          <td>In iCloud, not end-to-end encrypted by Doma (see section 3)</td>
+        </tr>
+        <tr>
+          <td>Reminders and notes you create from messages</td>
+          <td>Keeping them in the app for you</td>
+          <td>On your iPhone only</td>
+        </tr>
+        <tr>
+          <td>Your partner's name and phone number, if you add them for the Call button</td>
+          <td>Showing their name and starting a call in the Phone app</td>
+          <td>On your iPhone only</td>
+        </tr>
+        <tr>
+          <td>The conversation key</td>
+          <td>Encrypting and decrypting your content</td>
+          <td>In the iOS Keychain on each of the two iPhones, and inside the pairing QR code</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3. Encryption and iCloud</h2>
+    <p>When one partner creates "Our home", Doma generates a random encryption key on that iPhone. The key is passed to the other partner only inside the pairing QR code. Every message, photo, video, voice recording, transcript and location is encrypted on the sending iPhone with that key (AES-GCM, using Apple's CryptoKit) before it is uploaded, and decrypted only on the receiving iPhone.</p>
+    <p>The encrypted data is stored with Apple CloudKit: in the private iCloud database of the partner who created the home, shared with the other partner through iCloud sharing. Apple acts as the storage provider for your iCloud data under the <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple Privacy Policy</a> and the iCloud terms you agreed to with Apple. Apple stores the encrypted content but does not have the Doma key, and neither do we.</p>
+    <p>Some technical information has to stay readable for syncing to work: when records were created, which message a delivered or read marker belongs to, record identifiers, and the iCloud account identities Apple uses to share the conversation between the two of you. This information is stored in iCloud and protected by Apple's iCloud security, but it is not end-to-end encrypted by Doma.</p>
+    <p>Anyone who has the pairing QR code can join the conversation, so treat the code (and any screenshot of it) like a key and delete the screenshot once you are paired.</p>
+
+    <h2>4. Permissions Doma asks for</h2>
+    <p>Doma asks for each permission only when you first use the feature that needs it. You can change any of them later in the iOS Settings app.</p>
+    <ul>
+      <li><strong>Camera:</strong> to scan the pairing QR code and to take photos or videos inside a conversation.</li>
+      <li><strong>Photos:</strong> to send photos or videos you pick, to read a pairing QR code from a screenshot you pick, and to save photos or videos you capture in Doma to your library. Doma only sees the items you select.</li>
+      <li><strong>Microphone:</strong> to record voice messages and the sound of videos.</li>
+      <li><strong>Speech recognition:</strong> to create a written transcript of voice messages. Doma asks iOS to do this on the device whenever your iPhone supports it. If on-device recognition is not available, iOS may send the audio to Apple to be transcribed, under Apple's own privacy terms and your Siri and dictation settings. Doma does not send the audio anywhere else.</li>
+      <li><strong>Location (While Using):</strong> to send your current location once, when you choose to.</li>
+      <li><strong>Location (Always):</strong> used only while you are actively sharing your live location, which stops automatically after at most one hour or earlier if you stop it. Doma does not track your location at any other time.</li>
+      <li><strong>Calendar:</strong> used only when you turn a message into a calendar event, to add that event to the calendar you pick.</li>
+      <li><strong>Notifications:</strong> to tell you that a new message arrived. The notification only says "New message in Doma" and never shows the content.</li>
+    </ul>
+    <p>Doma does not access your contacts.</p>
+
+    <h2>5. How long data is kept</h2>
+    <ul>
+      <li><strong>Messages and locations</strong> stay until you delete them in the app, disconnect, or delete the data from iCloud.</li>
+      <li><strong>Photo, video and voice files</strong> are removed from iCloud about seven days after they have been delivered to your partner's iPhone. The copies already on the two iPhones stay until you delete them.</li>
+      <li><strong>Live location</strong> updates stop after at most one hour.</li>
+    </ul>
+
+    <h2>6. Deleting your data</h2>
+    <ul>
+      <li><strong>Delete a message:</strong> delete any message you sent from inside the app.</li>
+      <li><strong>Disconnect:</strong> either partner can disconnect at any time. If you created the home, disconnecting stops sharing it and your partner loses access. If you joined, disconnecting removes you from the shared conversation. The conversation key is removed from your iPhone.</li>
+      <li><strong>Delete the app:</strong> removes the messages and files Doma keeps on that iPhone. iOS can keep Keychain items after an app is deleted, so disconnect first if you also want the conversation key removed.</li>
+      <li><strong>Remove the iCloud data:</strong> open Settings, tap your name, then iCloud, then Manage Account Storage (called Manage Storage on some iOS versions), choose Doma and delete its data.</li>
+    </ul>
+
+    <h2>7. What Codigit receives</h2>
+    <p>Nothing from the app itself. We do not operate servers for Doma and the app contains no analytics, advertising or third-party SDKs. We do not sell, rent or share any data, because we do not have any.</p>
+    <ul>
+      <li><strong>Crash reports:</strong> if Doma crashes, iOS may hand the app a crash diagnostic on the next launch. It is kept on your iPhone and only leaves it if you choose to share it with us.</li>
+      <li><strong>Apple's app statistics:</strong> if you turned on "Share with App Developers" in iOS settings, Apple may give us anonymised, aggregated crash and usage statistics. That is controlled by Apple and by your settings, not by Doma.</li>
+      <li><strong>Support email:</strong> if you write to us, we use your email address and message only to reply, and delete the conversation when it is no longer needed, at most two years later.</li>
+    </ul>
+
+    <h2>8. Children</h2>
+    <p>Doma is not directed at children under 13 and we do not knowingly handle their data.</p>
+
+    <h2>9. Your rights</h2>
+    <p>Under the GDPR you have the right to access, correct, delete, restrict or object to the processing of your personal data, and to data portability. Your Doma content is in your own hands and your own iCloud, so you can exercise most of these rights directly as described in section 6. For anything else, or for the support emails we hold, contact <a href="mailto:marino@codigit.io">marino@codigit.io</a>. We will respond within 30 days. You can also lodge a complaint with the Croatian Personal Data Protection Agency (AZOP, <a href="https://azop.hr" target="_blank" rel="noopener">azop.hr</a>).</p>
+
+    <h2>10. Changes to this policy</h2>
+    <p>If Doma starts handling data differently, we will update this page and the effective date above before the change ships.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about privacy in Doma: <a href="mailto:marino@codigit.io">marino@codigit.io</a>. Help with the app: <a href="/apps/doma/support">Doma support</a>.</p>
+  </div>
+
+  <!-- CROATIAN SUMMARY -->
+  <div class="lang-content" data-lang="hr">
+    <p class="label">Doma · Pravni dokumenti</p>
+    <h1>Doma: politika privatnosti</h1>
+    <p class="meta">Vrijedi od: 27. rujna 2026. · CO DIGIT d.o.o., Zagreb, Hrvatska</p>
+
+    <p>Ovo je kratki sažetak na hrvatskom. Mjerodavna je <a href="#" data-switch="en">puna verzija na engleskom</a>.</p>
+
+    <h2>Ukratko</h2>
+    <ul>
+      <li><strong>Ne prikupljamo vaše podatke.</strong> Codigit nema server za Domu i nikad ne prima vaše poruke, fotke, videe, glasovne snimke ni lokaciju.</li>
+      <li><strong>Sadržaj je šifriran s kraja na kraj.</strong> Šifrira se na iPhoneu prije sinkronizacije, ključem koji se dijeli samo kroz QR kod za povezivanje.</li>
+      <li><strong>Podaci su u vašem iCloudu.</strong> Šifrirani podaci sinkroniziraju se kroz Apple CloudKit u iCloudu vas dvoje. Apple je pružatelj pohrane i nema ključ.</li>
+      <li><strong>Tehnički podaci</strong> potrebni za sinkronizaciju (vrijeme zapisa, oznake isporučeno i pročitano, identifikatori) nisu šifrirani od strane Dome, ali su zaštićeni iCloud sigurnošću.</li>
+      <li><strong>Bez računa, reklama i praćenja.</strong> Nema analitike ni koda trećih strana.</li>
+    </ul>
+
+    <h2>Dopuštenja</h2>
+    <ul>
+      <li><strong>Kamera, Fotografije, Mikrofon:</strong> skeniranje QR koda, slanje i snimanje fotki, videa i glasovnih poruka.</li>
+      <li><strong>Prepoznavanje govora:</strong> prijepis glasovnih poruka na uređaju kad ga iPhone podržava; inače iOS može poslati zvuk Appleu na prijepis prema Appleovim uvjetima.</li>
+      <li><strong>Lokacija:</strong> jednokratno slanje, a "Uvijek" samo dok dijelite lokaciju uživo, najdulje sat vremena.</li>
+      <li><strong>Kalendar:</strong> samo kad poruku pretvorite u događaj.</li>
+      <li><strong>Obavijesti:</strong> pišu samo "Nova poruka u Domi", nikad sadržaj.</li>
+      <li>Doma ne pristupa kontaktima.</li>
+    </ul>
+
+    <h2>Brisanje</h2>
+    <p>Poruke brišete u aplikaciji, vezu može prekinuti bilo tko od vas, a brisanje aplikacije uklanja podatke s tog iPhonea. Podatke iz iClouda uklonite u Postavke, vaše ime, iCloud, Upravljanje prostorom, Doma. Fotke, videi i glasovne datoteke brišu se iz iClouda oko sedam dana nakon isporuke.</p>
+
+    <h2>Kontakt</h2>
+    <p><a href="mailto:marino@codigit.io">marino@codigit.io</a> · <a href="/apps/doma/support">Doma podrška</a> · Pritužbu možete podnijeti AZOP-u (<a href="https://azop.hr" target="_blank" rel="noopener">azop.hr</a>).</p>
+  </div>
+</div>
+
+<footer>
+  <p id="footerCopy">© 2026 Co Digit d.o.o. · Zagreb, Croatia · <a href="/apps/doma">Doma</a> · <a href="/apps/doma/support">Support</a> · <a href="/">codigit.io</a></p>
+</footer>
+
+<script>
+  const pp = {
+    en: { backLink: '← Back to Doma', footerCopy: '© 2026 Co Digit d.o.o. · Zagreb, Croatia · <a href="/apps/doma">Doma</a> · <a href="/apps/doma/support">Support</a> · <a href="/">codigit.io</a>' },
+    hr: { backLink: '← Natrag na Domu', footerCopy: '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska · <a href="/apps/doma">Doma</a> · <a href="/apps/doma/support">Podrška</a> · <a href="/">codigit.io</a>' }
+  };
+
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    localStorage.setItem('lang', lang);
+    const d = pp[lang];
+    Object.keys(d).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = d[id];
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    document.querySelectorAll('.lang-content').forEach(el => {
+      el.classList.toggle('active', el.getAttribute('data-lang') === lang);
+    });
+  }
+  const savedLang = localStorage.getItem('lang');
+  applyLang(savedLang === 'hr' ? 'hr' : 'en');
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+  });
+  document.querySelectorAll('[data-switch]').forEach(a => {
+    a.addEventListener('click', e => { e.preventDefault(); applyLang(a.dataset.switch); window.scrollTo(0, 0); });
+  });
+</script>
+<script src="/site.js" defer></script>
+</body>
+</html>

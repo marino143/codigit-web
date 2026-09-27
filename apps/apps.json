@@ -1,5 +1,26 @@
 [
   {
+    "slug": "doma",
+    "name": "Doma",
+    "tagline_en": "A private messenger for the two of you. Pair two iPhones with one QR code; messages, photos, voice and live location are end-to-end encrypted and synced through your own iCloud. Coming soon to the App Store.",
+    "tagline_hr": "Privatni messenger za vas dvoje. Dva iPhonea povežete jednim QR kodom; poruke, fotke, glasovne poruke i lokacija uživo šifrirani su s kraja na kraj i sinkronizirani kroz vaš vlastiti iCloud. Uskoro na App Storeu.",
+    "description_en": "Doma is a messenger for one conversation: the one with the person you share a home with. One partner creates \"Our home\" and shows a QR invite; the other scans it with the camera or picks it from a screenshot in Photos. From then on it is messages, photos, videos, voice messages with an on-device transcript, a one-time location or a one-hour live location, edit and delete, delivered and read ticks, and any message can become a reminder, a note or a calendar event. Content is encrypted on the iPhone (AES-GCM via CryptoKit) with a key that travels only inside the QR code, and it syncs through Apple CloudKit in the couple's own iCloud. Codigit runs no server and cannot read anything. No accounts, no ads, no analytics; notifications only say \"New message in Doma\". Either partner can disconnect at any time. Free, in English.",
+    "description_hr": "Doma je messenger za jedan razgovor: onaj s osobom s kojom dijelite dom. Jedan partner napravi \"Naš dom\" i pokaže QR pozivnicu, drugi je skenira kamerom ili odabere screenshot iz Fotografija. Od tada su tu poruke, fotke, videi, glasovne poruke s prijepisom na uređaju, jednokratna lokacija ili lokacija uživo na sat vremena, uređivanje i brisanje, kvačice za isporučeno i pročitano, a svaka poruka može postati podsjetnik, bilješka ili događaj u kalendaru. Sadržaj se šifrira na iPhoneu (AES-GCM kroz CryptoKit) ključem koji putuje samo unutar QR koda i sinkronizira se kroz Apple CloudKit u vlastitom iCloudu para. Codigit nema server i ne može ništa pročitati. Bez računa, reklama i analitike; obavijesti pišu samo \"Nova poruka u Domi\". Bilo koji partner može prekinuti vezu u svakom trenutku. Besplatno, na engleskom.",
+    "category": "Social",
+    "platform": "iOS",
+    "kind": "soon",
+    "version": "1.0",
+    "release_date": "2026-09-27",
+    "icon": "🏠",
+    "icon_url": "/apps/icons/doma.png",
+    "download_url": null,
+    "support_url": "https://codigit.io/apps/doma/support",
+    "privacy_url": "https://codigit.io/apps/doma/privacy",
+    "buymeacoffee_url": "https://buymeacoffee.com/marino143",
+    "linkedin_posts": [],
+    "featured": true
+  },
+  {
     "slug": "termino",
     "name": "Termino",
     "tagline_en": "Online booking for Croatian hair, beauty and nail salons — clients book in a couple of clicks 24/7, owners run the calendar from the web or the native iPhone app. Live on the App Store.",

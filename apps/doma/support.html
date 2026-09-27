@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doma Support | Co Digit</title>
+  <meta name="description" content="Help with Doma, the private messenger for two: pairing with a QR code, disconnecting, live location, notifications and read receipts." />
+  <link rel="canonical" href="https://codigit.io/apps/doma/support" />
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/fonts/inter.css" />
+  <link rel="stylesheet" href="/site.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #0a0a0a; --bg2: #111111; --border: #222222; --muted: #888; --accent: #c1121f; --nav-bg: rgba(10,10,10,0.9); --text: #f0f0f0; --white: #ffffff; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; color: #fff; text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .logo-dot { display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
+    @keyframes codigit-blink { 0%, 100% { color: var(--white); } 50% { color: var(--accent); } }
+    @media (prefers-reduced-motion: reduce) { .logo-dot { animation: none; } }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    nav a.back { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    nav a.back:hover { color: #fff; }
+
+    .page { max-width: 760px; margin: 0 auto; padding: 72px 24px 120px; }
+    .label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; margin-bottom: 16px; }
+    h1 { font-size: 48px; font-weight: 900; letter-spacing: -1.5px; color: #fff; line-height: 1.1; margin-bottom: 16px; }
+    .meta { font-size: 15px; color: var(--muted); margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+    h2 { font-size: 20px; font-weight: 700; color: #fff; margin: 48px 0 16px; }
+    p { color: #bbb; margin-bottom: 16px; font-size: 15px; }
+    ol, ul { color: #bbb; font-size: 15px; padding-left: 20px; margin-bottom: 16px; }
+    li { margin-bottom: 8px; }
+    a { color: var(--accent); }
+
+    /* FAQ: native details/summary, so it opens with Enter/Space and needs no script */
+    .faq details { border-bottom: 1px solid var(--border); }
+    .faq details:first-child { border-top: 1px solid var(--border); }
+    .faq summary {
+      cursor: pointer; list-style: none;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+      padding: 18px 0; min-height: 44px;
+      font-size: 16px; font-weight: 600; color: #fff;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: '+'; color: var(--muted); font-size: 20px; font-weight: 400; flex-shrink: 0; }
+    .faq details[open] summary::after { content: '−'; }
+    .faq summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+    .faq .answer { padding: 0 0 20px; }
+    .faq .answer p:last-child, .faq .answer ol:last-child { margin-bottom: 0; }
+
+    .contact-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-top: 8px; }
+    .contact-card p { margin-bottom: 20px; }
+    .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 12px 22px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; font-family: inherit;
+      text-decoration: none; border: 1px solid transparent; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-bmc { background: #FFDD00; color: #000; border-color: #FFDD00; }
+    .btn-bmc:hover { background: #FFE633; transform: translateY(-1px); opacity: 1; }
+
+    footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+    @media (max-width: 700px) {
+      nav { padding: 16px 20px; }
+      h1 { font-size: 32px; }
+      .page { padding: 48px 20px 80px; }
+    }
+    /* keep nav items clear of the fixed mobile menu button from site.css */
+    @media (max-width: 768px) { nav { padding-right: 76px; } }
+  </style>
+</head>
+<body>
+
+<button class="site-mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<div class="site-mobile-menu" aria-label="Mobile navigation">
+  <button class="site-mobile-close" type="button" aria-label="Close menu">×</button>
+  <a href="/">Home</a><a href="/services">Services</a><a href="/blog/">Notes</a>
+  <a href="/apps/">Apps</a><a href="/manifesto">Manifesto</a>
+  <a class="site-mobile-cta" href="/contact">Get in touch</a>
+</div>
+
+<nav>
+  <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
+  <div class="nav-right">
+    <a href="/apps/doma" class="back">← Back to Doma</a>
+  </div>
+</nav>
+
+<main class="page">
+  <p class="label">Doma · Support</p>
+  <h1>Doma support</h1>
+  <p class="meta">Answers to the questions people ask most about pairing, location and notifications. If yours is not here, email <a href="mailto:marino@codigit.io">marino@codigit.io</a> and a real person will reply.</p>
+
+  <h2>Frequently asked questions</h2>
+  <div class="faq">
+    <details>
+      <summary>How do we pair our two iPhones?</summary>
+      <div class="answer">
+        <ol>
+          <li>Both of you install Doma and make sure you are signed in to iCloud on your iPhone.</li>
+          <li>One of you opens Doma and taps <strong>Create our home</strong>. Doma shows an invitation QR code.</li>
+          <li>The other opens Doma, taps <strong>Scan invitation</strong>, then <strong>Open camera</strong>, and points it at that code.</li>
+        </ol>
+        <p>That is the whole setup. There is no account, phone number or email to enter. An invitation is valid for 10 minutes; if it expires, the partner who created the home can show a fresh one from the shield icon at the top of the chat. The QR code carries the key that encrypts your conversation, so only show it to your partner.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>We are not in the same place. Can I pair from a screenshot?</summary>
+      <div class="answer">
+        <p>Yes. The partner who created the home takes a screenshot of the QR code and sends it privately. The other partner taps <strong>Scan invitation</strong>, then <strong>Choose QR code from library</strong>, picks the screenshot and taps <strong>Connect this iPhone</strong>. Do it within 10 minutes, while the invitation is still valid.</p>
+        <p>Because the code contains the conversation key, send it only through a channel you trust, and delete the screenshot from both phones (and from Recently Deleted) once you are paired.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>How do I disconnect?</summary>
+      <div class="answer">
+        <p>Either partner can disconnect at any time: tap the shield icon at the top of the chat, then <strong>Disconnect this iPhone</strong>. If you created the home, disconnecting stops sharing it and your partner loses access. If you joined, disconnecting removes you from the conversation. To connect again, create a new home and pair with a new QR code.</p>
+        <p>The encrypted conversation stays in the iCloud of the partner who created the home until it is deleted there. To remove it: Settings, tap your name, iCloud, Manage Account Storage, Doma. More in the <a href="/apps/doma/privacy">privacy policy</a>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Live location stops when I leave the app. Why?</summary>
+      <div class="answer">
+        <p>To keep updating your position while Doma is in the background, iOS needs location access set to <strong>Always</strong>. Open Settings, Doma, Location and choose Always. If it is set to While Using the App, you can still send your location once, but live sharing pauses when you leave Doma.</p>
+        <p>Doma only uses background location while you are actively sharing, and live sharing ends automatically after one hour at the latest.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Why don't notifications show the message?</summary>
+      <div class="answer">
+        <p>On purpose. Notifications only say "New message in Doma", so nothing private appears on your lock screen or on a paired watch. Open Doma to read the message.</p>
+        <p>If you get no notifications at all, check Settings, Notifications, Doma and make sure Allow Notifications is on, and that a Focus mode is not silencing Doma.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Delivered and read ticks are missing. What is wrong?</summary>
+      <div class="answer">
+        <p>Delivered and read ticks only work when both of you are on the latest version of Doma. Update the app on both iPhones from the App Store, then open Doma on both. Ticks for new messages should appear right away.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Can Codigit read our messages?</summary>
+      <div class="answer">
+        <p>No. Content is encrypted on your iPhone with a key that only exists on your two phones and in the pairing QR code, and it syncs through your own iCloud. We run no server for Doma and never receive your data. The <a href="/apps/doma/privacy">privacy policy</a> has the details.</p>
+      </div>
+    </details>
+  </div>
+
+  <h2>Contact</h2>
+  <div class="contact-card">
+    <p>Found a bug or have an idea? Email me with your iPhone model and iOS version, and a screenshot if it helps. Please never send your pairing QR code.</p>
+    <div class="cta-row">
+      <a href="mailto:marino@codigit.io?subject=Doma%20support" class="btn btn-primary">Email marino@codigit.io</a>
+      <a href="https://buymeacoffee.com/marino143" target="_blank" rel="noopener" class="btn btn-bmc">☕ Buy me a coffee</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 Co Digit d.o.o. · Zagreb, Croatia · <a href="/apps/doma">Doma</a> · <a href="/apps/doma/privacy">Privacy policy</a> · <a href="/">codigit.io</a></p>
+</footer>
+
+<script src="/site.js" defer></script>
+</body>
+</html>
