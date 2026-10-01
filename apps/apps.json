@@ -20,6 +20,26 @@
     "featured": true
   },
   {
+    "slug": "tidebook",
+    "name": "TideBook",
+    "tagline_en": "A cycle tracker built for the partner: where she is in her cycle, what actually helps that day and the next two weeks at a glance. One tap a day, nothing leaves the phone. On the App Store.",
+    "tagline_hr": "Praćenje ciklusa napravljeno za partnera: gdje je ona u ciklusu, što joj taj dan stvarno pomaže i idućih 14 dana na jednom mjestu. Jedan dodir dnevno, ništa ne napušta mobitel. Na App Storeu.",
+    "description_en": "TideBook is an iPhone app for the partner who wants to get it right. He enters the date her last period started, and every day the app shows the current phase in plain language, a short playbook of concrete things that tend to help, and a 14-day outlook. One answer a day moves the forecast from the textbook curve toward the couple's own pattern. No account, no backend and no analytics in the app; everything is stored on the device. Free, with TideBook Pro ($2.99 a month or $19.99 a year) for the full forecast, learning predictions and the complete daily playbook. Built in React Native with Expo. tide-book.com lets her send it to him in one tap.",
+    "description_hr": "TideBook je iPhone aplikacija za partnera koji želi to napraviti kako treba. Upiše datum kad joj je počela zadnja menstruacija, a aplikacija mu svaki dan pokaže trenutnu fazu jednostavnim jezikom, kratki plan konkretnih stvari koje obično pomažu i pregled idućih 14 dana. Jedan odgovor dnevno pomiče prognozu s krivulje iz udžbenika prema stvarnom obrascu para. Bez računa, bez backenda i bez analitike u aplikaciji; sve je spremljeno na uređaju. Besplatno, uz TideBook Pro (2,99 $ mjesečno ili 19,99 $ godišnje) za cijelu prognozu, prognozu koja uči i kompletan dnevni plan. Napravljeno u React Nativeu s Expoom. Na tide-book.com ona mu je može poslati jednim dodirom.",
+    "category": "Health",
+    "platform": "iOS",
+    "kind": "download",
+    "version": "1.1.3",
+    "release_date": "2026-09-15",
+    "icon": "🌊",
+    "icon_url": "/apps/icons/tidebook.png",
+    "download_url": "https://apps.apple.com/us/app/tidebook/id6797864682",
+    "demo_url": "https://tide-book.com/",
+    "privacy_url": "https://tide-book.com/privacy/",
+    "linkedin_posts": [],
+    "featured": true
+  },
+  {
     "slug": "termino",
     "name": "Termino",
     "tagline_en": "Online booking for Croatian hair, beauty and nail salons — clients book in a couple of clicks 24/7, owners run the calendar from the web or the native iPhone app. Live on the App Store.",
