@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page not found | Co Digit</title>
+  <meta name="description" content="This page does not exist on codigit.io. Go back home, browse the apps we build, or get in touch with Co Digit." />
+  <meta name="robots" content="noindex" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Page not found | Co Digit" />
+  <meta property="og:description" content="This page does not exist on codigit.io." />
+  <meta property="og:image" content="https://codigit.io/og-image.png" />
+  <meta property="og:site_name" content="Co Digit" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/fonts/inter.css" />
+  <link rel="stylesheet" href="/site.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
+      --border: #222222; --text: #f0f0f0; --muted: #888;
+      --accent: #c1121f; --white: #ffffff;
+      --nav-bg: rgba(10,10,10,0.9);
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: var(--white); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .logo-dot { display: inline-block; animation: codigit-blink 2s ease-in-out infinite; }
+    @keyframes codigit-blink { 0%, 100% { color: var(--white); } 50% { color: var(--accent); } }
+    @media (prefers-reduced-motion: reduce) { .logo-dot { animation: none; } }
+    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; letter-spacing: 0.3px; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 18px; border-radius: 6px; font-weight: 600 !important; font-size: 13px !important; }
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    .lang-switcher { display: flex; align-items: center; gap: 4px; }
+    .lang-btn {
+      background: none; border: 1px solid transparent; color: var(--muted);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 4px 8px; border-radius: 4px; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .lang-btn:hover { color: var(--white); }
+    .lang-btn.active { color: var(--white); border-color: var(--border); }
+    .lang-sep { color: #333; font-size: 11px; }
+
+    /* The giant code is the one focal point; everything else defers to it. */
+    .nf {
+      flex: 1;
+      width: 100%; max-width: 1200px; margin: 0 auto;
+      padding: 96px 60px 112px;
+      display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 64px; align-items: end;
+    }
+    .nf-code {
+      font-size: clamp(120px, 20vw, 280px); font-weight: 900; line-height: 0.82;
+      letter-spacing: -0.06em; color: var(--white);
+    }
+    .nf-code span { color: var(--accent); }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+    h1 { font-size: clamp(30px, 3.4vw, 48px); font-weight: 900; letter-spacing: -1.5px; color: var(--white); line-height: 1.08; margin-bottom: 18px; }
+    .nf-sub { color: var(--muted); font-size: 16px; line-height: 1.7; max-width: 440px; margin-bottom: 32px; }
+    .nf-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 14px 28px; border-radius: 8px; min-height: 48px;
+      font-size: 15px; font-weight: 600; font-family: inherit; text-decoration: none;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-outline { background: transparent; color: var(--white); border: 1px solid var(--border); }
+    .nf-list { list-style: none; border-top: 1px solid var(--border); }
+    .nf-list li { border-bottom: 1px solid var(--border); }
+    .nf-list a {
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+      padding: 14px 0; min-height: 48px; color: var(--text); text-decoration: none; font-size: 15px; font-weight: 600;
+    }
+    .nf-list a small { color: var(--muted); font-size: 13px; font-weight: 400; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo { font-size: 14px; font-weight: 800; color: var(--white); }
+    .footer-logo span { color: var(--accent); }
+    footer p { font-size: 12px; color: #8a8a8a; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: #8a8a8a; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .nf { grid-template-columns: 1fr; gap: 32px; padding: 56px 24px 72px; align-items: start; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="site-mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<div class="site-mobile-menu" aria-label="Mobile navigation">
+  <button class="site-mobile-close" type="button" aria-label="Close menu">×</button>
+  <a href="/">Home</a><a href="/services">Services</a><a href="/blog/">Notes</a>
+  <a href="/apps/">Apps</a><a href="/manifesto">Manifesto</a>
+  <a class="site-mobile-cta" href="/contact">Get in touch</a>
+</div>
+
+<nav>
+  <a href="/" class="nav-logo">CO<span class="logo-dot">.</span>DIGIT</a>
+  <ul class="nav-links">
+    <li><a href="/#services">Capabilities</a></li>
+    <li><a href="/#ai">AI-Powered</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#certs">Certifications</a></li>
+    <li><a href="/services">Services</a></li>
+    <li><a href="/blog/">Notes</a></li>
+    <li><a href="/apps/">Apps</a></li>
+    <li><a href="/contact" class="nav-cta">Get in touch</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en" type="button">EN</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" data-lang="hr" type="button">HR</button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+  <section class="nf" aria-labelledby="nf-title">
+    <div class="nf-code" aria-hidden="true">4<span>0</span>4</div>
+    <div>
+      <div class="section-label" data-t="label">Error 404</div>
+      <h1 id="nf-title" data-t="title">This page is not here.</h1>
+      <p class="nf-sub" data-t="sub">The link may be old, or the address has a typo. Nothing is broken on your side. Pick up from one of these instead.</p>
+      <div class="nf-actions">
+        <a href="/" class="btn btn-primary" data-t="home">Back to home</a>
+        <a href="/contact" class="btn btn-outline" data-t="contact">Get in touch</a>
+      </div>
+      <ul class="nf-list">
+        <li><a href="/apps/"><span data-t="apps">Apps</span> <small data-t="appsSub">Mac, iOS and web apps we ship</small></a></li>
+        <li><a href="/services"><span data-t="services">Services</span> <small data-t="servicesSub">Packages and prices</small></a></li>
+        <li><a href="/blog/"><span data-t="notes">Notes</span> <small data-t="notesSub">What we learned building them</small></a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-logo">CO<span class="logo-dot">.</span>DIGIT</div>
+  <p data-t="copy">&copy; 2026 Co Digit d.o.o. &middot; Zagreb, Croatia</p>
+  <div class="footer-links">
+    <a href="/" data-t="flHome">Home</a>
+    <a href="/apps/" data-t="apps">Apps</a>
+    <a href="/cookie-policy" data-t="flCookies">Cookie Policy</a>
+    <a href="/privacy-policy" data-t="flPrivacy">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var t = {
+      hr: {
+        label: 'Greška 404', title: 'Ove stranice nema.',
+        sub: 'Poveznica je možda stara ili adresa ima tipfeler. Kod tebe ništa nije pokvareno. Nastavi od jedne od ovih stranica.',
+        home: 'Natrag na početnu', contact: 'Javi nam se',
+        apps: 'Aplikacije', appsSub: 'Mac, iOS i web aplikacije koje izdajemo',
+        services: 'Usluge', servicesSub: 'Paketi i cijene',
+        notes: 'Bilješke', notesSub: 'Što smo naučili radeći ih',
+        copy: '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska',
+        flHome: 'Početna', flCookies: 'Politika kolačića', flPrivacy: 'Politika privatnosti'
+      }
+    };
+    var en = {};
+    document.querySelectorAll('[data-t]').forEach(function (el) { en[el.dataset.t] = el.textContent; });
+    t.en = en;
+    function apply(l) {
+      var d = t[l] || en;
+      document.documentElement.lang = l;
+      document.querySelectorAll('[data-t]').forEach(function (el) { if (d[el.dataset.t]) el.textContent = d[el.dataset.t]; });
+      document.querySelectorAll('.lang-btn').forEach(function (b) { b.classList.toggle('active', b.dataset.lang === l); });
+      try { localStorage.setItem('lang', l); } catch (_) {}
+    }
+    document.querySelectorAll('.lang-btn').forEach(function (b) { b.addEventListener('click', function () { apply(b.dataset.lang); }); });
+    var saved = null;
+    try { saved = localStorage.getItem('lang'); } catch (_) {}
+    if (saved === 'hr') apply('hr');
+  })();
+</script>
+<script src="/site.js" defer></script>
+</body>
+</html>
