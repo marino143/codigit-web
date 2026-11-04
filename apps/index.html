@@ -449,7 +449,8 @@
         if (a.featured !== b.featured) return a.featured ? -1 : 1;
         return new Date(b.release_date) - new Date(a.release_date);
       });
-      applyLang(saved || 'en');
+      // The English cards are already in the HTML; only rebuild for Croatian (keeps LCP on first paint).
+      if (saved === 'hr') applyLang('hr');
     })
     .catch(() => {
       // Keep the crawlable English cards visible if apps.json is unavailable.
