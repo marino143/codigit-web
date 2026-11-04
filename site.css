@@ -18,6 +18,9 @@
 }
 .skip-link:focus { transform: none; outline: 2px solid #fff; outline-offset: 2px; }
 footer p a { text-decoration: underline; text-underline-offset: 2px; }
+/* Smooth scrolling only for in-page link jumps (the clicked link holds focus). Scripted scrolls
+   and find-in-page stay instant, so nothing is measured or shown mid-scroll. */
+html:not(:focus-within) { scroll-behavior: auto !important; }
 
 /* Tap targets: standalone small links get at least 24px of height (WCAG 2.5.8). */
 .footer-links a,
@@ -205,22 +208,58 @@ footer p { color: #999 !important; }
   background-size: 100% 1px;
   opacity: 1 !important;
 }
+/* Prose links: the underline is a drawn 1px line that thickens to 2px on hover.
+   padding-block widens the hit area to 24px without changing the line height. */
 main :is(p, li, td, span, .trust-item-sub) a:not([class]) {
-  text-decoration-line: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  transition: text-decoration-thickness .2s ease, text-underline-offset .2s ease, color .2s ease;
+  text-decoration: none !important;
+  padding-block: 4px;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  transition: background-size .2s ease, color .2s ease;
 }
 main :is(p, li, td, span, .trust-item-sub) a:not([class]):is(:hover, :focus-visible) {
-  text-decoration-thickness: 2px;
-  text-underline-offset: 5px;
+  background-size: 100% 2px;
 }
 
-.lang-btn:hover { background: rgba(255, 255, 255, .06) !important; }
+/* Blog titles draw the same underline as the nav, line by line on multi-line titles. */
+.post-card h2 a {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 2px;
+  transition: background-size .3s ease, color .2s ease !important;
+}
+.post-card h2 a:is(:hover, :focus-visible),
+.post-card:hover h2 a { background-size: 100% 2px; }
+
+/* Small chrome buttons lift like the CTAs, just less. */
+.lang-btn:not(:disabled),
+.nav-logo { transition: transform .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease !important; }
+.nav-logo { display: inline-block; }
+.lang-btn:not(:disabled):is(:hover, :focus-visible) { background: rgba(255, 255, 255, .06) !important; color: var(--white, #fff) !important; transform: translateY(-1px); }
+.nav-logo:is(:hover, :focus-visible) { transform: translateY(-1px); }
 .footer-links a:hover { color: var(--text, #f0f0f0) !important; }
+
+/* FAQ rows: the plus turns a quarter on hover, so the row reads as something that opens. */
+.faq-q { transition: color .2s ease; }
+.faq-q::after { transition: transform .25s ease, color .2s ease !important; }
+button.faq-q:is(:hover, :focus-visible) { color: var(--accent-text) !important; }
+button.faq-q:is(:hover, :focus-visible)::after { color: var(--white, #fff) !important; transform: rotate(90deg); }
+.faq-item.open button.faq-q::after { transform: rotate(45deg); }
+.faq-item.open button.faq-q:is(:hover, :focus-visible)::after { transform: rotate(135deg); }
+
+/* App screenshots that open the lightbox zoom a touch inside their frame. */
+.shot img[role="button"] { transition: transform .3s ease, filter .3s ease; }
+.shot img[role="button"]:is(:hover, :focus-visible) { transform: scale(1.025); filter: brightness(1.06); }
 
 @media (prefers-reduced-motion: reduce) {
   :is(a, button):is(.btn-primary, .nav-cta, .site-mobile-cta, .cta-fill, #cookieAccept, .btn-outline, .back-to-apps, .back-to-blog, .share-btn, #cookieDecline):is(:hover, :focus-visible) { transform: none; }
   :is(.nav-links a, .footer-links a, .read-more, .learn-more, .capability-link, nav a.back, .text-link),
-  main :is(p, li, td, span, .trust-item-sub) a:not([class]) { transition: none !important; }
+  main :is(p, li, td, span, .trust-item-sub) a:not([class]),
+  .post-card h2 a, .faq-q::after { transition: none !important; }
+  .lang-btn:is(:hover, :focus-visible), .nav-logo:is(:hover, :focus-visible),
+  .shot img[role="button"]:is(:hover, :focus-visible) { transform: none !important; }
 }
