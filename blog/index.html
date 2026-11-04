@@ -362,26 +362,32 @@
     const grid = document.getElementById('postsGrid');
     const noPostsEl = document.getElementById('noPosts');
     if (posts.length === 0) {
-      grid.innerHTML = '';
+      grid.replaceChildren();
       noPostsEl.style.display = 'block';
       noPostsEl.textContent = t[lang].noPosts;
       return;
     }
     noPostsEl.style.display = 'none';
-    grid.innerHTML = posts.map(post => {
-      const title = lang === 'hr' ? post.title_hr : post.title_en;
-      const excerpt = lang === 'hr' ? post.excerpt_hr : post.excerpt_en;
-      const date = formatDate(post.date, lang);
-      const tags = post.tags.map(tag => '<span class="post-tag">' + tag + '</span>').join('');
-      const url = '/blog/' + post.slug + '.html';
-      return '<article class="post-card">'
-        + '<div class="post-tags">' + tags + '</div>'
-        + '<h2><a href="' + url + '">' + title + '</a></h2>'
-        + '<div class="post-date">' + date + '</div>'
-        + '<p class="post-excerpt">' + excerpt + '</p>'
-        + '<a href="' + url + '" class="read-more">' + t[lang].readMore + '</a>'
-        + '</article>';
-    }).join('');
+    // Built with DOM nodes (not string concatenation) so no template fragment can leak into an href.
+    const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+    grid.replaceChildren(...posts.map(post => {
+      const url = '/blog/' + post.slug;
+      const card = el('article', 'post-card');
+      const tags = el('div', 'post-tags');
+      post.tags.forEach(tag => tags.append(el('span', 'post-tag', tag)));
+      const h2 = el('h2');
+      const link = el('a', null, lang === 'hr' ? post.title_hr : post.title_en);
+      link.href = url;
+      h2.append(link);
+      const dateWrap = el('div', 'post-date');
+      const time = el('time', null, formatDate(post.date, lang));
+      time.dateTime = post.date;
+      dateWrap.append(time);
+      const more = el('a', 'read-more', t[lang].readMore);
+      more.href = url;
+      card.append(tags, h2, dateWrap, el('p', 'post-excerpt', lang === 'hr' ? post.excerpt_hr : post.excerpt_en), more);
+      return card;
+    }));
   }
 
   // Lang init

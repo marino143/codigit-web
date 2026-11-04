@@ -316,6 +316,8 @@
       padding: 20px 0;
     }
     .faq-q {
+      width: 100%; padding: 0; border: 0; background: none;
+      font-family: inherit; text-align: left; line-height: 1.5;
       font-size: 15px;
       font-weight: 600;
       color: var(--white);
@@ -629,22 +631,22 @@
   <h2 id="faq-title">Frequently Asked Questions</h2>
 
   <div class="faq-item">
-    <div class="faq-q" id="faq1-q" onclick="this.parentElement.classList.toggle('open')">What happens during a Strategy Session?</div>
+    <button type="button" class="faq-q" id="faq1-q" aria-expanded="false" aria-controls="faq1-a" onclick="this.setAttribute('aria-expanded', this.parentElement.classList.toggle('open'))">What happens during a Strategy Session?</button>
     <div class="faq-a" id="faq1-a">We'll spend 40 minutes on a 1:1 video call diving deep into your project. We'll discuss your goals, evaluate technology options, outline a recommended approach, and estimate timelines and budgets. Afterwards, you'll receive a written summary of everything we discussed.</div>
   </div>
 
   <div class="faq-item">
-    <div class="faq-q" id="faq2-q" onclick="this.parentElement.classList.toggle('open')">Can I upgrade from one package to another?</div>
+    <button type="button" class="faq-q" id="faq2-q" aria-expanded="false" aria-controls="faq2-a" onclick="this.setAttribute('aria-expanded', this.parentElement.classList.toggle('open'))">Can I upgrade from one package to another?</button>
     <div class="faq-a" id="faq2-a">Absolutely. If you start with a Discovery Call and later decide you need a full Project Roadmap, we'll credit what you've already paid toward the upgrade.</div>
   </div>
 
   <div class="faq-item">
-    <div class="faq-q" id="faq3-q" onclick="this.parentElement.classList.toggle('open')">What video call platform do you use?</div>
+    <button type="button" class="faq-q" id="faq3-q" aria-expanded="false" aria-controls="faq3-a" onclick="this.setAttribute('aria-expanded', this.parentElement.classList.toggle('open'))">What video call platform do you use?</button>
     <div class="faq-a" id="faq3-a">We typically use Google Meet or Zoom, but we're flexible. Just let us know your preference when booking and we'll accommodate.</div>
   </div>
 
   <div class="faq-item">
-    <div class="faq-q" id="faq4-q" onclick="this.parentElement.classList.toggle('open')">Is there a refund policy?</div>
+    <button type="button" class="faq-q" id="faq4-q" aria-expanded="false" aria-controls="faq4-a" onclick="this.setAttribute('aria-expanded', this.parentElement.classList.toggle('open'))">Is there a refund policy?</button>
     <div class="faq-a" id="faq4-a">If you're not satisfied with your session, let us know within 24 hours and we'll work with you to make it right. For packages that include deliverables, we offer revisions until you're happy with the result.</div>
   </div>
 </section>

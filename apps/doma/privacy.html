@@ -7,6 +7,16 @@
   <title>Doma Privacy Policy | Co Digit</title>
   <meta name="description" content="How Doma handles your data: content is end-to-end encrypted on your iPhone and synced through your own iCloud. Codigit runs no server and collects nothing." />
   <link rel="canonical" href="https://codigit.io/apps/doma/privacy" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://codigit.io/apps/doma/privacy" />
+  <meta property="og:title" content="Doma Privacy Policy | Co Digit" />
+  <meta property="og:description" content="How Doma handles your data: end-to-end encrypted on your iPhone, synced through your own iCloud. Codigit runs no server and collects nothing." />
+  <meta property="og:image" content="https://codigit.io/apps/icons/doma.png" />
+  <meta property="og:site_name" content="Co Digit" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Doma Privacy Policy | Co Digit" />
+  <meta name="twitter:description" content="How Doma handles your data: end-to-end encrypted on your iPhone, synced through your own iCloud. Codigit runs no server and collects nothing." />
+  <meta name="twitter:image" content="https://codigit.io/apps/icons/doma.png" />
   <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/fonts/inter.css" />
   <link rel="stylesheet" href="/site.css" />
@@ -101,13 +111,15 @@
   </div>
 </nav>
 
-<div class="page">
+<main id="main" class="page">
+
+  <!-- One h1 for the page; its text follows the language toggle. -->
+  <p class="label" id="pageLabel">Doma · Legal</p>
+  <h1 id="pageTitle">Doma Privacy Policy</h1>
+  <p class="meta" id="pageMeta">Effective date: 27 September 2026 · CO DIGIT d.o.o., Zagreb, Croatia</p>
 
   <!-- ENGLISH (authoritative) -->
   <div class="lang-content active" data-lang="en">
-    <p class="label">Doma · Legal</p>
-    <h1>Doma Privacy Policy</h1>
-    <p class="meta">Effective date: 27 September 2026 · CO DIGIT d.o.o., Zagreb, Croatia</p>
 
     <h2>The short version</h2>
     <ul>
@@ -235,9 +247,6 @@
 
   <!-- CROATIAN SUMMARY -->
   <div class="lang-content" data-lang="hr">
-    <p class="label">Doma · Pravni dokumenti</p>
-    <h1>Doma: politika privatnosti</h1>
-    <p class="meta">Vrijedi od: 27. rujna 2026. · CO DIGIT d.o.o., Zagreb, Hrvatska</p>
 
     <p>Ovo je kratki sažetak na hrvatskom. Mjerodavna je <a href="#" data-switch="en">puna verzija na engleskom</a>.</p>
 
@@ -266,7 +275,7 @@
     <h2>Kontakt</h2>
     <p><a href="mailto:marino@codigit.io">marino@codigit.io</a> · <a href="/apps/doma/support">Doma podrška</a> · Pritužbu možete podnijeti AZOP-u (<a href="https://azop.hr" target="_blank" rel="noopener">azop.hr</a>).</p>
   </div>
-</div>
+</main>
 
 <footer>
   <p id="footerCopy">© 2026 Co Digit d.o.o. · Zagreb, Croatia · <a href="/apps/doma">Doma</a> · <a href="/apps/doma/support">Support</a> · <a href="/">codigit.io</a></p>
@@ -274,8 +283,8 @@
 
 <script>
   const pp = {
-    en: { backLink: '← Back to Doma', footerCopy: '© 2026 Co Digit d.o.o. · Zagreb, Croatia · <a href="/apps/doma">Doma</a> · <a href="/apps/doma/support">Support</a> · <a href="/">codigit.io</a>' },
-    hr: { backLink: '← Natrag na Domu', footerCopy: '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska · <a href="/apps/doma">Doma</a> · <a href="/apps/doma/support">Podrška</a> · <a href="/">codigit.io</a>' }
+    en: { pageLabel: 'Doma · Legal', pageTitle: 'Doma Privacy Policy', pageMeta: 'Effective date: 27 September 2026 · CO DIGIT d.o.o., Zagreb, Croatia', backLink: '← Back to Doma', footerCopy: '© 2026 Co Digit d.o.o. · Zagreb, Croatia · <a href="/apps/doma">Doma</a> · <a href="/apps/doma/support">Support</a> · <a href="/">codigit.io</a>' },
+    hr: { pageLabel: 'Doma · Pravni dokumenti', pageTitle: 'Doma: politika privatnosti', pageMeta: 'Vrijedi od: 27. rujna 2026. · CO DIGIT d.o.o., Zagreb, Hrvatska', backLink: '← Natrag na Domu', footerCopy: '© 2026 Co Digit d.o.o. · Zagreb, Hrvatska · <a href="/apps/doma">Doma</a> · <a href="/apps/doma/support">Podrška</a> · <a href="/">codigit.io</a>' }
   };
 
   function applyLang(lang) {

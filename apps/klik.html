@@ -246,7 +246,7 @@
     .lb-stage { overflow: auto; display: grid; place-items: center; padding: 0 16px; min-height: 0; -webkit-overflow-scrolling: touch; }
     /* Postotna visina se u grid retku ne razrješava pouzdano — vežemo je
        na viewport minus traka (~54 px) i opis (~90 px). */
-    .lb-stage img { display: block; max-width: 100%; max-height: calc(100vh - 150px); border-radius: 10px; cursor: zoom-in; }
+    .lb-stage img { display: block; width: auto; height: auto; max-width: 100%; max-height: calc(100vh - 150px); border-radius: 10px; cursor: zoom-in; }
     .lb.zoom .lb-stage { place-items: start; }
     .lb.zoom .lb-stage img { max-width: none; max-height: none; cursor: zoom-out; }
     .lb-cap { padding: 12px 16px 18px; color: rgba(255,255,255,.75); font-size: 13px; text-align: center; max-width: 780px; margin: 0 auto; }
@@ -294,14 +294,14 @@
 
   <!-- HERO -->
   <section class="app-hero">
-    <div class="app-hero-icon"><img src="/apps/icons/klik.png" alt="Klik app icon" style="width:100%;height:100%;border-radius:inherit;object-fit:cover;"></div>
+    <div class="app-hero-icon"><img src="/apps/icons/klik.png" alt="Klik app icon" width="96" height="96" style="width:100%;height:100%;border-radius:inherit;object-fit:cover;"></div>
     <div class="app-hero-content">
       <span class="app-platform-badge" id="platform-badge">macOS · Apple Silicon · Free</span>
       <h1 id="app-name">Klik</h1>
       <p class="app-tagline" id="app-tagline">Screenshots, screen recording and GIFs on your Mac — annotate, then drag straight into any app. 1 MB, native, no subscription.</p>
       <div class="app-cta-row">
         <a href="https://github.com/marino143/klik/releases/download/v0.2.8/Klik.app.zip" class="btn btn-primary" id="cta-download">Download free →</a>
-        <a href="https://github.com/marino143/klik" target="_blank" class="btn btn-outline" id="cta-github">View on GitHub</a>
+        <a href="https://github.com/marino143/klik" target="_blank" rel="noopener" class="btn btn-outline" id="cta-github">View on GitHub</a>
         <a href="https://buymeacoffee.com/marino143" target="_blank" rel="noopener" class="btn btn-bmc" id="cta-bmc">☕ Buy me a coffee</a>
       </div>
     </div>
@@ -380,10 +380,10 @@
     <h2 id="h-journey">Build story</h2>
     <div class="info-card">
       <div class="lang-content active" data-lang="en">
-        <p>Klik started as a Saturday-afternoon question: how close can a native app get to CleanShot's core experience with no Electron and no third-party dependencies? The answer turned out to be a single 766 KB binary. Built in Swift with Claude as a pairing partner, MIT licensed, source on <a href="https://github.com/marino143/klik" target="_blank">GitHub</a>. This is the kind of ship-velocity work I do for founders building SaaS and AI products at <a href="/services">Codigit</a>.</p>
+        <p>Klik started as a Saturday-afternoon question: how close can a native app get to CleanShot's core experience with no Electron and no third-party dependencies? The answer turned out to be a single 766 KB binary. Built in Swift with Claude as a pairing partner, MIT licensed, source on <a href="https://github.com/marino143/klik" target="_blank" rel="noopener">GitHub</a>. This is the kind of ship-velocity work I do for founders building SaaS and AI products at <a href="/services">Codigit</a>.</p>
       </div>
       <div class="lang-content" data-lang="hr">
-        <p>Klik je krenuo kao subotnje pitanje: koliko blizu CleanShotovom iskustvu može doći nativna aplikacija bez Electrona i bez vanjskih ovisnosti? Odgovor je ispao jedan binary od 766 KB. Napisan u Swiftu uz Claude kao pair partnera, MIT licenca, source na <a href="https://github.com/marino143/klik" target="_blank">GitHubu</a>. Ovo je tip ship-velocity rada koji radim za founderse koji grade SaaS i AI proizvode kroz <a href="/services">Codigit</a>.</p>
+        <p>Klik je krenuo kao subotnje pitanje: koliko blizu CleanShotovom iskustvu može doći nativna aplikacija bez Electrona i bez vanjskih ovisnosti? Odgovor je ispao jedan binary od 766 KB. Napisan u Swiftu uz Claude kao pair partnera, MIT licenca, source na <a href="https://github.com/marino143/klik" target="_blank" rel="noopener">GitHubu</a>. Ovo je tip ship-velocity rada koji radim za founderse koji grade SaaS i AI proizvode kroz <a href="/services">Codigit</a>.</p>
       </div>
     </div>
   </section>
@@ -661,17 +661,23 @@
       '<div class="lb-bar">' +
         '<span class="lb-count"></span>' +
         '<div class="lb-nav">' +
-          '<button class="lb-btn" data-a="prev"></button>' +
-          '<button class="lb-btn" data-a="next"></button>' +
-          '<button class="lb-btn" data-a="zoom"></button>' +
-          '<button class="lb-btn" data-a="close"></button>' +
+          '<button type="button" class="lb-btn" data-a="prev" aria-label="Previous">‹</button>' +
+          '<button type="button" class="lb-btn" data-a="next" aria-label="Next">›</button>' +
+          '<button type="button" class="lb-btn" data-a="zoom">Zoom in</button>' +
+          '<button type="button" class="lb-btn" data-a="close">Close</button>' +
         '</div>' +
       '</div>' +
-      '<div class="lb-stage"><img alt="" /></div>' +
+      '<div class="lb-stage"><img alt="" width="1600" height="1000" /></div>' +
       '<p class="lb-cap"></p>';
     document.body.appendChild(lb);
 
     var img = lb.querySelector('.lb-stage img');
+    /* Carry the thumbnail's width/height over so the lightbox image always has intrinsic dimensions. */
+    function dims(f) {
+      var s = f.querySelector('img');
+      if (s && s.getAttribute('width')) { img.setAttribute('width', s.getAttribute('width')); img.setAttribute('height', s.getAttribute('height')); }
+    }
+    dims(figs[0]);
     var cap = lb.querySelector('.lb-cap');
     var count = lb.querySelector('.lb-count');
     var stage = lb.querySelector('.lb-stage');
@@ -682,6 +688,7 @@
 
     function paint() {
       var f = figs[i], src = f.querySelector('img');
+      dims(f);
       var c = f.querySelector('figcaption');
       img.src = src.currentSrc || src.src;
       img.alt = src.alt || '';
