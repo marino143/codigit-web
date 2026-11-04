@@ -85,6 +85,11 @@
       padding: 14px 0; min-height: 48px; color: var(--text); text-decoration: none; font-size: 15px; font-weight: 600;
     }
     .nf-list a small { color: var(--muted); font-size: 13px; font-weight: 400; }
+    /* Rows nudge right on hover, the same 2px-ish lift language as the buttons, sideways. */
+    .nf-list a { transition: padding-left .2s ease, color .2s ease; }
+    .nf-list a:hover, .nf-list a:focus-visible { padding-left: 8px; color: var(--white); }
+    .btn { transition: transform .2s ease, background-color .2s ease, border-color .2s ease; }
+    @media (prefers-reduced-motion: reduce) { .nf-list a { transition: none; } .nf-list a:hover { padding-left: 0; text-decoration: underline; } }
 
     footer {
       border-top: 1px solid var(--border);
@@ -150,9 +155,9 @@
         <a href="/contact" class="btn btn-outline" data-t="contact">Get in touch</a>
       </div>
       <ul class="nf-list">
-        <li><a href="/apps/"><span data-t="apps">Apps</span> <small data-t="appsSub">Mac, iOS and web apps we ship</small></a></li>
-        <li><a href="/services"><span data-t="services">Services</span> <small data-t="servicesSub">Packages and prices</small></a></li>
-        <li><a href="/blog/"><span data-t="notes">Notes</span> <small data-t="notesSub">What we learned building them</small></a></li>
+        <li><a class="nf-link" href="/apps/"><span data-t="apps">Apps</span> <small data-t="appsSub">Mac, iOS and web apps we ship</small></a></li>
+        <li><a class="nf-link" href="/services"><span data-t="services">Services</span> <small data-t="servicesSub">Packages and prices</small></a></li>
+        <li><a class="nf-link" href="/blog/"><span data-t="notes">Notes</span> <small data-t="notesSub">What we learned building them</small></a></li>
       </ul>
     </div>
   </section>
