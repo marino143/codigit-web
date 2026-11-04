@@ -29,6 +29,23 @@ main a[href^="mailto:"] {
   align-items: center;
   min-height: 24px;
 }
+/* Base styles for the shared nav, so pages that never styled it (legal, manifesto) match the rest.
+   Page-level rules load later and win where they exist. */
+.nav-links { display: flex; gap: 28px; list-style: none; align-items: center; margin: 0; padding: 0; }
+.nav-links a { color: var(--muted, #888); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.3px; }
+.nav-links a:hover { color: #fff; }
+.nav-cta { background: #c1121f; color: #fff !important; padding: 8px 18px; border-radius: 6px; font-weight: 600 !important; font-size: 13px !important; }
+.nav-right { display: flex; align-items: center; gap: 24px; }
+@media (max-width: 900px) { .nav-links { display: none; } }
+
+/* Same-origin page loads crossfade instead of hard-cutting. */
+@view-transition { navigation: auto; }
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: .22s; }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
+
 .site-mobile-toggle { display: none; }
 .site-mobile-menu { display: none; }
 
