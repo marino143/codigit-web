@@ -98,3 +98,57 @@ footer p a { text-decoration: underline; text-underline-offset: 2px; }
   color: var(--accent-text) !important;
 }
 footer p { color: #999 !important; }
+
+/* One hover language for the whole site.
+   Filled CTAs brighten and lift 2px (the "Book a Free Call" motion, made visible).
+   Outline CTAs take the text colour on the border and lift the same 2px.
+   Text links draw an underline in from the left; prose links already underlined get a heavier line. */
+:is(a, button):is(.btn-primary, .nav-cta, .site-mobile-cta, .cta-fill, #cookieAccept),
+:is(a, button):is(.btn-outline, .back-to-apps, .back-to-blog, .share-btn, #cookieDecline) {
+  transition: transform .2s ease, background-color .2s ease, border-color .2s ease, color .2s ease, opacity .2s ease !important;
+}
+:is(a, button):is(.btn-primary, .nav-cta, .site-mobile-cta, .cta-fill, #cookieAccept):not(:disabled):is(:hover, :focus-visible) {
+  background-color: #d4202d !important;
+  opacity: 1 !important;
+  transform: translateY(-2px);
+}
+:is(a, button):is(.btn-outline, .back-to-apps, .back-to-blog, .share-btn, #cookieDecline):not(:disabled):is(:hover, :focus-visible) {
+  border-color: var(--text, #f0f0f0) !important;
+  color: var(--white, #fff) !important;
+  transform: translateY(-2px);
+}
+
+:is(.nav-links a:not(.nav-cta), .footer-links a, .read-more, .learn-more, .capability-link, nav a.back, .text-link) {
+  text-decoration: none !important;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 1px;
+  transition: background-size .25s ease, color .2s ease !important;
+}
+:is(.nav-links a:not(.nav-cta), .footer-links a, .read-more, .learn-more, .capability-link, nav a.back, .text-link):is(:hover, :focus-visible),
+.app-card:hover .learn-more,
+.post-card:hover .read-more,
+.capability-card:hover .capability-link {
+  background-size: 100% 1px;
+  opacity: 1 !important;
+}
+main :is(p, li, td, span, .trust-item-sub) a:not([class]) {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-thickness .2s ease, text-underline-offset .2s ease, color .2s ease;
+}
+main :is(p, li, td, span, .trust-item-sub) a:not([class]):is(:hover, :focus-visible) {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
+.lang-btn:hover { background: rgba(255, 255, 255, .06) !important; }
+.footer-links a:hover { color: var(--text, #f0f0f0) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  :is(a, button):is(.btn-primary, .nav-cta, .site-mobile-cta, .cta-fill, #cookieAccept, .btn-outline, .back-to-apps, .back-to-blog, .share-btn, #cookieDecline):is(:hover, :focus-visible) { transform: none; }
+  :is(.nav-links a, .footer-links a, .read-more, .learn-more, .capability-link, nav a.back, .text-link),
+  main :is(p, li, td, span, .trust-item-sub) a:not([class]) { transition: none !important; }
+}
