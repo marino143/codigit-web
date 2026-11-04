@@ -94,7 +94,7 @@
     }
     .section-label {
       font-size: 11px; font-weight: 700; letter-spacing: 2px;
-      color: var(--accent); text-transform: uppercase; margin-bottom: 16px;
+      color: var(--accent-text); text-transform: uppercase; margin-bottom: 16px;
     }
     .divider { width: 48px; height: 3px; background: var(--accent); margin: 0 auto 32px; border-radius: 2px; }
     h1 { font-size: clamp(32px, 3.5vw, 52px); font-weight: 900; letter-spacing: -1.5px; color: var(--white); line-height: 1.1; margin-bottom: 20px; }
@@ -111,7 +111,7 @@
     .capability-card:hover { transform: translateY(-2px); border-color: var(--accent); }
     .capability-card h2 { font-size: 20px; color: var(--white); margin-bottom: 10px; }
     .capability-card p { color: var(--muted); font-size: 14px; line-height: 1.7; }
-    .capability-link { display: inline-block; margin-top: 18px; color: var(--accent); font-size: 13px; font-weight: 700; }
+    .capability-link { display: inline-block; margin-top: 18px; color: var(--accent-text); font-size: 13px; font-weight: 700; }
     .trust-panel { display: grid; grid-template-columns: 1.15fr .85fr; gap: 36px; padding: 36px; border: 1px solid var(--border); border-radius: 16px; background: var(--bg2); }
     .trust-points { display: grid; gap: 16px; }
     .trust-point strong { display: block; color: var(--white); margin-bottom: 4px; }
@@ -226,7 +226,7 @@
     }
     .card-features li::before {
       content: "\2713";
-      color: var(--accent);
+      color: var(--accent-text);
       font-weight: 700;
       flex-shrink: 0;
       margin-top: 1px;
@@ -356,9 +356,9 @@
     }
     .footer-logo { font-size: 14px; font-weight: 800; color: var(--white); }
     .footer-logo span { color: var(--accent); }
-    footer p { font-size: 12px; color: #555; }
+    footer p { font-size: 12px; color: #8a8a8a; }
     .footer-links { display: flex; gap: 20px; }
-    .footer-links a { font-size: 12px; color: #555; text-decoration: none; transition: color 0.2s; }
+    .footer-links a { font-size: 12px; color: #8a8a8a; text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--muted); }
 
     /* RESPONSIVE */
@@ -393,6 +393,7 @@
   </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <div id="mobileMenu" aria-hidden="true">
   <a href="/#services">Capabilities</a>
@@ -429,7 +430,7 @@
   </div>
 </nav>
 
-<main>
+<main id="main">
 
 <!-- HERO -->
 <section class="hero">

@@ -34,14 +34,14 @@
     nav a.back:hover { color: #fff; }
 
     .page { max-width: 760px; margin: 0 auto; padding: 72px 24px 120px; }
-    .label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; margin-bottom: 16px; }
+    .label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--accent-text); text-transform: uppercase; margin-bottom: 16px; }
     h1 { font-size: 48px; font-weight: 900; letter-spacing: -1.5px; color: #fff; line-height: 1.1; margin-bottom: 16px; }
     .meta { font-size: 15px; color: var(--muted); margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
     h2 { font-size: 20px; font-weight: 700; color: #fff; margin: 48px 0 16px; }
     p { color: #bbb; margin-bottom: 16px; font-size: 15px; }
     ol, ul { color: #bbb; font-size: 15px; padding-left: 20px; margin-bottom: 16px; }
     li { margin-bottom: 8px; }
-    a { color: var(--accent); }
+    a { color: var(--accent-text); }
 
     /* FAQ: native details/summary, so it opens with Enter/Space and needs no script */
     .faq details { border-bottom: 1px solid var(--border); }
@@ -86,6 +86,7 @@
   </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <button class="site-mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
 <div class="site-mobile-menu" aria-label="Mobile navigation">
@@ -102,7 +103,7 @@
   </div>
 </nav>
 
-<main class="page">
+<main id="main" class="page">
   <p class="label">Doma · Support</p>
   <h1>Doma support</h1>
   <p class="meta">Answers to the questions people ask most about pairing, location and notifications. If yours is not here, email <a href="mailto:marino@codigit.io">marino@codigit.io</a> and a real person will reply.</p>

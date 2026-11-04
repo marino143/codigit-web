@@ -20,6 +20,11 @@
     if (localStorage.getItem('cookieConsent') === 'accepted') window.loadAnalytics();
   } catch (_) {}
 
+  try {
+    var skip = document.querySelector('.skip-link');
+    if (skip && localStorage.getItem('lang') === 'hr') skip.textContent = 'Preskoči na sadržaj';
+  } catch (_) {}
+
   if (document.getElementById('menuBtn') || !document.querySelector('nav')) return;
 
   var nav = document.querySelector('nav');

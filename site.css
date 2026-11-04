@@ -1,5 +1,23 @@
 /* Shared mobile navigation and small cross-page fixes. */
-:root { color-scheme: dark; }
+/* --accent stays #c1121f for fills (buttons, dividers, badges behind white text).
+   --accent-text is the red for text on the dark surfaces: 6.2:1 on #111, 5.7:1 on #1a1a1a. */
+:root { color-scheme: dark; --accent-text: #ff5a5f; }
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 10002;
+  padding: 12px 18px;
+  border-radius: 8px;
+  background: #c1121f;
+  color: #fff;
+  font: 600 14px/1.2 'Inter', sans-serif;
+  text-decoration: none;
+  transform: translateY(-160%);
+}
+.skip-link:focus { transform: none; outline: 2px solid #fff; outline-offset: 2px; }
+footer p a { text-decoration: underline; text-underline-offset: 2px; }
 .site-mobile-toggle { display: none; }
 .site-mobile-menu { display: none; }
 
@@ -77,6 +95,6 @@
 .read-more,
 .app-meta,
 .learn-more {
-  color: #ff6670 !important;
+  color: var(--accent-text) !important;
 }
 footer p { color: #999 !important; }
