@@ -1029,30 +1029,32 @@
     }
 
     /* ─── COOKIE BANNER ─── */
-    /* Compact corner card: sits bottom-right, clear of the hero CTAs on the left. */
+    /* Slim strip on the bottom edge: one row, about 52px tall on desktop, so it sits below
+       card content (testimonial authors, stats) instead of on top of it. */
     #cookieBanner {
       position: fixed;
-      right: 24px;
-      bottom: 24px;
+      left: 0;
+      right: 0;
+      bottom: 0;
       z-index: 9999;
       background: var(--cookie-bg);
-      border: 1px solid var(--cookie-border);
-      border-radius: 14px;
-      padding: 16px 18px;
-      width: 340px;
-      max-width: calc(100% - 48px);
+      border-top: 1px solid var(--cookie-border);
+      padding: 8px max(24px, calc((100% - 1240px) / 2));
+      padding-bottom: max(8px, env(safe-area-inset-bottom));
       display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 12px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.55);
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 -6px 24px rgba(0,0,0,0.45);
     }
     #cookieBanner.hidden { display: none; }
+    /* Room under the last section, so the strip never sits on the footer. */
+    body:has(#cookieBanner:not(.hidden)) { padding-bottom: 64px; }
     #cookieBanner p {
       font-size: 13px;
       color: var(--cookie-text);
-      line-height: 1.5;
+      line-height: 1.4;
       flex: 1;
+      min-width: 0;
     }
     #cookieBanner p a {
       color: #ff6670;
@@ -1061,8 +1063,9 @@
     .cookie-btns {
       display: flex;
       gap: 8px;
+      flex-shrink: 0;
     }
-    .cookie-btns button { flex: 1; min-height: 40px; }
+    .cookie-btns button { min-height: 36px; }
     #cookieAccept {
       background: #c92f3c;
       color: #fff;
@@ -1084,14 +1087,14 @@
       cursor: pointer;
       white-space: nowrap;
     }
-    /* Phones: pinned to the bottom edge so the header and menu stay usable. */
+    /* Phones: one line. The "why" sentence drops out, the policy link and both buttons stay. */
     @media (max-width: 600px) {
-      #cookieBanner {
-        left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom));
-        width: auto; max-width: none;
-        gap: 10px; padding: 12px 14px; border-radius: 12px;
-      }
-      #cookieBanner p { font-size: 12.5px; line-height: 1.45; }
+      #cookieBanner { gap: 10px; padding: 8px 12px; padding-bottom: max(8px, env(safe-area-inset-bottom)); }
+      #cookieBanner .cookie-why { display: none; }
+      #cookieBanner p { font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .cookie-btns { gap: 6px; }
+      .cookie-btns button { min-height: 44px; }
+      #cookieAccept, #cookieDecline { padding-left: 14px; padding-right: 14px; }
     }
     /* Back-to-top waits until the banner is answered, so they never stack. */
     body:has(#cookieBanner:not(.hidden)) #backToTop { display: none; }
@@ -1129,7 +1132,7 @@
 
 <!-- COOKIE BANNER -->
 <div id="cookieBanner">
-  <p data-i18n-html="cookie.p">We use cookies to improve your experience. <a href="/cookie-policy">Read our cookie policy</a></p>
+  <p data-i18n-html="cookie.p"><span class="cookie-why">We use cookies to improve your experience.</span> <a href="/cookie-policy">Read our cookie policy</a></p>
   <div class="cookie-btns">
     <button id="cookieAccept" data-i18n="cookie.accept">Accept all</button>
     <button id="cookieDecline" data-i18n="cookie.decline">Decline</button>
@@ -1696,7 +1699,7 @@
       'contact.reply':'Expect a personal reply within one business day.','contact.full':'Need more details? Open the full contact page','contact.privacy':'We use these details only to reply to your enquiry.','contact.error':'Submission failed. Please try again or email marino@codigit.io.',
       'footer.services':'Capabilities','footer.ai':'AI','footer.about':'About','footer.contact':'Contact','footer.cookies':'Cookie Policy','footer.privacy':'Privacy Policy',
       'footer.copy':'© 2026 Co Digit d.o.o. · Zagreb, Croatia',
-      'cookie.p':'We use cookies to improve your experience. <a href="/cookie-policy">Read our cookie policy</a>',
+      'cookie.p':'<span class="cookie-why">We use cookies to improve your experience.</span> <a href="/cookie-policy">Read our cookie policy</a>',
       'cookie.accept':'Accept all','cookie.decline':'Decline',
     },
     hr: {
@@ -1748,7 +1751,7 @@
       'contact.reply':'Očekujte osobni odgovor unutar jednog radnog dana.','contact.full':'Trebate više informacija? Otvorite punu kontakt stranicu','contact.privacy':'Ove podatke koristimo samo za odgovor na vaš upit.','contact.error':'Slanje nije uspjelo. Pokušajte ponovno ili pišite na marino@codigit.io.',
       'footer.services':'Mogućnosti','footer.ai':'AI','footer.about':'O nama','footer.contact':'Kontakt','footer.cookies':'Politika kolačića','footer.privacy':'Politika privatnosti',
       'footer.copy':'© 2026 Co Digit d.o.o. · Zagreb, Hrvatska',
-      'cookie.p':'Koristimo kolačiće kako bismo poboljšali vaše iskustvo. <a href="/cookie-policy">Više o kolačićima</a>',
+      'cookie.p':'<span class="cookie-why">Koristimo kolačiće kako bismo poboljšali vaše iskustvo.</span> <a href="/cookie-policy">Više o kolačićima</a>',
       'cookie.accept':'Prihvati sve','cookie.decline':'Odbij',
     }
   };
