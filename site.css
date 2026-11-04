@@ -18,6 +18,7 @@
 }
 .skip-link:focus { transform: none; outline: 2px solid #fff; outline-offset: 2px; }
 footer p a { text-decoration: underline; text-underline-offset: 2px; }
+footer p a, footer > a { display: inline-block; padding-block: 3px; }
 /* Smooth scrolling only for in-page link jumps (the clicked link holds focus). Scripted scrolls
    and find-in-page stay instant, so nothing is measured or shown mid-scroll. */
 html:not(:focus-within) { scroll-behavior: auto !important; }
@@ -27,11 +28,16 @@ html:not(:focus-within) { scroll-behavior: auto !important; }
 .nav-links a:not(.nav-cta),
 .text-link,
 nav a.back,
-main a[href^="mailto:"] {
+main a[href^="mailto:"],
+.read-more,
+.contact-detail-link {
   display: inline-flex;
   align-items: center;
   min-height: 24px;
 }
+/* Two-letter footer links ("AI") need width as well as height. */
+.footer-links a { min-width: 24px; justify-content: center; }
+#cookieBanner p a { display: inline-block; padding-block: 4px; }
 /* Base styles for the shared nav, so pages that never styled it (legal, manifesto) match the rest.
    Page-level rules load later and win where they exist. */
 .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; margin: 0; padding: 0; }
