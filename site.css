@@ -38,6 +38,42 @@ main a[href^="mailto:"] {
 .nav-right { display: flex; align-items: center; gap: 24px; }
 @media (max-width: 900px) { .nav-links { display: none; } }
 
+/* One header on every template. Each page still carries its own nav CSS, so these rules use
+   `html body` to outrank it: same height, padding, link rhythm and EN/HR slot everywhere.
+   Home keeps position: fixed (its hero is built around it), every other page is sticky. */
+html body nav {
+  box-sizing: border-box;
+  height: 70px;
+  padding: 0 60px;
+  align-items: center;
+  justify-content: space-between;
+}
+html body .nav-links { gap: 28px; }
+html body .nav-links a { font-size: 13px; }
+html body .nav-links a.nav-cta { padding: 8px 18px; font-size: 13px; }
+html body nav .lang-switcher { display: flex; align-items: center; gap: 4px; margin-left: 0; }
+.lang-btn {
+  background: none; border: 1px solid transparent; color: var(--muted, #888);
+  font-family: inherit; font-size: 12px; font-weight: 600; letter-spacing: .5px;
+  padding: 4px 8px; border-radius: 4px; cursor: pointer;
+}
+.lang-btn.active { color: var(--white, #fff); border-color: var(--border, #222); }
+.lang-sep { color: #333; font-size: 11px; }
+/* EN-only pages keep the switcher in place so the header never changes shape; HR is shown but inert. */
+.lang-btn:disabled { cursor: not-allowed; opacity: .5; }
+@media (max-width: 900px) {
+  html body nav { height: 76px; padding: 0 68px 0 24px; }
+  /* Home and /services put the menu button inside the nav instead of the fixed corner button. */
+  html body nav:has(.hamburger) { padding-right: 16px; }
+  html body nav .nav-right { margin-left: auto; gap: 8px; }
+  html body nav > .lang-switcher { margin-left: auto; margin-right: 8px; }
+  html body .hamburger {
+    display: flex; width: 44px; height: 44px; padding: 10px; box-sizing: border-box;
+    border: 1px solid var(--border, #333); border-radius: 8px; background: var(--bg3, #1a1a1a);
+  }
+  html body .hamburger span { width: 100%; }
+}
+
 /* Same-origin page loads crossfade instead of hard-cutting. */
 @view-transition { navigation: auto; }
 ::view-transition-old(root),
@@ -51,8 +87,6 @@ main a[href^="mailto:"] {
 
 /* The page CSS hides .nav-links at 900px, so the shared menu has to take over at the same width. */
 @media (max-width: 900px) {
-  /* Reserve the corner the fixed menu button sits in, so EN/HR and nav links never slide under it. */
-  body:has(.site-mobile-toggle) nav { padding-right: 76px !important; }
   /* Room under the footer links for the floating back-to-top button. */
   body:has(#backToTop) footer { padding-bottom: 96px !important; }
   .site-mobile-toggle {

@@ -31,8 +31,10 @@
       --accent: #c1121f; --white: #ffffff;
       --nav-bg: rgba(10,10,10,0.9);
     }
-    html { scroll-behavior: smooth; overflow-x: hidden; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; width: 100%; max-width: 100vw; overflow-x: hidden; display: flex; flex-direction: column; }
+    /* clip, not hidden: overflow hidden on both html and body turns body into its own scroll box,
+       and the sticky nav then scrolls away with the page. */
+    html { scroll-behavior: smooth; overflow-x: clip; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; width: 100%; max-width: 100vw; overflow-x: clip; display: flex; flex-direction: column; }
 
     /* NAV */
     nav {
@@ -367,7 +369,6 @@
     @media (max-width: 900px) {
       nav { padding: 16px 24px; }
       .nav-links { display: none; }
-      .lang-switcher { display: none; }
       .hamburger { display: flex; }
       .hero { padding: 40px 24px 36px; }
       .capabilities-section, .trust-section { padding: 0 24px 56px; }
