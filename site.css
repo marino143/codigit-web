@@ -74,10 +74,16 @@ html body nav .lang-switcher { display: flex; align-items: center; gap: 4px; mar
   html body .hamburger span { width: 100%; }
 }
 
-/* Same-origin page loads crossfade instead of hard-cutting. */
+/* Same-origin page loads: the header holds still (it is the same on every page) while the old
+   page fades out and the new one rises in. Long enough to read as a move, not a flicker:
+   the first version was a 0.22s crossfade between two near-black pages and looked like a cut. */
 @view-transition { navigation: auto; }
-::view-transition-old(root),
-::view-transition-new(root) { animation-duration: .22s; }
+nav { view-transition-name: site-nav; }
+::view-transition-group(site-nav) { animation-duration: 0s; }
+::view-transition-old(root) { animation: cg-page-out .2s ease-in both; }
+::view-transition-new(root) { animation: cg-page-in .5s cubic-bezier(.2, .7, .2, 1) .08s both; }
+@keyframes cg-page-out { to { opacity: 0; } }
+@keyframes cg-page-in { from { opacity: 0; transform: translateY(18px); } }
 @media (prefers-reduced-motion: reduce) {
   @view-transition { navigation: none; }
 }
