@@ -74,7 +74,7 @@ html body nav .lang-switcher { display: flex; align-items: center; gap: 4px; mar
 .lang-btn.active { color: var(--white, #fff); border-color: var(--border, #222); }
 .lang-sep { color: #333; font-size: 11px; }
 /* EN-only pages keep the switcher in place so the header never changes shape; HR is shown but inert. */
-.lang-btn:disabled { cursor: not-allowed; opacity: .5; }
+.lang-btn[aria-disabled="true"] { cursor: default; opacity: .5; }
 @media (max-width: 900px) {
   html body nav { height: 76px; padding: 0 68px 0 24px; }
   /* Home and /services put the menu button inside the nav instead of the fixed corner button. */
@@ -247,10 +247,10 @@ main :is(p, li, td, span, .trust-item-sub) a:not([class]):is(:hover, :focus-visi
 .post-card:hover h2 a { background-size: 100% 2px; }
 
 /* Small chrome buttons lift like the CTAs, just less. */
-.lang-btn:not(:disabled),
+button.lang-btn,
 .nav-logo { transition: transform .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease !important; }
 .nav-logo { display: inline-block; }
-.lang-btn:not(:disabled):is(:hover, :focus-visible) { background: rgba(255, 255, 255, .06) !important; color: var(--white, #fff) !important; transform: translateY(-1px); }
+button.lang-btn:is(:hover, :focus-visible) { background: rgba(255, 255, 255, .06) !important; color: var(--white, #fff) !important; transform: translateY(-1px); }
 .nav-logo:is(:hover, :focus-visible) { transform: translateY(-1px); }
 .footer-links a:hover { color: var(--text, #f0f0f0) !important; }
 
