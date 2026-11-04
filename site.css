@@ -59,7 +59,12 @@ html body nav {
 }
 html body .nav-links { gap: 28px; }
 html body .nav-links a { font-size: 13px; }
-html body .nav-links a.nav-cta { padding: 8px 18px; font-size: 13px; }
+html body .nav-links,
+html body .nav-links li { margin: 0; padding: 0; }
+html body .nav-links li { display: flex; align-items: center; }
+html body .nav-logo { line-height: 1.6; }
+html body .nav-links a { line-height: 1.5; }
+html body .nav-links a.nav-cta { display: inline-flex; align-items: center; padding: 8px 18px; font-size: 13px; }
 html body nav .lang-switcher { display: flex; align-items: center; gap: 4px; margin-left: 0; }
 .lang-btn {
   background: none; border: 1px solid transparent; color: var(--muted, #888);
