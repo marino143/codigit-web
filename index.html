@@ -1028,22 +1028,23 @@
     }
 
     /* ─── COOKIE BANNER ─── */
+    /* Compact corner card: sits bottom-right, clear of the hero CTAs on the left. */
     #cookieBanner {
       position: fixed;
+      right: 24px;
       bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
       z-index: 9999;
       background: var(--cookie-bg);
       border: 1px solid var(--cookie-border);
-      border-radius: 16px;
-      padding: 20px 24px;
-      max-width: 560px;
-      width: calc(100% - 48px);
+      border-radius: 14px;
+      padding: 16px 18px;
+      width: 340px;
+      max-width: calc(100% - 48px);
       display: flex;
-      align-items: center;
-      gap: 20px;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.55);
     }
     #cookieBanner.hidden { display: none; }
     #cookieBanner p {
@@ -1058,10 +1059,9 @@
     }
     .cookie-btns {
       display: flex;
-      flex-direction: column;
       gap: 8px;
-      flex-shrink: 0;
     }
+    .cookie-btns button { flex: 1; min-height: 40px; }
     #cookieAccept {
       background: #c92f3c;
       color: #fff;
@@ -1083,16 +1083,17 @@
       cursor: pointer;
       white-space: nowrap;
     }
+    /* Phones: pinned to the bottom edge so the header and menu stay usable. */
     @media (max-width: 600px) {
       #cookieBanner {
-        position: relative; bottom: auto; left: auto; transform: none;
-        width: auto; max-width: none; margin: 12px;
-        flex-direction: column; align-items: flex-start; gap: 12px;
-        padding: 14px 16px; border-radius: 12px;
+        left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom));
+        width: auto; max-width: none;
+        gap: 10px; padding: 12px 14px; border-radius: 12px;
       }
-      .cookie-btns { flex-direction: row; width: 100%; }
-      #cookieAccept, #cookieDecline { flex: 1; text-align: center; }
+      #cookieBanner p { font-size: 12.5px; line-height: 1.45; }
     }
+    /* Back-to-top waits until the banner is answered, so they never stack. */
+    body:has(#cookieBanner:not(.hidden)) #backToTop { display: none; }
 
     /* ─── MOBILE ─── */
     @media (max-width: 900px) {

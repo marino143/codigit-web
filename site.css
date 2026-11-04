@@ -18,10 +18,26 @@
 }
 .skip-link:focus { transform: none; outline: 2px solid #fff; outline-offset: 2px; }
 footer p a { text-decoration: underline; text-underline-offset: 2px; }
+
+/* Tap targets: standalone small links get at least 24px of height (WCAG 2.5.8). */
+.footer-links a,
+.nav-links a:not(.nav-cta),
+.text-link,
+nav a.back,
+main a[href^="mailto:"] {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
 .site-mobile-toggle { display: none; }
 .site-mobile-menu { display: none; }
 
-@media (max-width: 768px) {
+/* The page CSS hides .nav-links at 900px, so the shared menu has to take over at the same width. */
+@media (max-width: 900px) {
+  /* Reserve the corner the fixed menu button sits in, so EN/HR and nav links never slide under it. */
+  body:has(.site-mobile-toggle) nav { padding-right: 76px !important; }
+  /* Room under the footer links for the floating back-to-top button. */
+  body:has(#backToTop) footer { padding-bottom: 96px !important; }
   .site-mobile-toggle {
     display: flex;
     position: fixed;
@@ -81,7 +97,6 @@ footer p a { text-decoration: underline; text-underline-offset: 2px; }
   }
   .footer-links { flex-wrap: wrap !important; justify-content: center; }
   .footer-links a { color: var(--muted, #888) !important; }
-  #cookieBanner { top: auto !important; bottom: 12px !important; }
 }
 
 #cookieDecline { color: #aaa !important; }
